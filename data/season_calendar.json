@@ -1,0 +1,430 @@
+{
+ "_about": "Season and festival calendar for the 2026 twin year, Visakhapatnam / coastal Andhra Pradesh. Everything here is E (assumption): supply from TNAU / ICAR crop calendars, dates from a Telugu panchang where we could, prices anchored on Vizag press reports. 'confirmed': false = date NOT confirmed, check a panchang.",
+ "supply": {
+  "_note": "2 = peak, 1 = some supply, 0 = off season. E – TNAU / ICAR crop calendars (crop-calendar research).",
+  "jasmine": [
+   0,
+   0,
+   2,
+   2,
+   2,
+   2,
+   2,
+   2,
+   1,
+   1,
+   0,
+   0
+  ],
+  "marigold": [
+   2,
+   1,
+   1,
+   0,
+   0,
+   0,
+   1,
+   1,
+   2,
+   2,
+   2,
+   2
+  ],
+  "chamanthi": [
+   2,
+   1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   1,
+   2,
+   2,
+   2,
+   2
+  ],
+  "tuberose": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   2,
+   2,
+   1,
+   1
+  ],
+  "rose": [
+   2,
+   2,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   2,
+   1,
+   1,
+   2
+  ],
+  "crossandra": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   0,
+   0,
+   1,
+   1,
+   1,
+   1
+  ]
+ },
+ "festivals": [
+  {
+   "key": "sankranti",
+   "name": "Sankranti",
+   "date": "2026-01-14",
+   "days": 3,
+   "confirmed": true,
+   "season": "sankranti",
+   "flowers": [
+    "marigold",
+    "chamanthi",
+    "rose"
+   ]
+  },
+  {
+   "key": "valentine",
+   "name": "Valentine's Day",
+   "date": "2026-02-14",
+   "days": 1,
+   "confirmed": true,
+   "season": "valentine",
+   "flowers": [
+    "rose"
+   ]
+  },
+  {
+   "key": "shivaratri",
+   "name": "Maha Shivaratri",
+   "date": "2026-02-15",
+   "days": 1,
+   "confirmed": true,
+   "season": "valentine",
+   "flowers": [
+    "rose",
+    "marigold"
+   ]
+  },
+  {
+   "key": "ugadi",
+   "name": "Ugadi",
+   "date": "2026-03-19",
+   "days": 1,
+   "confirmed": true,
+   "season": "summer_jasmine",
+   "flowers": [
+    "jasmine",
+    "marigold"
+   ]
+  },
+  {
+   "key": "ramanavami",
+   "name": "Sri Rama Navami",
+   "date": "2026-03-27",
+   "days": 1,
+   "confirmed": false,
+   "season": "summer_jasmine",
+   "flowers": [
+    "jasmine",
+    "tuberose"
+   ]
+  },
+  {
+   "key": "akshaya",
+   "name": "Akshaya Tritiya",
+   "date": "2026-04-19",
+   "days": 1,
+   "confirmed": false,
+   "season": "summer_jasmine",
+   "flowers": [
+    "jasmine",
+    "tuberose"
+   ]
+  },
+  {
+   "key": "varalakshmi",
+   "name": "Varalakshmi Vratam",
+   "date": "2026-08-28",
+   "days": 1,
+   "confirmed": false,
+   "season": "sravana",
+   "flowers": [
+    "marigold",
+    "rose",
+    "chamanthi",
+    "jasmine"
+   ]
+  },
+  {
+   "key": "sravana_fri_1",
+   "name": "Sravana Friday",
+   "date": "2026-08-14",
+   "days": 1,
+   "confirmed": false,
+   "season": "sravana",
+   "flowers": [
+    "marigold",
+    "rose",
+    "jasmine"
+   ]
+  },
+  {
+   "key": "sravana_fri_2",
+   "name": "Sravana Friday",
+   "date": "2026-08-21",
+   "days": 1,
+   "confirmed": false,
+   "season": "sravana",
+   "flowers": [
+    "marigold",
+    "rose",
+    "jasmine"
+   ]
+  },
+  {
+   "key": "sravana_fri_4",
+   "name": "Sravana Friday",
+   "date": "2026-09-04",
+   "days": 1,
+   "confirmed": false,
+   "season": "sravana",
+   "flowers": [
+    "marigold",
+    "rose",
+    "chamanthi"
+   ]
+  },
+  {
+   "key": "chavithi",
+   "name": "Vinayaka Chavithi",
+   "date": "2026-09-14",
+   "days": 1,
+   "confirmed": true,
+   "season": "dasara_deepavali_karthika",
+   "flowers": [
+    "marigold",
+    "chamanthi"
+   ]
+  },
+  {
+   "key": "bathukamma",
+   "name": "Bathukamma",
+   "date": "2026-10-18",
+   "days": 1,
+   "confirmed": true,
+   "season": "dasara_deepavali_karthika",
+   "flowers": [
+    "marigold",
+    "chamanthi"
+   ]
+  },
+  {
+   "key": "dasara",
+   "name": "Dasara",
+   "date": "2026-10-20",
+   "days": 1,
+   "confirmed": true,
+   "season": "dasara_deepavali_karthika",
+   "flowers": [
+    "marigold",
+    "chamanthi"
+   ]
+  },
+  {
+   "key": "deepavali",
+   "name": "Deepavali",
+   "date": "2026-11-08",
+   "days": 1,
+   "confirmed": true,
+   "season": "dasara_deepavali_karthika",
+   "flowers": [
+    "marigold",
+    "chamanthi"
+   ]
+  },
+  {
+   "key": "karthika_mon_1",
+   "name": "Karthika Monday",
+   "date": "2026-11-16",
+   "days": 1,
+   "confirmed": true,
+   "season": "dasara_deepavali_karthika",
+   "flowers": [
+    "chamanthi",
+    "marigold",
+    "rose"
+   ]
+  },
+  {
+   "key": "karthika_mon_2",
+   "name": "Karthika Monday",
+   "date": "2026-11-23",
+   "days": 1,
+   "confirmed": true,
+   "season": "dasara_deepavali_karthika",
+   "flowers": [
+    "chamanthi",
+    "marigold",
+    "rose"
+   ]
+  },
+  {
+   "key": "karthika_mon_3",
+   "name": "Karthika Monday",
+   "date": "2026-11-30",
+   "days": 1,
+   "confirmed": true,
+   "season": "dasara_deepavali_karthika",
+   "flowers": [
+    "chamanthi",
+    "marigold",
+    "rose"
+   ]
+  },
+  {
+   "key": "karthika_mon_4",
+   "name": "Karthika Monday",
+   "date": "2026-12-07",
+   "days": 1,
+   "confirmed": true,
+   "season": "dasara_deepavali_karthika",
+   "flowers": [
+    "chamanthi",
+    "marigold",
+    "rose"
+   ]
+  },
+  {
+   "key": "christmas",
+   "name": "Christmas",
+   "date": "2026-12-25",
+   "days": 1,
+   "confirmed": true,
+   "season": "sankranti",
+   "flowers": [
+    "rose",
+    "chamanthi"
+   ]
+  }
+ ],
+ "windows": [
+  {
+   "name": "Wedding season",
+   "from": "2026-01-16",
+   "to": "2026-03-15",
+   "weddings": true,
+   "confirmed": false
+  },
+  {
+   "name": "Wedding season (May busiest)",
+   "from": "2026-04-15",
+   "to": "2026-06-15",
+   "weddings": true,
+   "confirmed": false
+  },
+  {
+   "name": "Ashadha (no weddings)",
+   "from": "2026-07-15",
+   "to": "2026-08-12",
+   "weddings": false,
+   "confirmed": false
+  },
+  {
+   "name": "Sravana masam",
+   "from": "2026-08-13",
+   "to": "2026-09-11",
+   "weddings": true,
+   "confirmed": false
+  },
+  {
+   "name": "Karthika masam",
+   "from": "2026-11-10",
+   "to": "2026-12-08",
+   "weddings": true,
+   "confirmed": true
+  },
+  {
+   "name": "Wedding season",
+   "from": "2026-11-20",
+   "to": "2026-12-15",
+   "weddings": true,
+   "confirmed": false
+  },
+  {
+   "name": "Margasira / Dhanurmasam (no weddings)",
+   "from": "2026-12-16",
+   "to": "2027-01-13",
+   "weddings": false,
+   "confirmed": false
+  }
+ ],
+ "muhurtham_proxy": {
+  "sale_weekdays": [
+   "Fri",
+   "Sun"
+  ],
+  "load_weekdays": [
+   "Tue",
+   "Wed"
+  ],
+  "note": "E – exact muhurtham days were not available; in wedding seasons Fridays and Sundays stand in for muhurtham / puja days, Tuesdays and Wednesdays for slack days."
+ },
+ "price_model": {
+  "pre_festival_multiplier": 2.5,
+  "pre_festival_days": 2,
+  "post_crash_multiplier": 0.4,
+  "post_crash_days": 4,
+  "sale_day_multiplier": 1.4,
+  "slack_day_multiplier": 0.8,
+  "peak_supply_multiplier": 0.85,
+  "off_season_multiplier": 1.5,
+  "note": "E – price = base price of the month (data/crops.json) x supply factor x day factor. 2 days up to and on a festival x2.5 (brief: x2-3); 4 days after x0.4 (brief: x0.3-0.5 for 3-5 days); muhurtham-proxy days x1.4, slack days x0.8. Anchors (Vizag press, E): marigold Rs 50 -> 150-200/kg before Deepavali 2025, jasmine Rs 250-300/kg; Sravana: marigold 160 -> 200, rose 280 -> 500, chamanthi 380 -> 600; marigold crash to about Rs 50 a basket after Deepavali."
+ },
+ "research_estimate": {
+  "days_with_stock": [
+   200,
+   250
+  ],
+  "high_value_days": [
+   100,
+   140
+  ],
+  "note": "E – crop-calendar research estimate for a full year."
+ },
+ "plan": {
+  "_note": "What the cold room does each month (used by twin/season_plan.py).",
+  "months": {
+   "1": "Marigold, chamanthi and rose: hold before Sankranti, then weekly cycles for weddings.",
+   "2": "Rose for Valentine's Day and weddings (bagged, up to 3 days).",
+   "3": "Jasmine season starts: load on slack days, sell on muhurtham days and Fridays.",
+   "4": "Jasmine glut (+ tuberose): hold 1–3 days.",
+   "5": "Jasmine glut, busiest wedding month: hold 1–3 days.",
+   "6": "Jasmine (+ tuberose): hold 1–3 days.",
+   "7": "Jasmine and tuberose; Ashadha has no weddings – store only for Fridays.",
+   "8": "Build stock 3–5 days before Sravana Fridays and Varalakshmi Vratam.",
+   "9": "Marigold and chamanthi: hold 2–5 days before Vinayaka Chavithi; store the surplus after.",
+   "10": "Marigold and chamanthi: hold before Bathukamma and Dasara.",
+   "11": "Hold before Deepavali; then weekly cycles before Karthika Mondays and Fridays.",
+   "12": "Chamanthi, marigold, rose: Karthika Mondays, weddings, Christmas; hold before Sankranti."
+  }
+ }
+}

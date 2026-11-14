@@ -1,0 +1,235 @@
+{
+  "_about": "ALL design values for KoolKisaan Flowers live here. Change a number here and every run, test and page uses the new value. Keys starting with '_' and '..._note' are notes. Values tagged E are assumptions: their source is in config 'assumptions_E' and they are listed again in every results file.",
+
+  "project": {
+    "name": "KoolKisaan Flowers",
+    "tagline": "Cold from the sun, wax for the night, truth in the ledger.",
+    "chamber_id": "CH-FLOWER"
+  },
+
+  "site": {"name": "Visakhapatnam", "lat_deg": 17.68, "lon_deg": 83.20, "utc_offset_h": 5.5, "pressure_Pa": 101325},
+
+  "chamber": {
+    "length_m": 2.0, "width_m": 2.0, "height_m": 2.2,
+    "envelope_area_m2": 25.6,
+    "insulation_thickness_m": 0.100,
+    "insulation_k_W_mK": 0.022,
+    "_note": "Same room as the old design: inside 2.0 x 2.0 x 2.2 m = 8.8 m3, U = k / thickness = 0.022 / 0.100 = 0.22 W/m2K, same inside-area rule (25.6 m2)."
+  },
+
+  "setpoint": {
+    "target_C": 4.0,
+    "band_low_C": 2.0, "band_high_C": 6.0,
+    "alarm_high_C": 8.0, "alarm_low_C": 1.0,
+    "rh_room_pct": 92.5,
+    "rh_target_pct": [90.0, 95.0],
+    "rh_low_alarm_pct": 85.0
+  },
+
+  "door": {
+    "width_m": 0.8, "height_m": 1.8,
+    "openings_per_hour": 0.25, "seconds_per_opening": 20,
+    "flow_factor_Df": 1.1,
+    "curtain_installed": true, "curtain_effectiveness_E": 0.85,
+    "_note": "Same door and strip curtain as the old design. 6 openings a day of 20 s (E)."
+  },
+
+  "internal_loads": {"evaporator_fan_W": 40, "lights_W": 10, "lights_on_fraction": 0.1, "controller_sensors_W": 5, "safety_margin_frac": 0.10},
+
+  "refrigeration": {
+    "refrigerant": "R290", "coolprop_name": "Propane",
+    "location": "outdoor, factory-sealed glycol chiller (0 g of R290 inside the room)",
+    "T_evap_C": -3.0,
+    "T_cond_design_C": 50.0,
+    "cond_approach_K": 10.0,
+    "superheat_K": 0.0, "subcool_K": 0.0,
+    "eta_isentropic": 0.75, "eta_motor_drive": 0.85,
+    "design_capacity_kW": 1.5,
+    "_note": "Same compressor efficiency and condenser model as the old twin (condensing = outside air + 10 K). T_evap_C here is only the design-point value; the twin uses glycol supply - approach every step."
+  },
+
+  "glycol": {
+    "fluid": "propylene glycol 30-35 % in water",
+    "cp_kJ_kgK": 3.7,
+    "density_kg_m3": 1030.0,
+    "freeze_C": -13.0,
+    "hx_approach_K": 3.0,
+    "supply_room_C": 0.0,
+    "supply_wax_C": -2.0,
+    "design_dT_K": 3.0,
+    "pump_W": 40.0,
+    "pump_heat_to_fluid_frac": 1.0,
+    "pipe_UA_W_K": 3.0,
+    "air_cooler_G_kW_K": 0.25,
+    "air_cooler_air_side_frac": 0.75,
+    "air_cooler_airflow_m3_h": 900,
+    "wax_coil_R_m2K_W": 0.01,
+    "loop_volume_L": 15.0,
+    "min_on_min": 3,
+    "_note": "E values (sources in assumptions_E). Chiller evaporating temperature = glycol supply - hx_approach_K. Flow is fixed: m_dot = design capacity / (cp x design_dT_K). The pump runs only when the chiller runs."
+  },
+
+  "pv": {
+    "rated_kWp": 1.8, "tilt_deg": 17.0, "azimuth_deg": 180.0,
+    "performance_ratio": 0.79, "temp_coeff_per_C": -0.004, "NOCT_C": 45.0, "ground_albedo": 0.20,
+    "_note": "Same PV model and values as the old twin."
+  },
+
+  "pcm": {
+    "name": "Paraffin blend (C14-rich + a little C13) with 7 wt% expanded graphite",
+    "T_melt_C": 3.5,
+    "melt_range_C": [3.0, 4.0],
+    "latent_pure_kJ_kg": 190.0,
+    "graphite_wt_frac": 0.07,
+    "latent_kJ_kg": 176.7,
+    "cp_solid_kJ_kgK": 1.8, "cp_liquid_kJ_kgK": 2.1,
+    "k_pure_W_mK": 0.2,
+    "k_multiplier": 5.0,
+    "k_W_mK": 1.0,
+    "density_kg_m3": 800.0,
+    "mass_kg": 100.0,
+    "mass_sweep_kg": [100, 115, 130, 145],
+    "price_INR_kg": 1000, "price_range_INR_kg": [600, 1600],
+    "slab_area_m2": 12.0,
+    "T_fully_used_C": 6.0,
+    "charge_stop_C": 2.0,
+    "_note": "latent = 190 x (1 - 0.07) = 176.7 kJ/kg (shown as about 177). k = 0.2 x 5. Same 12 m2 of finned panels as the old design. mass_kg = the mass chosen by the wax sweep (results/live/wax_sweep.json); a test checks they agree."
+  },
+
+  "product": {
+    "default_crop": "marigold",
+    "pulldown_hours": 4.0,
+    "cp_kJ_kgK": 3.9,
+    "_note": "pulldown_hours = time for 7/8 of the cooling of flowers in ventilated crates (E, same rule as the old twin). cp is taken from the flower table (data/crops.json) when it has one."
+  },
+
+  "controller": {
+    "ats_pcm_pct": 15.0,
+    "protect_above_C": 6.0,
+    "smart": {"ats_release_C": 5.0, "ats_delay_steps": 3, "solar_first": true},
+    "_note": "Room first. V-WAX opens only with spare solar and wax below 100 %. Grid (automatic transfer switch) only when wax < 15 % and no sun, or the room stays above 6.0 C (top of the normal 2-6 C band) for 15 min; by day the grid helps only if the sun is too weak for a hot room. 'smart' = the smart controller rules of the old reality check, which are the DESIGN controller here: grid only after 15 min above the limit, sun first, grid off again below 5.0 C. 'simple_controller' in the reality check switches them off."
+  },
+
+  "simulation": {"dt_s": 300, "structure_heat_capacity_kJ_K": 60, "inverter_min_capacity_frac": 0.30},
+
+  "live_run": {
+    "inside_m": [2.0, 2.0, 2.2],
+    "insulation_thickness_m": 0.100,
+    "curtain_installed": true,
+    "compressor_max_kW": 1.5,
+    "setpoint_C": 4.0,
+    "band_C": [2.0, 6.0],
+    "load_kg": 90,
+    "load_sweep_kg": [60, 90, 120, 150],
+    "load_hour": 13,
+    "takeout_hour": 5,
+    "hold_days": 1,
+    "hold_sweep_days": [1, 2, 3],
+    "cooled_to_C": 6.0,
+    "loading_window_h": 3,
+    "grid_assist_during_loading": false,
+    "door_openings": [[5, 0], [5, 10], [9, 0], [13, 0], [13, 10], [17, 0]],
+    "door_seconds": 20,
+    "designs": {"current": {"label": "KoolKisaan Flowers (wax + 1.8 kWp, glycol loop)", "pcm_kg": 100, "pv_kWp": 1.8}},
+    "sun_factor": 0.88,
+    "sun_factor_note": "Open-Meteo sunlight x 0.88 = NASA POWER level (conservative), same as the old twin.",
+    "wax_hx": {"kind": "fins", "L": 1.7, "S": 0.023, "b": 0.04, "t": 0.001, "h_scale": 1.0,
+               "keep_clear_m": 0.10, "panel_bottom_m": 0.25, "drip_tray": true,
+               "note": "Same finned wax panels as the old design: 12 m2, vertical aluminium fins 40 mm deep, 23 mm gap, 1 mm thick, no fan. New: glycol coils inside the panels instead of R290 tubes."},
+    "battery_12V": {"capacity_Ah": 40, "voltage": 12.8, "loads_W": {"controller": 5, "sensors": 2, "iot_gateway": 3}},
+    "money": {"grid_tariff_INR_kWh": 8.0}
+  },
+
+  "humidity": {
+    "default_option": "liners_fogger",
+    "options": {
+      "nothing": {"label": "(a) Nothing", "liner": false, "tray": false, "fogger": false},
+      "liners": {"label": "(b) Perforated PE bags / liners", "liner": true, "tray": false, "fogger": false},
+      "liners_tray": {"label": "(c) Bags + water tray", "liner": true, "tray": true, "fogger": false},
+      "liners_fogger": {"label": "(d) Bags + ultrasonic fogger", "liner": true, "tray": false, "fogger": true}
+    },
+    "liner_transpiration_factor": 0.25,
+    "tray_area_m2": 0.5,
+    "tray_h_W_m2K": 4.0,
+    "fogger_L_h": 0.30,
+    "fogger_W": 30.0,
+    "fogger_on_below_pct": 90.0,
+    "fogger_off_at_pct": 95.0,
+    "flower_air_speed_fan_on_m_s": 0.5,
+    "flower_air_speed_fan_off_m_s": 0.1,
+    "empty_room_wet_surface_m2": 0.0,
+    "_note": "E values (sources in assumptions_E)."
+  },
+
+  "flowers": {
+    "design_flower": "marigold",
+    "also_run": ["jasmine", "mixed"],
+    "mixed": {"jasmine": 0.34, "marigold": 0.33, "rose": 0.33},
+    "allowed": ["jasmine", "marigold", "rose", "tuberose", "chamanthi", "crossandra"],
+    "crate_places": 12, "crate_places_extra_racks": 16,
+    "price_season": "normal"
+  },
+
+  "reality": {
+    "_note": "E values of the reality check (twin/reality_check.py). Same loopholes as the old reality check, plus pump and glycol losses.",
+    "wall_outside_area_m2": 30.8, "wall_bridge_frac": 0.10,
+    "door": {"times": [[5, 0], [5, 10], [7, 0], [9, 0], [11, 0], [13, 0], [13, 10], [17, 0]], "seconds": 20, "curtain_E": 0.70},
+    "fans_lights": {"evap_fan_W": 30, "circ_fan_W": 10, "lights_door_only": true, "controller_W": 10},
+    "defrost": {"times": [[3, 0], [15, 0]], "minutes": 20, "heater_W": 0, "fan_on": true},
+    "wax": {"latent_frac": 0.90, "melt_range_C": [2.5, 4.5], "fin_UA_frac": 0.75, "k_multiplier": 3.0},
+    "machine": {"start_loss_frac": 0.20, "cop_hot_penalty": {"above_T_out_C": 35.0, "frac": 0.10}, "pv_dust_per_day": 0.003, "pv_clean_days": 7, "pv_wiring_loss": 0.03},
+    "glycol": {"pump_W": 55.0, "pipe_UA_factor": 1.5, "hx_approach_K": 5.0, "air_cooler_G_frac": 0.80, "loop_restart": true},
+    "load_random_frac": [0.5, 1.5, 2026],
+    "thermostat_band_K": 1.0,
+    "rack_steel_kg": 50, "steel_cp_kJ_kgK": 0.50, "crate_empty_kg": 1.8, "pp_cp_kJ_kgK": 1.9
+  },
+
+  "trust": {
+    "payload_limit_kg": 90, "bays": 6, "load_warn_frac": 0.8,
+    "rh_band_pct": [85, 95],
+    "evaporator_airflow_m3_h": 900, "coil_face_area_m2": 0.12,
+    "crop": "marigold",
+    "reading_interval_s": 300, "transit_interval_min": 30,
+    "vehicle_time_constant_h": 4.0, "vehicle_rh_pct": 85, "vehicle_air_speed_m_s": 0.5,
+    "harvest_to_checkin_h_default": 2,
+    "sensor_noise": {"T_K": 0.1, "RH_pct": 1.0, "P_rel": 0.02, "airflow_bias_rel": 0.05, "glycol_T_K": 0.05, "flow_rel": 0.02, "seed": 7},
+    "phi": {"weights": [1, 1, 1, 1, 1], "window_steps": 3,
+            "sigma_default": {"W_kg_kg": 0.00005, "E_W": 40, "Q_W": 30, "core_K": 0.05, "G_W": 40},
+            "green_below": 2.0, "red_at": 3.0, "red_steps": 3},
+    "fake_reading_C": 4.0
+  },
+
+  "seasons": {"Winter (Jan-Feb)": [1, 2], "Summer (Mar-May)": [3, 4, 5], "Monsoon (Jun-Sep)": [6, 7, 8, 9], "Post-monsoon (Oct-Dec)": [10, 11, 12]},
+
+  "assumptions_E": {
+    "glycol.cp_kJ_kgK": "E – 30-35 % propylene glycol near 0 C: about 3.7 kJ/kg.K (design brief; check the glycol supplier's data sheet).",
+    "glycol.freeze_C": "E – 30-35 % propylene glycol freezes at about -13 C (design brief; check the data sheet).",
+    "glycol.hx_approach_K": "E – brazed-plate heat exchanger approach 3 K: R290 evaporating temperature = glycol supply - 3 K (design brief).",
+    "glycol.supply_room_C": "E – glycol supply about 0 C when only the air cooler is fed (design brief).",
+    "glycol.supply_wax_C": "E – glycol supply about -2 C when the wax is being frozen (design brief).",
+    "glycol.design_dT_K": "E – glycol warms 3 K at full 1.5 kW load; this sets the fixed pump flow (our choice, typical 3-5 K).",
+    "glycol.pump_W": "E – small DC circulation pump 40 W, runs only with the chiller (design brief). All of it is counted as heat into the glycol (conservative).",
+    "glycol.pipe_UA_W_K": "E – about 6 m of insulated outdoor glycol pipe plus plate exchanger, tank and valves: 3 W/K to the outside air (our estimate: 19 mm nitrile foam on 22 mm pipe is about 0.25 W/m.K; doubled for fittings).",
+    "glycol.air_cooler_G_kW_K": "E – glycol air cooler with EC fan: 900 m3/h of air (0.32 kW/K), effectiveness about 0.78 -> 0.25 kW per K between room air and mean glycol temperature (our estimate; check the chosen unit).",
+    "glycol.air_cooler_air_side_frac": "E – 75 % of the air cooler's heat resistance is on the air side, so the wet fin surface is warmer than the glycol: T_surface = T_room - 0.75 x (T_room - T_glycol_mean). This decides how much water the coil takes out of the air (our estimate, typical finned coil).",
+    "glycol.wax_coil_R_m2K_W": "E – contact resistance of the coils in the wax panels, same value as the old twin (0.01 m2K/W).",
+    "glycol.loop_volume_L": "E – about 15 L of glycol in pipes, coils and tank (our estimate). Used only in the reality check (re-cooling the loop at every start).",
+    "pcm.melt_range_C": "E – C14-rich paraffin blend with a little C13 melts over 3.0-4.0 C (design brief; needs a DSC test of the real blend).",
+    "pcm.latent_kJ_kg": "E – 190 kJ/kg (old design value, lower end of the data sheet) x 0.93 because 7 wt% is graphite = 176.7 kJ/kg.",
+    "pcm.graphite_wt_frac": "E – 7 wt% expanded graphite (design brief).",
+    "pcm.k_multiplier": "E – thermal conductivity x5 against pure paraffin (0.2 -> 1.0 W/m.K) in the panel model (design brief; literature for 5-10 wt% expanded graphite gives x3 to x10).",
+    "pcm.price_INR_kg": "E – Rs 1,000/kg, our quotation; range Rs 600-1,600/kg.",
+    "pcm.charge_stop_C": "E – wax charging stops when the solid wax is 1 K below the lower melting point (same rule as the old twin).",
+    "product.pulldown_hours": "E – flowers in ventilated crates lose 7/8 of their extra warmth in 4 h (same rule as the old twin; flowers are light, so this is likely conservative).",
+    "door": "E – 6 door openings a day (05:00, 05:10, 09:00, 13:00, 13:10, 17:00), 20 s each, strip curtain 85 % effective (design brief + old twin).",
+    "live_run.load_hour": "E – unsold surplus is loaded at 13:00 at that hour's outside air temperature and taken out at 05:00 (design brief).",
+    "live_run.sun_factor": "E – sunlight x 0.88 (old twin: Open-Meteo corrected to the NASA POWER level).",
+    "controller.protect_above_C": "E – grid help when the room stays above 6.0 C (top of the normal band) for 15 min, off again below 5.0 C (our rule). results/live/night_limit.json shows what 5.5 and 6.5 C would give.",
+    "humidity.liner_transpiration_factor": "E – perforated polyethylene crate liners cut the water loss of the flowers to about 25 % of the unlined value (literature for perforated film liners: 50-90 % less weight loss).",
+    "humidity.tray": "E – open water tray 0.5 m2 on the floor, natural convection 4 W/m2K (our estimate).",
+    "humidity.fogger": "E – ultrasonic fogger 0.30 L/h, 30 W, switched on below 90 % RH and off at 95 % (design brief + typical small unit). Needs clean (RO) water.",
+    "humidity.flower_air_speed": "E – air speed around the flowers 0.5 m/s with the cooler fan on, 0.1 m/s with it off (our estimate).",
+    "simulation.structure_heat_capacity_kJ_K": "E – 60 kJ/K for the inner skin of the room (old twin).",
+    "simulation.inverter_min_capacity_frac": "E – inverter chiller runs between 30 % and 100 % (old twin)."
+  }
+}

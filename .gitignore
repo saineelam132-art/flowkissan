@@ -1,0 +1,27 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+
+# ISHRAE weather data: licence forbids redistribution - never commit
+data/live/ishrae/
+
+# Firebase CLI cache and logs
+.firebase/
+firebase-debug.log
+
+# Firebase SDK bundle build folder
+tools/firebase_bundle/node_modules/
+tools/firebase_bundle/package-lock.json
+
+# Firebase emulator logs
+*-debug.log
+
+# never commit keys or licensed weather
+*service-account*.json
+*serviceAccount*.json
+*.epw
+.firebaserc
+.env

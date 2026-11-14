@@ -1,0 +1,1309 @@
+{
+ "about": "KoolKisaan Flowers – final design on the seasonal loading plan.",
+ "date_range": {
+  "from": "2026-01-01",
+  "to": "2026-11-06",
+  "days": 310,
+  "label": "1 Jan 2026 – 6 Nov 2026 (310 days, real Visakhapatnam weather, digital twin)"
+ },
+ "note": "Digital twin (S) on real 2026 Visakhapatnam weather. Nothing here is measured. E = assumption (config/design.json -> assumptions_E, data/crops.json, data/season_calendar.json).",
+ "design": {
+  "name": "KoolKisaan Flowers",
+  "tagline": "Cold from the sun, wax for the night, truth in the ledger.",
+  "room_m": [
+   2.0,
+   2.0,
+   2.2
+  ],
+  "room_m3": 8.8,
+  "U_W_m2K": 0.22,
+  "pv_kWp": 1.8,
+  "wax_kg": 100,
+  "wax_cost_INR": 100000,
+  "setpoint_C": 4.0,
+  "band_C": [
+   2.0,
+   6.0
+  ],
+  "alarm_C": [
+   1.0,
+   8.0
+  ],
+  "rh_target_pct": [
+   90.0,
+   95.0
+  ],
+  "chiller_max_kW": 1.5,
+  "glycol": {
+   "fluid": "propylene glycol 30-35 % in water",
+   "cp_kJ_kgK": 3.7,
+   "density_kg_m3": 1030.0,
+   "freeze_C": -13.0,
+   "hx_approach_K": 3.0,
+   "supply_room_C": 0.0,
+   "supply_wax_C": -2.0,
+   "design_dT_K": 3.0,
+   "pump_W": 40.0,
+   "pump_heat_to_fluid_frac": 1.0,
+   "pipe_UA_W_K": 3.0,
+   "air_cooler_G_kW_K": 0.25,
+   "air_cooler_air_side_frac": 0.75,
+   "air_cooler_airflow_m3_h": 900,
+   "wax_coil_R_m2K_W": 0.01,
+   "loop_volume_L": 15.0,
+   "min_on_min": 3
+  },
+  "glycol_m_dot_kg_s": 0.1351,
+  "T_evap_room_C": -3.0,
+  "T_evap_wax_C": -5.0,
+  "r290_inside_room_g": 0,
+  "r290_room_limit_g": 66.88,
+  "humidity_option": "liners_fogger",
+  "crate_places": 12,
+  "controller": {
+   "ats_pcm_pct": 15.0,
+   "protect_above_C": 6.0,
+   "smart": {
+    "ats_release_C": 5.0,
+    "ats_delay_steps": 3,
+    "solar_first": true
+   }
+  }
+ },
+ "ideal": {
+  "days": 310,
+  "days_full_solar_wax": 249,
+  "grid_h_per_year": 73.9812,
+  "grid_kWh_per_year": 17.9706,
+  "solar_used_pct": 41.2136,
+  "COP_chiller": 2.8577,
+  "COP_system": 1.6211,
+  "electric_kWh_day": 2.6154,
+  "solar_share_of_electricity_pct": 97.8167,
+  "grid_h_per_day": 0.2027,
+  "pump_kWh_day": 0.3179,
+  "compressor_kWh_day": 1.9319,
+  "hours_outside_band": 9,
+  "hours_outside_band_loading": 9,
+  "hours_outside_band_other": 0,
+  "hours_above_alarm": 1,
+  "night_room_max_C": 5.9909,
+  "rh_avg_pct": 92.2373,
+  "rh_below_85_h_day": 0.0065,
+  "time_to_6C_h_avg": 6.9544,
+  "time_to_6C_h_worst": 14.25,
+  "wax_sunrise_mean_pct": 62.9701,
+  "wax_sunrise_worst_pct": 13.861,
+  "solar_available_kWh_day": 6.2074,
+  "solar_used_kWh_day": 2.5583,
+  "fan_kWh_day": 0.3179,
+  "fogger_kWh_day": 0.0477,
+  "pipe_loss_kWh_day": 0.8982,
+  "pump_heat_kWh_day": 0.3827,
+  "cold_to_room_kWh_day": 1.7553,
+  "cold_into_wax_kWh_day": 2.4846,
+  "cold_wax_to_room_kWh_day": 2.2815,
+  "room_max_C": 8.5138,
+  "room_mean_C": 4.8428,
+  "water_fog_L_day": 0.4775,
+  "glycol_supply_mean_C": -1.7889,
+  "glycol_return_mean_C": -0.5053,
+  "energy_balance_error_pct": 0.0,
+  "kg_stored": 3739.5,
+  "kg_days": 6346.5,
+  "fills_done": 73,
+  "days_with_stock": 82,
+  "high_value_days": 12,
+  "value_INR": 236427.3621,
+  "price_uplift_INR": 225844.5805,
+  "loss_avoided_INR": 10582.7816,
+  "by_season": {
+   "dasara_deepavali_karthika": {
+    "label": "Dasara–Deepavali–Karthika (mid Sep–mid Dec)",
+    "kg": 630.0,
+    "value_INR": 23940.009,
+    "price_uplift_INR": 16127.1346,
+    "loss_avoided_INR": 7812.8745
+   },
+   "sankranti": {
+    "label": "Sankranti (mid Dec–Jan)",
+    "kg": 405.0,
+    "value_INR": 8734.4969,
+    "price_uplift_INR": 5964.5898,
+    "loss_avoided_INR": 2769.9071
+   },
+   "sravana": {
+    "label": "Sravana (Aug–early Sep)",
+    "kg": 90.0,
+    "value_INR": 2259.5365,
+    "price_uplift_INR": 2259.5365,
+    "loss_avoided_INR": 0.0
+   },
+   "summer_jasmine": {
+    "label": "Summer jasmine (Mar–Jul)",
+    "kg": 2458.5,
+    "value_INR": 183227.4025,
+    "price_uplift_INR": 183227.4025,
+    "loss_avoided_INR": 0.0
+   },
+   "valentine": {
+    "label": "Valentine's / weddings (Feb)",
+    "kg": 156.0,
+    "value_INR": 18265.9172,
+    "price_uplift_INR": 18265.9172,
+    "loss_avoided_INR": 0.0
+   }
+  },
+  "by_flower": {
+   "chamanthi": {
+    "kg": 112.5,
+    "fills": 5,
+    "hold_days_avg": 0.6667,
+    "freshness_kept_pct": 83.0042,
+    "freshness_kept_worst_pct": 82.9734,
+    "freshness_no_room_pct": 81.4219,
+    "weight_loss_pct": 0.2626,
+    "fragrance_kept_pct": null,
+    "value_INR": 15283.5622
+   },
+   "jasmine": {
+    "kg": 1470.0,
+    "fills": 44,
+    "hold_days_avg": 2.2348,
+    "freshness_kept_pct": 81.3767,
+    "freshness_kept_worst_pct": 76.8274,
+    "freshness_no_room_pct": 0.0,
+    "weight_loss_pct": 0.6121,
+    "fragrance_kept_pct": 72.065,
+    "value_INR": 132933.4319
+   },
+   "marigold": {
+    "kg": 1057.5,
+    "fills": 27,
+    "hold_days_avg": 0.8148,
+    "freshness_kept_pct": 93.8155,
+    "freshness_kept_worst_pct": 83.0464,
+    "freshness_no_room_pct": 75.7779,
+    "weight_loss_pct": 0.2763,
+    "fragrance_kept_pct": null,
+    "value_INR": 22050.6331
+   },
+   "rose": {
+    "kg": 156.0,
+    "fills": 4,
+    "hold_days_avg": 0.6667,
+    "freshness_kept_pct": 75.1793,
+    "freshness_kept_worst_pct": 75.0425,
+    "freshness_no_room_pct": 61.8559,
+    "weight_loss_pct": 0.3227,
+    "fragrance_kept_pct": null,
+    "value_INR": 18265.9172
+   },
+   "tuberose": {
+    "kg": 943.5,
+    "fills": 37,
+    "hold_days_avg": 2.2072,
+    "freshness_kept_pct": 78.3354,
+    "freshness_kept_worst_pct": 73.2454,
+    "freshness_no_room_pct": 0.047,
+    "weight_loss_pct": 0.5266,
+    "fragrance_kept_pct": null,
+    "value_INR": 47893.8177
+   }
+  },
+  "value_INR_per_day_with_stock": 2883.2605
+ },
+ "realistic_smart": {
+  "days": 310,
+  "days_full_solar_wax": 0,
+  "grid_h_per_year": 939.7769,
+  "grid_kWh_per_year": 476.2345,
+  "solar_used_pct": 56.5792,
+  "COP_chiller": 2.66,
+  "COP_system": 1.3586,
+  "electric_kWh_day": 4.4624,
+  "solar_share_of_electricity_pct": 66.9289,
+  "grid_h_per_day": 2.5747,
+  "pump_kWh_day": 0.498,
+  "compressor_kWh_day": 3.7272,
+  "hours_outside_band": 116,
+  "hours_outside_band_loading": 72,
+  "hours_outside_band_other": 44,
+  "hours_above_alarm": 32,
+  "night_room_max_C": 6.1781,
+  "rh_avg_pct": 91.7465,
+  "rh_below_85_h_day": 0.1419,
+  "time_to_6C_h_avg": 9.6118,
+  "time_to_6C_h_worst": 15.6667,
+  "wax_sunrise_mean_pct": 54.3171,
+  "wax_sunrise_worst_pct": 0.0,
+  "solar_available_kWh_day": 5.2787,
+  "solar_used_kWh_day": 2.9866,
+  "fan_kWh_day": 0.154,
+  "fogger_kWh_day": 0.0632,
+  "pipe_loss_kWh_day": 1.4295,
+  "pump_heat_kWh_day": 0.5498,
+  "cold_to_room_kWh_day": 3.7173,
+  "cold_into_wax_kWh_day": 2.3453,
+  "cold_wax_to_room_kWh_day": 2.0714,
+  "room_max_C": 12.4653,
+  "room_mean_C": 5.0406,
+  "water_fog_L_day": 0.6323,
+  "glycol_supply_mean_C": -0.5795,
+  "glycol_return_mean_C": 2.2558,
+  "energy_balance_error_pct": 0.0,
+  "kg_stored": 3815.6107,
+  "kg_days": 6613.2496,
+  "fills_done": 73,
+  "days_with_stock": 82,
+  "high_value_days": 12,
+  "value_INR": 232328.8827,
+  "price_uplift_INR": 221997.7291,
+  "loss_avoided_INR": 10331.1536,
+  "by_season": {
+   "dasara_deepavali_karthika": {
+    "label": "Dasara–Deepavali–Karthika (mid Sep–mid Dec)",
+    "kg": 673.8405,
+    "value_INR": 28954.8764,
+    "price_uplift_INR": 20632.4839,
+    "loss_avoided_INR": 8322.3925
+   },
+   "sankranti": {
+    "label": "Sankranti (mid Dec–Jan)",
+    "kg": 307.7627,
+    "value_INR": 6479.3703,
+    "price_uplift_INR": 4470.6092,
+    "loss_avoided_INR": 2008.7612
+   },
+   "sravana": {
+    "label": "Sravana (Aug–early Sep)",
+    "kg": 127.7217,
+    "value_INR": 2988.5165,
+    "price_uplift_INR": 2988.5165,
+    "loss_avoided_INR": 0.0
+   },
+   "summer_jasmine": {
+    "label": "Summer jasmine (Mar–Jul)",
+    "kg": 2569.1697,
+    "value_INR": 177183.4691,
+    "price_uplift_INR": 177183.4691,
+    "loss_avoided_INR": 0.0
+   },
+   "valentine": {
+    "label": "Valentine's / weddings (Feb)",
+    "kg": 137.1161,
+    "value_INR": 16722.6505,
+    "price_uplift_INR": 16722.6505,
+    "loss_avoided_INR": 0.0
+   }
+  },
+  "by_flower": {
+   "chamanthi": {
+    "kg": 130.3317,
+    "fills": 5,
+    "hold_days_avg": 0.6667,
+    "freshness_kept_pct": 82.9094,
+    "freshness_kept_worst_pct": 82.8694,
+    "freshness_no_room_pct": 81.2846,
+    "weight_loss_pct": 0.285,
+    "fragrance_kept_pct": null,
+    "value_INR": 18708.9878
+   },
+   "jasmine": {
+    "kg": 1533.5246,
+    "fills": 44,
+    "hold_days_avg": 2.2348,
+    "freshness_kept_pct": 79.3934,
+    "freshness_kept_worst_pct": 74.0996,
+    "freshness_no_room_pct": 0.0,
+    "weight_loss_pct": 0.6182,
+    "fragrance_kept_pct": 69.09,
+    "value_INR": 129352.2561
+   },
+   "marigold": {
+    "kg": 1041.471,
+    "fills": 27,
+    "hold_days_avg": 0.8148,
+    "freshness_kept_pct": 93.1853,
+    "freshness_kept_worst_pct": 81.722,
+    "freshness_no_room_pct": 72.7772,
+    "weight_loss_pct": 0.3011,
+    "fragrance_kept_pct": null,
+    "value_INR": 22941.5622
+   },
+   "rose": {
+    "kg": 137.1161,
+    "fills": 4,
+    "hold_days_avg": 0.6667,
+    "freshness_kept_pct": 74.5226,
+    "freshness_kept_worst_pct": 74.3325,
+    "freshness_no_room_pct": 60.2792,
+    "weight_loss_pct": 0.3319,
+    "fragrance_kept_pct": null,
+    "value_INR": 16722.6505
+   },
+   "tuberose": {
+    "kg": 973.1673,
+    "fills": 37,
+    "hold_days_avg": 2.2072,
+    "freshness_kept_pct": 77.0995,
+    "freshness_kept_worst_pct": 71.559,
+    "freshness_no_room_pct": 0.0,
+    "weight_loss_pct": 0.5309,
+    "fragrance_kept_pct": null,
+    "value_INR": 44603.4261
+   }
+  },
+  "value_INR_per_day_with_stock": 2833.2791
+ },
+ "setpoint_5C": {
+  "ideal": {
+   "days": 310,
+   "days_full_solar_wax": 304,
+   "grid_h_per_year": 73.7849,
+   "grid_kWh_per_year": 15.1842,
+   "solar_used_pct": 40.6577,
+   "COP_chiller": 2.8527,
+   "COP_system": 1.6199,
+   "electric_kWh_day": 2.572,
+   "solar_share_of_electricity_pct": 98.1253,
+   "grid_h_per_day": 0.2022,
+   "pump_kWh_day": 0.3135,
+   "compressor_kWh_day": 1.9088,
+   "hours_outside_band": 2,
+   "hours_outside_band_loading": 2,
+   "hours_outside_band_other": 0,
+   "hours_above_alarm": 0,
+   "night_room_max_C": 6.0322,
+   "rh_avg_pct": 92.1803,
+   "rh_below_85_h_day": 0.0032,
+   "time_to_6C_h_avg": 5.1994,
+   "time_to_6C_h_worst": 7.0,
+   "wax_sunrise_mean_pct": 61.7562,
+   "wax_sunrise_worst_pct": 6.6502,
+   "solar_available_kWh_day": 6.2074,
+   "solar_used_kWh_day": 2.5238,
+   "fan_kWh_day": 0.3005,
+   "fogger_kWh_day": 0.0492,
+   "pipe_loss_kWh_day": 0.8969,
+   "pump_heat_kWh_day": 0.3816,
+   "cold_to_room_kWh_day": 0.9812,
+   "cold_into_wax_kWh_day": 3.1853,
+   "cold_wax_to_room_kWh_day": 2.9129,
+   "room_max_C": 7.4184,
+   "room_mean_C": 5.2512,
+   "water_fog_L_day": 0.4918,
+   "glycol_supply_mean_C": -1.904,
+   "glycol_return_mean_C": -0.6328,
+   "energy_balance_error_pct": 0.0,
+   "kg_stored": 3739.5,
+   "kg_days": 6346.5,
+   "fills_done": 73,
+   "days_with_stock": 82,
+   "high_value_days": 12,
+   "value_INR": 231579.1833,
+   "price_uplift_INR": 221003.307,
+   "loss_avoided_INR": 10575.8763,
+   "by_season": {
+    "dasara_deepavali_karthika": {
+     "label": "Dasara–Deepavali–Karthika (mid Sep–mid Dec)",
+     "kg": 630.0,
+     "value_INR": 23906.5233,
+     "price_uplift_INR": 16098.4442,
+     "loss_avoided_INR": 7808.0791
+    },
+    "sankranti": {
+     "label": "Sankranti (mid Dec–Jan)",
+     "kg": 405.0,
+     "value_INR": 8704.4444,
+     "price_uplift_INR": 5936.6472,
+     "loss_avoided_INR": 2767.7972
+    },
+    "sravana": {
+     "label": "Sravana (Aug–early Sep)",
+     "kg": 90.0,
+     "value_INR": 2248.9703,
+     "price_uplift_INR": 2248.9703,
+     "loss_avoided_INR": 0.0
+    },
+    "summer_jasmine": {
+     "label": "Summer jasmine (Mar–Jul)",
+     "kg": 2458.5,
+     "value_INR": 178552.5787,
+     "price_uplift_INR": 178552.5787,
+     "loss_avoided_INR": 0.0
+    },
+    "valentine": {
+     "label": "Valentine's / weddings (Feb)",
+     "kg": 156.0,
+     "value_INR": 18166.6667,
+     "price_uplift_INR": 18166.6667,
+     "loss_avoided_INR": 0.0
+    }
+   },
+   "by_flower": {
+    "chamanthi": {
+     "kg": 112.5,
+     "fills": 5,
+     "hold_days_avg": 0.6667,
+     "freshness_kept_pct": 82.9846,
+     "freshness_kept_worst_pct": 82.9519,
+     "freshness_no_room_pct": 81.4219,
+     "weight_loss_pct": 0.2678,
+     "fragrance_kept_pct": null,
+     "value_INR": 15278.3001
+    },
+    "jasmine": {
+     "kg": 1470.0,
+     "fills": 44,
+     "hold_days_avg": 2.2348,
+     "freshness_kept_pct": 80.6299,
+     "freshness_kept_worst_pct": 75.9382,
+     "freshness_no_room_pct": 0.0,
+     "weight_loss_pct": 0.6193,
+     "fragrance_kept_pct": 70.9449,
+     "value_INR": 129511.1837
+    },
+    "marigold": {
+     "kg": 1057.5,
+     "fills": 27,
+     "hold_days_avg": 0.8148,
+     "freshness_kept_pct": 93.6904,
+     "freshness_kept_worst_pct": 82.5546,
+     "freshness_no_room_pct": 75.7779,
+     "weight_loss_pct": 0.2809,
+     "fragrance_kept_pct": null,
+     "value_INR": 21954.2088
+    },
+    "rose": {
+     "kg": 156.0,
+     "fills": 4,
+     "hold_days_avg": 0.6667,
+     "freshness_kept_pct": 74.9923,
+     "freshness_kept_worst_pct": 74.8616,
+     "freshness_no_room_pct": 61.8559,
+     "weight_loss_pct": 0.3288,
+     "fragrance_kept_pct": null,
+     "value_INR": 18166.6667
+    },
+    "tuberose": {
+     "kg": 943.5,
+     "fills": 37,
+     "hold_days_avg": 2.2072,
+     "freshness_kept_pct": 77.6628,
+     "freshness_kept_worst_pct": 72.5797,
+     "freshness_no_room_pct": 0.047,
+     "weight_loss_pct": 0.533,
+     "fragrance_kept_pct": null,
+     "value_INR": 46668.824
+    }
+   },
+   "value_INR_per_day_with_stock": 2824.1364
+  },
+  "realistic_smart": {
+   "days": 310,
+   "days_full_solar_wax": 50,
+   "grid_h_per_year": 837.9301,
+   "grid_kWh_per_year": 247.2912,
+   "solar_used_pct": 61.4897,
+   "COP_chiller": 2.5607,
+   "COP_system": 1.4191,
+   "electric_kWh_day": 4.1121,
+   "solar_share_of_electricity_pct": 78.9337,
+   "grid_h_per_day": 2.2957,
+   "pump_kWh_day": 0.4709,
+   "compressor_kWh_day": 3.4473,
+   "hours_outside_band": 56,
+   "hours_outside_band_loading": 48,
+   "hours_outside_band_other": 8,
+   "hours_above_alarm": 29,
+   "night_room_max_C": 6.9917,
+   "rh_avg_pct": 91.7027,
+   "rh_below_85_h_day": 0.1419,
+   "time_to_6C_h_avg": 8.5207,
+   "time_to_6C_h_worst": 14.5,
+   "wax_sunrise_mean_pct": 37.325,
+   "wax_sunrise_worst_pct": 0.0,
+   "solar_available_kWh_day": 5.2787,
+   "solar_used_kWh_day": 3.2458,
+   "fan_kWh_day": 0.1057,
+   "fogger_kWh_day": 0.0683,
+   "pipe_loss_kWh_day": 1.3333,
+   "pump_heat_kWh_day": 0.5042,
+   "cold_to_room_kWh_day": 2.4122,
+   "cold_into_wax_kWh_day": 3.4235,
+   "cold_wax_to_room_kWh_day": 3.0218,
+   "room_max_C": 12.6395,
+   "room_mean_C": 5.9556,
+   "water_fog_L_day": 0.6827,
+   "glycol_supply_mean_C": -0.9503,
+   "glycol_return_mean_C": 1.4393,
+   "energy_balance_error_pct": 0.0,
+   "kg_stored": 3815.6107,
+   "kg_days": 6613.2496,
+   "fills_done": 73,
+   "days_with_stock": 82,
+   "high_value_days": 12,
+   "value_INR": 222990.1652,
+   "price_uplift_INR": 212670.0648,
+   "loss_avoided_INR": 10320.1004,
+   "by_season": {
+    "dasara_deepavali_karthika": {
+     "label": "Dasara–Deepavali–Karthika (mid Sep–mid Dec)",
+     "kg": 673.8405,
+     "value_INR": 28867.0572,
+     "price_uplift_INR": 20554.4681,
+     "loss_avoided_INR": 8312.5892
+    },
+    "sankranti": {
+     "label": "Sankranti (mid Dec–Jan)",
+     "kg": 307.7627,
+     "value_INR": 6455.022,
+     "price_uplift_INR": 4447.5107,
+     "loss_avoided_INR": 2007.5113
+    },
+    "sravana": {
+     "label": "Sravana (Aug–early Sep)",
+     "kg": 127.7217,
+     "value_INR": 2968.0873,
+     "price_uplift_INR": 2968.0873,
+     "loss_avoided_INR": 0.0
+    },
+    "summer_jasmine": {
+     "label": "Summer jasmine (Mar–Jul)",
+     "kg": 2569.1697,
+     "value_INR": 168101.7762,
+     "price_uplift_INR": 168101.7762,
+     "loss_avoided_INR": 0.0
+    },
+    "valentine": {
+     "label": "Valentine's / weddings (Feb)",
+     "kg": 137.1161,
+     "value_INR": 16598.2225,
+     "price_uplift_INR": 16598.2225,
+     "loss_avoided_INR": 0.0
+    }
+   },
+   "by_flower": {
+    "chamanthi": {
+     "kg": 130.3317,
+     "fills": 5,
+     "hold_days_avg": 0.6667,
+     "freshness_kept_pct": 82.8651,
+     "freshness_kept_worst_pct": 82.8351,
+     "freshness_no_room_pct": 81.2846,
+     "weight_loss_pct": 0.2773,
+     "fragrance_kept_pct": null,
+     "value_INR": 18694.9555
+    },
+    "jasmine": {
+     "kg": 1533.5246,
+     "fills": 44,
+     "hold_days_avg": 2.2348,
+     "freshness_kept_pct": 77.9525,
+     "freshness_kept_worst_pct": 72.5749,
+     "freshness_no_room_pct": 0.0,
+     "weight_loss_pct": 0.611,
+     "fragrance_kept_pct": 66.9287,
+     "value_INR": 122734.1601
+    },
+    "marigold": {
+     "kg": 1041.471,
+     "fills": 27,
+     "hold_days_avg": 0.8148,
+     "freshness_kept_pct": 92.9657,
+     "freshness_kept_worst_pct": 80.8753,
+     "freshness_no_room_pct": 72.7772,
+     "weight_loss_pct": 0.297,
+     "fragrance_kept_pct": null,
+     "value_INR": 22757.2018
+    },
+    "rose": {
+     "kg": 137.1161,
+     "fills": 4,
+     "hold_days_avg": 0.6667,
+     "freshness_kept_pct": 74.2508,
+     "freshness_kept_worst_pct": 74.0076,
+     "freshness_no_room_pct": 60.2792,
+     "weight_loss_pct": 0.3195,
+     "fragrance_kept_pct": null,
+     "value_INR": 16598.2225
+    },
+    "tuberose": {
+     "kg": 973.1673,
+     "fills": 37,
+     "hold_days_avg": 2.2072,
+     "freshness_kept_pct": 75.7613,
+     "freshness_kept_worst_pct": 70.2831,
+     "freshness_no_room_pct": 0.0,
+     "weight_loss_pct": 0.5255,
+     "fragrance_kept_pct": null,
+     "value_INR": 42205.6254
+    }
+   },
+   "value_INR_per_day_with_stock": 2719.3923
+  }
+ },
+ "extra_racks": {
+  "crate_places": 16,
+  "aisle_note": "two side racks: aisle only about 0.49 m (tight, E)",
+  "realistic_smart": {
+   "days": 310,
+   "days_full_solar_wax": 0,
+   "grid_h_per_year": 1009.7352,
+   "grid_kWh_per_year": 499.7218,
+   "solar_used_pct": 57.0196,
+   "COP_chiller": 2.6632,
+   "COP_system": 1.3711,
+   "electric_kWh_day": 4.5455,
+   "solar_share_of_electricity_pct": 66.2173,
+   "grid_h_per_day": 2.7664,
+   "pump_kWh_day": 0.5048,
+   "compressor_kWh_day": 3.7966,
+   "hours_outside_band": 181,
+   "hours_outside_band_loading": 102,
+   "hours_outside_band_other": 79,
+   "hours_above_alarm": 58,
+   "night_room_max_C": 6.3164,
+   "rh_avg_pct": 91.3726,
+   "rh_below_85_h_day": 0.229,
+   "time_to_6C_h_avg": 10.0648,
+   "time_to_6C_h_worst": 18.75,
+   "wax_sunrise_mean_pct": 53.3518,
+   "wax_sunrise_worst_pct": 0.0,
+   "solar_available_kWh_day": 5.2787,
+   "solar_used_kWh_day": 3.0099,
+   "fan_kWh_day": 0.1581,
+   "fogger_kWh_day": 0.066,
+   "pipe_loss_kWh_day": 1.4438,
+   "pump_heat_kWh_day": 0.5562,
+   "cold_to_room_kWh_day": 3.8688,
+   "cold_into_wax_kWh_day": 2.3636,
+   "cold_wax_to_room_kWh_day": 2.0895,
+   "room_max_C": 14.9196,
+   "room_mean_C": 5.0645,
+   "water_fog_L_day": 0.6597,
+   "glycol_supply_mean_C": -0.5723,
+   "glycol_return_mean_C": 2.2633,
+   "energy_balance_error_pct": 0.0,
+   "kg_stored": 5087.481,
+   "kg_days": 8817.6662,
+   "fills_done": 73,
+   "days_with_stock": 82,
+   "high_value_days": 12,
+   "value_INR": 305591.6266,
+   "price_uplift_INR": 291824.8484,
+   "loss_avoided_INR": 13766.7782,
+   "by_season": {
+    "dasara_deepavali_karthika": {
+     "label": "Dasara–Deepavali–Karthika (mid Sep–mid Dec)",
+     "kg": 898.454,
+     "value_INR": 38471.006,
+     "price_uplift_INR": 27381.9652,
+     "loss_avoided_INR": 11089.0408
+    },
+    "sankranti": {
+     "label": "Sankranti (mid Dec–Jan)",
+     "kg": 410.3503,
+     "value_INR": 8607.6451,
+     "price_uplift_INR": 5929.9077,
+     "loss_avoided_INR": 2677.7374
+    },
+    "sravana": {
+     "label": "Sravana (Aug–early Sep)",
+     "kg": 170.2957,
+     "value_INR": 3919.5806,
+     "price_uplift_INR": 3919.5806,
+     "loss_avoided_INR": 0.0
+    },
+    "summer_jasmine": {
+     "label": "Summer jasmine (Mar–Jul)",
+     "kg": 3425.5595,
+     "value_INR": 232401.0146,
+     "price_uplift_INR": 232401.0146,
+     "loss_avoided_INR": 0.0
+    },
+    "valentine": {
+     "label": "Valentine's / weddings (Feb)",
+     "kg": 182.8215,
+     "value_INR": 22192.3804,
+     "price_uplift_INR": 22192.3804,
+     "loss_avoided_INR": 0.0
+    }
+   },
+   "by_flower": {
+    "chamanthi": {
+     "kg": 173.7756,
+     "fills": 5,
+     "hold_days_avg": 0.6667,
+     "freshness_kept_pct": 82.8916,
+     "freshness_kept_worst_pct": 82.841,
+     "freshness_no_room_pct": 81.2846,
+     "weight_loss_pct": 0.3102,
+     "fragrance_kept_pct": null,
+     "value_INR": 24921.3812
+    },
+    "jasmine": {
+     "kg": 2044.6995,
+     "fills": 44,
+     "hold_days_avg": 2.2348,
+     "freshness_kept_pct": 78.9741,
+     "freshness_kept_worst_pct": 73.4193,
+     "freshness_no_room_pct": 0.0,
+     "weight_loss_pct": 0.648,
+     "fragrance_kept_pct": 68.4612,
+     "value_INR": 169465.2523
+    },
+    "marigold": {
+     "kg": 1388.628,
+     "fills": 27,
+     "hold_days_avg": 0.8148,
+     "freshness_kept_pct": 93.0204,
+     "freshness_kept_worst_pct": 81.4123,
+     "freshness_no_room_pct": 72.7772,
+     "weight_loss_pct": 0.3264,
+     "fragrance_kept_pct": null,
+     "value_INR": 30344.8478
+    },
+    "rose": {
+     "kg": 182.8215,
+     "fills": 4,
+     "hold_days_avg": 0.6667,
+     "freshness_kept_pct": 74.3737,
+     "freshness_kept_worst_pct": 74.1453,
+     "freshness_no_room_pct": 60.2792,
+     "weight_loss_pct": 0.3531,
+     "fragrance_kept_pct": null,
+     "value_INR": 22192.3804
+    },
+    "tuberose": {
+     "kg": 1297.5564,
+     "fills": 37,
+     "hold_days_avg": 2.2072,
+     "freshness_kept_pct": 76.8193,
+     "freshness_kept_worst_pct": 71.1645,
+     "freshness_no_room_pct": 0.0,
+     "weight_loss_pct": 0.5558,
+     "fragrance_kept_pct": null,
+     "value_INR": 58667.7649
+    }
+   },
+   "value_INR_per_day_with_stock": 3726.7272
+  },
+  "extra_kg_stored": 1271.8702,
+  "extra_electric_kWh_day": 0.0831,
+  "extra_grid_kWh_per_year": 23.4873,
+  "extra_hours_outside_band": 65,
+  "extra_value_INR": 73262.7439
+ },
+ "freshness_after_days": {
+  "jasmine": {
+   "ideal": {
+    "1": {
+     "freshness_kept_pct": 91.2389,
+     "freshness_no_room_pct": 37.4909,
+     "weight_loss_pct": 0.4282,
+     "hours_in_room": 16.0,
+     "kg_per_fill": 120.0,
+     "time_to_6C_h": 7.9292,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 22197.9219
+    },
+    "2": {
+     "freshness_kept_pct": 84.9767,
+     "freshness_no_room_pct": 1.275,
+     "weight_loss_pct": 0.5414,
+     "hours_in_room": 40.0,
+     "kg_per_fill": 120.0,
+     "time_to_6C_h": 8.9984,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 34568.8096
+    },
+    "3": {
+     "freshness_kept_pct": 78.9651,
+     "freshness_no_room_pct": 0.0,
+     "weight_loss_pct": 0.645,
+     "hours_in_room": 64.0,
+     "kg_per_fill": 120.0,
+     "time_to_6C_h": 8.7201,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 32612.5681
+    }
+   },
+   "realistic": {
+    "1": {
+     "freshness_kept_pct": 89.3925,
+     "freshness_no_room_pct": 27.1608,
+     "weight_loss_pct": 0.4972,
+     "hours_in_room": 16.0,
+     "kg_per_fill": 120.0,
+     "time_to_6C_h": 10.227,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 25701.6748
+    },
+    "2": {
+     "freshness_kept_pct": 82.8639,
+     "freshness_no_room_pct": 0.1392,
+     "weight_loss_pct": 0.583,
+     "hours_in_room": 40.0,
+     "kg_per_fill": 120.0,
+     "time_to_6C_h": 10.6851,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 34165.2878
+    },
+    "3": {
+     "freshness_kept_pct": 76.573,
+     "freshness_no_room_pct": 0.0,
+     "weight_loss_pct": 0.6581,
+     "hours_in_room": 64.0,
+     "kg_per_fill": 120.0,
+     "time_to_6C_h": 10.9943,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 31624.6596
+    }
+   }
+  },
+  "marigold": {
+   "ideal": {
+    "1": {
+     "freshness_kept_pct": 94.3503,
+     "freshness_no_room_pct": 76.9552,
+     "weight_loss_pct": 0.3042,
+     "hours_in_room": 16.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 7.3779,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 952.3823
+    },
+    "2": {
+     "freshness_kept_pct": 88.6106,
+     "freshness_no_room_pct": 40.5787,
+     "weight_loss_pct": 0.3852,
+     "hours_in_room": 40.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 7.79,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 2629.7445
+    },
+    "3": {
+     "freshness_kept_pct": 82.9446,
+     "freshness_no_room_pct": 9.5403,
+     "weight_loss_pct": 0.4597,
+     "hours_in_room": 64.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 7.5421,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 4018.8883
+    }
+   },
+   "realistic": {
+    "1": {
+     "freshness_kept_pct": 93.7554,
+     "freshness_no_room_pct": 74.1108,
+     "weight_loss_pct": 0.344,
+     "hours_in_room": 16.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 10.0144,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 1075.5406
+    },
+    "2": {
+     "freshness_kept_pct": 87.8481,
+     "freshness_no_room_pct": 33.2201,
+     "weight_loss_pct": 0.4055,
+     "hours_in_room": 40.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 10.6201,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 2990.8796
+    },
+    "3": {
+     "freshness_kept_pct": 82.0076,
+     "freshness_no_room_pct": 5.4511,
+     "weight_loss_pct": 0.4588,
+     "hours_in_room": 64.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 10.5186,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 4191.4713
+    }
+   }
+  },
+  "rose": {
+   "ideal": {
+    "1": {
+     "freshness_kept_pct": 74.8204,
+     "freshness_no_room_pct": 57.7414,
+     "weight_loss_pct": 0.3549,
+     "hours_in_room": 16.0,
+     "kg_per_fill": 78.0,
+     "time_to_6C_h": 6.936,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 3041.774
+    },
+    "2": {
+     "freshness_kept_pct": 40.677,
+     "freshness_no_room_pct": 1.0694,
+     "weight_loss_pct": 0.4508,
+     "hours_in_room": 40.0,
+     "kg_per_fill": 78.0,
+     "time_to_6C_h": 7.0741,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 7054.1025
+    },
+    "3": {
+     "freshness_kept_pct": 6.6065,
+     "freshness_no_room_pct": 0.0,
+     "weight_loss_pct": 0.5396,
+     "hours_in_room": 64.0,
+     "kg_per_fill": 78.0,
+     "time_to_6C_h": 7.0032,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 1176.6245
+    }
+   },
+   "realistic": {
+    "1": {
+     "freshness_kept_pct": 74.167,
+     "freshness_no_room_pct": 55.9926,
+     "weight_loss_pct": 0.3956,
+     "hours_in_room": 16.0,
+     "kg_per_fill": 78.0,
+     "time_to_6C_h": 9.6638,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 3236.854
+    },
+    "2": {
+     "freshness_kept_pct": 39.6799,
+     "freshness_no_room_pct": 0.4249,
+     "weight_loss_pct": 0.4686,
+     "hours_in_room": 40.0,
+     "kg_per_fill": 78.0,
+     "time_to_6C_h": 10.0119,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 6991.3169
+    },
+    "3": {
+     "freshness_kept_pct": 5.2375,
+     "freshness_no_room_pct": 0.0,
+     "weight_loss_pct": 0.5313,
+     "hours_in_room": 64.0,
+     "kg_per_fill": 78.0,
+     "time_to_6C_h": 9.9345,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 932.8037
+    }
+   }
+  },
+  "tuberose": {
+   "ideal": {
+    "1": {
+     "freshness_kept_pct": 91.3518,
+     "freshness_no_room_pct": 60.8074,
+     "weight_loss_pct": 0.3636,
+     "hours_in_room": 16.0,
+     "kg_per_fill": 102.0,
+     "time_to_6C_h": 7.5367,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 3868.4493
+    },
+    "2": {
+     "freshness_kept_pct": 83.0132,
+     "freshness_no_room_pct": 7.9281,
+     "weight_loss_pct": 0.4602,
+     "hours_in_room": 40.0,
+     "kg_per_fill": 102.0,
+     "time_to_6C_h": 8.2035,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 9509.522
+    },
+    "3": {
+     "freshness_kept_pct": 74.8102,
+     "freshness_no_room_pct": 0.098,
+     "weight_loss_pct": 0.5488,
+     "hours_in_room": 64.0,
+     "kg_per_fill": 102.0,
+     "time_to_6C_h": 7.89,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 9462.3035
+    }
+   },
+   "realistic": {
+    "1": {
+     "freshness_kept_pct": 90.283,
+     "freshness_no_room_pct": 55.5252,
+     "weight_loss_pct": 0.4168,
+     "hours_in_room": 16.0,
+     "kg_per_fill": 102.0,
+     "time_to_6C_h": 10.3217,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 4402.0761
+    },
+    "2": {
+     "freshness_kept_pct": 81.6752,
+     "freshness_no_room_pct": 4.4314,
+     "weight_loss_pct": 0.4897,
+     "hours_in_room": 40.0,
+     "kg_per_fill": 102.0,
+     "time_to_6C_h": 10.6483,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 9782.9349
+    },
+    "3": {
+     "freshness_kept_pct": 73.1813,
+     "freshness_no_room_pct": 0.0,
+     "weight_loss_pct": 0.5533,
+     "hours_in_room": 64.0,
+     "kg_per_fill": 102.0,
+     "time_to_6C_h": 10.6133,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 9268.4067
+    }
+   }
+  },
+  "chamanthi": {
+   "ideal": {
+    "1": {
+     "freshness_kept_pct": 82.9731,
+     "freshness_no_room_pct": 81.294,
+     "weight_loss_pct": 0.3045,
+     "hours_in_room": 16.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 7.3887,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 363.9351
+    },
+    "2": {
+     "freshness_kept_pct": 57.864,
+     "freshness_no_room_pct": 53.1533,
+     "weight_loss_pct": 0.3853,
+     "hours_in_room": 40.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 7.8047,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 1021.0484
+    },
+    "3": {
+     "freshness_kept_pct": 32.7638,
+     "freshness_no_room_pct": 25.0121,
+     "weight_loss_pct": 0.4597,
+     "hours_in_room": 64.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 7.5558,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 1680.1911
+    }
+   },
+   "realistic": {
+    "1": {
+     "freshness_kept_pct": 82.8973,
+     "freshness_no_room_pct": 81.1565,
+     "weight_loss_pct": 0.3447,
+     "hours_in_room": 16.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 10.0155,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 377.3189
+    },
+    "2": {
+     "freshness_kept_pct": 57.7427,
+     "freshness_no_room_pct": 52.8073,
+     "weight_loss_pct": 0.4059,
+     "hours_in_room": 40.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 10.6234,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 1069.7287
+    },
+    "3": {
+     "freshness_kept_pct": 32.5914,
+     "freshness_no_room_pct": 24.4576,
+     "weight_loss_pct": 0.4587,
+     "hours_in_room": 64.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 10.4248,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 1762.9998
+    }
+   }
+  },
+  "crossandra": {
+   "ideal": {
+    "1": {
+     "freshness_kept_pct": 76.3267,
+     "freshness_no_room_pct": 79.8606,
+     "weight_loss_pct": 0.3885,
+     "hours_in_room": 16.0,
+     "kg_per_fill": 60.0,
+     "time_to_6C_h": 8.881,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": -1325.2013
+    },
+    "2": {
+     "freshness_kept_pct": 29.3735,
+     "freshness_no_room_pct": 49.4445,
+     "weight_loss_pct": 0.5521,
+     "hours_in_room": 40.0,
+     "kg_per_fill": 60.0,
+     "time_to_6C_h": 19.0525,
+     "allowed": false,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": -7526.6482
+    },
+    "3": {
+     "freshness_kept_pct": 0.0,
+     "freshness_no_room_pct": 19.0269,
+     "weight_loss_pct": 0.7095,
+     "hours_in_room": 64.0,
+     "kg_per_fill": 60.0,
+     "time_to_6C_h": 18.9547,
+     "allowed": false,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": -7135.0777
+    }
+   },
+   "realistic": {
+    "1": {
+     "freshness_kept_pct": 77.3267,
+     "freshness_no_room_pct": 79.515,
+     "weight_loss_pct": 0.4169,
+     "hours_in_room": 16.0,
+     "kg_per_fill": 60.0,
+     "time_to_6C_h": 7.6373,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": -820.6009
+    },
+    "2": {
+     "freshness_kept_pct": 33.9592,
+     "freshness_no_room_pct": 48.573,
+     "weight_loss_pct": 0.5463,
+     "hours_in_room": 40.0,
+     "kg_per_fill": 60.0,
+     "time_to_6C_h": 18.6499,
+     "allowed": false,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": -5480.1948
+    },
+    "3": {
+     "freshness_kept_pct": 0.0,
+     "freshness_no_room_pct": 17.629,
+     "weight_loss_pct": 0.6661,
+     "hours_in_room": 64.0,
+     "kg_per_fill": 60.0,
+     "time_to_6C_h": 18.5761,
+     "allowed": false,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": -6610.8748
+    }
+   }
+  },
+  "jasmine (in mixed load)": {
+   "realistic": {
+    "1": {
+     "freshness_kept_pct": 89.8669,
+     "freshness_no_room_pct": 27.1608,
+     "weight_loss_pct": 0.4698,
+     "hours_in_room": 16.0,
+     "kg_per_fill": 30.6,
+     "time_to_6C_h": 9.9356,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 6603.8928
+    }
+   }
+  },
+  "marigold (in mixed load)": {
+   "realistic": {
+    "1": {
+     "freshness_kept_pct": 93.753,
+     "freshness_no_room_pct": 74.1108,
+     "weight_loss_pct": 0.3433,
+     "hours_in_room": 16.0,
+     "kg_per_fill": 29.7,
+     "time_to_6C_h": 9.9356,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 354.8855
+    }
+   }
+  },
+  "rose (in mixed load)": {
+   "realistic": {
+    "1": {
+     "freshness_kept_pct": 74.0744,
+     "freshness_no_room_pct": 55.9926,
+     "weight_loss_pct": 0.4055,
+     "hours_in_room": 16.0,
+     "kg_per_fill": 29.7,
+     "time_to_6C_h": 9.9356,
+     "allowed": true,
+     "fragrance_kept_pct": null,
+     "value_saved_INR_per_fill": 1226.2136
+    }
+   }
+  }
+ },
+ "assumptions_E": {
+  "glycol.cp_kJ_kgK": "E – 30-35 % propylene glycol near 0 C: about 3.7 kJ/kg.K (design brief; check the glycol supplier's data sheet).",
+  "glycol.freeze_C": "E – 30-35 % propylene glycol freezes at about -13 C (design brief; check the data sheet).",
+  "glycol.hx_approach_K": "E – brazed-plate heat exchanger approach 3 K: R290 evaporating temperature = glycol supply - 3 K (design brief).",
+  "glycol.supply_room_C": "E – glycol supply about 0 C when only the air cooler is fed (design brief).",
+  "glycol.supply_wax_C": "E – glycol supply about -2 C when the wax is being frozen (design brief).",
+  "glycol.design_dT_K": "E – glycol warms 3 K at full 1.5 kW load; this sets the fixed pump flow (our choice, typical 3-5 K).",
+  "glycol.pump_W": "E – small DC circulation pump 40 W, runs only with the chiller (design brief). All of it is counted as heat into the glycol (conservative).",
+  "glycol.pipe_UA_W_K": "E – about 6 m of insulated outdoor glycol pipe plus plate exchanger, tank and valves: 3 W/K to the outside air (our estimate: 19 mm nitrile foam on 22 mm pipe is about 0.25 W/m.K; doubled for fittings).",
+  "glycol.air_cooler_G_kW_K": "E – glycol air cooler with EC fan: 900 m3/h of air (0.32 kW/K), effectiveness about 0.78 -> 0.25 kW per K between room air and mean glycol temperature (our estimate; check the chosen unit).",
+  "glycol.air_cooler_air_side_frac": "E – 75 % of the air cooler's heat resistance is on the air side, so the wet fin surface is warmer than the glycol: T_surface = T_room - 0.75 x (T_room - T_glycol_mean). This decides how much water the coil takes out of the air (our estimate, typical finned coil).",
+  "glycol.wax_coil_R_m2K_W": "E – contact resistance of the coils in the wax panels, same value as the old twin (0.01 m2K/W).",
+  "glycol.loop_volume_L": "E – about 15 L of glycol in pipes, coils and tank (our estimate). Used only in the reality check (re-cooling the loop at every start).",
+  "pcm.melt_range_C": "E – C14-rich paraffin blend with a little C13 melts over 3.0-4.0 C (design brief; needs a DSC test of the real blend).",
+  "pcm.latent_kJ_kg": "E – 190 kJ/kg (old design value, lower end of the data sheet) x 0.93 because 7 wt% is graphite = 176.7 kJ/kg.",
+  "pcm.graphite_wt_frac": "E – 7 wt% expanded graphite (design brief).",
+  "pcm.k_multiplier": "E – thermal conductivity x5 against pure paraffin (0.2 -> 1.0 W/m.K) in the panel model (design brief; literature for 5-10 wt% expanded graphite gives x3 to x10).",
+  "pcm.price_INR_kg": "E – Rs 1,000/kg, our quotation; range Rs 600-1,600/kg.",
+  "pcm.charge_stop_C": "E – wax charging stops when the solid wax is 1 K below the lower melting point (same rule as the old twin).",
+  "product.pulldown_hours": "E – flowers in ventilated crates lose 7/8 of their extra warmth in 4 h (same rule as the old twin; flowers are light, so this is likely conservative).",
+  "door": "E – 6 door openings a day (05:00, 05:10, 09:00, 13:00, 13:10, 17:00), 20 s each, strip curtain 85 % effective (design brief + old twin).",
+  "live_run.load_hour": "E – unsold surplus is loaded at 13:00 at that hour's outside air temperature and taken out at 05:00 (design brief).",
+  "live_run.sun_factor": "E – sunlight x 0.88 (old twin: Open-Meteo corrected to the NASA POWER level).",
+  "controller.protect_above_C": "E – grid help when the room stays above 6.0 C (top of the normal band) for 15 min, off again below 5.0 C (our rule). results/live/night_limit.json shows what 5.5 and 6.5 C would give.",
+  "humidity.liner_transpiration_factor": "E – perforated polyethylene crate liners cut the water loss of the flowers to about 25 % of the unlined value (literature for perforated film liners: 50-90 % less weight loss).",
+  "humidity.tray": "E – open water tray 0.5 m2 on the floor, natural convection 4 W/m2K (our estimate).",
+  "humidity.fogger": "E – ultrasonic fogger 0.30 L/h, 30 W, switched on below 90 % RH and off at 95 % (design brief + typical small unit). Needs clean (RO) water.",
+  "humidity.flower_air_speed": "E – air speed around the flowers 0.5 m/s with the cooler fan on, 0.1 m/s with it off (our estimate).",
+  "simulation.structure_heat_capacity_kJ_K": "E – 60 kJ/K for the inner skin of the room (old twin).",
+  "simulation.inverter_min_capacity_frac": "E – inverter chiller runs between 30 % and 100 % (old twin)."
+ }
+}

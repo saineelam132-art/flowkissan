@@ -1,0 +1,109 @@
+{
+ "about": "The 4 humidity options, realistic model + smart controller, seasonal plan. RH numbers count only the hours with flowers inside.",
+ "date_range": {
+  "from": "2026-01-01",
+  "to": "2026-11-06",
+  "days": 310,
+  "label": "1 Jan 2026 – 6 Nov 2026 (310 days, real Visakhapatnam weather, digital twin)"
+ },
+ "note": "Digital twin (S) on real 2026 Visakhapatnam weather. Nothing here is measured. E = assumption (config/design.json -> assumptions_E, data/crops.json, data/season_calendar.json).",
+ "options": {
+  "nothing": {
+   "label": "(a) Nothing",
+   "rh_avg_pct": 85.0886,
+   "rh_below_85_h_day": 2.3452,
+   "weight_loss_pct_per_day": 1.4346,
+   "extra_energy_kWh_day": 0.0,
+   "electric_kWh_day": 4.3962,
+   "water_use_L_day": 0.0,
+   "freshness_kept_pct": {
+    "chamanthi": 76.7729,
+    "jasmine": 67.7398,
+    "marigold": 86.2305,
+    "rose": 68.7794,
+    "tuberose": 66.648
+   },
+   "value_INR": 139274.176,
+   "water_condensed_L_day": 0.5318
+  },
+  "liners": {
+   "label": "(b) Perforated PE bags / liners",
+   "rh_avg_pct": 82.1529,
+   "rh_below_85_h_day": 4.9452,
+   "weight_loss_pct_per_day": 0.4538,
+   "extra_energy_kWh_day": 0.0099,
+   "electric_kWh_day": 4.4061,
+   "water_use_L_day": 0.0,
+   "freshness_kept_pct": {
+    "chamanthi": 82.9,
+    "jasmine": 79.2961,
+    "marigold": 93.1472,
+    "rose": 74.5937,
+    "tuberose": 77.0185
+   },
+   "value_INR": 230542.7857,
+   "water_condensed_L_day": 0.35
+  },
+  "liners_tray": {
+   "label": "(c) Bags + water tray",
+   "rh_avg_pct": 83.3167,
+   "rh_below_85_h_day": 4.4065,
+   "weight_loss_pct_per_day": 0.4442,
+   "extra_energy_kWh_day": -0.0122,
+   "electric_kWh_day": 4.384,
+   "water_use_L_day": 0.1602,
+   "freshness_kept_pct": {
+    "chamanthi": 82.8996,
+    "jasmine": 79.2872,
+    "marigold": 93.1474,
+    "rose": 74.5786,
+    "tuberose": 77.0098
+   },
+   "value_INR": 230609.249,
+   "water_condensed_L_day": 0.5019
+  },
+  "liners_fogger": {
+   "label": "(d) Bags + ultrasonic fogger",
+   "rh_avg_pct": 91.7465,
+   "rh_below_85_h_day": 0.1419,
+   "weight_loss_pct_per_day": 0.3624,
+   "extra_energy_kWh_day": 0.0662,
+   "electric_kWh_day": 4.4624,
+   "water_use_L_day": 0.6323,
+   "freshness_kept_pct": {
+    "chamanthi": 82.9094,
+    "jasmine": 79.3934,
+    "marigold": 93.1853,
+    "rose": 74.5226,
+    "tuberose": 77.0995
+   },
+   "value_INR": 232328.8827,
+   "water_condensed_L_day": 0.9531
+  }
+ },
+ "best": "liners_fogger",
+ "best_why": "highest Rs value of the flowers at take-out (E prices); ties go to the option that uses less water",
+ "rules": {
+  "ethylene": "No fruit in the room. Ripening fruit (banana, mango, tomato, papaya) gives off ethylene gas, which makes flowers open, drop petals and brown early.",
+  "ethylene_source": "UC Davis Postharvest; USDA Agriculture Handbook 66.",
+  "water": "Never spray water directly on the flowers: wet petals rot. Raise the room humidity instead (bags, fogger).",
+  "fogger_water": "The fogger needs clean (RO) water.",
+  "handling": [
+   "Pick at bud stage, early in the morning.",
+   "Bag in polyethylene (PE) film.",
+   "Optional boric-acid dip (jasmine, tuberose) – about 2× life (E).",
+   "No fruit in the room (ethylene).",
+   "Keep the door closed at night."
+  ],
+  "faq_months": {
+   "q": "Can flowers be stored for months?",
+   "a": "No. Fresh loose flowers last 1–3 weeks at best (bagged, 2–7 °C). Only carnation buds at 0–1 °C with special treatment can last months. Our room is a 1–7 day holding room. For long-term value: jasmine concrete, marigold lutein/dye, rose gulkand, dried flowers."
+  }
+ },
+ "E": {
+  "humidity.liner_transpiration_factor": "E – perforated polyethylene crate liners cut the water loss of the flowers to about 25 % of the unlined value (literature for perforated film liners: 50-90 % less weight loss).",
+  "humidity.tray": "E – open water tray 0.5 m2 on the floor, natural convection 4 W/m2K (our estimate).",
+  "humidity.fogger": "E – ultrasonic fogger 0.30 L/h, 30 W, switched on below 90 % RH and off at 95 % (design brief + typical small unit). Needs clean (RO) water.",
+  "humidity.flower_air_speed": "E – air speed around the flowers 0.5 m/s with the cooler fan on, 0.1 m/s with it off (our estimate)."
+ }
+}

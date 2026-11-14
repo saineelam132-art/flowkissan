@@ -1,0 +1,19 @@
+{
+ "_about": "Published numbers of the OLD KoolKisaan design (pomegranate, R290 direct expansion in the room, 5 C), copied from the old repo results/live/stress_2026.json. Used only by a test that checks our copy of the old twin still gives the same answer.",
+ "base": {
+  "days": 310,
+  "days_full_solar_wax": 291,
+  "grid_h_per_year": 163.46505376344086,
+  "grid_kWh_per_year": 22.973905252177573,
+  "comp_kWh_day": 2.995550471314072,
+  "solar_used_pct": 47.24386014069384
+ },
+ "realistic_fix": {
+  "days": 310,
+  "days_full_solar_wax": 57,
+  "grid_h_per_year": 687.1223118279571,
+  "grid_kWh_per_year": 164.33918521082026,
+  "comp_kWh_day": 3.9538508511032937,
+  "solar_used_pct": 66.37273701016332
+ }
+}

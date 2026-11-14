@@ -1,0 +1,89 @@
+{
+ "about": "OLD design (R290 direct expansion inside the room, pomegranate 150 kg a day, 5 °C, band 2–8 °C, 115 kg wax melting at 4 °C) against the NEW flower design (outdoor R290 chiller + glycol loop, 4 °C, band 2–6 °C), same room, same PV, same 2026 weather. Comparison only: the two rooms store different produce on different loading plans.",
+ "date_range": {
+  "from": "2026-01-01",
+  "to": "2026-11-06",
+  "days": 310,
+  "label": "1 Jan 2026 – 6 Nov 2026 (310 days, real Visakhapatnam weather, digital twin)"
+ },
+ "note": "Digital twin (S) on real 2026 Visakhapatnam weather. Nothing here is measured. E = assumption (config/design.json -> assumptions_E, data/crops.json, data/season_calendar.json).",
+ "old": {
+  "ideal": {
+   "days": 310,
+   "days_full_solar_wax": 293,
+   "grid_h_per_year": 140.8978,
+   "grid_kWh_per_year": 19.9513,
+   "electric_kWh_day": 2.9854,
+   "COP_chiller": 2.9278,
+   "COP_system": 2.4554,
+   "solar_used_pct": 47.2137,
+   "pump_kWh_day": 0.0,
+   "hours_outside_2_8": 495,
+   "room_mean_C": 6.2137,
+   "T_evap_C": -5.0,
+   "r290_inside_room_g": [
+    150,
+    300
+   ]
+  },
+  "realistic_smart": {
+   "days": 310,
+   "days_full_solar_wax": 58,
+   "grid_h_per_year": 690.9489,
+   "grid_kWh_per_year": 165.2641,
+   "electric_kWh_day": 3.9393,
+   "COP_chiller": 2.8718,
+   "COP_system": 2.3757,
+   "solar_used_pct": 66.0495,
+   "pump_kWh_day": 0.0,
+   "hours_outside_2_8": 660,
+   "room_mean_C": 6.9039,
+   "T_evap_C": -5.0,
+   "r290_inside_room_g": [
+    150,
+    300
+   ]
+  }
+ },
+ "new": {
+  "ideal": {
+   "days": 310,
+   "days_full_solar_wax": 249,
+   "grid_h_per_year": 73.9812,
+   "grid_kWh_per_year": 17.9706,
+   "electric_kWh_day": 2.6154,
+   "COP_chiller": 2.8577,
+   "COP_system": 1.6211,
+   "solar_used_pct": 41.2136,
+   "pump_kWh_day": 0.3179,
+   "hours_outside_band": 9,
+   "room_mean_C": 4.8428,
+   "T_evap_C": [
+    -3.0,
+    -5.0
+   ],
+   "r290_inside_room_g": 0
+  },
+  "realistic_smart": {
+   "days": 310,
+   "days_full_solar_wax": 0,
+   "grid_h_per_year": 939.7769,
+   "grid_kWh_per_year": 476.2345,
+   "electric_kWh_day": 4.4624,
+   "COP_chiller": 2.66,
+   "COP_system": 1.3586,
+   "solar_used_pct": 56.5792,
+   "pump_kWh_day": 0.498,
+   "hours_outside_band": 116,
+   "room_mean_C": 5.0406,
+   "T_evap_C": [
+    -5.0,
+    -7.0
+   ],
+   "r290_inside_room_g": 0
+  }
+ },
+ "new_wax_kg": 100,
+ "old_wax_kg": 115,
+ "r290_room_limit_g": 66.88
+}

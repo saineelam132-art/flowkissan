@@ -1,0 +1,185 @@
+{
+ "about": "Marigold, one fill a day (13:00 in, 05:00 out), realistic model + smart controller.",
+ "date_range": {
+  "from": "2026-01-01",
+  "to": "2026-11-06",
+  "days": 310,
+  "label": "1 Jan 2026 – 6 Nov 2026 (310 days, real Visakhapatnam weather, digital twin)"
+ },
+ "note": "Digital twin (S) on real 2026 Visakhapatnam weather. Nothing here is measured. E = assumption (config/design.json -> assumptions_E, data/crops.json, data/season_calendar.json).",
+ "crate_places": 12,
+ "rows": [
+  {
+   "kg_per_fill": 60,
+   "crates_needed": 8,
+   "fits": true,
+   "days": 310,
+   "days_full_solar_wax": 0,
+   "grid_h_per_year": 1276.6169,
+   "grid_kWh_per_year": 565.2384,
+   "solar_used_pct": 69.9471,
+   "COP_chiller": 2.6548,
+   "COP_system": 1.4703,
+   "electric_kWh_day": 5.4011,
+   "solar_share_of_electricity_pct": 68.362,
+   "grid_h_per_day": 3.4976,
+   "pump_kWh_day": 0.5501,
+   "compressor_kWh_day": 4.4163,
+   "hours_outside_band": 344,
+   "hours_outside_band_loading": 256,
+   "hours_outside_band_other": 88,
+   "hours_above_alarm": 71,
+   "night_room_max_C": 6.217,
+   "rh_avg_pct": 91.4649,
+   "rh_below_85_h_day": 0.4323,
+   "time_to_6C_h_avg": 9.3303,
+   "time_to_6C_h_worst": 15.9167,
+   "wax_sunrise_mean_pct": 39.8173,
+   "wax_sunrise_worst_pct": 0.0,
+   "freshness_kept_pct": 93.9729
+  },
+  {
+   "kg_per_fill": 90,
+   "crates_needed": 12,
+   "fits": true,
+   "days": 310,
+   "days_full_solar_wax": 0,
+   "grid_h_per_year": 1625.0349,
+   "grid_kWh_per_year": 716.6102,
+   "solar_used_pct": 73.0442,
+   "COP_chiller": 2.6722,
+   "COP_system": 1.5239,
+   "electric_kWh_day": 5.946,
+   "solar_share_of_electricity_pct": 64.8461,
+   "grid_h_per_day": 4.4522,
+   "pump_kWh_day": 0.5912,
+   "compressor_kWh_day": 4.8797,
+   "hours_outside_band": 916,
+   "hours_outside_band_loading": 638,
+   "hours_outside_band_other": 278,
+   "hours_above_alarm": 268,
+   "night_room_max_C": 6.2894,
+   "rh_avg_pct": 90.4312,
+   "rh_below_85_h_day": 1.4419,
+   "time_to_6C_h_avg": 10.0144,
+   "time_to_6C_h_worst": 15.5,
+   "wax_sunrise_mean_pct": 32.054,
+   "wax_sunrise_worst_pct": 0.0,
+   "freshness_kept_pct": 93.7554
+  },
+  {
+   "kg_per_fill": 120,
+   "crates_needed": 16,
+   "fits": false,
+   "days": 310,
+   "days_full_solar_wax": 0,
+   "grid_h_per_year": 2129.1667,
+   "grid_kWh_per_year": 881.8716,
+   "solar_used_pct": 75.2956,
+   "COP_chiller": 2.687,
+   "COP_system": 1.5715,
+   "electric_kWh_day": 6.4978,
+   "solar_share_of_electricity_pct": 61.1687,
+   "grid_h_per_day": 5.8333,
+   "pump_kWh_day": 0.6411,
+   "compressor_kWh_day": 5.3408,
+   "hours_outside_band": 1471,
+   "hours_outside_band_loading": 845,
+   "hours_outside_band_other": 626,
+   "hours_above_alarm": 581,
+   "night_room_max_C": 6.3118,
+   "rh_avg_pct": 89.1827,
+   "rh_below_85_h_day": 2.5774,
+   "time_to_6C_h_avg": 10.4819,
+   "time_to_6C_h_worst": 15.8333,
+   "wax_sunrise_mean_pct": 24.6747,
+   "wax_sunrise_worst_pct": 0.0,
+   "freshness_kept_pct": 93.5165
+  },
+  {
+   "kg_per_fill": 150,
+   "crates_needed": 20,
+   "fits": false,
+   "days": 310,
+   "days_full_solar_wax": 0,
+   "grid_h_per_year": 2699.5282,
+   "grid_kWh_per_year": 1045.7687,
+   "solar_used_pct": 77.3431,
+   "COP_chiller": 2.6978,
+   "COP_system": 1.6159,
+   "electric_kWh_day": 7.0463,
+   "solar_share_of_electricity_pct": 57.9413,
+   "grid_h_per_day": 7.396,
+   "pump_kWh_day": 0.6938,
+   "compressor_kWh_day": 5.7935,
+   "hours_outside_band": 1901,
+   "hours_outside_band_loading": 924,
+   "hours_outside_band_other": 977,
+   "hours_above_alarm": 820,
+   "night_room_max_C": 6.3442,
+   "rh_avg_pct": 87.9474,
+   "rh_below_85_h_day": 3.2419,
+   "time_to_6C_h_avg": 10.8002,
+   "time_to_6C_h_worst": 15.75,
+   "wax_sunrise_mean_pct": 17.6205,
+   "wax_sunrise_worst_pct": 0.0,
+   "freshness_kept_pct": 93.2722
+  }
+ ],
+ "capacity_kg_by_flower": {
+  "jasmine": {
+   "kg_per_crate": [
+    8,
+    12
+   ],
+   "kg_per_crate_mid": 10.0,
+   "room_kg": 120.0,
+   "room_kg_extra_racks": 160.0
+  },
+  "marigold": {
+   "kg_per_crate": [
+    6,
+    9
+   ],
+   "kg_per_crate_mid": 7.5,
+   "room_kg": 90.0,
+   "room_kg_extra_racks": 120.0
+  },
+  "rose": {
+   "kg_per_crate": [
+    5,
+    8
+   ],
+   "kg_per_crate_mid": 6.5,
+   "room_kg": 78.0,
+   "room_kg_extra_racks": 104.0
+  },
+  "tuberose": {
+   "kg_per_crate": [
+    7,
+    10
+   ],
+   "kg_per_crate_mid": 8.5,
+   "room_kg": 102.0,
+   "room_kg_extra_racks": 136.0
+  },
+  "chamanthi": {
+   "kg_per_crate": [
+    6,
+    9
+   ],
+   "kg_per_crate_mid": 7.5,
+   "room_kg": 90.0,
+   "room_kg_extra_racks": 120.0
+  },
+  "crossandra": {
+   "kg_per_crate": [
+    4,
+    6
+   ],
+   "kg_per_crate_mid": 5.0,
+   "room_kg": 60.0,
+   "room_kg_extra_racks": 80.0
+  }
+ }
+}

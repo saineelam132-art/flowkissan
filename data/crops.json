@@ -1,0 +1,733 @@
+{
+ "_about": "Crop table for shelf-life and respiration. Edit freely. JSON has no comments, so every crop has a 'source' field. SL_ref_days is the storage life when kept at T_ref_C. Q10 = how many times faster quality is lost for every 10 C warmer. Q10 values are typical literature ranges (2-4 for fresh produce) and are APPROXIMATE - treat shelf-life output as an estimate, not a guarantee.",
+ "tomato": {
+  "label": "Tomato (firm-ripe)",
+  "T_opt_low_C": 10.0,
+  "T_opt_high_C": 12.0,
+  "T_ref_C": 10.0,
+  "SL_ref_days": 14.0,
+  "Q10": 2.5,
+  "chill_injury_below_C": 10.0,
+  "respiration_W_per_kg_at_ref": 0.035,
+  "source": "USDA Agriculture Handbook 66 (2016), Tomato: firm-ripe 10-12 C for safe storage (8-10 C only for a few days), 1-3 weeks, chilling-sensitive below ~10 C. Respiration ~25-45 mW/kg at 10 C (ASHRAE Refrigeration Handbook, Commodity Storage Requirements). Q10 2.5 typical for produce (assumed)."
+ },
+ "leafy_greens": {
+  "label": "Leafy greens (spinach / lettuce)",
+  "T_opt_low_C": 0.0,
+  "T_opt_high_C": 2.0,
+  "T_ref_C": 0.0,
+  "SL_ref_days": 14.0,
+  "Q10": 3.0,
+  "chill_injury_below_C": null,
+  "freeze_below_C": -0.2,
+  "respiration_W_per_kg_at_ref": 0.025,
+  "source": "USDA Agriculture Handbook 66 (2016), Spinach: 0 C, 95-100 % RH, 10-14 days. Respiration ~20-30 mW/kg at 0 C (ASHRAE). Q10 ~3 for leafy vegetables (assumed, literature range 2-4)."
+ },
+ "grapes": {
+  "label": "Grapes (table)",
+  "T_opt_low_C": -1.0,
+  "T_opt_high_C": 0.0,
+  "T_ref_C": 0.0,
+  "SL_ref_days": 42.0,
+  "Q10": 3.0,
+  "chill_injury_below_C": null,
+  "freeze_below_C": -1.5,
+  "respiration_W_per_kg_at_ref": 0.005,
+  "source": "USDA Agriculture Handbook 66 (2016), Grape: -1 to 0 C, 1-6 months depending on cultivar; 6 weeks used (conservative, no SO2 pads). Respiration ~3-7 mW/kg at 0 C (ASHRAE). Q10 3 assumed."
+ },
+ "pomegranate": {
+  "cp_kJ_kgK": 3.56,
+  "cp_source": "University of Wisconsin crop-storage table 'Specific heat of fruits and vegetables' (adapted from ASHRAE / Engineering ToolBox): pomegranate 3.56 kJ/kg·K above freezing, 1.72 below. https://fyi.extension.wisc.edu/cropstorage/files/2019/09/Specific_heat_fruits-Vegetables.pdf",
+  "respiration_mgCO2_kg_h": {
+   "5": [
+    4,
+    8
+   ],
+   "10": [
+    8,
+    16
+   ],
+   "20": [
+    16,
+    36
+   ]
+  },
+  "respiration_source": "USDA Agriculture Handbook 66 values as reproduced by Pekmezci & Erkan (pomegranate chapter): 4–8 mg CO2/kg·h at 5 °C, 8–16 at 10 °C, 16–36 at 20 °C – check against the HB66 pomegranate page. Heat = mg CO2/kg·h × 2.96 mW/kg (HB66 conversion: × 61.2 kcal/t/day). Mid value at 5 °C: 6 × 2.96 = 17.8 mW/kg.",
+  "fruit": {
+   "mass_g": 250,
+   "mass_source": "E – assumption for counting (Bhagwa studies report about 285 g to 406 g per fruit; 250 g = small grade).",
+   "diameter_cm": 8.0,
+   "diameter_source": "E – Bhagwa maturity study reports about 8.4 cm at harvest; commercial grades 7.5–8.5 cm.",
+   "fruit_density_kg_m3": 1000,
+   "fruit_density_source": "E – whole fruit close to water (check: weigh + water displacement).",
+   "bulk_density_kg_m3": 550,
+   "bulk_density_source": "E – fruit loose in a crate, packing fraction about 0.55."
+  },
+  "label": "Pomegranate",
+  "T_opt_low_C": 5.0,
+  "T_opt_high_C": 7.0,
+  "T_ref_C": 5.0,
+  "SL_ref_days": 60.0,
+  "Q10": 2.5,
+  "chill_injury_below_C": 5.0,
+  "respiration_W_per_kg_at_ref": 0.0178,
+  "source": "USDA Agriculture Handbook 66 (2016), Pomegranate: 5 C, 90-95 % RH, 2-3 months; chilling injury below 5 C. Respiration: see respiration_source (HB66 4-8 mg CO2/kg.h at 5 C = 12-24 mW/kg; mid 17.8 mW/kg used; earlier value 8 mW/kg was too low). Q10 2.5 assumed.",
+  "freshness": {
+   "T_opt_C": 5.0,
+   "T_opt_source": "USDA Agriculture Handbook 66 (2016), Pomegranate (Kader): best storage 5 °C, 90–95 % RH, up to 2 months.",
+   "RH_opt_pct": [
+    90,
+    95
+   ],
+   "SL_ref_h": 1440,
+   "SL_ref_source": "= SL_ref_days 60 × 24 h (USDA HB66: 2 months at 5 °C).",
+   "T_freeze_C": -3.0,
+   "T_freeze_source": "USDA HB66 / ASHRAE Refrigeration Handbook (Commodity Storage Requirements): highest freezing point of pomegranate −3.0 °C.",
+   "freeze_minutes_to_damage": 30,
+   "damaged_freshness_pct": 40,
+   "damaged_source": "E – assumption (example value from the project brief); no published single number. Edit here.",
+   "chill_a_c_per_K2": 0.15,
+   "chill_source": "E – assumption. Chilling injury below 5 °C is published (USDA HB66) but no rate coefficient; 0.15 /K² makes 1 h at 2 °C use 2.35 h of life (more than 1 h at 8 °C = 1.32 h). Edit here.",
+   "K_t_mg_kg_s_MPa": 140,
+   "K_t_source": "E – proxy. Pomegranate is not in the ASHRAE/Sastry et al. (1978) transpiration-coefficient table; the tomato value (140 mg kg⁻¹ s⁻¹ MPa⁻¹, same table) is used until measured. Weight-loss rate (%/h) = K_t × VPD(hPa) × 3.6e-5 × (v/1 m/s)^0.5.",
+   "WL_max_pct": 5.0,
+   "WL_max_source": "Kader (2002) Postharvest Technology of Horticultural Crops: most produce becomes unsaleable at 3–10 % weight loss; pomegranate shrivels visibly at about 5 % (chosen value, check).",
+   "status": "Published values have a source; values marked E are assumptions to be checked/measured."
+  }
+ },
+ "mango": {
+  "label": "Mango",
+  "T_opt_low_C": 12.0,
+  "T_opt_high_C": 13.0,
+  "T_ref_C": 13.0,
+  "SL_ref_days": 21.0,
+  "Q10": 2.5,
+  "chill_injury_below_C": 12.0,
+  "respiration_W_per_kg_at_ref": 0.07,
+  "source": "USDA Agriculture Handbook 66 (2016), Mango: 13 C, 2-3 weeks; chilling injury below 10-13 C depending on cultivar (12 C used). Respiration ~50-90 mW/kg at 13 C (ASHRAE). Q10 2.5 assumed. NOTE: our 2-8 C room is too cold for mango - the site will warn."
+ },
+ "milk": {
+  "label": "Milk (pasteurised, packed)",
+  "T_opt_low_C": 2.0,
+  "T_opt_high_C": 4.0,
+  "T_ref_C": 4.0,
+  "SL_ref_days": 10.0,
+  "Q10": 3.0,
+  "chill_injury_below_C": null,
+  "freeze_below_C": -0.5,
+  "respiration_W_per_kg_at_ref": 0.0,
+  "source": "FSSAI / typical dairy practice: pasteurised milk at or below 4 C, about 7-14 days; 10 days used. Spoilage Q10 ~3 for psychrotrophic bacteria (assumed). Not a living product, so no respiration heat."
+ },
+ "vaccines": {
+  "label": "Vaccines (VVM30 class, illustrative)",
+  "T_opt_low_C": 2.0,
+  "T_opt_high_C": 8.0,
+  "T_ref_C": 5.0,
+  "SL_ref_days": 1460.0,
+  "Q10": 3.37,
+  "chill_injury_below_C": 2.0,
+  "freeze_below_C": 0.0,
+  "respiration_W_per_kg_at_ref": 0.0,
+  "source": "WHO: store at +2 to +8 C, do not freeze. VVM30 category = end point after 30 days at 37 C or 4 years at 5 C (WHO PQS E006/IN05). Q10 derived from those two points: (1460/30)^(10/32) = 3.37. Illustrative only - real vaccines follow their own VVM."
+ },
+ "jasmine": {
+  "label": "Jasmine (malle, loose buds)",
+  "latin": "Jasminum sambac",
+  "kind": "flower",
+  "ok_in_our_room": true,
+  "best_storage_C": [
+   4,
+   7
+  ],
+  "best_storage_source": "E – ICAR-IARI review 2025 (crop-calendar research); check the paper.",
+  "fit_at_4C": "Excellent",
+  "fit_note": "Best range is 4-7 °C. Fragrance fades before the look does.",
+  "max_hold_days": 7,
+  "T_opt_low_C": 4,
+  "T_opt_high_C": 7,
+  "rh_pct": [
+   90,
+   95
+  ],
+  "rh_source": "USDA Agriculture Handbook 66: 90-95 % RH for most cut flowers.",
+  "T_ref_C": 5.0,
+  "SL_ref_days": 18.0,
+  "shelf_life_ambient_days": 0.875,
+  "shelf_life_ambient_source": "E – ambient 12-30 h (mid 21 h); crop-calendar research; Jawaharlal et al. 2012.",
+  "shelf_life_bagged_4C_days": 18.0,
+  "shelf_life_bagged_source": "E – 18 days white buds / 12 days fragrance in 0.03 mm PE at 2-5 C; 7 days in 60 micron PE + 4 % boric acid at 7 C (crop-calendar research; Singh et al. 2009, ISHS Acta Hort. 847).",
+  "Q10": 3.2,
+  "Q10_source": "C – from the two shelf lives: (18.0/0.875)^(10/(30-4)) = 3.2. Freshness reaches 0 at the reference shelf life in both cases.",
+  "respiration_mgCO2_kg_h": {
+   "0": 31.0,
+   "5": 50.0,
+   "10": 80.6,
+   "20": 209.6
+  },
+  "respiration_mW_kg": {
+   "0": 92.0,
+   "5": 148.0,
+   "10": 239.0,
+   "20": 620.0
+  },
+  "respiration_Q10": 2.6,
+  "respiration_source": "E – no species table found. Class value for cut flowers: 40-60 mg CO2/kg.h at 5 C ('very high' class, Kader / UC Davis); mid 50. Other temperatures from Q10 = 2.6 (cut snapdragons 0-20 C, ISHS Acta Hort. 628). Heat = mg CO2/kg.h x 2.96 mW/kg (USDA Handbook 66 conversion).",
+  "respiration_W_per_kg_at_ref": 0.148,
+  "water_frac": 0.82,
+  "cp_kJ_kgK": 3.58,
+  "cp_source": "C – Siebel's rule cp = 0.837 + 3.349 x water fraction (0.82, E typical).",
+  "kg_per_crate": [
+   8,
+   12
+  ],
+  "kg_per_crate_mid": 10.0,
+  "kg_per_crate_source": "E – loose flowers in a 600 x 400 x 300 mm ventilated crate, not pressed (design brief / our estimate).",
+  "bulk_density_kg_m3": 177,
+  "bulk_density_source": "C – kg per crate / inside volume of the crate (0.056 m3).",
+  "ethylene_sensitivity": "high",
+  "ethylene_source": "E – buds open and brown faster with ethylene (check).",
+  "chill_injury_below_C": 2.0,
+  "chill_source": "E – no injury at 2 C in film (Singh et al. 2009); flag below 2 C.",
+  "freeze_below_C": -0.5,
+  "boric_acid_dip": true,
+  "boric_life_factor": 2.0,
+  "boric_source": "E – 4 % boric acid dip, about 2x life (jasmine in 60 micron PE at 7 C: 7 days; crop-calendar research).",
+  "price_base_INR_kg": {
+   "1": 500,
+   "2": 450,
+   "3": 300,
+   "4": 200,
+   "5": 180,
+   "6": 200,
+   "7": 250,
+   "8": 300,
+   "9": 350,
+   "10": 300,
+   "11": 500,
+   "12": 600
+  },
+  "price_source": "E – Visakhapatnam press reports (Deccan Chronicle, Anandapuram market / rythu bazaars 2023-2025). Prices swing a lot; check before use.",
+  "freshness": {
+   "T_opt_C": 4.0,
+   "SL_ref_h": 432.0,
+   "chill_a_c_per_K2": 0.5,
+   "K_t_mg_kg_s_MPa": 1280.0,
+   "K_t_source": "E – set so loose, unbagged flowers at 30 C, 70 % RH lose about 7 % of weight a day.",
+   "WL_max_pct": 15.0,
+   "WL_max_source": "E – unbagged flowers are hard to sell after about 15 % weight loss. With a PE bag there is no water-loss penalty (the bagged shelf life already includes it).",
+   "T_freeze_C": -0.5,
+   "freeze_minutes_to_damage": 30,
+   "damaged_freshness_pct": 20.0
+  },
+  "fragrance": {
+   "life_factor": 1.5,
+   "note": "Fragrance ends before looks: 12 days of fragrance against 18 days of white buds (0.03 mm PE, 2-5 C). The fragrance score runs 18/12 = 1.5x faster.",
+   "source": "E – crop-calendar research (jasmine in 0.03 mm PE at 2-5 C)."
+  },
+  "plan_hold_days": 3,
+  "plan_hold_source": "E – the season plan never holds a flower longer than this (about a quarter of its bagged shelf life at 4 C, so most of the freshness is still there at sale)."
+ },
+ "marigold": {
+  "label": "Marigold (banthi, loose)",
+  "latin": "Tagetes erecta",
+  "kind": "flower",
+  "ok_in_our_room": true,
+  "best_storage_C": [
+   8,
+   12
+  ],
+  "best_storage_source": "E – ICAR-IARI review 2025 (crop-calendar research); check the paper.",
+  "fit_at_4C": "Good",
+  "fit_note": "Best range is 8-12 °C; trials at 5 °C worked, so 4 °C is acceptable.",
+  "max_hold_days": 7,
+  "T_opt_low_C": 8,
+  "T_opt_high_C": 12,
+  "rh_pct": [
+   90,
+   95
+  ],
+  "rh_source": "USDA Agriculture Handbook 66: 90-95 % RH for most cut flowers.",
+  "T_ref_C": 5.0,
+  "SL_ref_days": 18.75,
+  "shelf_life_ambient_days": 2.5,
+  "shelf_life_ambient_source": "E – ambient 1-4 days (IARI 2024: 2.8-4.8 days by packaging).",
+  "shelf_life_bagged_4C_days": 18.75,
+  "shelf_life_bagged_source": "E – 18.5-19 days in HDPE / shrink-wrap at 5 C (IARI; J. IAHS 2025).",
+  "Q10": 2.17,
+  "Q10_source": "C – from the two shelf lives: (18.75/2.5)^(10/(30-4)) = 2.17. Freshness reaches 0 at the reference shelf life in both cases.",
+  "respiration_mgCO2_kg_h": {
+   "0": 31.0,
+   "5": 50.0,
+   "10": 80.6,
+   "20": 209.6
+  },
+  "respiration_mW_kg": {
+   "0": 92.0,
+   "5": 148.0,
+   "10": 239.0,
+   "20": 620.0
+  },
+  "respiration_Q10": 2.6,
+  "respiration_source": "E – no species table found. Class value for cut flowers: 40-60 mg CO2/kg.h at 5 C ('very high' class, Kader / UC Davis); mid 50. Other temperatures from Q10 = 2.6 (cut snapdragons 0-20 C, ISHS Acta Hort. 628). Heat = mg CO2/kg.h x 2.96 mW/kg (USDA Handbook 66 conversion).",
+  "respiration_W_per_kg_at_ref": 0.148,
+  "water_frac": 0.86,
+  "cp_kJ_kgK": 3.72,
+  "cp_source": "C – Siebel's rule cp = 0.837 + 3.349 x water fraction (0.86, E typical).",
+  "kg_per_crate": [
+   6,
+   9
+  ],
+  "kg_per_crate_mid": 7.5,
+  "kg_per_crate_source": "E – loose flowers in a 600 x 400 x 300 mm ventilated crate, not pressed (design brief / our estimate).",
+  "bulk_density_kg_m3": 133,
+  "bulk_density_source": "C – kg per crate / inside volume of the crate (0.056 m3).",
+  "ethylene_sensitivity": "low",
+  "ethylene_source": "E – not known as ethylene-sensitive (check).",
+  "chill_injury_below_C": 2.0,
+  "chill_source": "E – no chilling study found; flag below 2 C.",
+  "freeze_below_C": -0.5,
+  "boric_acid_dip": false,
+  "boric_life_factor": 1.0,
+  "boric_source": null,
+  "price_base_INR_kg": {
+   "1": 60,
+   "2": 50,
+   "3": 50,
+   "4": 70,
+   "5": 80,
+   "6": 80,
+   "7": 60,
+   "8": 80,
+   "9": 50,
+   "10": 50,
+   "11": 50,
+   "12": 50
+  },
+  "price_source": "E – Visakhapatnam press reports (Deccan Chronicle, Anandapuram market / rythu bazaars 2023-2025). Prices swing a lot; check before use.",
+  "freshness": {
+   "T_opt_C": 4.0,
+   "SL_ref_h": 450.0,
+   "chill_a_c_per_K2": 0.5,
+   "K_t_mg_kg_s_MPa": 910.0,
+   "K_t_source": "E – set so loose, unbagged flowers at 30 C, 70 % RH lose about 5 % of weight a day.",
+   "WL_max_pct": 15.0,
+   "WL_max_source": "E – unbagged flowers are hard to sell after about 15 % weight loss. With a PE bag there is no water-loss penalty (the bagged shelf life already includes it).",
+   "T_freeze_C": -0.5,
+   "freeze_minutes_to_damage": 30,
+   "damaged_freshness_pct": 20.0
+  },
+  "plan_hold_days": 4,
+  "plan_hold_source": "E – the season plan never holds a flower longer than this (about a quarter of its bagged shelf life at 4 C, so most of the freshness is still there at sale)."
+ },
+ "rose": {
+  "label": "Rose (loose desi rose)",
+  "latin": "Rosa spp.",
+  "kind": "flower",
+  "ok_in_our_room": true,
+  "best_storage_C": [
+   0,
+   2
+  ],
+  "best_storage_source": "E – ICAR-IARI review 2025 (crop-calendar research); check the paper.",
+  "fit_at_4C": "Short holds",
+  "fit_note": "Best at 0-2 °C. At 4 °C hold only 1-3 days, bagged.",
+  "max_hold_days": 3,
+  "T_opt_low_C": 0,
+  "T_opt_high_C": 2,
+  "rh_pct": [
+   90,
+   95
+  ],
+  "rh_source": "USDA Agriculture Handbook 66: 90-95 % RH for most cut flowers.",
+  "T_ref_C": 5.0,
+  "SL_ref_days": 3.0,
+  "shelf_life_ambient_days": 1.5,
+  "shelf_life_ambient_source": "E – ambient 1-2 days.",
+  "shelf_life_bagged_4C_days": 3.0,
+  "shelf_life_bagged_source": "E – hold 1-3 days bagged at 4 C (crop-calendar research). USDA Handbook 66: cut roses 0-2 C.",
+  "Q10": 1.31,
+  "Q10_source": "C – from the two shelf lives: (3.0/1.5)^(10/(30-4)) = 1.31. Freshness reaches 0 at the reference shelf life in both cases.",
+  "respiration_mgCO2_kg_h": {
+   "0": 31.0,
+   "5": 50.0,
+   "10": 80.6,
+   "20": 209.6
+  },
+  "respiration_mW_kg": {
+   "0": 92.0,
+   "5": 148.0,
+   "10": 239.0,
+   "20": 620.0
+  },
+  "respiration_Q10": 2.6,
+  "respiration_source": "E – no species table found. Class value for cut flowers: 40-60 mg CO2/kg.h at 5 C ('very high' class, Kader / UC Davis); mid 50. Other temperatures from Q10 = 2.6 (cut snapdragons 0-20 C, ISHS Acta Hort. 628). Heat = mg CO2/kg.h x 2.96 mW/kg (USDA Handbook 66 conversion).",
+  "respiration_W_per_kg_at_ref": 0.148,
+  "water_frac": 0.88,
+  "cp_kJ_kgK": 3.78,
+  "cp_source": "C – Siebel's rule cp = 0.837 + 3.349 x water fraction (0.88, E typical).",
+  "kg_per_crate": [
+   5,
+   8
+  ],
+  "kg_per_crate_mid": 6.5,
+  "kg_per_crate_source": "E – loose flowers in a 600 x 400 x 300 mm ventilated crate, not pressed (design brief / our estimate).",
+  "bulk_density_kg_m3": 115,
+  "bulk_density_source": "C – kg per crate / inside volume of the crate (0.056 m3).",
+  "ethylene_sensitivity": "high",
+  "ethylene_source": "UC Davis Postharvest: many roses are ethylene-sensitive.",
+  "chill_injury_below_C": 0.0,
+  "chill_source": "Roses are stored at 0-2 C: no chilling injury above freezing.",
+  "freeze_below_C": -0.5,
+  "boric_acid_dip": false,
+  "boric_life_factor": 1.0,
+  "boric_source": null,
+  "price_base_INR_kg": {
+   "1": 200,
+   "2": 280,
+   "3": 220,
+   "4": 220,
+   "5": 240,
+   "6": 200,
+   "7": 200,
+   "8": 280,
+   "9": 220,
+   "10": 220,
+   "11": 240,
+   "12": 220
+  },
+  "price_source": "E – Visakhapatnam press reports (Deccan Chronicle, Anandapuram market / rythu bazaars 2023-2025). Prices swing a lot; check before use.",
+  "freshness": {
+   "T_opt_C": 4.0,
+   "SL_ref_h": 72.0,
+   "chill_a_c_per_K2": 0.5,
+   "K_t_mg_kg_s_MPa": 1090.0,
+   "K_t_source": "E – set so loose, unbagged flowers at 30 C, 70 % RH lose about 6 % of weight a day.",
+   "WL_max_pct": 15.0,
+   "WL_max_source": "E – unbagged flowers are hard to sell after about 15 % weight loss. With a PE bag there is no water-loss penalty (the bagged shelf life already includes it).",
+   "T_freeze_C": -0.5,
+   "freeze_minutes_to_damage": 30,
+   "damaged_freshness_pct": 20.0
+  },
+  "plan_hold_days": 1,
+  "plan_hold_source": "E – the season plan never holds a flower longer than this (about a quarter of its bagged shelf life at 4 C, so most of the freshness is still there at sale)."
+ },
+ "tuberose": {
+  "label": "Tuberose (sampangi / lilly, loose)",
+  "latin": "Agave amica (Polianthes tuberosa)",
+  "kind": "flower",
+  "ok_in_our_room": true,
+  "best_storage_C": [
+   4,
+   4
+  ],
+  "best_storage_source": "E – ICAR-IARI review 2025 (crop-calendar research); check the paper.",
+  "fit_at_4C": "Excellent",
+  "fit_note": "Best at 4 °C.",
+  "max_hold_days": 7,
+  "T_opt_low_C": 4,
+  "T_opt_high_C": 4,
+  "rh_pct": [
+   90,
+   95
+  ],
+  "rh_source": "USDA Agriculture Handbook 66: 90-95 % RH for most cut flowers.",
+  "T_ref_C": 5.0,
+  "SL_ref_days": 13.0,
+  "shelf_life_ambient_days": 1.46,
+  "shelf_life_ambient_source": "E – ambient about 35 h.",
+  "shelf_life_bagged_4C_days": 13.0,
+  "shelf_life_bagged_source": "E – 11-15 days in PE at 4-5 C (crop-calendar research).",
+  "Q10": 2.32,
+  "Q10_source": "C – from the two shelf lives: (13.0/1.46)^(10/(30-4)) = 2.32. Freshness reaches 0 at the reference shelf life in both cases.",
+  "respiration_mgCO2_kg_h": {
+   "0": 31.0,
+   "5": 50.0,
+   "10": 80.6,
+   "20": 209.6
+  },
+  "respiration_mW_kg": {
+   "0": 92.0,
+   "5": 148.0,
+   "10": 239.0,
+   "20": 620.0
+  },
+  "respiration_Q10": 2.6,
+  "respiration_source": "E – no species table found. Class value for cut flowers: 40-60 mg CO2/kg.h at 5 C ('very high' class, Kader / UC Davis); mid 50. Other temperatures from Q10 = 2.6 (cut snapdragons 0-20 C, ISHS Acta Hort. 628). Heat = mg CO2/kg.h x 2.96 mW/kg (USDA Handbook 66 conversion).",
+  "respiration_W_per_kg_at_ref": 0.148,
+  "water_frac": 0.85,
+  "cp_kJ_kgK": 3.68,
+  "cp_source": "C – Siebel's rule cp = 0.837 + 3.349 x water fraction (0.85, E typical).",
+  "kg_per_crate": [
+   7,
+   10
+  ],
+  "kg_per_crate_mid": 8.5,
+  "kg_per_crate_source": "E – loose flowers in a 600 x 400 x 300 mm ventilated crate, not pressed (design brief / our estimate).",
+  "bulk_density_kg_m3": 151,
+  "bulk_density_source": "C – kg per crate / inside volume of the crate (0.056 m3).",
+  "ethylene_sensitivity": "medium",
+  "ethylene_source": "E (check).",
+  "chill_injury_below_C": 2.0,
+  "chill_source": "E – flag below 2 C.",
+  "freeze_below_C": -0.5,
+  "boric_acid_dip": true,
+  "boric_life_factor": 2.0,
+  "boric_source": "E – 4 % boric acid dip, about 2x life (jasmine in 60 micron PE at 7 C: 7 days; crop-calendar research).",
+  "price_base_INR_kg": {
+   "1": 150,
+   "2": 150,
+   "3": 140,
+   "4": 140,
+   "5": 150,
+   "6": 120,
+   "7": 80,
+   "8": 100,
+   "9": 80,
+   "10": 90,
+   "11": 140,
+   "12": 150
+  },
+  "price_source": "E – Visakhapatnam press reports (Deccan Chronicle, Anandapuram market / rythu bazaars 2023-2025). Prices swing a lot; check before use.",
+  "freshness": {
+   "T_opt_C": 4.0,
+   "SL_ref_h": 312.0,
+   "chill_a_c_per_K2": 0.5,
+   "K_t_mg_kg_s_MPa": 1090.0,
+   "K_t_source": "E – set so loose, unbagged flowers at 30 C, 70 % RH lose about 6 % of weight a day.",
+   "WL_max_pct": 15.0,
+   "WL_max_source": "E – unbagged flowers are hard to sell after about 15 % weight loss. With a PE bag there is no water-loss penalty (the bagged shelf life already includes it).",
+   "T_freeze_C": -0.5,
+   "freeze_minutes_to_damage": 30,
+   "damaged_freshness_pct": 20.0
+  },
+  "plan_hold_days": 3,
+  "plan_hold_source": "E – the season plan never holds a flower longer than this (about a quarter of its bagged shelf life at 4 C, so most of the freshness is still there at sale)."
+ },
+ "chamanthi": {
+  "label": "Chamanthi (chrysanthemum, loose)",
+  "latin": "Chrysanthemum morifolium",
+  "kind": "flower",
+  "ok_in_our_room": true,
+  "best_storage_C": [
+   0,
+   2
+  ],
+  "best_storage_source": "E – ICAR-IARI review 2025 (crop-calendar research); check the paper.",
+  "fit_at_4C": "Short holds",
+  "fit_note": "Best at 0-2 °C. At 4 °C use short holds (about 4 days).",
+  "max_hold_days": 4,
+  "T_opt_low_C": 0,
+  "T_opt_high_C": 2,
+  "rh_pct": [
+   90,
+   95
+  ],
+  "rh_source": "USDA Agriculture Handbook 66: 90-95 % RH for most cut flowers.",
+  "T_ref_C": 5.0,
+  "SL_ref_days": 4.0,
+  "shelf_life_ambient_days": 3.5,
+  "shelf_life_ambient_source": "E – ambient 2-5 days.",
+  "shelf_life_bagged_4C_days": 4.0,
+  "shelf_life_bagged_source": "E – about 4 days at 4 C, loose (crop-calendar research).",
+  "Q10": 1.05,
+  "Q10_source": "C – from the two shelf lives: (4.0/3.5)^(10/(30-4)) = 1.05. Freshness reaches 0 at the reference shelf life in both cases.",
+  "respiration_mgCO2_kg_h": {
+   "0": 31.0,
+   "5": 50.0,
+   "10": 80.6,
+   "20": 209.6
+  },
+  "respiration_mW_kg": {
+   "0": 92.0,
+   "5": 148.0,
+   "10": 239.0,
+   "20": 620.0
+  },
+  "respiration_Q10": 2.6,
+  "respiration_source": "E – no species table found. Class value for cut flowers: 40-60 mg CO2/kg.h at 5 C ('very high' class, Kader / UC Davis); mid 50. Other temperatures from Q10 = 2.6 (cut snapdragons 0-20 C, ISHS Acta Hort. 628). Heat = mg CO2/kg.h x 2.96 mW/kg (USDA Handbook 66 conversion).",
+  "respiration_W_per_kg_at_ref": 0.148,
+  "water_frac": 0.87,
+  "cp_kJ_kgK": 3.75,
+  "cp_source": "C – Siebel's rule cp = 0.837 + 3.349 x water fraction (0.87, E typical).",
+  "kg_per_crate": [
+   6,
+   9
+  ],
+  "kg_per_crate_mid": 7.5,
+  "kg_per_crate_source": "E – loose flowers in a 600 x 400 x 300 mm ventilated crate, not pressed (design brief / our estimate).",
+  "bulk_density_kg_m3": 133,
+  "bulk_density_source": "C – kg per crate / inside volume of the crate (0.056 m3).",
+  "ethylene_sensitivity": "low",
+  "ethylene_source": "E (check).",
+  "chill_injury_below_C": 0.0,
+  "chill_source": "Stored at 0-2 C: no chilling injury above freezing.",
+  "freeze_below_C": -0.5,
+  "boric_acid_dip": false,
+  "boric_life_factor": 1.0,
+  "boric_source": null,
+  "price_base_INR_kg": {
+   "1": 150,
+   "2": 200,
+   "3": 250,
+   "4": 300,
+   "5": 300,
+   "6": 300,
+   "7": 300,
+   "8": 380,
+   "9": 200,
+   "10": 180,
+   "11": 180,
+   "12": 150
+  },
+  "price_source": "E – Visakhapatnam press reports (Deccan Chronicle, Anandapuram market / rythu bazaars 2023-2025). Prices swing a lot; check before use.",
+  "freshness": {
+   "T_opt_C": 4.0,
+   "SL_ref_h": 96.0,
+   "chill_a_c_per_K2": 0.5,
+   "K_t_mg_kg_s_MPa": 910.0,
+   "K_t_source": "E – set so loose, unbagged flowers at 30 C, 70 % RH lose about 5 % of weight a day.",
+   "WL_max_pct": 15.0,
+   "WL_max_source": "E – unbagged flowers are hard to sell after about 15 % weight loss. With a PE bag there is no water-loss penalty (the bagged shelf life already includes it).",
+   "T_freeze_C": -0.5,
+   "freeze_minutes_to_damage": 30,
+   "damaged_freshness_pct": 20.0
+  },
+  "plan_hold_days": 1,
+  "plan_hold_source": "E – the season plan never holds a flower longer than this (about a quarter of its bagged shelf life at 4 C, so most of the freshness is still there at sale)."
+ },
+ "crossandra": {
+  "label": "Kanakambaram (crossandra)",
+  "latin": "Crossandra infundibuliformis",
+  "kind": "flower",
+  "ok_in_our_room": true,
+  "best_storage_C": [
+   10,
+   12
+  ],
+  "best_storage_source": "E – ICAR-IARI review 2025 (crop-calendar research); check the paper.",
+  "fit_at_4C": "Not suitable",
+  "fit_note": "Best at 10-12 °C. In our 4 °C room: at most a 1-day hold on the warmest shelf, with chilling risk.",
+  "max_hold_days": 1,
+  "T_opt_low_C": 10,
+  "T_opt_high_C": 12,
+  "rh_pct": [
+   90,
+   95
+  ],
+  "rh_source": "USDA Agriculture Handbook 66: 90-95 % RH for most cut flowers.",
+  "T_ref_C": 5.0,
+  "SL_ref_days": 4.0,
+  "shelf_life_ambient_days": 3.0,
+  "shelf_life_ambient_source": "E – ambient about 72 h in film.",
+  "shelf_life_bagged_4C_days": 4.0,
+  "shelf_life_bagged_source": "E – about 96 h, but only at 10-12 C (crop-calendar research).",
+  "Q10": 1.12,
+  "Q10_source": "C – from the two shelf lives: (4.0/3.0)^(10/(30-4)) = 1.12. Freshness reaches 0 at the reference shelf life in both cases.",
+  "respiration_mgCO2_kg_h": {
+   "0": 31.0,
+   "5": 50.0,
+   "10": 80.6,
+   "20": 209.6
+  },
+  "respiration_mW_kg": {
+   "0": 92.0,
+   "5": 148.0,
+   "10": 239.0,
+   "20": 620.0
+  },
+  "respiration_Q10": 2.6,
+  "respiration_source": "E – no species table found. Class value for cut flowers: 40-60 mg CO2/kg.h at 5 C ('very high' class, Kader / UC Davis); mid 50. Other temperatures from Q10 = 2.6 (cut snapdragons 0-20 C, ISHS Acta Hort. 628). Heat = mg CO2/kg.h x 2.96 mW/kg (USDA Handbook 66 conversion).",
+  "respiration_W_per_kg_at_ref": 0.148,
+  "water_frac": 0.8,
+  "cp_kJ_kgK": 3.52,
+  "cp_source": "C – Siebel's rule cp = 0.837 + 3.349 x water fraction (0.8, E typical).",
+  "kg_per_crate": [
+   4,
+   6
+  ],
+  "kg_per_crate_mid": 5.0,
+  "kg_per_crate_source": "E – loose flowers in a 600 x 400 x 300 mm ventilated crate, not pressed (design brief / our estimate).",
+  "bulk_density_kg_m3": 89,
+  "bulk_density_source": "C – kg per crate / inside volume of the crate (0.056 m3).",
+  "ethylene_sensitivity": "medium",
+  "ethylene_source": "E (check).",
+  "chill_injury_below_C": 10.0,
+  "chill_source": "E – tropical flower: chilling risk below 10 C.",
+  "freeze_below_C": -0.5,
+  "boric_acid_dip": false,
+  "boric_life_factor": 1.0,
+  "boric_source": null,
+  "price_base_INR_kg": {
+   "1": 600,
+   "2": 600,
+   "3": 500,
+   "4": 500,
+   "5": 500,
+   "6": 600,
+   "7": 700,
+   "8": 800,
+   "9": 700,
+   "10": 600,
+   "11": 700,
+   "12": 700
+  },
+  "price_source": "E – Visakhapatnam press reports (Deccan Chronicle, Anandapuram market / rythu bazaars 2023-2025). Prices swing a lot; check before use.",
+  "freshness": {
+   "T_opt_C": 11.0,
+   "SL_ref_h": 96.0,
+   "chill_a_c_per_K2": 0.05,
+   "K_t_mg_kg_s_MPa": 1090.0,
+   "K_t_source": "E – set so loose, unbagged flowers at 30 C, 70 % RH lose about 6 % of weight a day.",
+   "WL_max_pct": 15.0,
+   "WL_max_source": "E – unbagged flowers are hard to sell after about 15 % weight loss. With a PE bag there is no water-loss penalty (the bagged shelf life already includes it).",
+   "T_freeze_C": -0.5,
+   "freeze_minutes_to_damage": 30,
+   "damaged_freshness_pct": 20.0
+  },
+  "shelf": {
+   "warning": "Kanakambaram: best at 10–12 °C, chilling risk. Maximum 1-day hold, on the warmest shelf (top, away from the cooler).",
+   "warmest_shelf_offset_K": 1.0,
+   "offset_source": "E – the top shelf away from the cooler is about 1 K warmer than the room average."
+  },
+  "plan_hold_days": 1,
+  "plan_hold_source": "E – the season plan never holds a flower longer than this (about a quarter of its bagged shelf life at 4 C, so most of the freshness is still there at sale)."
+ },
+ "blocked_flowers": {
+  "_about": "Flowers that must NOT go into the 4 C room. Check-in refuses them.",
+  "anthurium": {
+   "label": "Anthurium",
+   "needs_C": [
+    12.5,
+    20
+   ],
+   "warning": "Anthurium needs 10–13 °C or warmer. At 4 °C it gets chilling injury (purple, then brown). Do not store it in this room.",
+   "source": "UC Davis Postharvest (Anthurium): store at 12.5-20 C; below 10 C causes purpling, browning and death."
+  },
+  "orchid": {
+   "label": "Orchids (tropical)",
+   "needs_C": [
+    10,
+    13
+   ],
+   "warning": "Tropical orchids need 10–13 °C. At 4 °C they get chilling injury. Do not store them in this room.",
+   "source": "E – design brief; USDA Handbook 66 lists most tropical orchids at 7-13 C (check)."
+  }
+ },
+ "flower_rules": {
+  "ethylene": "No fruit in the room. Ripening fruit (banana, mango, tomato, papaya) gives off ethylene gas, which makes flowers open, drop petals and brown early.",
+  "ethylene_source": "UC Davis Postharvest; USDA Agriculture Handbook 66.",
+  "water": "Never spray water directly on the flowers: wet petals rot. Raise the room humidity instead (bags, fogger).",
+  "fogger_water": "The fogger needs clean (RO) water.",
+  "handling": [
+   "Pick at bud stage, early in the morning.",
+   "Bag in polyethylene (PE) film.",
+   "Optional boric-acid dip (jasmine, tuberose) – about 2× life (E).",
+   "No fruit in the room (ethylene).",
+   "Keep the door closed at night."
+  ],
+  "faq_months": {
+   "q": "Can flowers be stored for months?",
+   "a": "No. Fresh loose flowers last 1–3 weeks at best (bagged, 2–7 °C). Only carnation buds at 0–1 °C with special treatment can last months. Our room is a 1–7 day holding room. For long-term value: jasmine concrete, marigold lutein/dye, rose gulkand, dried flowers."
+  }
+ }
+}
