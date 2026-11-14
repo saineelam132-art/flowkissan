@@ -234,7 +234,7 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
             "Q_int", "Q_air", "Q_air_sens", "Q_air_lat", "Q_ch", "Q_pcm_room", "Q_wax_lat", "Q_pipe", "Q_pump", "Q_chill",
             "P_comp", "P_chiller", "P_pump", "P_fan", "P_fog", "P_pv", "P_solar_used", "P_grid", "grid_on", "running", "run_frac",
             "door_s", "solar_ok", "G_wax", "cop", "T_out", "RH_out", "poa", "v_room", "v_wax", "T_sup", "T_ret",
-            "w_transp", "w_coil", "w_wax", "w_fog", "w_tray", "w_door", "kg_inside", "valve_duty", "Q_evap_air", "ps_Pa", "load_event")
+            "w_transp", "w_coil", "w_wax", "w_fog", "w_tray", "w_door", "kg_inside", "valve_duty", "Q_evap_air", "ps_Pa", "load_event", "Q_other")
     out = {k: np.zeros(n) for k in keys}
     acc = dict(in_=0.0, out=0.0, prod_in=0.0, prod_out=0.0)
     batches = []
@@ -473,6 +473,7 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
                     T_x += q * dts / C_room
                     nd["T"] += (-q + qr - wt * HV) * dts / nd["C"]
             T_r_new = T_x
+        Q_other = C_room * (T_r_new - T_r) / DT - (Q_wall + Q_door - Q_pa - Q_air)   # fans, lights, flowers, evaporation (controller log)
         v_now = v_on if duty > 0 else v_off
         for nd in nodes:
             nd["fresh"].step(T_r, RH_r, v_now, DT / 3600.0, T_core=nd["T"], liner=nd.get("liner", 1.0))
@@ -499,7 +500,7 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
                          ("T_out", T_out[i]), ("RH_out", RH_o[i]), ("poa", poa[i]), ("v_room", float(Q_air > 1e-9)), ("v_wax", float(Q_ch > 1e-9)),
                          ("T_sup", Ts if running else np.nan), ("T_ret", Tret), ("w_transp", sum(w_tr)), ("w_coil", w_coil), ("w_wax", w_wax),
                          ("w_fog", S_fog), ("w_tray", w_tray), ("w_door", w_door), ("kg_inside", sum(nd["m"] for nd in nodes)),
-                         ("valve_duty", duty), ("Q_evap_air", evap_air), ("ps_Pa", p), ("load_event", load_ev)):
+                         ("valve_duty", duty), ("Q_evap_air", evap_air), ("ps_Pa", p), ("load_event", load_ev), ("Q_other", Q_other)):
             out[key][i] = val
 
     E1 = C_room * T_r + M_air * W_r * HV + m_p * h + sum(nd["C"] * nd["T"] for nd in nodes)

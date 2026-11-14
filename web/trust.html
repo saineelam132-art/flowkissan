@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Trust &amp; Trade – KoolKisaan</title>
+<title>Trust &amp; Trade – KoolKisaan Flowers</title>
 <meta name="description" content="KoolKisaan Trust &amp; Trade: farmer check-in with a signed slip, per-batch hash chain, physics check (Φ) on the sensor data, transporter custody and buyer settlement by freshness.">
 <link rel="icon" type="image/png" sizes="64x64" href="public/favicon-64.png">
 <link rel="apple-touch-icon" href="public/apple-touch-icon.png">
@@ -12,7 +12,7 @@
 </head>
 <body>
 <header class="tt-top">
-  <a class="tt-brand" href="index.html" title="Back to the cold room"><img src="public/koolkisaan-logo-small.png" alt="KoolKisaan logo"><span><b>KoolKisaan</b><small>Trust &amp; Trade</small></span></a>
+  <a class="tt-brand" href="index.html" title="Back to the cold room"><img src="public/koolkisaan-logo-small.png" alt="KoolKisaan logo"><span><b>KoolKisaan Flowers</b><small>Trust &amp; Trade · chamber CH-FLOWER</small></span></a>
   <nav class="tt-roles" id="roles" aria-label="Role">
     <button data-role="farmer" class="on">👩‍🌾 Farmer</button>
     <button data-role="owner">🏠 Cold-store owner</button>
@@ -34,9 +34,10 @@
   <section id="v-farmer" class="view on">
     <div class="grid">
       <div class="card">
-        <h3>1 · Check in your produce</h3>
+        <h3>1 · Check in your flowers</h3>
         <label>Farmer name<input id="fName" value="Lakshmi R." autocomplete="off"></label>
-        <label>Produce<select id="fCrop"></select></label>
+        <label>Flower type<select id="fCrop"></select></label>
+        <p class="msg" id="fFlowerMsg"></p>
         <label>Quantity (kg) – <span id="fFree"></span> kg free in the room<input id="fKg" type="number" min="1" step="1" value="40"></label>
         <label>Agreed base price (₹/kg, at 100 % freshness)<input id="fBase" type="number" min="1" step="1" value="120"></label>
         <label>Harvested how many hours before check-in?<input id="fHarv" type="number" min="0" step="0.5"></label>
@@ -102,13 +103,19 @@
         <div id="phiTx" class="phitx"></div>
       </div>
       <div class="card wide">
+        <h3>Glycol energy-balance check <span class="chip C">C</span> <span class="chip S">S</span></h3>
+        <div id="glyNow" class="nodes"></div>
+        <div class="chartbox"><canvas id="cGly"></canvas></div>
+        <p class="note" id="glyNote"></p>
+      </div>
+      <div class="card wide">
         <h3>Inside nodes now <span class="chip S">S</span> · outside <span class="chip W">W</span></h3>
         <div id="nodes" class="nodes"></div>
       </div>
       <div class="card wide">
         <h3>Air and produce core – last 24 h <span class="chip S">S</span></h3>
         <div class="chartbox"><canvas id="c24"></canvas></div>
-        <p class="note">Shaded = 2–8 °C safe band. Lines are what the nodes REPORT (with the fake readings, if switched on).</p>
+        <p class="note">Shaded = the normal band of the room. Lines are what the nodes REPORT (with the fake readings, if switched on).</p>
       </div>
       <div class="card">
         <h3>Alarms</h3>
@@ -214,7 +221,7 @@
       <div class="card wide">
         <h3>Freshness along the journey <span class="chip C">C</span></h3>
         <div class="chartbox"><canvas id="cFresh"></canvas></div>
-        <p class="note">Left axis: freshness F (100 % at harvest). Right axis: produce temperature with the 2–8 °C band and the best temperature line.</p>
+        <p class="note">Left axis: freshness F (100 % at harvest). Right axis: flower temperature with the normal band and the best temperature line.</p>
       </div>
       <div class="card wide">
         <h3>How freshness is counted</h3>
@@ -236,5 +243,6 @@
 <script src="vendor/firebase/kk-firebase.js"></script>
 <script src="kk/kkstore.js"></script>
 <script src="trust/trust.js"></script>
+<script src="trust/glycol.js"></script>
 </body>
 </html>

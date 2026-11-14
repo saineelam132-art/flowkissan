@@ -178,7 +178,7 @@
     'supply air holds more water than the room air – humidity readings do not fit',
     'cooling seen in the air does not match the cooling the energy meter paid for',
     'room heat balance does not close – heat is appearing or vanishing (door seal? wrong reading?)',
-    'produce core does not follow the air the way real fruit does',
+    'flower core probe does not follow the air the way real flowers do',
   ];
   function phiReason(z, a, b) {               // the residual with the largest mean |z| in [a, b]
     let best = 0, bv = -1;
@@ -207,7 +207,8 @@
       return this.value;
     }
     get value() {
-      const F = 100 * Math.max(0, 1 - this.life_used) * Math.max(0, 1 - this.wl / this.f.WL_max_pct);
+      // flowers are stored in PE bags: the bagged shelf life already includes water loss (engine/flowers.py)
+      const F = 100 * Math.max(0, 1 - this.life_used) * (this.crop.kind === 'flower' ? 1 : Math.max(0, 1 - this.wl / this.f.WL_max_pct));
       return this.damaged ? Math.min(F, this.f.damaged_freshness_pct) : F;
     }
     state() { return { life_used: this.life_used, wl_pct: this.wl, freeze_min: this.freeze_min, damaged: this.damaged, freshness_pct: this.value }; }

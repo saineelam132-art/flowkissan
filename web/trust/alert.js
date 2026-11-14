@@ -64,7 +64,7 @@
       <div class="card"><h3>Which checks failed (|z|, limit ${PH.red_at}) <span class="chip C">C</span></h3>
         <table><tr><th>Check</th><th class="n">|z|</th><th></th></tr>
           ${zRow('moisture', 'Moisture link: water in supply vs return air')}${zRow('energy', 'Energy link: heat removed vs electricity × COP')}
-          ${zRow('heat', 'Room heat-balance link')}${zRow('core', 'Core-lag link (fruit follows the air)')}</table>
+          ${zRow('heat', 'Room heat-balance link')}${zRow('core', 'Core-lag link (flowers follow the air)')}</table>
         <p class="note">${a.kind === 'gap' ? 'This alert is a missing-data alert: the sensor stopped sending.' : a.kind === 'stuck' ? 'This alert: the sensor sent exactly the same value again and again – real sensors always wobble a little.' :
           a.kind === 'outside' ? 'This alert: the outside sensor disagrees with the weather service.' : a.kind === 'pair' ? 'This alert: supply and return humidity disagree while the air is not being cooled.' : ''}</p></div>
       <div class="card"><h3>Φ timeline <span class="chip C">C</span></h3><div class="chartbox"><canvas id="cPhi"></canvas></div></div>

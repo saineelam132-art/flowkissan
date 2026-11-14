@@ -193,8 +193,8 @@
     "vehicle_time_constant_h": 4.0, "vehicle_rh_pct": 85, "vehicle_air_speed_m_s": 0.5,
     "harvest_to_checkin_h_default": 2,
     "sensor_noise": {"T_K": 0.1, "RH_pct": 1.0, "P_rel": 0.02, "airflow_bias_rel": 0.05, "glycol_T_K": 0.05, "flow_rel": 0.02, "seed": 7},
-    "phi": {"weights": [1, 1, 1, 1, 1], "window_steps": 3,
-            "sigma_default": {"W_kg_kg": 0.00005, "E_W": 40, "Q_W": 30, "core_K": 0.05, "G_W": 40},
+    "phi": {"weights": [1, 1, 1, 1], "window_steps": 3,
+            "sigma_default": {"W_kg_kg": 0.00005, "E_W": 40, "Q_W": 30, "core_K": 0.05},
             "green_below": 2.0, "red_at": 3.0, "red_steps": 3},
     "fake_reading_C": 4.0
   },

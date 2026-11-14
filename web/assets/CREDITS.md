@@ -1,3 +1,7 @@
+# Image credits (KoolKisaan Flowers)
+
+This site uses only the **real photos** listed under "Real photos" below (copied from the earlier KoolKisaan project with their credits) and design drawings made in code. The AI-generated concept pictures of the earlier site are NOT used here; their list is kept only because this file was copied whole.
+
 # Image credits
 
 The `.png` pictures directly in `web/assets/images/` (and the converted copies in `img/`, `cutouts/`, `tex/`)

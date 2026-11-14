@@ -4,7 +4,7 @@ rules_version = '2';
 // * Owner-only actions need the device's uid in chambers/{ch}.admins (the first device that opens the site
 //   creates the chamber and becomes admin; add more uids in the Firebase console).
 // * Ledger blocks are APPEND-ONLY: a block can only be created at head + 1 with prevHash = the previous block's
-//   hash; nobody can update or delete a block. Only CH-DEMO can be "reset" (a new epoch – old data stays).
+//   hash; nobody can update or delete a block. Only CH-FLOWER can be "reset" (a new epoch – old data stays).
 service cloud.firestore {
   match /databases/{database}/documents {
     function signedIn() { return request.auth != null; }
@@ -22,9 +22,9 @@ service cloud.firestore {
     // ---------------------------------------------------------------- chamber (bays, capacity, epoch, controller)
     match /chambers/{ch} {
       allow read: if true;
-      allow create: if signedIn() && ch == 'CH-DEMO'
+      allow create: if signedIn() && ch == 'CH-FLOWER'
         && request.resource.data.admins == [request.auth.uid]
-        && request.resource.data.capacity_kg == 150 && request.resource.data.stored_kg == 0 && request.resource.data.epoch == 1;
+        && request.resource.data.capacity_kg == 90 && request.resource.data.stored_kg == 0 && request.resource.data.epoch == 1;
       // check-in / check-out move kg between bays: totals must stay within the limits; admins and capacity never change
       allow update: if signedIn()
         && request.resource.data.admins == resource.data.admins
@@ -33,7 +33,7 @@ service cloud.firestore {
         && request.resource.data.stored_kg >= 0 && request.resource.data.stored_kg <= resource.data.capacity_kg
         && baysOk(request.resource.data)
         && (request.resource.data.epoch == resource.data.epoch
-            || (ch == 'CH-DEMO' && isAdmin(ch) && request.resource.data.epoch == resource.data.epoch + 1))
+            || (ch == 'CH-FLOWER' && isAdmin(ch) && request.resource.data.epoch == resource.data.epoch + 1))
         && (onlyChanges(['bays', 'stored_kg', 'seq', 'updated']) || isAdmin(ch));
       allow delete: if false;
     }
@@ -43,7 +43,7 @@ service cloud.firestore {
       allow read: if true;
       allow create: if signedIn()
         && request.resource.data.slipId == slipId
-        && request.resource.data.chamberId == 'CH-DEMO'
+        && request.resource.data.chamberId == 'CH-FLOWER'
         && sameEpoch(request.resource.data.chamberId)
         && request.resource.data.kg > 0 && request.resource.data.kg <= 150
         && request.resource.data.kg_stored == request.resource.data.kg
@@ -79,7 +79,7 @@ service cloud.firestore {
               || (request.resource.data.index > 0
                   && get(/databases/$(database)/documents/batches/$(slipId)/blocks/$(string(request.resource.data.index - 1))).data.hash
                      == request.resource.data.prevHash))
-          && (!(request.resource.data.type in ['VOID', 'REVIEW']) || isAdmin('CH-DEMO'));
+          && (!(request.resource.data.type in ['VOID', 'REVIEW']) || isAdmin('CH-FLOWER'));
         allow update, delete: if false;          // append-only: no edits, no deletes, for anyone
       }
     }
@@ -108,7 +108,7 @@ service cloud.firestore {
     }
     match /reservations/{id} {
       allow read: if true;
-      allow create: if signedIn() && request.resource.data.chamberId == 'CH-DEMO' && sameEpoch('CH-DEMO')
+      allow create: if signedIn() && request.resource.data.chamberId == 'CH-FLOWER' && sameEpoch('CH-FLOWER')
         && request.resource.data.kg > 0 && request.resource.data.kg <= 150 && request.resource.data.days >= 1 && request.resource.data.days <= 60
         && request.resource.data.status == 'booked' && request.resource.data.by == request.auth.uid;
       allow update: if isAdmin(resource.data.chamberId) && onlyChanges(['status', 'decided'])
@@ -124,7 +124,7 @@ service cloud.firestore {
     // with direct database access WOULD make; the verifiers apply it and show the broken hash.
     match /demo_edits/{id} {
       allow read: if true;
-      allow create: if isAdmin(request.resource.data.chamberId) && request.resource.data.chamberId == 'CH-DEMO';
+      allow create: if isAdmin(request.resource.data.chamberId) && request.resource.data.chamberId == 'CH-FLOWER';
       allow update, delete: if false;
     }
   }

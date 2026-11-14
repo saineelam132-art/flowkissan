@@ -49,8 +49,8 @@
 
   const WHICH = [['moisture', 'Moisture link: water in the supply air vs the return air', ['humidity', 'room_air']],
     ['energy', 'Energy link: heat removed by the coil vs electricity × COP', ['room_air']],
-    ['heat', 'Room heat-balance link: walls + door + produce + fans − wax − coil', ['room_air', 'core', 'door', 'outside']],
-    ['core', 'Core-lag link: the fruit core follows the air with a 4-h lag', ['core', 'room_air']]];
+    ['heat', 'Room heat-balance link: walls + door + flowers + fans − wax − air cooler', ['room_air', 'core', 'door', 'outside']],
+    ['core', 'Core-lag link: the flower core probe follows the air with a lag', ['core', 'room_air']]];
 
   class Detector {
     constructor(D, sc, opts) {

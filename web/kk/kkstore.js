@@ -6,18 +6,18 @@
 // Collections: chambers/{ch}  batches/{slipId}  batches/{slipId}/blocks/{index}  telemetry/{ch}/readings/{step}
 //              anchors/{ch_date}  alerts/{id}  reservations/{id}  audit/{id}  demo_edits/{id}
 // The ledger is append-only (firestore.rules): a block can only be created at head+1 with the right prevHash;
-// nothing is ever updated or deleted. "Reset demo" starts a new epoch for CH-DEMO; old data stays.
+// nothing is ever updated or deleted. "Reset demo" starts a new epoch for CH-FLOWER; old data stays.
 (function (root) {
   'use strict';
-  const CH = 'CH-DEMO';
+  const CH = 'CH-FLOWER';
   const T = () => root.TrustCore;
-  const LS = 'kk_store_offline_v1';
+  const LS = 'kkflowers_store_offline_v1';
   const pad = n => String(n).padStart(2, '0');
   const now = () => new Date().toISOString();
   const BAYS = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6'];
 
   function defaultChamber(uid) {
-    return { chamberId: CH, name: 'KoolKisaan demo chamber', capacity_kg: 150, bay_limit_kg: 30, bays: Object.fromEntries(BAYS.map(b => [b, 0])),
+    return { chamberId: CH, name: 'KoolKisaan Flowers demo chamber', capacity_kg: 90, bay_limit_kg: 15, bays: Object.fromEntries(BAYS.map(b => [b, 0])),
       stored_kg: 0, epoch: 1, seq: {}, admins: uid ? [uid] : [], demo: true, ctrl: null, created: now(), updated: now() };
   }
 
@@ -97,7 +97,7 @@
   class Offline extends Base {
     constructor() {
       super(); this.mode = 'offline'; this.uid = 'offline-device';
-      try { this.bc = new BroadcastChannel('kk-store'); this.bc.onmessage = () => { this.load(); this.emit('all'); }; if (this.bc.unref) this.bc.unref(); } catch (e) { this.bc = null; }
+      try { this.bc = new BroadcastChannel('kkflowers-store'); this.bc.onmessage = () => { this.load(); this.emit('all'); }; if (this.bc.unref) this.bc.unref(); } catch (e) { this.bc = null; }
       this.load();
     }
     load() {
@@ -265,7 +265,7 @@
   async function loadConfig() {
     const p = new URLSearchParams(location.search);
     if (p.get('offline') === '1') return null;
-    if (p.get('emu')) return { emu: p.get('emu'), authEmu: p.get('authemu') || p.get('emu').replace(/:\d+$/, ':9099'), config: { apiKey: 'demo-key', projectId: p.get('project') || 'demo-koolkisan', authDomain: 'localhost' } };
+    if (p.get('emu')) return { emu: p.get('emu'), authEmu: p.get('authemu') || p.get('emu').replace(/:\d+$/, ':9099'), config: { apiKey: 'demo-key', projectId: p.get('project') || 'demo-koolkisaan-flowers', authDomain: 'localhost' } };
     if (root.KK_FIREBASE_CONFIG) return { config: root.KK_FIREBASE_CONFIG };
     if (!/^https?:$/.test(location.protocol)) return null;
     try {

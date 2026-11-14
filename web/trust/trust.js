@@ -12,7 +12,7 @@
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const f1 = x => (x === null || x === undefined || !isFinite(x)) ? '–' : (+x).toFixed(1);
   const f0 = x => (x === null || x === undefined || !isFinite(x)) ? '–' : Math.round(x).toLocaleString('en-IN');
-  const DWELL_DAYS = { pomegranate: 7 };                                // default expected stay (E, editable at check-in)
+  const DWELL_DAYS = { jasmine: 2, tuberose: 2, marigold: 3, chamanthi: 1, rose: 1, crossandra: 1 };                                // default expected stay (E, editable at check-in)
   let store = null, signMode = 'demo', role = 'farmer';
 
   // ------------------------------------------------------------------ chamber clock (shared)
@@ -72,7 +72,7 @@
     const affected = activeList().map(b => b.slipId);
     const id = await store.createAlert({ kind: ev.kind, sensors: ev.sensors, check: ev.check || null, reason: ev.reason, z: ev.z || null,
       from_step: ev.from, from_ts: tsAt(ev.from), raised_step: ev.raised, raised_ts: tsAt(ev.raised), to_step: i, to_ts: tsAt(i),
-      phi_max: phi, scenario: scKey(), custody: 'owner (cold store)', batches: affected, status: 'active',
+      phi_max: phi, scenario: scKey(), custody: 'owner (cold room)', batches: affected, status: 'active',
       hash: ev.hash || null, label: ev.kind === 'hash' ? 'Evidence tampered – payment frozen' : 'Payment on hold – data does not match physics' });
     openAlerts[key] = id;
     const flag = { type: ev.kind === 'hash' ? 'HASH' : 'PHYSICS', alertId: id, from: tsAt(ev.from), raised: tsAt(ev.raised), phi, reason: ev.reason, sensors: ev.sensors };
@@ -152,7 +152,7 @@
 
   // ------------------------------------------------------------------ freshness along a chain
   function settle(bl) {
-    const F = new T.Freshness(CROP), b0 = bl[0], p0 = b0.payload, vOff = CFG.produce_air_speed_fan_off_m_s;
+    const b0 = bl[0], p0 = b0.payload, F = new T.Freshness((D.crops || {})[p0.crop] || CROP), vOff = CFG.produce_air_speed_fan_off_m_s;
     const curve = [];
     F.step(p0.T_field_C, p0.RH_field_pct, vOff, p0.harvest_h || 0, p0.T_field_C);
     const Fc = F.value;
@@ -227,14 +227,28 @@
     m.textContent = q > CAP() ? `⛔ At most ${CAP()} kg per check-in` : q > free ? `⛔ Only ${f1(free)} kg free in the room` :
       (store.ch.stored_kg + q >= CAP() * CFG.load_warn_frac ? '⚠ This load takes the room above 80 %' : '');
   }
+  // check-in rule for flowers (same as engine/flowers.py check_in): blocked flowers are refused; kanakambaram 1 day only
+  function flowerRule() {
+    const k = $('fCrop').value, w = $('fFlowerMsg'), c = D.crops[k];
+    const days = $('fOut').value ? Math.round((Date.parse($('fOut').value) - Date.parse(dateOf(tsAt(step())))) / 864e5) : 1;
+    let r = { ok: true, msg: '' };
+    if (D.blocked[k]) r = { ok: false, msg: D.blocked[k].warning };
+    else if (c && days > c.max_hold_days) r = { ok: false, msg: `${c.label}: at most ${c.max_hold_days} day(s) in this room.` + (c.shelf ? ' ' + c.shelf.warning : '') };
+    else if (c && c.shelf) r = { ok: true, msg: c.shelf.warning };
+    else if (c) r = { ok: true, msg: `${c.label}: ${c.fit_at_4C} at 4 °C. ${c.fit_note}` };
+    if (w) { w.className = 'msg ' + (r.ok ? (c && c.shelf ? 'wn' : 'ok') : 'bd'); w.textContent = (r.ok ? (c && c.shelf ? '⚠ ' : '✔ ') : '⛔ ') + r.msg + ' ' + D.flower_rules.ethylene; }
+    return r;
+  }
   async function checkIn() {
     const q = +$('fKg').value, base = +$('fBase').value, name = $('fName').value.trim(), m = $('fMsg');
     if (!name || !(q > 0) || !(base > 0)) { m.className = 'msg bd'; m.textContent = '⛔ Fill in name, quantity and price'; return; }
+    const fr = flowerRule();
+    if (!fr.ok) { m.className = 'msg bd'; m.textContent = '⛔ ' + fr.msg; return; }
     $('fGo').disabled = true;
     try {
       const s = sc(), i = step(), anc = latestAnchor();
       const b = await store.checkIn({ kg: q, ts: tsAt(i), expected_out: $('fOut').value || null, payload: {
-        farmer: name, crop: D.crop_key, basePrice_INR_kg: base, harvest_h: Math.max(0, +$('fHarv').value || 0),
+        farmer: name, crop: $('fCrop').value, basePrice_INR_kg: base, harvest_h: Math.max(0, +$('fHarv').value || 0),
         T_field_C: s.out.T_out[i], RH_field_pct: s.out.RH_out[i], expected_out: $('fOut').value || null,
         lastAnchor: anc ? `${anc.day}:${anc.anchor}` : 'none yet' } });
       const { sig, mode } = await signSlip(b.slipId, b.bay, b.genesisHash);
@@ -260,7 +274,7 @@
     const note = b.sigMode === 'server' ? 'Signed on the server' : esc(CFG.demo_key_note);
     $('slipBox').innerHTML = `<div class="slip"><div class="qr">${qrSvg(qrText)}</div>
       <div><div class="id">${esc(b.slipId)}</div><div class="kv">
-        <span>Farmer</span><b>${esc(p.farmer)}</b><span>Produce</span><b>${esc(CROP.label)} · ${p.kg} kg</b>
+        <span>Farmer</span><b>${esc(p.farmer)}</b><span>Produce</span><b>${esc(((D.crops || {})[p.crop] || CROP).label)} · ${p.kg} kg</b>
         <span>Base price</span><b>₹${p.basePrice_INR_kg}/kg at 100 % freshness</b><span>Bay(s)</span><b>${esc(b.bay)}</b>
         <span>Check-in</span><b>${when} IST</b><span>Expected take-out</span><b>${esc(b.expected_out || '–')}</b>
         <span>Genesis hash</span><b class="mono">${b.genesisHash.slice(0, 24)}…</b>
@@ -269,7 +283,7 @@
       <button id="printBtn">🖨 Print A6 slip</button><button id="copyQR">Copy QR text</button></div></div>`;
     $('printSlip').innerHTML = `<h2>KoolKisaan cold-room slip</h2><div class="id">${esc(b.slipId)}</div>
       <div class="qr">${qrSvg(qrText)}</div>
-      <div>Farmer: <b>${esc(p.farmer)}</b><br>${esc(CROP.label)} · <b>${p.kg} kg</b> · Bay <b>${esc(b.bay)}</b><br>
+      <div>Farmer: <b>${esc(p.farmer)}</b><br>${esc(((D.crops || {})[p.crop] || CROP).label)} · <b>${p.kg} kg</b> · Bay <b>${esc(b.bay)}</b><br>
       Base ₹${p.basePrice_INR_kg}/kg (at 100 % freshness)<br>Check-in ${when} IST · take-out ${esc(b.expected_out || '–')}</div>
       <div class="small">Genesis ${b.genesisHash}<br>Sig ${b.qr.sig}<br>Daily anchor ${esc(p.lastAnchor)}<br>${note}</div>`;
     $('printBtn').onclick = () => window.print();
@@ -380,7 +394,7 @@
     if ($('takeCtrl')) $('takeCtrl').onclick = () => store.setCtrl({ uid: store.uid, scenario: scKey(), step: step(), updated: new Date().toISOString() });
     ['playBtn', 'speedSel'].forEach(id => ($(id).disabled = !amController()));
     document.querySelectorAll('[data-adv]').forEach(b => (b.disabled = !amController()));
-    $('adminBox').innerHTML = live ? `Device id (uid): <code>${esc(store.uid)}</code> · ${store.isAdmin() ? '<b>owner (admin)</b>' : 'not an owner – add this uid to chambers/CH-DEMO → admins in the Firebase console'}` : '';
+    $('adminBox').innerHTML = live ? `Device id (uid): <code>${esc(store.uid)}</code> · ${store.isAdmin() ? '<b>owner (admin)</b>' : 'not an owner – add this uid to chambers/CH-FLOWER → admins in the Firebase console'}` : '';
     gauge($('gauge'), tl ? tl.phi : 0);
     $('phiTx').innerHTML = `${phiWord(tl ? tl.phi : 0)}<br><span class="note">Φ = √(Σ w·z² / Σ w) over 4 checks (moisture, energy, room heat balance, core lag), 15-min mean.
       Green &lt; ${PH.green_below}, orange ${PH.green_below}–${PH.red_at}, alert when ≥ ${PH.red_at} for ${PH.red_steps} readings.</span>`;
@@ -389,7 +403,7 @@
     const node = (t, val, sub, tag) => `<div class="node"><b>${t} <span class="chip ${tag}">${tag}</span></b><span class="v">${val}</span><small>${sub}</small></div>`;
     $('nodes').innerHTML =
       node('N1 supply air', v(p.N1.T_s, '°C'), `RH ${f1(p.N1.RH_s)} % · v ${f1(p.N1.v_m_s)} m/s`, 'S') +
-      node('N2 produce core', v(p.N2.T_core, '°C'), 'probe in the fruit (lag τ = 4 h / ln 8)', 'S') +
+      node('N2 produce core', v(p.N2.T_core, '°C'), 'probe among the flowers (lag τ = 4 h / ln 8)', 'S') +
       node('N3 door', p.N3.open === null ? '<span class="bd">no reading</span>' : p.N3.open ? 'OPEN' : 'closed', `leak ${f0(p.N3.Q_door_W)} W (ASHRAE)`, 'S') +
       node('N4 return air', v(p.N4.T_r, '°C'), `RH ${p.N4.RH_r === null ? 'no reading' : f1(p.N4.RH_r) + ' %'}`, 'S') +
       node('Outside air', v(p.out.T_out, '°C'), `RH ${f0(p.out.RH_out)} %`, 'W') +
@@ -397,8 +411,8 @@
     // 24 h of shared telemetry
     const tt = store.tele.filter(x => x.scenario === scKey() && x.step > i - 288);
     const data = { labels: tt.map(x => hhmm(x.ts)), datasets: [
-      { label: '8 °C', data: tt.map(() => 8), borderWidth: 0, pointRadius: 0, backgroundColor: 'rgba(22,163,74,.12)', fill: '+1' },
-      { label: '2 °C', data: tt.map(() => 2), borderWidth: 0, pointRadius: 0, fill: false },
+      { label: D.band_C[1] + ' °C', data: tt.map(() => D.band_C[1]), borderWidth: 0, pointRadius: 0, backgroundColor: 'rgba(22,163,74,.12)', fill: '+1' },
+      { label: D.band_C[0] + ' °C', data: tt.map(() => D.band_C[0]), borderWidth: 0, pointRadius: 0, fill: false },
       { label: 'Room air N4 (reported)', data: tt.map(x => x.rep.T_r), borderColor: '#2a78d6', borderWidth: 2, pointRadius: 0, spanGaps: false },
       { label: 'Produce core N2 (reported)', data: tt.map(x => x.rep.T_core), borderColor: '#e8590c', borderWidth: 2, pointRadius: 0 },
       { label: 'Room air – twin (true)', data: tt.map(x => s.T_room_true[x.step]), borderColor: '#94a3b8', borderDash: [4, 4], borderWidth: 1.5, pointRadius: 0 }] };
@@ -534,7 +548,7 @@
   function blameTable(st) {
     const leg = (n, who, k) => `<tr><td>${n}</td><td>${who}</td><td class="n">${f1(st.legs[k])} %</td><td class="n">₹${f0(st.loss_INR[k])}</td></tr>`;
     return `<table><tr><th>Leg</th><th>Who held it</th><th class="n">Freshness lost</th><th class="n">₹ lost</th></tr>
-      ${leg('Farm (harvest → check-in)', 'farmer', 'farm')}${leg('Storage (cold room)', 'cold-store owner', 'storage')}${leg('Transport', 'transporter', 'transport')}</table>
+      ${leg('Farm (harvest → check-in)', 'farmer', 'farm')}${leg('Storage (cold room)', 'cold-room owner', 'storage')}${leg('Transport', 'transporter', 'transport')}</table>
       <p class="note">₹ lost = kg × base price × freshness lost. Freshness ${f1(st.F_checkin)} % at check-in${st.F_out !== null ? `, ${f1(st.F_out)} % at pick-up` : ''}${st.F_in !== null ? `, ${f1(st.F_in)} % at delivery` : `, ${f1(st.F_now)} % now`}.</p>`;
   }
   function renderTransporter() {
@@ -609,8 +623,8 @@
     const c = st.curve, lab = c.map(p => whenLbl(p.ts)), opt = CROP.freshness.T_opt_C;
     const data = { labels: lab, datasets: [
       { label: 'Freshness F (%)', data: c.map(p => p.F), borderColor: '#0f766e', borderWidth: 2.5, pointRadius: 0, yAxisID: 'y' },
-      { label: '8 °C', data: c.map(() => 8), borderWidth: 0, pointRadius: 0, backgroundColor: 'rgba(22,163,74,.12)', fill: '+1', yAxisID: 'y1' },
-      { label: '2 °C', data: c.map(() => 2), borderWidth: 0, pointRadius: 0, fill: false, yAxisID: 'y1' },
+      { label: D.band_C[1] + ' °C', data: c.map(() => D.band_C[1]), borderWidth: 0, pointRadius: 0, backgroundColor: 'rgba(22,163,74,.12)', fill: '+1', yAxisID: 'y1' },
+      { label: D.band_C[0] + ' °C', data: c.map(() => D.band_C[0]), borderWidth: 0, pointRadius: 0, fill: false, yAxisID: 'y1' },
       { label: `Best ${opt} °C`, data: c.map(() => opt), borderColor: '#16a34a', borderDash: [5, 4], borderWidth: 1.5, pointRadius: 0, yAxisID: 'y1' },
       { label: 'Produce temperature (°C)', data: c.map(p => p.T), borderColor: '#e8590c', borderWidth: 1.5, pointRadius: 0, yAxisID: 'y1' }] };
     cFresh = chart(cFresh, $('cFresh'), data, { y: { min: 0, max: 100, title: { display: true, text: 'Freshness %' } },
@@ -662,7 +676,11 @@
     $('honestyO').innerHTML = $('honestyB').innerHTML = `<b>What this proves – honestly.</b> ${HONESTY}<p class="note">${esc(D.generated_note)}
       Φ tuned on the twin's normal 2026 run: ${D.stats.false_flags} false flags in ${Math.round(D.stats.days)} days; the ${CFG.fake_reading_C} °C fake is caught in a median of ${f0(D.stats.fake_detection_all.median_min)} min.
       A door switch stuck on "closed" cannot be caught by physics (a 15 s opening is too little heat) – it needs a second, independent door sensor.</p>`;
-    $('fCrop').innerHTML = `<option value="${D.crop_key}">${esc(CROP.label)}</option>`;
+    $('fCrop').innerHTML = Object.entries(D.crops).map(([k, c]) => `<option value="${k}">${esc(c.label)}</option>`).join('')
+      + Object.entries(D.blocked).map(([k, c]) => `<option value="${k}">${esc(c.label)}</option>`).join('');
+    $('fCrop').value = D.crop_key;
+    $('fCrop').onchange = () => { $('fOut').value = addDays(dateOf(tsAt(step())), DWELL_DAYS[$('fCrop').value] || 1); flowerRule(); };
+    $('fOut').onchange = flowerRule;
     $('fHarv').value = CFG.harvest_to_checkin_h_default !== undefined ? CFG.harvest_to_checkin_h_default : 2;
     $('tpSensor').innerHTML = Object.entries(X.SENSORS).map(([k, v]) => `<option value="${k}">${esc(v.label)}</option>`).join('');
     $('tpAction').innerHTML = Object.entries(X.ACTIONS).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join('');
@@ -671,7 +689,8 @@
     KKStore.banner($('kkBanner'), store);
     store.on(() => schedule());
     const today = dateOf(tsAt(step()));
-    $('fOut').value = addDays(today, DWELL_DAYS[D.crop_key] || 7);
+    $('fOut').value = addDays(today, DWELL_DAYS[D.crop_key] || 2);
+    flowerRule();
     $('rsDate').value = addDays(today, 1); $('ansDate').value = addDays(today, 1);
     $('fKg').oninput = checkQty; $('fGo').onclick = checkIn; $('coGo').onclick = doCheckout; $('rsGo').onclick = reserve; $('ansGo').onclick = answer;
     $('coSlip').onchange = () => { const b = store.batches[$('coSlip').value]; if (b) $('coKg').value = b.kg_stored; };
@@ -686,7 +705,7 @@
     };
     $('resetBtn').textContent = 'Demo: reset (admin)';
     $('resetBtn').onclick = async () => {
-      if (!confirm('Reset the DEMO chamber CH-DEMO? All demo batches, alerts and bookings go to history (nothing is deleted; a new demo round starts).')) return;
+      if (!confirm('Reset the DEMO chamber CH-FLOWER? All demo batches, alerts and bookings go to history (nothing is deleted; a new demo round starts).')) return;
       try { play(false); tamper = null; det = null; await store.resetDemo(); $('slipBox').innerHTML = 'No slip yet – check in first.'; shownSlip = null; } catch (e) { alert(e.message); }
     };
     $('tpStart').onclick = startTamper; $('tpStop').onclick = stopTamper;

@@ -163,3 +163,30 @@ def test_no_secrets_and_no_old_site():
             continue
         t = p.read_text(encoding="utf-8", errors="ignore")
         assert "koolkisan.web.app" not in t and "CH-DEMO" not in t, p
+
+
+def test_website_numbers_come_from_results():
+    """web/data/site_data.js is made only from the results files, and the pages hold no typed result numbers."""
+    import re
+    js = (ROOT / "web" / "data" / "site_data.js").read_text(encoding="utf-8")
+    K = json.loads(js[js.index("window.KK = ") + len("window.KK = "):].rstrip().rstrip(";"))
+    F = json.loads((RES / "flowers_2026.json").read_text(encoding="utf-8"))
+    assert K["flowers"]["realistic_smart"] == F["realistic_smart"] and K["flowers"]["ideal"] == F["ideal"]
+    assert K["cost"] == json.loads((RES / "cost_roi.json").read_text(encoding="utf-8"))
+    for page in ("index", "how", "flowers", "season", "humidity", "safety", "cost", "reality"):
+        html = (ROOT / "web" / f"{page}.html").read_text(encoding="utf-8")
+        body = html[html.index("<body"):]
+        assert not re.search(r"\d", re.sub(r"<script[^>]*>", "", body)), page          # no numbers typed into the pages
+    pages = (ROOT / "web" / "js" / "pages.js").read_text(encoding="utf-8")
+    assert "cold storage" not in pages.lower() and "0 g R290 inside the room" not in pages   # even the big label is built from data
+    for p in (ROOT / "web").glob("*.html"):
+        assert "cold storage" not in p.read_text(encoding="utf-8").lower(), p
+
+
+def test_trust_data_has_flowers_and_glycol_check():
+    js = (ROOT / "web" / "trust" / "data" / "trust_data.js").read_text(encoding="utf-8")
+    D = json.loads(js[js.index("window.TRUST_DATA = ") + len("window.TRUST_DATA = "):].rstrip().rstrip(";"))
+    assert D["chamber_id"] == "CH-FLOWER" and set(D["blocked"]) == {"anthurium", "orchid"} and "crossandra" in D["crops"]
+    g = D["scenarios"]["normal"]["glycol"]
+    assert sum(g["ok"]) / len(g["ok"]) > 0.98                                        # normal run: glycol balance closes inside the band
+    assert D["stats"]["glycol_check"]["readings_inside_band_pct"] > 99 and D["stats"]["false_flags_per_year"] < 12
