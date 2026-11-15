@@ -62,6 +62,11 @@ def run_job(job):
     seasonal = job.pop("seasonal", False)
     keep = job.pop("keep", False)
     cfg = _G["cfg"]
+    patch = job.pop("cfg_patch", None)
+    if patch:                                                         # design option: change some config values for this run only
+        cfg = copy.deepcopy(cfg)
+        for sec, vals in patch.items():
+            cfg[sec].update(vals)
     if job.get("protect"):
         real = dict(real, protect_above_C=job.pop("protect"))
     w = _G["hot"] if wk else _G["w"]
@@ -197,25 +202,24 @@ def main(procs=None):
     jobs += [{"key": ("ideal", m), "pcm_kg": m, "seasonal": True} for m in masses]
     r = dict(pool.map(run_job, jobs))
     price = cfg["pcm"]["price_INR_kg"]
+    fixed = cfg["pcm"].get("fixed_cost_INR", [0, 0, 0])
     tariff = cfg["live_run"]["money"]["grid_tariff_INR_kWh"]
     ref = r[("real", 0)]
     rows = []
     for m in masses:
         a, i = r[("real", m)], r[("ideal", m)]
-        cost = m * price
+        cost = m * price + fixed[1]
         rows.append({"wax_kg": m, "wax_cost_INR": cost, "realistic": short(a, ("value_INR",)), "ideal": short(i),
                      "grid_h_avoided_vs_no_wax": ref["grid_h_per_year"] - a["grid_h_per_year"],
                      "grid_kWh_avoided_vs_no_wax": ref["grid_kWh_per_year"] - a["grid_kWh_per_year"],
-                     "grid_h_avoided_per_1000_INR": (ref["grid_h_per_year"] - a["grid_h_per_year"]) / (cost / 1000.0),
-                     "grid_kWh_avoided_per_1000_INR": (ref["grid_kWh_per_year"] - a["grid_kWh_per_year"]) / (cost / 1000.0),
                      "ten_year_cost_INR": cost + 10 * a["grid_kWh_per_year"] * tariff})
-    best = max(rows, key=lambda x: x["grid_h_avoided_per_1000_INR"])
+    best = min(rows, key=lambda x: x["ten_year_cost_INR"])
     chosen = best["wax_kg"]
-    write("wax_sweep.json", {"about": "Wax mass sweep on the seasonal plan. Rule: choose the mass with the most grid hours avoided (against the same room with no wax) per rupee of wax, realistic model + smart controller.",
-                             "date_range": dr, "note": note, "wax_price_INR_kg": price, "wax_price_range_INR_kg": cfg["pcm"]["price_range_INR_kg"],
-                             "no_wax_realistic": short(ref), "rows": rows, "chosen_kg": chosen, "chosen_cost_INR": chosen * price,
-                             "chosen_cost_range_INR": [chosen * p for p in cfg["pcm"]["price_range_INR_kg"]],
-                             "why": f"{chosen} kg gives the most grid hours avoided per Rs 1,000 of wax. More wax still helps a little, but each extra kg buys less.",
+    write("wax_sweep.json", {"about": "Cold-storage mass sweep (water / ice panels) on the seasonal plan, realistic model + smart controller. Rule: lowest 10-year cost = storage material + 10 years of grid bill.",
+                             "date_range": dr, "note": note, "storage": cfg["pcm"]["name"], "wax_price_INR_kg": price, "fixed_cost_INR": fixed, "tariff_INR_kWh": tariff,
+                             "no_wax_realistic": short(ref), "rows": rows, "chosen_kg": chosen, "chosen_cost_INR": chosen * price + fixed[1],
+                             "chosen_cost_range_INR": [chosen * cfg["pcm"]["price_range_INR_kg"][0] + fixed[0], chosen * cfg["pcm"]["price_range_INR_kg"][1] + fixed[2]],
+                             "why": f"Water costs about nothing, so the biggest mass that was tested ({chosen} kg) wins: it needs the least grid electricity.",
                              "E": {k: v for k, v in E_cfg.items() if k.startswith("pcm.")}})
     P = {"pcm_kg": chosen}
 
@@ -227,6 +231,7 @@ def main(procs=None):
     for h in cfg["humidity"]["options"]:
         jobs.append({"key": ("hum", h), "seasonal": True, "humidity": h, "real": R_all, **P})
     cs = RL.cases(cfg)
+    fl_keys_early = list(cfg["flowers"]["allowed"])
     for k in RL.ORDER:
         jobs.append({"key": ("one", k), "seasonal": True, "real": RL.spec([k], cfg), **P})
         jobs.append({"key": ("loo", k), "seasonal": True, "real": realistic(skip=k), **P})
@@ -234,6 +239,35 @@ def main(procs=None):
              {"key": "ideal_simple", "seasonal": True, "real": ({"simple_controller": True}, None), **P},
              {"key": "real_no_grid", "seasonal": True, "real": realistic({"no_grid": True}), **P},
              {"key": "ideal_no_grid", "seasonal": True, "real": ({"no_grid": True}, None), **P}]
+    def pjob(key, kind, tweak=None, **kw):
+        real, wk, patch, hum = RL.practice(kind, cfg)
+        real, patch = dict(real), copy.deepcopy(patch)
+        if tweak:
+            out_ = tweak(real, patch, hum)
+            hum = out_ if isinstance(out_, str) else hum
+        return {"key": key, "real": (real, wk), "cfg_patch": patch, "humidity": hum, **P, **kw}
+    bp, rk = cfg["reality"]["best"], cfg["reality"]["racks"]
+    def t_door(real, patch, hum): real.update(door_times=bp["door"]["times"], door_seconds=bp["door"]["seconds"], curtain_E=bp["door"]["curtain_E"])
+    def t_load(real, patch, hum): patch["live_run"]["load_hour"] = bp["load_hour"]
+    def t_bags(real, patch, hum): return "liners_fogger"
+    def t_roof(real, patch, hum): real.pop("roof_solar", None)
+    def t_floor(real, patch, hum): real.pop("floor", None)
+    def t_led(real, patch, hum): real["lights_door_only"] = True
+    def t_fan(real, patch, hum): real.update(night_fan=bp["night_fan"], circ_fan_W=0)
+    def t_rack(real, patch, hum): real["extra_C_room_kJ_K"] = rk["frp"]["kg_total"] * rk["frp"]["cp_kJ_kgK"]
+    ITEMS = [("door", "4 door openings a day, good curtain + door closer", t_door), ("load", "Load at 06:00, never 11:00–15:00", t_load),
+             ("bags", "Flowers in perforated bags (+ fogger)", t_bags), ("roof", "Shade over the room + white roof", t_roof), ("floor", "Insulated floor", t_floor),
+             ("led", "LED light only when the door is open", t_led), ("fan", "Night circulation fan (12 W EC) instead of an always-on fan", t_fan),
+             ("rack", "FRP racks instead of steel", t_rack)]
+    jobs += [pjob("best", "best", seasonal=True, keep=True), pjob("poor", "poor", seasonal=True)]
+    jobs += [pjob(("item", k), "poor", tw, seasonal=True) for k, _, tw in ITEMS]
+    for mat in rk:
+        jobs.append(pjob(("rack", mat), "best", lambda real, patch, hum, mat=mat: real.update(extra_C_room_kJ_K=rk[mat]["kg_total"] * rk[mat]["cp_kJ_kgK"]), seasonal=True))
+    for ck in fl_keys_early:
+        for hd in (1, 2, 3):
+            for kind in ("best", "poor"):
+                jobs.append(pjob(("phold", kind, ck, hd), kind, lambda real, patch, hum: real.pop("intake_random", None), crop_key=ck, hold_days=hd,
+                                 load_kg=cfg["flowers"]["crate_places"] * crops[ck]["kg_per_crate_mid"]))
     for pr in (5.5, 6.0, 6.5):
         jobs.append({"key": ("night", pr), "seasonal": True, "real": R_all, "protect": pr, **P})
         jobs.append({"key": ("night_ideal", pr), "seasonal": True, "protect": pr, **P})
@@ -248,7 +282,7 @@ def main(procs=None):
     jobs.append({"key": ("hold", "mixed", 1, "realistic"), "crop_key": "mixed", "hold_days": 1, "real": realistic(skip="load_var"), **P})
     r2 = dict(pool.map(run_job, jobs))
     pool.close()
-    fi, fr = r2["final_ideal"], r2["final_realistic"]
+    fi, fr, fb, fp = r2["final_ideal"], r2["final_realistic"], r2["best"], r2["poor"]
 
     # ---- season plan + prices
     sched = _G[f"sched{places}"]
@@ -288,12 +322,20 @@ def main(procs=None):
                         "time_to_6C_h": m.get("time_to_6C_h_avg"), "allowed": ok,
                         "fragrance_kept_pct": None, "value_saved_INR_per_fill": v["kg_per_fill"] * (v["freshness_kept_pct"] - v["freshness_no_room_pct"]) / 100.0
                         * float(np.mean(list(crops[c2]["price_base_INR_kg"].values())))}
+    for ck in fl_keys:
+        for hd in (1, 2, 3):
+            for kind in ("best", "poor"):
+                m = r2[("phold", kind, ck, hd)]
+                v = m["flowers"][ck]
+                holds[ck].setdefault(kind + "_practice", {})[str(hd)] = {
+                    "freshness_kept_pct": v["freshness_kept_pct"], "freshness_no_room_pct": v["freshness_no_room_pct"], "weight_loss_pct": v["weight_loss_pct"],
+                    "hours_in_room": v["hours_in_room"], "kg_per_fill": v["kg_per_fill"], "time_to_6C_h": m.get("time_to_6C_h_avg"), "allowed": hd <= crops[ck]["max_hold_days"]}
     write("holds.json", {"about": "Freshness kept after 1, 2 and 3 days per flower: one full room (12 crates) of that flower, in at 13:00 at the outside temperature, out at 05:00, bagged. 'no room' = the same flowers kept outside in the shade.",
                          "date_range": dr, "note": note, "wax_kg": chosen, "flowers": holds,
                          "value_note": "E – value saved per fill = kg x (freshness in room - freshness without room) x mean base price of the flower."})
     limit_g = GLY.r290_room_limit_g(8.8)
     write("flowers_2026.json", {
-        "about": "KoolKisaan Flowers – final design on the seasonal loading plan.", "date_range": dr, "note": note,
+        "about": "KoolKisaan Flowers – final design (ice panels) on the seasonal loading plan. Headline = best practice.", "date_range": dr, "note": note,
         "design": {"name": cfg["project"]["name"], "tagline": cfg["project"]["tagline"], "room_m": cfg["live_run"]["inside_m"], "room_m3": 8.8,
                    "U_W_m2K": 0.22, "pv_kWp": cfg["pv"]["rated_kWp"], "wax_kg": chosen, "wax_cost_INR": chosen * price, "setpoint_C": cfg["live_run"]["setpoint_C"],
                    "band_C": cfg["live_run"]["band_C"], "alarm_C": [cfg["setpoint"]["alarm_low_C"], cfg["setpoint"]["alarm_high_C"]],
@@ -301,7 +343,8 @@ def main(procs=None):
                    "glycol_m_dot_kg_s": GLY.m_dot(cfg), "T_evap_room_C": GLY.evap_T(cfg, "room"), "T_evap_wax_C": GLY.evap_T(cfg, "wax"),
                    "r290_inside_room_g": 0, "r290_room_limit_g": limit_g, "humidity_option": cfg["humidity"]["default_option"],
                    "crate_places": places, "controller": cfg["controller"]},
-        "ideal": head(fi), "realistic_smart": head(fr),
+        "headline_case": "best_practice",
+        "ideal": head(fi), "best_practice": head(fb), "poor_practice": head(fp), "realistic_smart": head(fr),
         "setpoint_5C": {"ideal": head(r2["sp5_ideal"]), "realistic_smart": head(r2["sp5_realistic"])},
         "extra_racks": {"crate_places": cfg["flowers"]["crate_places_extra_racks"], "aisle_note": "two side racks: aisle only about 0.49 m (tight, E)",
                         "realistic_smart": head(r2["extra_racks"]), "extra_kg_stored": r2["extra_racks"]["kg_stored"] - fr["kg_stored"],
@@ -311,10 +354,10 @@ def main(procs=None):
                         "extra_value_INR": r2["extra_racks"]["value_INR"] - fr["value_INR"]},
         "freshness_after_days": holds,
         "assumptions_E": E_cfg})
-    hard = sorted(fr["monthly"], key=lambda x: -(x["grid_h"] / x["days"]))
-    busy = max(fr["monthly"], key=lambda x: x["kg_stored"] / x["days"])
+    hard = sorted(fb["monthly"], key=lambda x: -(x["grid_h"] / x["days"]))
+    busy = max(fb["monthly"], key=lambda x: x["kg_stored"] / x["days"])
     write("monthly_2026.json", {"about": "Month by month, seasonal plan. Rs values are E (price model).", "date_range": dr, "note": note,
-                                "ideal": fi["monthly"], "realistic_smart": fr["monthly"],
+                                "ideal": fi["monthly"], "best_practice": fb["monthly"], "realistic_smart": fr["monthly"],
                                 "busiest_month": busy["month"], "hardest_month": hard[0]["month"],
                                 "hardest_months": [{"month": x["month"], "grid_h_per_day": x["grid_h"] / x["days"], "outside_avg_C": x["outside_avg_C"],
                                                     "kg_stored": x["kg_stored"], "wax_sunrise_worst_pct": x["wax_sunrise_worst_pct"],
@@ -353,10 +396,45 @@ def main(procs=None):
                                  "leave_one_out": {"about": "REALISTIC + smart controller with ONE loophole left out: what comes back shows how big that loophole is.",
                                                    "with_all": short(fr), "without": {k: short(r2[("loo", k)]) for k in RL.ORDER}},
                                  "E": cfg["reality"]})
+    # ---- best practice / poor practice
+    tariffs = json.loads((ROOT / "config" / "cost.json").read_text(encoding="utf-8"))["running"]["grid_tariff_INR_kWh"]
+    def pcase(label, m, hk):
+        return {"label": label, **short(m, ("hours_above_band_top", "hours_above_band_top_per_year", "hours_above_alarm_per_year", "night_fan_kWh_per_year", "value_INR", "kg_stored")),
+                "grid_bill_INR_per_year": dict(zip(("low", "mid", "high"), [m["grid_kWh_per_year"] * t for t in tariffs])),
+                "freshness_after_days": {ck: {d: holds[ck][hk][d]["freshness_kept_pct"] for d in ("1", "2", "3")} for ck in ("jasmine", "marigold", "tuberose", "rose", "chamanthi")}}
+    base_p = fp
+    items = [{"key": k, "label": lab, "grid_kWh_per_year": r2[("item", k)]["grid_kWh_per_year"], "grid_h_per_year": r2[("item", k)]["grid_h_per_year"],
+              "days_full_solar_wax": r2[("item", k)]["days_full_solar_wax"], "hours_above_band_top": r2[("item", k)]["hours_above_band_top"],
+              "grid_kWh_saved_per_year": base_p["grid_kWh_per_year"] - r2[("item", k)]["grid_kWh_per_year"],
+              "electric_kWh_saved_per_year": (base_p["electric_kWh_day"] - r2[("item", k)]["electric_kWh_day"]) * 365,
+              "value_gain_INR": r2[("item", k)]["value_INR"] - base_p["value_INR"]} for k, lab, _ in ITEMS]
+    items.sort(key=lambda x: -x["grid_kWh_saved_per_year"])
+    from engine import space as SPACE
+    sp_out = SPACE.build(cfg, crop_key="marigold")[0]
+    lay = sp_out["layout"]
+    racks = {mat: {"label": rk[mat]["label"], "kg_total": rk[mat]["kg_total"], "cp_kJ_kgK": rk[mat]["cp_kJ_kgK"], "heat_capacity_kJ_K": rk[mat]["kg_total"] * rk[mat]["cp_kJ_kgK"],
+                   "INR": dict(zip(("low", "mid", "high"), rk[mat]["INR"])), "note": rk[mat]["note"],
+                   "electric_kWh_per_year": r2[("rack", mat)]["electric_kWh_day"] * 365, "grid_kWh_per_year": r2[("rack", mat)]["grid_kWh_per_year"],
+                   "days_full_solar_wax": r2[("rack", mat)]["days_full_solar_wax"], "time_to_6C_h_avg": r2[("rack", mat)]["time_to_6C_h_avg"]} for mat in rk}
+    write("practice.json", {
+        "about": "Three cases side by side. Best practice (optimum) = realistic losses + good design + good operation; it is the site headline. Poor practice = realistic losses + bad operation.",
+        "date_range": dr, "note": note, "storage": cfg["pcm"]["name"], "storage_kg": chosen,
+        "cases": {"ideal": pcase("Ideal model (no real-life losses)", fi, "ideal"), "best_practice": pcase("Best practice (optimum) – headline", fb, "best_practice"),
+                  "poor_practice": pcase("Poor practice", fp, "poor_practice")},
+        "ideal_freshness_note": "Ideal freshness uses the plan's 13:00 loading; best practice loads at 06:00.",
+        "best_practice_rules": [lab for _, lab, _ in ITEMS] + ["Smart controller"], "poor_practice_is": "8 door openings with a worn curtain, loading at 12:00, no bags, steel racks, no shade (dark roof), floor not insulated, lights partly on, 10 W fan always on",
+        "items_alone": {"baseline": "Poor practice", "baseline_grid_kWh_per_year": base_p["grid_kWh_per_year"], "rows": items,
+                        "about": "Poor practice with ONE best-practice rule switched on: grid kWh saved a year shows which rule matters most."},
+        "racks": {"chosen": cfg["reality"]["rack_material"], "options": racks, "crate_places": sp_out["crate_places"], "shelf_levels": len(lay["shelves_m"]),
+                  "racks": lay["racks"], "crates_per_level": sum(x["crates_per_shelf"] for x in lay["racks"]), "layout": lay["chosen"], "aisle_m": lay["aisle_m"],
+                  "about": "Rack material changes only the heat that must be pulled out of the racks (thermal mass) and the price; all else is the best-practice case."},
+        "night_fan_note": "The night fan's electricity comes from the grid and is inside 'grid kWh'; 'days fully on solar + storage' counts days when the CHILLER never ran on grid.",
+        "E": {k: v for k, v in E_cfg.items() if k.startswith("reality.")}})
+    write("space_budget.json", sp_out)
     write("night_limit.json", {"about": "How the result changes with the room temperature at which the grid may help (design value 6.0 °C, the top of the normal band).",
                                "date_range": dr, "note": note,
                                "rows": [{"grid_help_above_C": pr, "realistic_smart": short(r2[("night", pr)]), "ideal": short(r2[("night_ideal", pr)])} for pr in (5.5, 6.0, 6.5)],
-                               "why": "The wax melts at 3–4 °C and cools the room only by natural convection, so at night the room settles about 2 K above the wax (5.5–6 °C)."})
+                               "why": "With ice panels at 0 °C the room has about 4 K of pull at night, so this limit matters much less than it did with the 3–4 °C paraffin wax."})
     write("load_sweep.json", {"about": "Marigold, one fill a day (13:00 in, 05:00 out), realistic model + smart controller.", "date_range": dr, "note": note,
                               "crate_places": places, "rows": [{"kg_per_fill": kg, "crates_needed": FL.crates_needed(crops["marigold"], kg),
                                                                 "fits": FL.crates_needed(crops["marigold"], kg) <= places,
@@ -374,17 +452,18 @@ def main(procs=None):
         "about": "OLD design (R290 direct expansion inside the room, pomegranate 150 kg a day, 5 °C, band 2–8 °C, 115 kg wax melting at 4 °C) against the NEW flower design (outdoor R290 chiller + glycol loop, 4 °C, band 2–6 °C), same room, same PV, same 2026 weather. Comparison only: the two rooms store different produce on different loading plans.",
         "date_range": dr, "note": note, "old": old,
         "new": {"ideal": {**newc(fi), "T_evap_C": [GLY.evap_T(cfg, "room"), GLY.evap_T(cfg, "wax")], "r290_inside_room_g": 0},
+                "best_practice": {**newc(fb), "T_evap_C": [GLY.evap_T(cfg, "room") - 2, GLY.evap_T(cfg, "wax") - 2], "r290_inside_room_g": 0},
                 "realistic_smart": {**newc(fr), "T_evap_C": [GLY.evap_T(cfg, "room") - 2, GLY.evap_T(cfg, "wax") - 2], "r290_inside_room_g": 0}},
-        "new_wax_kg": chosen, "old_wax_kg": 115, "r290_room_limit_g": limit_g}, ROOT / "results")
+        "new_wax_kg": chosen, "new_storage": cfg["pcm"]["name"], "old_wax_kg": 115, "r290_room_limit_g": limit_g}, ROOT / "results")
 
     # ---- hourly exports for the website
-    for tag, m in (("flowers", fr), ("flowers_ideal", fi)):
+    for tag, m in (("flowers", fb), ("flowers_ideal", fi)):
         H = m["_H"]
         cols = ["time_ist", "T_out", "RH_out", "T_room", "RH_room", "pcm_pct", "T_pcm", "T_sup", "T_ret", "P_pv", "P_solar_used", "P_grid", "P_comp", "P_pump",
                 "grid_on", "running_h", "v_room", "v_wax", "kg_inside", "Q_air", "Q_ch", "Q_pcm_room", "Q_chill", "cop", "door_s"]
         H[cols].round({c_: 3 for c_ in cols[1:]}).to_csv(RES / f"hourly_{tag}.csv", index=False)
-    fr["_bt"].drop(columns=["cool_steps", "out_step", "step"]).round(3).to_csv(RES / "fills_flowers.csv", index=False)
-    print(json.dumps(clean({"chosen_wax_kg": chosen, "ideal": short(fi, ("value_INR", "kg_stored")), "realistic": short(fr, ("value_INR", "kg_stored")),
+    fb["_bt"].drop(columns=["cool_steps", "out_step", "step"]).round(3).to_csv(RES / "fills_flowers.csv", index=False)
+    print(json.dumps(clean({"chosen_wax_kg": chosen, "ideal": short(fi, ("value_INR", "kg_stored")), "best": short(fb, ("value_INR", "kg_stored")), "poor": short(fp, ("value_INR", "kg_stored")), "realistic": short(fr, ("value_INR", "kg_stored")),
                             "old": old}), indent=1))
     return chosen
 

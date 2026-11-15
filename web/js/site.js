@@ -12,7 +12,7 @@
   const C = '<span class="tag C" title="Calculated">C</span>';
   const range = () => `<span class="range">${esc(K.flowers.date_range.label)}</span>`;
   const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const PAGES = [['index.html', 'Home'], ['how.html', 'How it works'], ['flowers.html', 'Flowers'], ['season.html', 'Season planner'], ['humidity.html', 'Humidity'],
+  const PAGES = [['index.html', 'Home'], ['how.html', 'How it works'], ['flowers.html', 'Flowers'], ['live.html', 'Live 2026'], ['season.html', 'Season planner'], ['humidity.html', 'Humidity'],
     ['safety.html', 'Safety'], ['cost.html', 'Cost & ROI'], ['reality.html', 'Reality check'], ['trust.html', 'Trust & Trade']];
   function table(head, rows, opt = {}) {
     const th = head.map(h => `<th class="${h.n ? 'n' : ''}">${h.t ?? h}</th>`).join('');

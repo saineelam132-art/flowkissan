@@ -82,3 +82,8 @@ body[data-page="home"] main>.card{margin-left:auto;margin-right:auto;width:calc(
 .barctl select{max-width:120px}
 .barctl b{font:600 14px Consolas,monospace}
 .sim{font-size:11px;font-weight:700;background:#fbbf24;color:#3a2a00;border-radius:4px;padding:1px 6px}
+
+.bar{display:grid;grid-template-columns:minmax(180px,2fr) 3fr minmax(120px,1fr) minmax(130px,1fr);gap:10px;align-items:center;margin:5px 0;font-size:13.5px}
+.bar .bt{background:var(--line);border-radius:6px;height:16px;overflow:hidden}.bar .bt i{display:block;height:100%;background:#14b8a6}.bar .bt i.neg{background:#f59e0b}
+.bar b{font-variant-numeric:tabular-nums}.bar em{color:var(--muted);font-style:normal;font-size:12px}
+@media (max-width:700px){.bar{grid-template-columns:1fr 1fr}}

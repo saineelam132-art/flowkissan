@@ -133,6 +133,11 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
     V_room = W_in * L_in * H_in
     M_air = 1.25 * V_room
     C_room = M_air * CPA + cfg["simulation"]["structure_heat_capacity_kJ_K"] + R.get("extra_C_room_kJ_K", 0.0)
+    rs = R.get("roof_solar")                                              # unshaded roof: sol-air gain through the roof panel
+    roof_k = (cfg["chamber"]["insulation_k_W_mK"] / lr["insulation_thickness_m"] * rs["area_m2"] * rs["absorptance"] / rs["h_o_W_m2K"] / 1000.0) if rs else 0.0
+    fl_ = R.get("floor")                                                  # floor without insulation: extra loss to the ground
+    floor_UA, ground_C = ((fl_["extra_UA_W_K"] / 1000.0, fl_["ground_C"]) if fl_ else (0.0, 0.0))
+    nfan = R.get("night_fan")                                             # EC circulation fan when the chiller is off
     Tset0 = lr["setpoint_C"] if setpoint_C is None else float(setpoint_C)
     shift = Tset0 - lr["setpoint_C"]                                   # a 5 C run moves the control limits with it
     protect = (cfg["controller"]["protect_above_C"] if R.get("protect_above_C") is None else R["protect_above_C"]) + shift
@@ -234,7 +239,7 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
             "Q_int", "Q_air", "Q_air_sens", "Q_air_lat", "Q_ch", "Q_pcm_room", "Q_wax_lat", "Q_pipe", "Q_pump", "Q_chill",
             "P_comp", "P_chiller", "P_pump", "P_fan", "P_fog", "P_pv", "P_solar_used", "P_grid", "grid_on", "running", "run_frac",
             "door_s", "solar_ok", "G_wax", "cop", "T_out", "RH_out", "poa", "v_room", "v_wax", "T_sup", "T_ret",
-            "w_transp", "w_coil", "w_wax", "w_fog", "w_tray", "w_door", "kg_inside", "valve_duty", "Q_evap_air", "ps_Pa", "load_event", "Q_other")
+            "w_transp", "w_coil", "w_wax", "w_fog", "w_tray", "w_door", "kg_inside", "valve_duty", "Q_evap_air", "ps_Pa", "load_event", "Q_other", "P_nfan")
     out = {k: np.zeros(n) for k in keys}
     acc = dict(in_=0.0, out=0.0, prod_in=0.0, prod_out=0.0)
     batches = []
@@ -311,7 +316,7 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
         # ---- heat gains
         Dt_door = min(1.0, door[i] / DT)
         Dt = max(Dt_door, float(sc["door_leak"])) if (fault and sc.get("door_leak")) else Dt_door
-        Q_wall = UAw * (T_out[i] - T_r)
+        Q_wall = UAw * (T_out[i] - T_r) + roof_k * poa[i] + floor_UA * (ground_C - T_r)
         g_door, W_o = 0.0, psychro.humidity_ratio(T_out[i], RH_o[i], p)
         Q_door = 0.0
         if Dt > 0:
@@ -328,7 +333,12 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
         dTw = T_r - T_p if m_p > 0 else 0.0
         G_w = float(np.interp(max(dTw, 0.0), dTs, G_nat_tab)) if m_p > 0 else 0.0
         Q_pa = G_w * dTw if dTw > 0 else (G_nat_tab[1] * dTw if m_p > 0 else 0.0)
-        base = Q_wall + Q_door + Q_b + lights + ctrl_kW + circ_kW + heat_def
+        P_nf = 0.0
+        if nfan and m_p > 0 and Q_avail <= 0 and dTw > 0 and T_r > Tset + nfan["on_above_setpoint_K"]:
+            G_w *= nfan["fin_G_factor"]                                   # stirred air: more heat from the fins (E)
+            Q_pa = G_w * dTw
+            P_nf = nfan["W"] / 1000.0
+        base = Q_wall + Q_door + Q_b + lights + ctrl_kW + circ_kW + heat_def + P_nf
 
         # ---- V-ROOM: air cooler duty needed to bring the room to the set point this step
         target = Tset
@@ -438,12 +448,12 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
             Q_ch *= k_
             Q_air = Q_air_s + Q_air_l
         was_running = running
-        P_comp = P_chiller + P_fan + P_pump + heat_def + P_fog            # all electricity of the cooling system
+        P_comp = P_chiller + P_fan + P_pump + heat_def + P_fog + P_nf     # all electricity of the cooling system
         if grid_mode:
             P_sol = min(P_comp, P_pv[i]) if solar_ok else 0.0
             P_grid = P_comp - P_sol
         else:
-            P_sol = min(P_comp, P_pv[i]) if running else min(P_fog, P_pv[i])
+            P_sol = min(P_comp, P_pv[i]) if running else min(P_fog + P_nf, P_pv[i])
             P_grid = P_comp - P_sol if not running else 0.0               # fogger at night: from the grid / battery
         if C_loop > 0:
             if running:
@@ -454,7 +464,7 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
                 T_loop = T_new
 
         # ---- integrate
-        Q_int = lights + ctrl_kW + circ_kW + heat_def + P_fan + P_fog
+        Q_int = lights + ctrl_kW + circ_kW + heat_def + P_fan + P_fog + P_nf
         evap_air = (w_tray + S_fog - w_excess) * HV                       # evaporation in the air cools the air
         dT_r = (Q_wall + Q_door + Q_int - Q_pa - Q_air_s - evap_air) * DT / C_room
         Cn = sum(nd["C"] for nd in nodes)
@@ -500,7 +510,7 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
                          ("T_out", T_out[i]), ("RH_out", RH_o[i]), ("poa", poa[i]), ("v_room", float(Q_air > 1e-9)), ("v_wax", float(Q_ch > 1e-9)),
                          ("T_sup", Ts if running else np.nan), ("T_ret", Tret), ("w_transp", sum(w_tr)), ("w_coil", w_coil), ("w_wax", w_wax),
                          ("w_fog", S_fog), ("w_tray", w_tray), ("w_door", w_door), ("kg_inside", sum(nd["m"] for nd in nodes)),
-                         ("valve_duty", duty), ("Q_evap_air", evap_air), ("ps_Pa", p), ("load_event", load_ev), ("Q_other", Q_other)):
+                         ("valve_duty", duty), ("Q_evap_air", evap_air), ("ps_Pa", p), ("load_event", load_ev), ("Q_other", Q_other), ("P_nfan", P_nf)):
             out[key][i] = val
 
     E1 = C_room * T_r + M_air * W_r * HV + m_p * h + sum(nd["C"] * nd["T"] for nd in nodes)

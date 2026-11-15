@@ -20,7 +20,8 @@ def test_fixed_design_inputs(fcfg):
     assert fcfg["live_run"]["inside_m"] == [2.0, 2.0, 2.2]
     assert abs(fcfg["chamber"]["insulation_k_W_mK"] / fcfg["chamber"]["insulation_thickness_m"] - 0.22) < 1e-9
     assert fcfg["pv"]["rated_kWp"] == 1.8 and fcfg["live_run"]["setpoint_C"] == 4.0 and fcfg["live_run"]["band_C"] == [2.0, 6.0]
-    assert abs(fcfg["pcm"]["latent_kJ_kg"] - 190 * 0.93) < 0.01 and fcfg["pcm"]["melt_range_C"] == [3.0, 4.0]
+    assert fcfg["pcm"]["word"] == "ice" and fcfg["pcm"]["latent_kJ_kg"] == 334.0 and fcfg["pcm"]["melt_range_C"] == [0.0, 0.0]   # water / ice panels
+    assert fcfg["glycol"]["supply_wax_C"] > fcfg["glycol"]["freeze_C"] + 5                                                    # glycol stays liquid
 
 
 def test_no_r290_inside_and_room_limit():
@@ -30,7 +31,7 @@ def test_no_r290_inside_and_room_limit():
 
 def test_cop_follows_glycol_supply(fcfg):
     T, t = GLY.cop_tables(fcfg)
-    assert t["room"]["T_evap_C"] == -3.0 and t["wax"]["T_evap_C"] == -5.0             # supply - 3 K approach
+    assert t["room"]["T_evap_C"] == -3.0 and t["wax"]["T_evap_C"] == -8.0             # supply - 3 K approach (0 C room, -5 C ice making)
     assert (t["wax"]["COP_elec"] < t["room"]["COP_elec"]).all()                        # colder glycol costs COP
     assert np.interp(30, T, t["room"]["COP_elec"]) == pytest.approx(3.12, abs=0.05)
 
@@ -122,13 +123,14 @@ def test_results_files_and_chosen_wax(fcfg):
     W = json.loads((RES / "wax_sweep.json").read_text(encoding="utf-8"))
     assert F["date_range"]["days"] == 310 and F["design"]["r290_inside_room_g"] == 0
     assert W["chosen_kg"] == fcfg["pcm"]["mass_kg"] == fcfg["live_run"]["designs"]["current"]["pcm_kg"] == F["design"]["wax_kg"]
-    for k in ("ideal", "realistic_smart"):
+    assert F["headline_case"] == "best_practice"
+    for k in ("ideal", "best_practice", "poor_practice", "realistic_smart"):
         for key in ("days_full_solar_wax", "grid_h_per_year", "grid_kWh_per_year", "solar_used_pct", "COP_chiller", "pump_kWh_day",
                     "compressor_kWh_day", "hours_outside_band", "rh_avg_pct", "rh_below_85_h_day", "time_to_6C_h_avg", "value_INR"):
             assert F[k][key] is not None
     C = json.loads((RES / "cost_roi.json").read_text(encoding="utf-8"))
-    assert C["twin_inputs"]["grid_kWh_per_year"] == pytest.approx(F["realistic_smart"]["grid_kWh_per_year"], rel=1e-6)
-    for name in ("monthly_2026.json", "season_plan.json", "holds.json", "humidity_options.json", "reality_check.json", "load_sweep.json", "night_limit.json"):
+    assert C["twin_inputs"]["grid_kWh_per_year"] == pytest.approx(F["best_practice"]["grid_kWh_per_year"], rel=1e-6)
+    for name in ("monthly_2026.json", "season_plan.json", "holds.json", "humidity_options.json", "reality_check.json", "load_sweep.json", "night_limit.json", "practice.json", "solar_only.json", "live_2026.json", "space_budget.json"):
         assert (RES / name).exists()
     assert (ROOT / "results" / "compare_old_vs_new.json").exists()
 
@@ -171,9 +173,9 @@ def test_website_numbers_come_from_results():
     js = (ROOT / "web" / "data" / "site_data.js").read_text(encoding="utf-8")
     K = json.loads(js[js.index("window.KK = ") + len("window.KK = "):].rstrip().rstrip(";"))
     F = json.loads((RES / "flowers_2026.json").read_text(encoding="utf-8"))
-    assert K["flowers"]["realistic_smart"] == F["realistic_smart"] and K["flowers"]["ideal"] == F["ideal"]
+    assert K["flowers"]["best_practice"] == F["best_practice"] and K["flowers"]["ideal"] == F["ideal"]
     assert K["cost"] == json.loads((RES / "cost_roi.json").read_text(encoding="utf-8"))
-    for page in ("index", "how", "flowers", "season", "humidity", "safety", "cost", "reality"):
+    for page in ("index", "how", "flowers", "live", "season", "humidity", "safety", "cost", "reality"):
         html = (ROOT / "web" / f"{page}.html").read_text(encoding="utf-8")
         body = html[html.index("<body"):]
         assert not re.search(r"\d", re.sub(r"<script[^>]*>", "", body)), page          # no numbers typed into the pages
@@ -200,3 +202,29 @@ def test_static_site_is_an_exact_copy_of_web():
     b = sorted(str(p.relative_to(out)) for p in out.rglob("*") if p.is_file())
     assert a == b and (out / "index.html").exists()
     assert not filecmp.cmpfiles(web, out, a, shallow=False)[1]
+
+
+def test_practice_cases_and_racks(fcfg):
+    P = json.loads((RES / "practice.json").read_text(encoding="utf-8"))
+    c = P["cases"]
+    assert c["ideal"]["grid_kWh_per_year"] <= c["best_practice"]["grid_kWh_per_year"] <= c["poor_practice"]["grid_kWh_per_year"]
+    assert c["best_practice"]["value_INR"] > c["poor_practice"]["value_INR"]
+    r = P["racks"]
+    assert r["chosen"] == "frp" and r["crate_places"] == 12 == r["shelf_levels"] * r["crates_per_level"] and len(r["racks"]) == 2
+    assert len(P["items_alone"]["rows"]) == 8
+
+
+def test_solar_only_study():
+    S = json.loads((RES / "solar_only.json").read_text(encoding="utf-8"))
+    assert S["best"].startswith("A_ice") and S["options"][S["best"]]["storage_kg"] == 100
+    cur, best = S["options"]["current"], S["options"][S["best"]]
+    assert best["with_grid_backup"]["grid_kWh_per_year"] < cur["with_grid_backup"]["grid_kWh_per_year"]
+    assert best["extra_cost_INR"]["mid"] < 0                                         # ice is cheaper than paraffin wax
+    for o in S["options"].values():
+        assert o["with_grid_backup"]["grid_bill_INR_per_year"]["mid"] == pytest.approx(o["with_grid_backup"]["grid_kWh_per_year"] * S["tariff_INR_kWh"]["mid"])
+
+
+def test_live_report_runs_from_1_january():
+    L = json.loads((RES / "live_2026.json").read_text(encoding="utf-8"))
+    assert L["date_range"]["from"] == "2026-01-01" and L["date_range"]["days"] == len(L["daily"]) >= 310
+    assert L["totals"]["grid_kWh"] == pytest.approx(sum(d["grid_kWh"] for d in L["daily"]), abs=0.1)

@@ -23,7 +23,7 @@ def main():
     from engine.config import load_config, load_crops
     cfg, crops = load_config(), load_crops()
     plan = J(RES / "season_plan.json")
-    H = pd.read_csv(RES / "hourly_flowers.csv", parse_dates=["time_ist"])
+    H = pd.read_csv(RES / ("hourly_live.csv" if (RES / "hourly_live.csv").exists() else "hourly_flowers.csv"), parse_dates=["time_ist"])
     r = lambda c, k=2: [None if pd.isna(x) else round(float(x), k) for x in H[c]]
     hourly = {"t0": str(H.time_ist.iloc[0]), "n": len(H), "T_out": r("T_out", 1), "RH_out": r("RH_out", 0), "T_room": r("T_room"), "RH_room": r("RH_room", 1),
               "wax": r("pcm_pct", 1), "T_sup": r("T_sup"), "T_ret": r("T_ret"), "P_pv": r("P_pv", 3), "P_grid": r("P_grid", 3), "P_comp": r("P_comp", 3),
@@ -36,6 +36,7 @@ def main():
         "humidity": J(RES / "humidity_options.json"), "reality": J(RES / "reality_check.json"), "night": J(RES / "night_limit.json"),
         "load": J(RES / "load_sweep.json"), "wax": J(RES / "wax_sweep.json"), "cost": J(RES / "cost_roi.json"),
         "compare": J(ROOT / "results" / "compare_old_vs_new.json"),
+        "practice": J(RES / "practice.json"), "solar": J(RES / "solar_only.json"), "live": J(RES / "live_2026.json"),
         "plan": {k: v for k, v in plan.items() if k not in ("fills_full_year",)}, "fills": plan["fills_full_year"],
         "crops": {k: v for k, v in crops.items() if isinstance(v, dict) and v.get("kind") == "flower"},
         "blocked": crops["blocked_flowers"], "rules": crops["flower_rules"],

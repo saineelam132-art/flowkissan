@@ -1,118 +1,118 @@
 fill,date,crop,kg,T_in_C,F_room,F_ambient,wl_pct,fragrance,T_out_C,hours,bag,boric,reason,season,cool_h,price_in,price_out,value_INR,value_kind,out_date
-0,2026-01-08,marigold,30.481,28.571,94.637,84.717,0.223,,5.939,16.0,True,False,hold for sale day,sankranti,8.5,51.0,71.4,500.505,price uplift,2026-01-09
-1,2026-01-08,marigold,30.481,28.571,94.637,84.717,0.223,,5.939,16.0,True,False,hold for sale day,sankranti,8.5,51.0,71.4,500.505,price uplift,2026-01-09
-2,2026-01-20,marigold,16.342,30.483,94.492,82.917,0.22,,5.948,16.0,True,False,glut saving (post-festival surplus),sankranti,7.75,20.4,40.8,628.661,loss avoided,2026-01-21
-2,2026-01-20,chamanthi,16.342,30.483,82.975,81.64,0.22,,5.946,16.0,True,False,glut saving (post-festival surplus),sankranti,7.75,51.0,102.0,1380.1,loss avoided,2026-01-21
-3,2026-01-22,marigold,41.891,30.583,94.353,82.262,0.28,,5.899,16.0,True,False,hold for sale day,sankranti,15.583,51.0,71.4,677.763,price uplift,2026-01-23
-4,2026-01-22,marigold,41.891,30.583,94.353,82.262,0.28,,5.899,16.0,True,False,hold for sale day,sankranti,15.583,51.0,71.4,677.763,price uplift,2026-01-23
-5,2026-01-24,marigold,23.078,29.958,94.492,81.64,0.243,,5.894,16.0,True,False,hold for sale day,sankranti,14.583,51.0,71.4,376.239,price uplift,2026-01-25
-6,2026-01-24,marigold,23.078,29.958,94.492,81.64,0.243,,5.894,16.0,True,False,hold for sale day,sankranti,14.583,51.0,71.4,376.239,price uplift,2026-01-25
-7,2026-01-29,marigold,42.089,30.296,94.338,81.887,0.27,,5.916,16.0,True,False,hold for sale day,sankranti,15.667,51.0,71.4,680.797,price uplift,2026-01-30
-8,2026-01-29,marigold,42.089,30.296,94.338,81.887,0.27,,5.916,16.0,True,False,hold for sale day,sankranti,15.667,51.0,71.4,680.797,price uplift,2026-01-30
-9,2026-01-31,rose,27.667,30.367,74.713,60.699,0.295,,6.005,16.0,True,False,hold for sale day,valentine,10.333,170.0,333.2,2163.784,price uplift,2026-02-01
-10,2026-01-31,rose,27.667,30.367,74.713,60.699,0.295,,6.005,16.0,True,False,hold for sale day,valentine,10.333,170.0,333.2,2163.784,price uplift,2026-02-01
-11,2026-02-19,rose,40.891,32.779,74.332,59.859,0.369,,5.825,16.0,True,False,hold for sale day,valentine,13.083,95.2,333.2,6197.541,price uplift,2026-02-20
-12,2026-02-19,rose,40.891,32.779,74.332,59.859,0.369,,5.825,16.0,True,False,hold for sale day,valentine,13.083,95.2,333.2,6197.541,price uplift,2026-02-20
-13,2026-03-03,jasmine,49.593,35.575,76.817,0.0,0.625,65.226,5.905,64.0,True,False,hold for sale day,summer_jasmine,12.917,204.0,357.0,3398.281,price uplift,2026-03-06
-14,2026-03-04,jasmine,59.997,34.779,83.632,0.0,0.532,75.448,5.905,40.0,True,False,hold for sale day,summer_jasmine,10.417,204.0,357.0,5578.431,price uplift,2026-03-06
-15,2026-03-10,jasmine,73.804,33.979,77.507,0.0,0.614,66.26,5.873,64.0,True,False,hold for sale day,summer_jasmine,11.0,204.0,357.0,5239.998,price uplift,2026-03-13
-16,2026-03-11,jasmine,48.854,35.187,83.76,0.0,0.544,75.64,5.874,40.0,True,False,hold for sale day,summer_jasmine,10.333,204.0,357.0,4562.78,price uplift,2026-03-13
-17,2026-03-16,jasmine,41.652,32.979,76.598,0.0,0.661,64.898,5.866,64.0,True,False,hold for festival,summer_jasmine,10.667,255.0,637.5,9583.632,price uplift,2026-03-19
-17,2026-03-16,marigold,31.239,32.979,81.722,1.825,0.479,,5.862,64.0,True,False,hold for festival,summer_jasmine,10.667,50.0,125.0,1613.893,price uplift,2026-03-19
-18,2026-03-16,jasmine,41.652,32.979,76.598,0.0,0.661,64.898,5.866,64.0,True,False,hold for festival,summer_jasmine,10.667,255.0,637.5,9583.632,price uplift,2026-03-19
-18,2026-03-16,marigold,31.239,32.979,81.722,1.825,0.479,,5.862,64.0,True,False,hold for festival,summer_jasmine,10.667,50.0,125.0,1613.893,price uplift,2026-03-19
-19,2026-03-24,jasmine,29.621,32.55,77.652,0.0,0.608,66.478,5.846,64.0,True,False,hold for festival,summer_jasmine,9.0,204.0,637.5,8531.425,price uplift,2026-03-27
-19,2026-03-24,tuberose,25.178,32.55,73.596,0.0,0.523,,5.843,64.0,True,False,hold for festival,summer_jasmine,9.0,112.0,350.0,3631.663,price uplift,2026-03-27
-20,2026-03-24,jasmine,29.621,32.55,77.652,0.0,0.608,66.478,5.846,64.0,True,False,hold for festival,summer_jasmine,9.0,204.0,637.5,8531.425,price uplift,2026-03-27
-20,2026-03-24,tuberose,25.178,32.55,73.596,0.0,0.523,,5.843,64.0,True,False,hold for festival,summer_jasmine,9.0,112.0,350.0,3631.663,price uplift,2026-03-27
-21,2026-03-31,jasmine,41.714,33.5,77.717,0.0,0.629,66.576,5.83,64.0,True,False,hold for sale day,summer_jasmine,8.75,102.0,238.0,3412.335,price uplift,2026-04-03
-21,2026-03-31,tuberose,35.457,33.5,73.651,0.0,0.541,,5.827,64.0,True,False,hold for sale day,summer_jasmine,8.75,56.0,196.0,3105.14,price uplift,2026-04-03
-22,2026-04-01,jasmine,42.552,35.467,83.208,0.0,0.578,74.812,5.83,40.0,True,False,hold for sale day,summer_jasmine,9.083,136.0,238.0,2590.992,price uplift,2026-04-03
-22,2026-04-01,tuberose,36.169,35.467,81.763,0.0,0.499,,5.827,40.0,True,False,hold for sale day,summer_jasmine,9.083,112.0,196.0,1716.436,price uplift,2026-04-03
-23,2026-04-07,jasmine,31.382,34.012,77.419,0.0,0.63,66.129,5.798,64.0,True,False,hold for sale day,summer_jasmine,8.25,136.0,238.0,1477.97,price uplift,2026-04-10
-23,2026-04-07,tuberose,26.675,34.012,73.522,0.0,0.542,,5.795,64.0,True,False,hold for sale day,summer_jasmine,8.25,112.0,196.0,835.496,price uplift,2026-04-10
-24,2026-04-08,jasmine,42.518,34.388,83.587,0.0,0.546,75.38,5.8,40.0,True,False,hold for sale day,summer_jasmine,8.75,136.0,238.0,2629.761,price uplift,2026-04-10
-24,2026-04-08,tuberose,36.14,34.388,81.957,0.0,0.47,,5.797,40.0,True,False,hold for sale day,summer_jasmine,9.25,112.0,196.0,1730.437,price uplift,2026-04-10
-25,2026-04-16,jasmine,17.031,34.879,77.242,0.0,0.626,65.864,5.741,64.0,True,False,hold for festival,summer_jasmine,8.0,170.0,425.0,2660.734,price uplift,2026-04-19
-25,2026-04-16,tuberose,14.477,34.879,73.51,0.0,0.538,,5.739,64.0,True,False,hold for festival,summer_jasmine,8.0,140.0,350.0,1677.873,price uplift,2026-04-19
-26,2026-04-16,jasmine,17.031,34.879,77.242,0.0,0.626,65.864,5.741,64.0,True,False,hold for festival,summer_jasmine,8.0,170.0,425.0,2660.734,price uplift,2026-04-19
-26,2026-04-16,tuberose,14.477,34.879,73.51,0.0,0.538,,5.739,64.0,True,False,hold for festival,summer_jasmine,8.0,140.0,350.0,1677.873,price uplift,2026-04-19
-27,2026-04-21,jasmine,34.674,35.9,76.468,0.0,0.672,64.703,5.818,64.0,True,False,hold for sale day,summer_jasmine,8.583,68.0,238.0,3910.227,price uplift,2026-04-24
-27,2026-04-21,tuberose,29.473,35.9,73.069,0.0,0.578,,5.815,64.0,True,False,hold for sale day,summer_jasmine,8.583,56.0,196.0,2546.091,price uplift,2026-04-24
-28,2026-04-22,jasmine,25.145,36.288,83.041,0.0,0.567,74.562,5.818,40.0,True,False,hold for sale day,summer_jasmine,9.167,68.0,238.0,3231.55,price uplift,2026-04-24
-28,2026-04-22,tuberose,21.373,36.288,81.745,0.0,0.488,,5.814,40.0,True,False,hold for sale day,summer_jasmine,9.167,56.0,196.0,2210.772,price uplift,2026-04-24
-29,2026-04-28,jasmine,31.643,35.15,77.141,0.0,0.643,65.712,5.706,64.0,True,False,hold for sale day,summer_jasmine,8.417,136.0,214.2,891.486,price uplift,2026-05-01
-29,2026-04-28,tuberose,26.897,35.15,73.467,0.0,0.553,,5.704,64.0,True,False,hold for sale day,summer_jasmine,8.417,112.0,210.0,1114.242,price uplift,2026-05-01
-30,2026-04-29,jasmine,21.951,35.458,83.668,0.0,0.553,75.502,5.704,40.0,True,False,hold for sale day,summer_jasmine,8.583,136.0,214.2,926.896,price uplift,2026-05-01
-30,2026-04-29,tuberose,18.658,35.458,82.065,0.0,0.476,,5.701,40.0,True,False,hold for sale day,summer_jasmine,8.667,112.0,210.0,1110.475,price uplift,2026-05-01
-31,2026-05-05,jasmine,24.41,34.688,77.439,0.0,0.615,66.158,5.788,64.0,True,False,hold for sale day,summer_jasmine,10.0,122.4,214.2,1036.308,price uplift,2026-05-08
-31,2026-05-05,tuberose,20.749,34.688,73.618,0.0,0.528,,5.784,64.0,True,False,hold for sale day,summer_jasmine,10.0,120.0,210.0,700.899,price uplift,2026-05-08
-32,2026-05-06,jasmine,18.535,33.017,84.674,0.0,0.476,77.011,5.791,40.0,True,False,hold for sale day,summer_jasmine,9.583,122.4,214.2,1077.081,price uplift,2026-05-08
-32,2026-05-06,tuberose,15.755,33.017,82.589,0.0,0.409,,5.788,40.0,True,False,hold for sale day,summer_jasmine,9.583,120.0,210.0,830.729,price uplift,2026-05-08
-33,2026-05-12,jasmine,35.967,35.463,76.669,0.0,0.667,65.004,5.831,64.0,True,False,hold for sale day,summer_jasmine,8.25,122.4,214.2,1464.952,price uplift,2026-05-15
-33,2026-05-12,tuberose,30.572,35.463,73.133,0.0,0.574,,5.828,64.0,True,False,hold for sale day,summer_jasmine,8.25,120.0,210.0,999.668,price uplift,2026-05-15
-34,2026-05-13,jasmine,37.351,35.667,83.045,0.0,0.572,74.567,5.831,40.0,True,False,hold for sale day,summer_jasmine,9.083,122.4,214.2,2034.34,price uplift,2026-05-15
-34,2026-05-13,tuberose,31.748,35.667,81.691,0.0,0.493,,5.829,40.0,True,False,hold for sale day,summer_jasmine,9.083,120.0,210.0,1609.851,price uplift,2026-05-15
-35,2026-05-19,jasmine,25.314,36.875,75.935,0.0,0.706,63.903,5.809,64.0,True,False,hold for sale day,summer_jasmine,8.333,122.4,214.2,989.874,price uplift,2026-05-22
-35,2026-05-19,tuberose,21.517,36.875,72.718,0.0,0.608,,5.807,64.0,True,False,hold for sale day,summer_jasmine,8.333,120.0,210.0,683.805,price uplift,2026-05-22
-36,2026-05-20,jasmine,35.664,40.296,79.396,0.0,0.713,69.093,5.811,40.0,True,False,hold for sale day,summer_jasmine,10.667,122.4,214.2,1656.671,price uplift,2026-05-22
-36,2026-05-20,tuberose,30.314,40.296,79.875,0.0,0.617,,5.808,40.0,True,False,hold for sale day,summer_jasmine,10.667,120.0,210.0,1415.793,price uplift,2026-05-22
-37,2026-05-26,jasmine,21.496,39.071,74.509,0.0,0.739,61.764,5.724,64.0,True,False,hold for sale day,summer_jasmine,8.833,122.4,214.2,774.249,price uplift,2026-05-29
-37,2026-05-26,tuberose,18.271,39.071,72.066,0.0,0.637,,5.721,64.0,True,False,hold for sale day,summer_jasmine,8.917,120.0,210.0,555.011,price uplift,2026-05-29
-38,2026-05-27,jasmine,18.409,42.833,77.865,0.0,0.738,66.798,5.73,40.0,True,False,hold for sale day,summer_jasmine,10.583,122.4,214.2,794.485,price uplift,2026-05-29
-38,2026-05-27,tuberose,15.648,42.833,79.302,0.0,0.638,,5.728,40.0,True,False,hold for sale day,summer_jasmine,10.583,120.0,210.0,711.507,price uplift,2026-05-29
-39,2026-06-02,jasmine,32.577,35.704,76.4,0.0,0.681,64.6,5.739,64.0,True,False,hold for sale day,summer_jasmine,8.833,136.0,238.0,1452.698,price uplift,2026-06-05
-39,2026-06-02,tuberose,27.69,35.704,73.02,0.0,0.586,,5.736,64.0,True,False,hold for sale day,summer_jasmine,8.917,96.0,168.0,718.712,price uplift,2026-06-05
-40,2026-06-03,jasmine,22.162,37.1,82.741,0.0,0.603,74.111,5.737,40.0,True,False,hold for sale day,summer_jasmine,8.667,136.0,238.0,1323.869,price uplift,2026-06-05
-40,2026-06-03,tuberose,18.838,37.1,81.609,0.0,0.52,,5.734,40.0,True,False,hold for sale day,summer_jasmine,8.667,96.0,168.0,760.878,price uplift,2026-06-05
-41,2026-06-09,jasmine,37.747,38.196,74.1,0.0,0.79,61.149,5.833,64.0,True,False,hold for sale day,summer_jasmine,10.667,136.0,238.0,1470.795,price uplift,2026-06-12
-41,2026-06-09,tuberose,32.085,38.196,71.559,0.0,0.681,,5.83,64.0,True,False,hold for sale day,summer_jasmine,10.667,96.0,168.0,750.81,price uplift,2026-06-12
-42,2026-06-10,jasmine,31.628,41.633,78.107,0.0,0.746,67.16,5.828,40.0,True,False,hold for sale day,summer_jasmine,12.667,136.0,238.0,1534.186,price uplift,2026-06-12
-42,2026-06-10,tuberose,26.884,41.633,79.262,0.0,0.645,,5.825,40.0,True,False,hold for sale day,summer_jasmine,12.667,96.0,168.0,975.894,price uplift,2026-06-12
-43,2026-06-16,jasmine,43.961,36.992,74.866,0.0,0.744,62.299,5.86,64.0,True,False,hold for sale day,summer_jasmine,10.833,136.0,238.0,1796.048,price uplift,2026-06-19
-43,2026-06-16,tuberose,37.367,36.992,72.069,0.0,0.641,,5.858,64.0,True,False,hold for sale day,summer_jasmine,10.833,96.0,168.0,908.007,price uplift,2026-06-19
-44,2026-06-17,jasmine,15.914,30.858,85.428,0.0,0.449,78.143,5.858,40.0,True,False,hold for sale day,summer_jasmine,9.833,136.0,238.0,1056.797,price uplift,2026-06-19
-44,2026-06-17,tuberose,13.527,30.858,82.96,0.0,0.386,,5.855,40.0,True,False,hold for sale day,summer_jasmine,9.833,96.0,168.0,579.426,price uplift,2026-06-19
-45,2026-06-23,jasmine,43.735,34.075,75.928,0.0,0.69,63.891,5.762,64.0,True,False,hold for sale day,summer_jasmine,8.75,136.0,238.0,1900.762,price uplift,2026-06-26
-45,2026-06-23,tuberose,37.175,34.075,72.559,0.0,0.593,,5.759,64.0,True,False,hold for sale day,summer_jasmine,8.75,96.0,168.0,935.913,price uplift,2026-06-26
-46,2026-06-24,jasmine,43.089,36.492,81.994,0.0,0.621,72.991,5.761,40.0,True,False,hold for sale day,summer_jasmine,11.0,136.0,238.0,2496.323,price uplift,2026-06-26
-46,2026-06-24,tuberose,36.626,36.492,81.044,0.0,0.536,,5.759,40.0,True,False,hold for sale day,summer_jasmine,11.0,96.0,168.0,1443.981,price uplift,2026-06-26
-47,2026-06-30,jasmine,73.07,36.554,75.527,0.0,0.747,63.291,4.506,64.0,True,False,hold for sale day,summer_jasmine,9.667,136.0,297.5,6358.279,price uplift,2026-07-03
-48,2026-07-01,jasmine,36.564,35.796,82.86,0.0,0.601,74.29,4.506,40.0,True,False,hold for sale day,summer_jasmine,12.417,170.0,297.5,2743.266,price uplift,2026-07-03
-48,2026-07-01,tuberose,31.079,35.796,81.629,0.0,0.518,,4.505,40.0,True,False,hold for sale day,summer_jasmine,12.417,54.4,95.2,711.958,price uplift,2026-07-03
-49,2026-07-07,jasmine,17.389,33.671,77.875,0.0,0.557,66.812,5.83,64.0,True,False,hold for sale day,summer_jasmine,10.167,170.0,297.5,1050.071,price uplift,2026-07-10
-49,2026-07-07,tuberose,14.781,33.671,73.822,0.0,0.477,,5.827,64.0,True,False,hold for sale day,summer_jasmine,10.167,54.4,95.2,229.74,price uplift,2026-07-10
-50,2026-07-08,jasmine,34.889,34.571,83.706,0.0,0.542,75.559,5.83,40.0,True,False,hold for sale day,summer_jasmine,8.5,170.0,297.5,2709.97,price uplift,2026-07-10
-50,2026-07-08,tuberose,29.656,34.571,82.061,0.0,0.467,,5.827,40.0,True,False,hold for sale day,summer_jasmine,8.5,54.4,95.2,692.656,price uplift,2026-07-10
-51,2026-07-14,jasmine,34.258,37.417,75.617,0.0,0.797,63.425,4.427,64.0,True,False,hold for sale day,summer_jasmine,6.0,170.0,297.5,1821.351,price uplift,2026-07-17
-51,2026-07-14,tuberose,29.119,37.417,73.101,0.0,0.687,,4.426,64.0,True,False,hold for sale day,summer_jasmine,6.083,54.4,95.2,428.442,price uplift,2026-07-17
-52,2026-07-15,jasmine,29.96,36.525,82.456,0.0,0.553,73.684,4.43,40.0,True,False,hold for sale day,summer_jasmine,5.5,170.0,297.5,2215.571,price uplift,2026-07-17
-52,2026-07-15,tuberose,25.466,36.525,81.798,0.0,0.475,,4.43,40.0,True,False,hold for sale day,summer_jasmine,5.583,54.4,95.2,588.31,price uplift,2026-07-17
-53,2026-07-21,jasmine,34.563,28.117,78.875,0.0,0.42,68.312,5.823,64.0,True,False,hold for sale day,summer_jasmine,6.167,170.0,297.5,2200.568,price uplift,2026-07-24
-53,2026-07-21,tuberose,29.379,28.117,74.415,0.0,0.358,,5.82,64.0,True,False,hold for sale day,summer_jasmine,6.25,54.4,95.2,475.614,price uplift,2026-07-24
-54,2026-07-22,jasmine,21.193,33.875,84.233,0.0,0.511,76.349,5.818,40.0,True,False,hold for sale day,summer_jasmine,8.833,170.0,297.5,1680.823,price uplift,2026-07-24
-54,2026-07-22,tuberose,18.014,33.875,82.297,0.0,0.44,,5.814,40.0,True,False,hold for sale day,summer_jasmine,8.833,54.4,95.2,425.158,price uplift,2026-07-24
-55,2026-07-28,jasmine,41.862,29.033,80.128,0.0,0.529,70.191,5.824,64.0,True,False,hold for sale day,summer_jasmine,5.333,170.0,297.5,2809.646,price uplift,2026-07-31
-55,2026-07-28,tuberose,35.582,29.033,75.508,0.0,0.454,,5.821,64.0,True,False,hold for sale day,summer_jasmine,5.333,54.4,95.2,610.498,price uplift,2026-07-31
-56,2026-07-29,jasmine,41.383,29.713,85.985,0.0,0.472,78.978,5.824,40.0,True,False,hold for sale day,summer_jasmine,5.167,170.0,297.5,3500.983,price uplift,2026-07-31
-56,2026-07-29,tuberose,35.176,29.713,83.522,0.0,0.406,,5.82,40.0,True,False,hold for sale day,summer_jasmine,5.25,54.4,95.2,872.006,price uplift,2026-07-31
-57,2026-08-06,marigold,63.861,36.721,92.732,74.584,0.444,,6.002,16.0,True,False,hold for sale day,sravana,13.083,80.0,112.0,1494.258,price uplift,2026-08-07
-58,2026-08-06,marigold,63.861,36.721,92.732,74.584,0.444,,6.002,16.0,True,False,hold for sale day,sravana,13.083,80.0,112.0,1494.258,price uplift,2026-08-07
-59,2026-09-10,marigold,27.456,29.792,93.983,77.687,0.218,,5.001,16.0,True,False,hold for sale day,dasara_deepavali_karthika,10.75,42.5,59.5,365.104,price uplift,2026-09-11
-60,2026-09-10,marigold,27.456,29.792,93.983,77.687,0.218,,5.001,16.0,True,False,hold for sale day,dasara_deepavali_karthika,10.75,42.5,59.5,365.104,price uplift,2026-09-11
-61,2026-09-18,marigold,33.454,33.687,93.99,72.37,0.319,,5.71,16.0,True,False,glut saving (post-festival surplus),dasara_deepavali_karthika,8.75,17.0,42.5,1332.081,loss avoided,2026-09-19
-61,2026-09-18,chamanthi,33.454,33.687,82.923,81.052,0.319,,5.709,16.0,True,False,glut saving (post-festival surplus),dasara_deepavali_karthika,8.75,68.0,170.0,4700.907,loss avoided,2026-09-19
-62,2026-09-24,marigold,45.672,27.487,94.951,78.345,0.246,,4.419,16.0,True,False,hold for sale day,dasara_deepavali_karthika,5.0,42.5,59.5,632.877,price uplift,2026-09-25
-63,2026-09-24,marigold,45.672,27.487,94.951,78.345,0.246,,4.419,16.0,True,False,hold for sale day,dasara_deepavali_karthika,5.0,42.5,59.5,632.877,price uplift,2026-09-25
-64,2026-10-01,marigold,55.679,32.4,93.858,74.611,0.325,,5.75,16.0,True,False,hold for sale day,dasara_deepavali_karthika,10.0,42.5,59.5,732.952,price uplift,2026-10-02
-65,2026-10-01,marigold,55.679,32.4,93.858,74.611,0.325,,5.75,16.0,True,False,hold for sale day,dasara_deepavali_karthika,10.0,42.5,59.5,732.952,price uplift,2026-10-02
-66,2026-10-08,marigold,56.518,33.787,93.58,73.86,0.356,,5.774,16.0,True,False,hold for sale day,dasara_deepavali_karthika,10.417,42.5,59.5,733.681,price uplift,2026-10-09
-67,2026-10-08,marigold,56.518,33.787,93.58,73.86,0.356,,5.774,16.0,True,False,hold for sale day,dasara_deepavali_karthika,10.417,42.5,59.5,733.681,price uplift,2026-10-09
-68,2026-10-15,marigold,33.38,29.092,93.906,78.034,0.289,,5.836,16.0,True,False,hold for sale day,dasara_deepavali_karthika,11.667,42.5,106.25,1902.236,price uplift,2026-10-16
-68,2026-10-15,chamanthi,33.38,29.092,82.869,81.311,0.289,,5.834,16.0,True,False,hold for sale day,dasara_deepavali_karthika,11.667,153.0,382.5,5442.998,price uplift,2026-10-16
-69,2026-10-15,marigold,33.38,29.092,93.906,78.034,0.289,,5.836,16.0,True,False,hold for sale day,dasara_deepavali_karthika,11.667,42.5,106.25,1902.236,price uplift,2026-10-16
-69,2026-10-15,chamanthi,33.38,29.092,82.869,81.311,0.289,,5.834,16.0,True,False,hold for sale day,dasara_deepavali_karthika,11.667,153.0,382.5,5442.998,price uplift,2026-10-16
-70,2026-10-24,marigold,13.775,35.825,93.797,73.477,0.309,,5.752,16.0,True,False,glut saving (post-festival surplus),dasara_deepavali_karthika,9.083,17.0,42.5,547.42,loss avoided,2026-10-25
-70,2026-10-24,chamanthi,13.775,35.825,82.911,81.108,0.308,,5.75,16.0,True,False,glut saving (post-festival surplus),dasara_deepavali_karthika,9.083,61.2,153.0,1741.985,loss avoided,2026-10-25
-71,2026-10-29,marigold,37.606,30.154,94.311,78.659,0.266,,5.811,16.0,True,False,hold for sale day,dasara_deepavali_karthika,9.083,42.5,59.5,506.393,price uplift,2026-10-30
-72,2026-10-29,marigold,37.606,30.154,94.311,78.659,0.266,,5.811,16.0,True,False,hold for sale day,dasara_deepavali_karthika,9.083,42.5,59.5,506.393,price uplift,2026-10-30
+0,2026-01-08,marigold,30.481,19.146,94.231,76.487,0.102,,2.393,23.0,True,False,hold for sale day,sankranti,3.833,51.0,71.4,494.178,price uplift,2026-01-09
+1,2026-01-08,marigold,30.481,19.146,94.231,76.487,0.102,,2.393,23.0,True,False,hold for sale day,sankranti,3.833,51.0,71.4,494.178,price uplift,2026-01-09
+2,2026-01-20,marigold,16.342,18.771,94.288,73.514,0.094,,2.437,23.0,True,False,glut saving (post-festival surplus),sankranti,3.5,20.4,40.8,628.095,loss avoided,2026-01-21
+2,2026-01-20,chamanthi,16.342,18.771,75.912,73.495,0.094,,2.436,23.0,True,False,glut saving (post-festival surplus),sankranti,3.5,51.0,102.0,1264.219,loss avoided,2026-01-21
+3,2026-01-22,marigold,41.891,20.271,94.118,72.653,0.114,,2.57,23.0,True,False,hold for sale day,sankranti,4.25,51.0,71.4,675.423,price uplift,2026-01-23
+4,2026-01-22,marigold,41.891,20.271,94.118,72.653,0.114,,2.57,23.0,True,False,hold for sale day,sankranti,4.25,51.0,71.4,675.423,price uplift,2026-01-23
+5,2026-01-24,marigold,23.078,23.125,93.946,72.157,0.117,,2.596,23.0,True,False,hold for sale day,sankranti,4.333,51.0,71.4,369.218,price uplift,2026-01-25
+6,2026-01-24,marigold,23.078,23.125,93.946,72.157,0.117,,2.596,23.0,True,False,hold for sale day,sankranti,4.333,51.0,71.4,369.218,price uplift,2026-01-25
+7,2026-01-29,marigold,42.089,20.75,94.077,72.266,0.115,,2.577,23.0,True,False,hold for sale day,sankranti,4.333,51.0,71.4,677.375,price uplift,2026-01-30
+8,2026-01-29,marigold,42.089,20.75,94.077,72.266,0.115,,2.577,23.0,True,False,hold for sale day,sankranti,4.333,51.0,71.4,677.375,price uplift,2026-01-30
+9,2026-01-31,rose,27.667,21.454,66.699,42.37,0.135,,2.612,23.0,True,False,hold for sale day,valentine,4.167,170.0,333.2,1437.031,price uplift,2026-02-01
+10,2026-01-31,rose,27.667,21.454,66.699,42.37,0.135,,2.612,23.0,True,False,hold for sale day,valentine,4.167,170.0,333.2,1437.031,price uplift,2026-02-01
+11,2026-02-19,rose,40.891,21.192,66.636,40.767,0.143,,2.638,23.0,True,False,hold for sale day,valentine,4.417,95.2,333.2,5173.232,price uplift,2026-02-20
+12,2026-02-19,rose,40.891,21.192,66.636,40.767,0.143,,2.638,23.0,True,False,hold for sale day,valentine,4.417,95.2,333.2,5173.232,price uplift,2026-02-20
+13,2026-03-03,jasmine,49.593,25.208,81.2,0.0,0.312,71.8,2.844,71.0,True,False,hold for sale day,summer_jasmine,4.667,204.0,357.0,4214.441,price uplift,2026-03-06
+14,2026-03-04,jasmine,59.997,23.475,87.126,0.0,0.237,80.69,2.845,47.0,True,False,hold for sale day,summer_jasmine,4.5,204.0,357.0,6377.916,price uplift,2026-03-06
+15,2026-03-10,jasmine,73.804,24.588,81.263,0.0,0.318,71.894,2.913,71.0,True,False,hold for sale day,summer_jasmine,4.75,204.0,357.0,6287.171,price uplift,2026-03-13
+16,2026-03-11,jasmine,48.854,24.2,87.009,0.0,0.243,80.514,2.914,47.0,True,False,hold for sale day,summer_jasmine,4.417,204.0,357.0,5172.093,price uplift,2026-03-13
+17,2026-03-16,jasmine,41.652,25.088,80.768,0.0,0.364,71.152,3.015,71.0,True,False,hold for festival,summer_jasmine,5.333,255.0,637.5,10747.01,price uplift,2026-03-19
+17,2026-03-16,marigold,31.239,25.088,82.886,0.0,0.261,,3.011,71.0,True,False,hold for festival,summer_jasmine,5.417,50.0,125.0,1666.184,price uplift,2026-03-19
+18,2026-03-16,jasmine,41.652,25.088,80.768,0.0,0.364,71.152,3.015,71.0,True,False,hold for festival,summer_jasmine,5.333,255.0,637.5,10747.01,price uplift,2026-03-19
+18,2026-03-16,marigold,31.239,25.088,82.886,0.0,0.261,,3.011,71.0,True,False,hold for festival,summer_jasmine,5.417,50.0,125.0,1666.184,price uplift,2026-03-19
+19,2026-03-24,jasmine,29.621,25.788,80.789,0.0,0.355,71.183,2.998,71.0,True,False,hold for festival,summer_jasmine,5.167,204.0,637.5,9158.786,price uplift,2026-03-27
+19,2026-03-24,tuberose,25.178,25.788,75.098,0.0,0.303,,2.995,71.0,True,False,hold for festival,summer_jasmine,5.167,112.0,350.0,3777.787,price uplift,2026-03-27
+20,2026-03-24,jasmine,29.621,25.788,80.789,0.0,0.355,71.183,2.998,71.0,True,False,hold for festival,summer_jasmine,5.167,204.0,637.5,9158.786,price uplift,2026-03-27
+20,2026-03-24,tuberose,25.178,25.788,75.098,0.0,0.303,,2.995,71.0,True,False,hold for festival,summer_jasmine,5.167,112.0,350.0,3777.787,price uplift,2026-03-27
+21,2026-03-31,jasmine,41.714,26.692,80.598,0.0,0.364,70.897,3.07,71.0,True,False,hold for sale day,summer_jasmine,5.083,102.0,238.0,3717.804,price uplift,2026-04-03
+21,2026-03-31,tuberose,35.457,26.692,74.958,0.0,0.31,,3.067,71.0,True,False,hold for sale day,summer_jasmine,5.083,56.0,196.0,3207.489,price uplift,2026-04-03
+22,2026-04-01,jasmine,42.552,27.575,85.995,0.0,0.3,78.992,3.071,47.0,True,False,hold for sale day,summer_jasmine,5.333,136.0,238.0,2895.81,price uplift,2026-04-03
+22,2026-04-01,tuberose,36.169,27.575,82.577,0.0,0.256,,3.067,47.0,True,False,hold for sale day,summer_jasmine,5.333,112.0,196.0,1788.034,price uplift,2026-04-03
+23,2026-04-07,jasmine,31.382,28.179,80.266,0.0,0.363,70.399,3.141,71.0,True,False,hold for sale day,summer_jasmine,5.083,136.0,238.0,1705.268,price uplift,2026-04-10
+23,2026-04-07,tuberose,26.675,28.179,74.768,0.0,0.31,,3.137,71.0,True,False,hold for sale day,summer_jasmine,5.083,112.0,196.0,909.34,price uplift,2026-04-10
+24,2026-04-08,jasmine,42.518,28.471,85.728,0.0,0.315,78.592,3.142,47.0,True,False,hold for sale day,summer_jasmine,5.333,136.0,238.0,2865.264,price uplift,2026-04-10
+24,2026-04-08,tuberose,36.14,28.471,82.42,0.0,0.269,,3.139,47.0,True,False,hold for sale day,summer_jasmine,5.333,112.0,196.0,1774.772,price uplift,2026-04-10
+25,2026-04-16,jasmine,17.031,28.879,80.141,0.0,0.375,70.211,3.018,71.0,True,False,hold for festival,summer_jasmine,5.083,170.0,425.0,2883.75,price uplift,2026-04-19
+25,2026-04-16,tuberose,14.477,28.879,74.731,0.0,0.321,,3.015,71.0,True,False,hold for festival,summer_jasmine,5.167,140.0,350.0,1747.626,price uplift,2026-04-19
+26,2026-04-16,jasmine,17.031,28.879,80.141,0.0,0.375,70.211,3.018,71.0,True,False,hold for festival,summer_jasmine,5.083,170.0,425.0,2883.75,price uplift,2026-04-19
+26,2026-04-16,tuberose,14.477,28.879,74.731,0.0,0.321,,3.015,71.0,True,False,hold for festival,summer_jasmine,5.167,140.0,350.0,1747.626,price uplift,2026-04-19
+27,2026-04-21,jasmine,34.674,28.971,80.051,0.0,0.385,70.076,3.099,71.0,True,False,hold for sale day,summer_jasmine,5.167,68.0,238.0,4222.814,price uplift,2026-04-24
+27,2026-04-21,tuberose,29.473,28.971,74.657,0.0,0.329,,3.096,71.0,True,False,hold for sale day,summer_jasmine,5.25,56.0,196.0,2648.045,price uplift,2026-04-24
+28,2026-04-22,jasmine,25.145,29.192,85.701,0.0,0.305,78.552,3.098,47.0,True,False,hold for sale day,summer_jasmine,5.083,68.0,238.0,3403.249,price uplift,2026-04-24
+28,2026-04-22,tuberose,21.373,29.192,82.431,0.0,0.261,,3.095,47.0,True,False,hold for sale day,summer_jasmine,5.083,56.0,196.0,2247.21,price uplift,2026-04-24
+29,2026-04-28,jasmine,31.643,29.562,79.903,0.0,0.389,69.854,3.173,71.0,True,False,hold for sale day,summer_jasmine,5.167,136.0,214.2,1091.251,price uplift,2026-05-01
+29,2026-04-28,tuberose,26.897,29.562,74.582,0.0,0.332,,3.169,71.0,True,False,hold for sale day,summer_jasmine,5.167,112.0,210.0,1186.178,price uplift,2026-05-01
+30,2026-04-29,jasmine,21.951,29.762,85.542,0.0,0.304,78.312,3.171,47.0,True,False,hold for sale day,summer_jasmine,5.083,136.0,214.2,1024.499,price uplift,2026-05-01
+30,2026-04-29,tuberose,18.658,29.762,82.345,0.0,0.26,,3.167,47.0,True,False,hold for sale day,summer_jasmine,5.083,112.0,210.0,1128.352,price uplift,2026-05-01
+31,2026-05-05,jasmine,24.41,29.075,80.174,0.0,0.361,70.262,3.065,71.0,True,False,hold for sale day,summer_jasmine,5.0,122.4,214.2,1189.112,price uplift,2026-05-08
+31,2026-05-05,tuberose,20.749,29.075,74.763,0.0,0.308,,3.062,71.0,True,False,hold for sale day,summer_jasmine,5.0,120.0,210.0,757.708,price uplift,2026-05-08
+32,2026-05-06,jasmine,18.535,27.183,86.365,0.0,0.274,79.548,3.068,47.0,True,False,hold for sale day,summer_jasmine,4.583,122.4,214.2,1150.817,price uplift,2026-05-08
+32,2026-05-06,tuberose,15.755,27.183,82.853,0.0,0.234,,3.064,47.0,True,False,hold for sale day,summer_jasmine,4.667,120.0,210.0,844.214,price uplift,2026-05-08
+33,2026-05-12,jasmine,35.967,28.792,80.061,0.0,0.393,70.091,3.148,71.0,True,False,hold for sale day,summer_jasmine,5.167,122.4,214.2,1741.414,price uplift,2026-05-15
+33,2026-05-12,tuberose,30.572,28.792,74.646,0.0,0.335,,3.144,71.0,True,False,hold for sale day,summer_jasmine,5.167,120.0,210.0,1107.689,price uplift,2026-05-15
+34,2026-05-13,jasmine,37.351,28.887,85.666,0.0,0.321,78.499,3.148,47.0,True,False,hold for sale day,summer_jasmine,5.25,122.4,214.2,2260.037,price uplift,2026-05-15
+34,2026-05-13,tuberose,31.748,28.887,82.391,0.0,0.274,,3.145,47.0,True,False,hold for sale day,summer_jasmine,5.333,120.0,210.0,1668.258,price uplift,2026-05-15
+35,2026-05-19,jasmine,25.314,30.862,79.386,0.0,0.406,69.079,3.581,71.0,True,False,hold for sale day,summer_jasmine,5.25,122.4,214.2,1188.589,price uplift,2026-05-22
+35,2026-05-19,tuberose,21.517,30.862,74.244,0.0,0.347,,3.578,71.0,True,False,hold for sale day,summer_jasmine,5.333,120.0,210.0,761.099,price uplift,2026-05-22
+36,2026-05-20,jasmine,35.664,31.379,84.719,0.0,0.362,77.078,3.582,47.0,True,False,hold for sale day,summer_jasmine,5.667,122.4,214.2,2083.145,price uplift,2026-05-22
+36,2026-05-20,tuberose,30.314,31.379,81.835,0.0,0.31,,3.579,47.0,True,False,hold for sale day,summer_jasmine,5.667,120.0,210.0,1555.737,price uplift,2026-05-22
+37,2026-05-26,jasmine,21.496,32.292,79.135,0.0,0.499,68.702,3.422,71.0,True,False,hold for sale day,summer_jasmine,5.417,122.4,214.2,994.41,price uplift,2026-05-29
+37,2026-05-26,tuberose,18.271,32.292,74.108,0.0,0.428,,3.418,71.0,True,False,hold for sale day,summer_jasmine,5.417,120.0,210.0,638.776,price uplift,2026-05-29
+38,2026-05-27,jasmine,18.409,31.467,85.077,0.0,0.429,77.616,3.427,47.0,True,False,hold for sale day,summer_jasmine,5.167,122.4,214.2,1087.125,price uplift,2026-05-29
+38,2026-05-27,tuberose,15.648,31.467,82.037,0.0,0.368,,3.424,47.0,True,False,hold for sale day,summer_jasmine,5.25,120.0,210.0,808.112,price uplift,2026-05-29
+39,2026-06-02,jasmine,32.577,30.179,79.832,0.0,0.456,69.748,3.543,71.0,True,False,hold for sale day,summer_jasmine,5.333,136.0,238.0,1730.911,price uplift,2026-06-05
+39,2026-06-02,tuberose,27.69,30.179,74.535,0.0,0.391,,3.539,71.0,True,False,hold for sale day,summer_jasmine,5.333,96.0,168.0,795.546,price uplift,2026-06-05
+40,2026-06-03,jasmine,22.162,30.287,85.538,0.0,0.375,78.307,3.541,47.0,True,False,hold for sale day,summer_jasmine,5.167,136.0,238.0,1480.807,price uplift,2026-06-05
+40,2026-06-03,tuberose,18.838,30.287,82.329,0.0,0.321,,3.537,47.0,True,False,hold for sale day,summer_jasmine,5.167,96.0,168.0,788.726,price uplift,2026-06-05
+41,2026-06-09,jasmine,37.747,31.479,78.946,0.0,0.584,68.418,3.613,71.0,True,False,hold for sale day,summer_jasmine,5.583,136.0,238.0,1917.344,price uplift,2026-06-12
+41,2026-06-09,tuberose,32.085,31.479,73.818,0.0,0.501,,3.61,71.0,True,False,hold for sale day,summer_jasmine,5.667,96.0,168.0,878.878,price uplift,2026-06-12
+42,2026-06-10,jasmine,31.628,31.975,84.456,0.0,0.506,76.685,3.61,47.0,True,False,hold for sale day,summer_jasmine,5.5,136.0,238.0,2023.911,price uplift,2026-06-12
+42,2026-06-10,tuberose,26.884,31.975,81.605,0.0,0.435,,3.606,47.0,True,False,hold for sale day,summer_jasmine,5.583,96.0,168.0,1088.83,price uplift,2026-06-12
+43,2026-06-16,jasmine,43.961,30.971,78.979,0.0,0.421,68.469,4.302,71.0,True,False,hold for sale day,summer_jasmine,5.75,136.0,238.0,2249.916,price uplift,2026-06-19
+43,2026-06-16,tuberose,37.367,30.971,73.962,0.0,0.359,,4.302,71.0,True,False,hold for sale day,summer_jasmine,5.833,96.0,168.0,1039.182,price uplift,2026-06-19
+44,2026-06-17,jasmine,15.914,31.558,84.93,0.0,0.345,77.395,4.3,47.0,True,False,hold for sale day,summer_jasmine,5.417,136.0,238.0,1041.337,price uplift,2026-06-19
+44,2026-06-17,tuberose,13.527,31.558,81.95,0.0,0.295,,4.3,47.0,True,False,hold for sale day,summer_jasmine,5.417,96.0,168.0,558.24,price uplift,2026-06-19
+45,2026-06-23,jasmine,43.735,27.704,80.329,0.0,0.477,70.493,3.463,71.0,True,False,hold for sale day,summer_jasmine,4.75,136.0,238.0,2373.54,price uplift,2026-06-26
+45,2026-06-23,tuberose,37.175,27.704,74.704,0.0,0.408,,3.459,71.0,True,False,hold for sale day,summer_jasmine,4.833,96.0,168.0,1077.722,price uplift,2026-06-26
+46,2026-06-24,jasmine,43.089,29.838,85.297,0.0,0.461,77.945,3.462,47.0,True,False,hold for sale day,summer_jasmine,5.083,136.0,238.0,2846.92,price uplift,2026-06-26
+46,2026-06-24,tuberose,36.626,29.838,82.118,0.0,0.397,,3.459,47.0,True,False,hold for sale day,summer_jasmine,5.167,96.0,168.0,1516.735,price uplift,2026-06-26
+47,2026-06-30,jasmine,73.07,30.029,79.354,0.0,0.416,69.03,4.299,71.0,True,False,hold for sale day,summer_jasmine,5.417,136.0,297.5,7240.879,price uplift,2026-07-03
+48,2026-07-01,jasmine,36.564,30.017,85.164,0.0,0.369,77.745,4.299,47.0,True,False,hold for sale day,summer_jasmine,5.083,170.0,297.5,3013.867,price uplift,2026-07-03
+48,2026-07-01,tuberose,31.079,30.017,82.031,0.0,0.316,,4.299,47.0,True,False,hold for sale day,summer_jasmine,5.083,54.4,95.2,728.709,price uplift,2026-07-03
+49,2026-07-07,jasmine,17.389,29.542,80.101,0.0,0.392,70.151,3.081,71.0,True,False,hold for sale day,summer_jasmine,4.917,170.0,297.5,1171.418,price uplift,2026-07-10
+49,2026-07-07,tuberose,14.781,29.542,74.686,0.0,0.335,,3.077,71.0,True,False,hold for sale day,summer_jasmine,5.0,54.4,95.2,243.334,price uplift,2026-07-10
+50,2026-07-08,jasmine,34.889,29.071,85.6,0.0,0.322,78.4,3.081,47.0,True,False,hold for sale day,summer_jasmine,5.333,170.0,297.5,2925.118,price uplift,2026-07-10
+50,2026-07-08,tuberose,29.656,29.071,82.352,0.0,0.275,,3.077,47.0,True,False,hold for sale day,summer_jasmine,5.333,54.4,95.2,705.323,price uplift,2026-07-10
+51,2026-07-14,jasmine,34.258,31.354,78.758,0.0,0.428,68.137,4.253,71.0,True,False,hold for sale day,summer_jasmine,5.5,170.0,297.5,2168.517,price uplift,2026-07-17
+51,2026-07-14,tuberose,29.119,31.354,73.763,0.0,0.366,,4.253,71.0,True,False,hold for sale day,summer_jasmine,5.583,54.4,95.2,453.25,price uplift,2026-07-17
+52,2026-07-15,jasmine,29.96,31.508,84.836,0.0,0.508,77.254,4.256,47.0,True,False,hold for sale day,summer_jasmine,4.917,170.0,297.5,2429.9,price uplift,2026-07-17
+52,2026-07-15,tuberose,25.466,31.508,81.831,0.0,0.437,,4.256,47.0,True,False,hold for sale day,summer_jasmine,4.917,54.4,95.2,589.866,price uplift,2026-07-17
+53,2026-07-21,jasmine,34.563,27.75,80.378,0.0,0.365,70.568,3.202,71.0,True,False,hold for sale day,summer_jasmine,4.917,170.0,297.5,2359.03,price uplift,2026-07-24
+53,2026-07-21,tuberose,29.379,27.75,74.838,0.0,0.311,,3.199,71.0,True,False,hold for sale day,summer_jasmine,5.0,54.4,95.2,488.374,price uplift,2026-07-24
+54,2026-07-22,jasmine,21.193,28.529,86.05,0.0,0.392,79.074,3.198,47.0,True,False,hold for sale day,summer_jasmine,4.833,170.0,297.5,1801.233,price uplift,2026-07-24
+54,2026-07-22,tuberose,18.014,28.529,82.631,0.0,0.336,,3.194,47.0,True,False,hold for sale day,summer_jasmine,4.917,54.4,95.2,432.323,price uplift,2026-07-24
+55,2026-07-28,jasmine,41.862,27.033,80.534,0.0,0.504,70.802,3.229,71.0,True,False,hold for sale day,summer_jasmine,4.583,170.0,297.5,2862.57,price uplift,2026-07-31
+55,2026-07-28,tuberose,35.582,27.033,74.863,0.0,0.432,,3.226,71.0,True,False,hold for sale day,summer_jasmine,4.667,54.4,95.2,589.306,price uplift,2026-07-31
+56,2026-07-29,jasmine,41.383,26.817,86.371,0.0,0.413,79.556,3.229,47.0,True,False,hold for sale day,summer_jasmine,4.583,170.0,297.5,3554.48,price uplift,2026-07-31
+56,2026-07-29,tuberose,35.176,26.817,82.782,0.0,0.354,,3.226,47.0,True,False,hold for sale day,summer_jasmine,4.583,54.4,95.2,848.774,price uplift,2026-07-31
+57,2026-08-06,marigold,63.861,29.65,93.006,59.269,0.231,,3.309,23.0,True,False,hold for sale day,sravana,5.833,80.0,112.0,1527.987,price uplift,2026-08-07
+58,2026-08-06,marigold,63.861,29.65,93.006,59.269,0.231,,3.309,23.0,True,False,hold for sale day,sravana,5.833,80.0,112.0,1527.987,price uplift,2026-08-07
+59,2026-09-10,marigold,27.456,29.733,93.276,64.084,0.167,,3.193,23.0,True,False,hold for sale day,dasara_deepavali_karthika,5.167,42.5,59.5,354.363,price uplift,2026-09-11
+60,2026-09-10,marigold,27.456,29.733,93.276,64.084,0.167,,3.193,23.0,True,False,hold for sale day,dasara_deepavali_karthika,5.167,42.5,59.5,354.363,price uplift,2026-09-11
+61,2026-09-18,marigold,33.454,28.775,93.35,56.182,0.189,,3.005,23.0,True,False,glut saving (post-festival surplus),dasara_deepavali_karthika,5.333,17.0,42.5,1324.743,loss avoided,2026-09-19
+61,2026-09-18,chamanthi,33.454,28.775,75.78,72.612,0.189,,3.004,23.0,True,False,glut saving (post-festival surplus),dasara_deepavali_karthika,5.333,68.0,170.0,4301.632,loss avoided,2026-09-19
+62,2026-09-24,marigold,45.672,26.596,93.572,69.114,0.251,,4.282,23.0,True,False,hold for sale day,dasara_deepavali_karthika,4.667,42.5,59.5,595.349,price uplift,2026-09-25
+63,2026-09-24,marigold,45.672,26.596,93.572,69.114,0.251,,4.282,23.0,True,False,hold for sale day,dasara_deepavali_karthika,4.667,42.5,59.5,595.349,price uplift,2026-09-25
+64,2026-10-01,marigold,55.679,27.304,93.39,60.384,0.202,,3.044,23.0,True,False,hold for sale day,dasara_deepavali_karthika,5.5,42.5,59.5,721.3,price uplift,2026-10-02
+65,2026-10-01,marigold,55.679,27.304,93.39,60.384,0.202,,3.044,23.0,True,False,hold for sale day,dasara_deepavali_karthika,5.5,42.5,59.5,721.3,price uplift,2026-10-02
+66,2026-10-08,marigold,56.518,27.096,93.414,60.015,0.202,,3.053,23.0,True,False,hold for sale day,dasara_deepavali_karthika,5.417,42.5,59.5,732.987,price uplift,2026-10-09
+67,2026-10-08,marigold,56.518,27.096,93.414,60.015,0.202,,3.053,23.0,True,False,hold for sale day,dasara_deepavali_karthika,5.417,42.5,59.5,732.987,price uplift,2026-10-09
+68,2026-10-15,marigold,33.38,25.733,93.486,67.536,0.17,,3.184,23.0,True,False,hold for sale day,dasara_deepavali_karthika,5.5,42.5,106.25,1891.327,price uplift,2026-10-16
+68,2026-10-15,chamanthi,33.38,25.733,75.786,73.092,0.17,,3.183,23.0,True,False,hold for sale day,dasara_deepavali_karthika,5.5,153.0,382.5,4552.639,price uplift,2026-10-16
+69,2026-10-15,marigold,33.38,25.733,93.486,67.536,0.17,,3.184,23.0,True,False,hold for sale day,dasara_deepavali_karthika,5.5,42.5,106.25,1891.327,price uplift,2026-10-16
+69,2026-10-15,chamanthi,33.38,25.733,75.786,73.092,0.17,,3.183,23.0,True,False,hold for sale day,dasara_deepavali_karthika,5.5,153.0,382.5,4552.639,price uplift,2026-10-16
+70,2026-10-24,marigold,13.775,26.7,93.676,59.027,0.146,,2.886,23.0,True,False,glut saving (post-festival surplus),dasara_deepavali_karthika,4.5,17.0,42.5,547.606,loss avoided,2026-10-25
+70,2026-10-24,chamanthi,13.775,26.7,75.826,72.729,0.146,,2.885,23.0,True,False,glut saving (post-festival surplus),dasara_deepavali_karthika,4.5,61.2,153.0,1595.723,loss avoided,2026-10-25
+71,2026-10-29,marigold,37.606,26.692,93.632,68.059,0.237,,3.455,23.0,True,False,hold for sale day,dasara_deepavali_karthika,4.75,42.5,59.5,491.863,price uplift,2026-10-30
+72,2026-10-29,marigold,37.606,26.692,93.632,68.059,0.237,,3.455,23.0,True,False,hold for sale day,dasara_deepavali_karthika,4.75,42.5,59.5,491.863,price uplift,2026-10-30

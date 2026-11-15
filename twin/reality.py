@@ -9,9 +9,9 @@ def cases(cfg=None):
     rc = (cfg or load_config())["reality"]
     g = rc["glycol"]
     return {
-        "thermal_mass": {"label": "Racks + crates cool down too", "real": {"extra_C_room_kJ_K": rc["rack_steel_kg"] * rc["steel_cp_kJ_kgK"],
+        "thermal_mass": {"label": "Racks + crates cool down too", "real": {"extra_C_room_kJ_K": rc["racks"][rc["rack_material"]]["kg_total"] * rc["racks"][rc["rack_material"]]["cp_kJ_kgK"],
                                                                        "crate": {"kJ_K_each": rc["crate_empty_kg"] * rc["pp_cp_kJ_kgK"]}},
-                         "E": f"2 racks, {rc['rack_steel_kg']} kg steel; crates {rc['crate_empty_kg']} kg polypropylene arrive warm with the flowers"},
+                         "E": f"2 {rc['racks'][rc['rack_material']]['label']}, {rc['racks'][rc['rack_material']]['kg_total']} kg; crates {rc['crate_empty_kg']} kg polypropylene arrive warm with the flowers"},
         "walls": {"label": "Walls: outside area 30.8 m² + 10 % thermal bridges", "real": {"wall_factor": rc["wall_outside_area_m2"] / 25.6 * (1 + rc["wall_bridge_frac"])},
                   "E": "+10 % for corners and the door frame"},
         "door": {"label": "Door: 8 openings × 20 s a day, worn curtain (E = 0.70)",
@@ -19,8 +19,8 @@ def cases(cfg=None):
         "fans_lights": {"label": "Fans and lights: cooler fan 30 W, 10 W circulation fan day and night, controller 10 W", "real": dict(rc["fans_lights"]),
                         "E": "circulation fan keeps the air moving at night (its heat stays in the room)"},
         "defrost": {"label": "Defrost: 2 × 20 min a day (off-cycle)", "real": {"defrost": rc["defrost"]}, "E": "03:00 and 15:00: chiller stopped 20 min, cooler fan on"},
-        "wax_real": {"label": "Wax real-life: 90 % of latent heat, melts over 2.5–4.5 °C, fins 25 % weaker, conductivity only ×3", "real": dict(rc["wax"]),
-                     "E": "blend not sharp, graphite less effective than hoped"},
+        "wax_real": {"label": "Ice real-life: only 90 % freezes, 0.5 K supercooling, fins 25 % weaker", "real": dict(rc["wax"]),
+                     "E": "trapped air, uneven freezing, dirty fins"},
         "machine_real": {"label": "Machine real-life: start losses, COP −10 % when hot, PV dust + 3 % wiring loss", "real": dict(rc["machine"]),
                          "E": "first minute of every start gives little cold; dust 0.3 %/day, cleaned weekly"},
         "glycol_real": {"label": "Pump and glycol losses: pump 55 W, pipe heat gain ×1.5, exchanger approach 5 K, cooler 20 % weaker, loop re-cooled after every stop",
@@ -41,3 +41,25 @@ def spec(names, cfg=None, extra=None):
         wk = wk or cs[k].get("weather")
     real.update(extra or {})
     return real, wk
+
+
+def practice(kind, cfg=None):
+    """'best' or 'poor' practice -> (real options, weather kind, cfg patch, humidity option). Both keep every realistic loss."""
+    cfg = cfg or load_config()
+    rc = cfg["reality"]
+    P = rc[kind]
+    real, wk = spec(ORDER, cfg)
+    rk = rc["racks"][P["rack_material"]]
+    real.update({"extra_C_room_kJ_K": rk["kg_total"] * rk["cp_kJ_kgK"], "door_times": P["door"]["times"], "door_seconds": P["door"]["seconds"],
+                 "curtain_E": P["door"]["curtain_E"], "lights_door_only": P["lights_door_only"]})
+    if P.get("roof_solar"):
+        real["roof_solar"] = P["roof_solar"]
+    if P.get("floor"):
+        real["floor"] = P["floor"]
+    if P.get("night_fan"):
+        real["night_fan"] = P["night_fan"]
+        real["circ_fan_W"] = 0                                    # the night fan replaces the always-on circulation fan
+    else:
+        real["circ_fan_W"] = P.get("circ_fan_W", rc["fans_lights"]["circ_fan_W"])
+    patch = {"live_run": {"load_hour": P["load_hour"]}}
+    return real, wk, patch, ("liners_fogger" if P["bags"] else "nothing")

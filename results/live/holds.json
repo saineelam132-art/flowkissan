@@ -12,394 +12,684 @@
   "jasmine": {
    "ideal": {
     "1": {
-     "freshness_kept_pct": 91.2389,
+     "freshness_kept_pct": 92.0983,
      "freshness_no_room_pct": 37.4909,
-     "weight_loss_pct": 0.4282,
+     "weight_loss_pct": 0.4231,
      "hours_in_room": 16.0,
      "kg_per_fill": 120.0,
-     "time_to_6C_h": 7.9292,
+     "time_to_6C_h": 4.6033,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 22197.9219
+     "value_saved_INR_per_fill": 22552.8777
     },
     "2": {
-     "freshness_kept_pct": 84.9767,
+     "freshness_kept_pct": 86.465,
      "freshness_no_room_pct": 1.275,
-     "weight_loss_pct": 0.5414,
+     "weight_loss_pct": 0.4807,
      "hours_in_room": 40.0,
      "kg_per_fill": 120.0,
-     "time_to_6C_h": 8.9984,
+     "time_to_6C_h": 4.6315,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 34568.8096
+     "value_saved_INR_per_fill": 35183.496
     },
     "3": {
-     "freshness_kept_pct": 78.9651,
+     "freshness_kept_pct": 81.0196,
      "freshness_no_room_pct": 0.0,
-     "weight_loss_pct": 0.645,
+     "weight_loss_pct": 0.5302,
      "hours_in_room": 64.0,
      "kg_per_fill": 120.0,
-     "time_to_6C_h": 8.7201,
+     "time_to_6C_h": 4.6197,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 32612.5681
+     "value_saved_INR_per_fill": 33461.0949
     }
    },
    "realistic": {
     "1": {
-     "freshness_kept_pct": 89.3925,
+     "freshness_kept_pct": 90.4099,
      "freshness_no_room_pct": 27.1608,
-     "weight_loss_pct": 0.4972,
+     "weight_loss_pct": 0.476,
      "hours_in_room": 16.0,
      "kg_per_fill": 120.0,
-     "time_to_6C_h": 10.227,
+     "time_to_6C_h": 5.8242,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 25701.6748
+     "value_saved_INR_per_fill": 26121.8865
     },
     "2": {
-     "freshness_kept_pct": 82.8639,
+     "freshness_kept_pct": 84.7338,
      "freshness_no_room_pct": 0.1392,
-     "weight_loss_pct": 0.583,
+     "weight_loss_pct": 0.5433,
      "hours_in_room": 40.0,
      "kg_per_fill": 120.0,
-     "time_to_6C_h": 10.6851,
+     "time_to_6C_h": 5.8885,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 34165.2878
+     "value_saved_INR_per_fill": 34937.5738
     },
     "3": {
-     "freshness_kept_pct": 76.573,
+     "freshness_kept_pct": 79.4439,
      "freshness_no_room_pct": 0.0,
-     "weight_loss_pct": 0.6581,
+     "weight_loss_pct": 0.5926,
      "hours_in_room": 64.0,
      "kg_per_fill": 120.0,
-     "time_to_6C_h": 10.9943,
+     "time_to_6C_h": 5.818,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 31624.6596
+     "value_saved_INR_per_fill": 32810.3456
+    }
+   },
+   "best_practice": {
+    "1": {
+     "freshness_kept_pct": 91.3086,
+     "freshness_no_room_pct": 6.7166,
+     "weight_loss_pct": 0.3462,
+     "hours_in_room": 23.0,
+     "kg_per_fill": 120.0,
+     "time_to_6C_h": 5.3258,
+     "allowed": true
+    },
+    "2": {
+     "freshness_kept_pct": 85.7718,
+     "freshness_no_room_pct": 0.0,
+     "weight_loss_pct": 0.3706,
+     "hours_in_room": 47.0,
+     "kg_per_fill": 120.0,
+     "time_to_6C_h": 5.3241,
+     "allowed": true
+    },
+    "3": {
+     "freshness_kept_pct": 80.1724,
+     "freshness_no_room_pct": 0.0,
+     "weight_loss_pct": 0.425,
+     "hours_in_room": 71.0,
+     "kg_per_fill": 120.0,
+     "time_to_6C_h": 5.3463,
+     "allowed": true
+    }
+   },
+   "poor_practice": {
+    "1": {
+     "freshness_kept_pct": 80.7696,
+     "freshness_no_room_pct": 21.224,
+     "weight_loss_pct": 1.7577,
+     "hours_in_room": 17.0,
+     "kg_per_fill": 120.0,
+     "time_to_6C_h": 4.6135,
+     "allowed": true
+    },
+    "2": {
+     "freshness_kept_pct": 71.6466,
+     "freshness_no_room_pct": 0.0553,
+     "weight_loss_pct": 2.4548,
+     "hours_in_room": 41.0,
+     "kg_per_fill": 120.0,
+     "time_to_6C_h": 4.5952,
+     "allowed": true
+    },
+    "3": {
+     "freshness_kept_pct": 63.3787,
+     "freshness_no_room_pct": 0.0,
+     "weight_loss_pct": 3.1269,
+     "hours_in_room": 65.0,
+     "kg_per_fill": 120.0,
+     "time_to_6C_h": 4.5024,
+     "allowed": true
     }
    }
   },
   "marigold": {
    "ideal": {
     "1": {
-     "freshness_kept_pct": 94.3503,
+     "freshness_kept_pct": 94.7755,
      "freshness_no_room_pct": 76.9552,
-     "weight_loss_pct": 0.3042,
+     "weight_loss_pct": 0.3027,
      "hours_in_room": 16.0,
      "kg_per_fill": 90.0,
-     "time_to_6C_h": 7.3779,
+     "time_to_6C_h": 4.61,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 952.3823
+     "value_saved_INR_per_fill": 975.6623
     },
     "2": {
-     "freshness_kept_pct": 88.6106,
+     "freshness_kept_pct": 89.419,
      "freshness_no_room_pct": 40.5787,
-     "weight_loss_pct": 0.3852,
+     "weight_loss_pct": 0.3437,
      "hours_in_room": 40.0,
      "kg_per_fill": 90.0,
-     "time_to_6C_h": 7.79,
+     "time_to_6C_h": 4.6255,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 2629.7445
+     "value_saved_INR_per_fill": 2674.0026
     },
     "3": {
-     "freshness_kept_pct": 82.9446,
+     "freshness_kept_pct": 84.1138,
      "freshness_no_room_pct": 9.5403,
-     "weight_loss_pct": 0.4597,
+     "weight_loss_pct": 0.379,
      "hours_in_room": 64.0,
      "kg_per_fill": 90.0,
-     "time_to_6C_h": 7.5421,
+     "time_to_6C_h": 4.6141,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 4018.8883
+     "value_saved_INR_per_fill": 4082.903
     }
    },
    "realistic": {
     "1": {
-     "freshness_kept_pct": 93.7554,
+     "freshness_kept_pct": 94.2443,
      "freshness_no_room_pct": 74.1108,
-     "weight_loss_pct": 0.344,
+     "weight_loss_pct": 0.3297,
      "hours_in_room": 16.0,
      "kg_per_fill": 90.0,
-     "time_to_6C_h": 10.0144,
+     "time_to_6C_h": 5.6847,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 1075.5406
+     "value_saved_INR_per_fill": 1102.3077
     },
     "2": {
-     "freshness_kept_pct": 87.8481,
+     "freshness_kept_pct": 88.8767,
      "freshness_no_room_pct": 33.2201,
-     "weight_loss_pct": 0.4055,
+     "weight_loss_pct": 0.3776,
      "hours_in_room": 40.0,
      "kg_per_fill": 90.0,
-     "time_to_6C_h": 10.6201,
+     "time_to_6C_h": 5.711,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 2990.8796
+     "value_saved_INR_per_fill": 3047.1962
     },
     "3": {
-     "freshness_kept_pct": 82.0076,
+     "freshness_kept_pct": 83.6053,
      "freshness_no_room_pct": 5.4511,
-     "weight_loss_pct": 0.4588,
+     "weight_loss_pct": 0.4125,
      "hours_in_room": 64.0,
      "kg_per_fill": 90.0,
-     "time_to_6C_h": 10.5186,
+     "time_to_6C_h": 5.6683,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 4191.4713
+     "value_saved_INR_per_fill": 4278.9417
+    }
+   },
+   "best_practice": {
+    "1": {
+     "freshness_kept_pct": 93.471,
+     "freshness_no_room_pct": 60.3677,
+     "weight_loss_pct": 0.2254,
+     "hours_in_room": 23.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 5.1769,
+     "allowed": true
+    },
+    "2": {
+     "freshness_kept_pct": 88.1161,
+     "freshness_no_room_pct": 20.5564,
+     "weight_loss_pct": 0.2512,
+     "hours_in_room": 47.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 5.1753,
+     "allowed": true
+    },
+    "3": {
+     "freshness_kept_pct": 82.7761,
+     "freshness_no_room_pct": 2.8044,
+     "weight_loss_pct": 0.2919,
+     "hours_in_room": 71.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 5.1845,
+     "allowed": true
+    }
+   },
+   "poor_practice": {
+    "1": {
+     "freshness_kept_pct": 85.7078,
+     "freshness_no_room_pct": 71.8391,
+     "weight_loss_pct": 1.3722,
+     "hours_in_room": 17.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 4.7147,
+     "allowed": true
+    },
+    "2": {
+     "freshness_kept_pct": 77.4004,
+     "freshness_no_room_pct": 30.9894,
+     "weight_loss_pct": 1.9272,
+     "hours_in_room": 41.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 4.7468,
+     "allowed": true
+    },
+    "3": {
+     "freshness_kept_pct": 69.693,
+     "freshness_no_room_pct": 4.8885,
+     "weight_loss_pct": 2.4586,
+     "hours_in_room": 65.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 4.6642,
+     "allowed": true
     }
    }
   },
   "rose": {
    "ideal": {
     "1": {
-     "freshness_kept_pct": 74.8204,
+     "freshness_kept_pct": 75.6143,
      "freshness_no_room_pct": 57.7414,
-     "weight_loss_pct": 0.3549,
+     "weight_loss_pct": 0.3519,
      "hours_in_room": 16.0,
      "kg_per_fill": 78.0,
-     "time_to_6C_h": 6.936,
+     "time_to_6C_h": 4.5024,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 3041.774
+     "value_saved_INR_per_fill": 3183.1687
     },
     "2": {
-     "freshness_kept_pct": 40.677,
+     "freshness_kept_pct": 42.2615,
      "freshness_no_room_pct": 1.0694,
-     "weight_loss_pct": 0.4508,
+     "weight_loss_pct": 0.4008,
      "hours_in_room": 40.0,
      "kg_per_fill": 78.0,
-     "time_to_6C_h": 7.0741,
+     "time_to_6C_h": 4.5168,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 7054.1025
+     "value_saved_INR_per_fill": 7336.3029
     },
     "3": {
-     "freshness_kept_pct": 6.6065,
+     "freshness_kept_pct": 8.9527,
      "freshness_no_room_pct": 0.0,
-     "weight_loss_pct": 0.5396,
+     "weight_loss_pct": 0.4427,
      "hours_in_room": 64.0,
      "kg_per_fill": 78.0,
-     "time_to_6C_h": 7.0032,
+     "time_to_6C_h": 4.5024,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 1176.6245
+     "value_saved_INR_per_fill": 1594.4723
     }
    },
    "realistic": {
     "1": {
-     "freshness_kept_pct": 74.167,
+     "freshness_kept_pct": 75.0141,
      "freshness_no_room_pct": 55.9926,
-     "weight_loss_pct": 0.3956,
+     "weight_loss_pct": 0.3775,
      "hours_in_room": 16.0,
      "kg_per_fill": 78.0,
-     "time_to_6C_h": 9.6638,
+     "time_to_6C_h": 5.5321,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 3236.854
+     "value_saved_INR_per_fill": 3387.7252
     },
     "2": {
-     "freshness_kept_pct": 39.6799,
+     "freshness_kept_pct": 41.6489,
      "freshness_no_room_pct": 0.4249,
-     "weight_loss_pct": 0.4686,
+     "weight_loss_pct": 0.4338,
      "hours_in_room": 40.0,
      "kg_per_fill": 78.0,
-     "time_to_6C_h": 10.0119,
+     "time_to_6C_h": 5.5292,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 6991.3169
+     "value_saved_INR_per_fill": 7341.9934
     },
     "3": {
-     "freshness_kept_pct": 5.2375,
+     "freshness_kept_pct": 8.356,
      "freshness_no_room_pct": 0.0,
-     "weight_loss_pct": 0.5313,
+     "weight_loss_pct": 0.4753,
      "hours_in_room": 64.0,
      "kg_per_fill": 78.0,
-     "time_to_6C_h": 9.9345,
+     "time_to_6C_h": 5.4782,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 932.8037
+     "value_saved_INR_per_fill": 1488.1983
+    }
+   },
+   "best_practice": {
+    "1": {
+     "freshness_kept_pct": 65.9986,
+     "freshness_no_room_pct": 35.4127,
+     "weight_loss_pct": 0.2515,
+     "hours_in_room": 23.0,
+     "kg_per_fill": 78.0,
+     "time_to_6C_h": 5.068,
+     "allowed": true
+    },
+    "2": {
+     "freshness_kept_pct": 32.6401,
+     "freshness_no_room_pct": 0.0,
+     "weight_loss_pct": 0.2871,
+     "hours_in_room": 47.0,
+     "kg_per_fill": 78.0,
+     "time_to_6C_h": 5.0579,
+     "allowed": true
+    },
+    "3": {
+     "freshness_kept_pct": 0.0142,
+     "freshness_no_room_pct": 0.0,
+     "weight_loss_pct": 0.337,
+     "hours_in_room": 71.0,
+     "kg_per_fill": 78.0,
+     "time_to_6C_h": 5.0574,
+     "allowed": true
+    }
+   },
+   "poor_practice": {
+    "1": {
+     "freshness_kept_pct": 66.3565,
+     "freshness_no_room_pct": 52.8881,
+     "weight_loss_pct": 1.5548,
+     "hours_in_room": 17.0,
+     "kg_per_fill": 78.0,
+     "time_to_6C_h": 4.5016,
+     "allowed": true
+    },
+    "2": {
+     "freshness_kept_pct": 34.4135,
+     "freshness_no_room_pct": 0.1293,
+     "weight_loss_pct": 2.2066,
+     "hours_in_room": 41.0,
+     "kg_per_fill": 78.0,
+     "time_to_6C_h": 4.533,
+     "allowed": true
+    },
+    "3": {
+     "freshness_kept_pct": 5.4703,
+     "freshness_no_room_pct": 0.0,
+     "weight_loss_pct": 2.8311,
+     "hours_in_room": 65.0,
+     "kg_per_fill": 78.0,
+     "time_to_6C_h": 4.4515,
+     "allowed": true
     }
    }
   },
   "tuberose": {
    "ideal": {
     "1": {
-     "freshness_kept_pct": 91.3518,
+     "freshness_kept_pct": 92.057,
      "freshness_no_room_pct": 60.8074,
-     "weight_loss_pct": 0.3636,
+     "weight_loss_pct": 0.3608,
      "hours_in_room": 16.0,
      "kg_per_fill": 102.0,
-     "time_to_6C_h": 7.5367,
+     "time_to_6C_h": 4.6014,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 3868.4493
+     "value_saved_INR_per_fill": 3957.7628
     },
     "2": {
-     "freshness_kept_pct": 83.0132,
+     "freshness_kept_pct": 84.3239,
      "freshness_no_room_pct": 7.9281,
-     "weight_loss_pct": 0.4602,
+     "weight_loss_pct": 0.4101,
      "hours_in_room": 40.0,
      "kg_per_fill": 102.0,
-     "time_to_6C_h": 8.2035,
+     "time_to_6C_h": 4.6212,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 9509.522
+     "value_saved_INR_per_fill": 9675.5224
     },
     "3": {
-     "freshness_kept_pct": 74.8102,
+     "freshness_kept_pct": 76.6828,
      "freshness_no_room_pct": 0.098,
-     "weight_loss_pct": 0.5488,
+     "weight_loss_pct": 0.4523,
      "hours_in_room": 64.0,
      "kg_per_fill": 102.0,
-     "time_to_6C_h": 7.89,
+     "time_to_6C_h": 4.6052,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 9462.3035
+     "value_saved_INR_per_fill": 9699.4627
     }
    },
    "realistic": {
     "1": {
-     "freshness_kept_pct": 90.283,
+     "freshness_kept_pct": 91.0886,
      "freshness_no_room_pct": 55.5252,
-     "weight_loss_pct": 0.4168,
+     "weight_loss_pct": 0.3989,
      "hours_in_room": 16.0,
      "kg_per_fill": 102.0,
-     "time_to_6C_h": 10.3217,
+     "time_to_6C_h": 5.7244,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 4402.0761
+     "value_saved_INR_per_fill": 4504.1111
     },
     "2": {
-     "freshness_kept_pct": 81.6752,
+     "freshness_kept_pct": 83.3357,
      "freshness_no_room_pct": 4.4314,
-     "weight_loss_pct": 0.4897,
+     "weight_loss_pct": 0.4563,
      "hours_in_room": 40.0,
      "kg_per_fill": 102.0,
-     "time_to_6C_h": 10.6483,
+     "time_to_6C_h": 5.7727,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 9782.9349
+     "value_saved_INR_per_fill": 9993.2357
     },
     "3": {
-     "freshness_kept_pct": 73.1813,
+     "freshness_kept_pct": 75.7695,
      "freshness_no_room_pct": 0.0,
-     "weight_loss_pct": 0.5533,
+     "weight_loss_pct": 0.4985,
      "hours_in_room": 64.0,
      "kg_per_fill": 102.0,
-     "time_to_6C_h": 10.6133,
+     "time_to_6C_h": 5.6926,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 9268.4067
+     "value_saved_INR_per_fill": 9596.203
+    }
+   },
+   "best_practice": {
+    "1": {
+     "freshness_kept_pct": 90.2268,
+     "freshness_no_room_pct": 31.7654,
+     "weight_loss_pct": 0.2789,
+     "hours_in_room": 23.0,
+     "kg_per_fill": 102.0,
+     "time_to_6C_h": 5.2508,
+     "allowed": true
+    },
+    "2": {
+     "freshness_kept_pct": 82.5078,
+     "freshness_no_room_pct": 1.2726,
+     "weight_loss_pct": 0.3072,
+     "hours_in_room": 47.0,
+     "kg_per_fill": 102.0,
+     "time_to_6C_h": 5.2565,
+     "allowed": true
+    },
+    "3": {
+     "freshness_kept_pct": 74.793,
+     "freshness_no_room_pct": 0.0,
+     "weight_loss_pct": 0.3551,
+     "hours_in_room": 71.0,
+     "kg_per_fill": 102.0,
+     "time_to_6C_h": 5.2597,
+     "allowed": true
+    }
+   },
+   "poor_practice": {
+    "1": {
+     "freshness_kept_pct": 81.8632,
+     "freshness_no_room_pct": 51.5113,
+     "weight_loss_pct": 1.5723,
+     "hours_in_room": 17.0,
+     "kg_per_fill": 102.0,
+     "time_to_6C_h": 4.6359,
+     "allowed": true
+    },
+    "2": {
+     "freshness_kept_pct": 71.2043,
+     "freshness_no_room_pct": 3.6703,
+     "weight_loss_pct": 2.2059,
+     "hours_in_room": 41.0,
+     "kg_per_fill": 102.0,
+     "time_to_6C_h": 4.6429,
+     "allowed": true
+    },
+    "3": {
+     "freshness_kept_pct": 61.4622,
+     "freshness_no_room_pct": 0.0,
+     "weight_loss_pct": 2.8123,
+     "hours_in_room": 65.0,
+     "kg_per_fill": 102.0,
+     "time_to_6C_h": 4.5663,
+     "allowed": true
     }
    }
   },
   "chamanthi": {
    "ideal": {
     "1": {
-     "freshness_kept_pct": 82.9731,
+     "freshness_kept_pct": 83.08,
      "freshness_no_room_pct": 81.294,
-     "weight_loss_pct": 0.3045,
+     "weight_loss_pct": 0.3029,
      "hours_in_room": 16.0,
      "kg_per_fill": 90.0,
-     "time_to_6C_h": 7.3887,
+     "time_to_6C_h": 4.6119,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 363.9351
+     "value_saved_INR_per_fill": 387.1214
     },
     "2": {
-     "freshness_kept_pct": 57.864,
+     "freshness_kept_pct": 58.078,
      "freshness_no_room_pct": 53.1533,
-     "weight_loss_pct": 0.3853,
+     "weight_loss_pct": 0.3439,
      "hours_in_room": 40.0,
      "kg_per_fill": 90.0,
-     "time_to_6C_h": 7.8047,
+     "time_to_6C_h": 4.6282,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 1021.0484
+     "value_saved_INR_per_fill": 1067.4388
     },
     "3": {
-     "freshness_kept_pct": 32.7638,
+     "freshness_kept_pct": 33.0803,
      "freshness_no_room_pct": 25.0121,
-     "weight_loss_pct": 0.4597,
+     "weight_loss_pct": 0.3792,
      "hours_in_room": 64.0,
      "kg_per_fill": 90.0,
-     "time_to_6C_h": 7.5558,
+     "time_to_6C_h": 4.6157,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 1680.1911
+     "value_saved_INR_per_fill": 1748.7825
     }
    },
    "realistic": {
     "1": {
-     "freshness_kept_pct": 82.8973,
+     "freshness_kept_pct": 83.0063,
      "freshness_no_room_pct": 81.1565,
-     "weight_loss_pct": 0.3447,
+     "weight_loss_pct": 0.3303,
      "hours_in_room": 16.0,
      "kg_per_fill": 90.0,
-     "time_to_6C_h": 10.0155,
+     "time_to_6C_h": 5.6939,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 377.3189
+     "value_saved_INR_per_fill": 400.9431
     },
     "2": {
-     "freshness_kept_pct": 57.7427,
+     "freshness_kept_pct": 58.0019,
      "freshness_no_room_pct": 52.8073,
-     "weight_loss_pct": 0.4059,
+     "weight_loss_pct": 0.3781,
      "hours_in_room": 40.0,
      "kg_per_fill": 90.0,
-     "time_to_6C_h": 10.6234,
+     "time_to_6C_h": 5.7143,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 1069.7287
+     "value_saved_INR_per_fill": 1125.9162
     },
     "3": {
-     "freshness_kept_pct": 32.5914,
+     "freshness_kept_pct": 33.0061,
      "freshness_no_room_pct": 24.4576,
-     "weight_loss_pct": 0.4587,
+     "weight_loss_pct": 0.413,
      "hours_in_room": 64.0,
      "kg_per_fill": 90.0,
-     "time_to_6C_h": 10.4248,
+     "time_to_6C_h": 5.6699,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 1762.9998
+     "value_saved_INR_per_fill": 1852.8929
+    }
+   },
+   "best_practice": {
+    "1": {
+     "freshness_kept_pct": 75.7909,
+     "freshness_no_room_pct": 72.8133,
+     "weight_loss_pct": 0.2262,
+     "hours_in_room": 23.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 5.178,
+     "allowed": true
+    },
+    "2": {
+     "freshness_kept_pct": 50.787,
+     "freshness_no_room_pct": 44.4615,
+     "weight_loss_pct": 0.2516,
+     "hours_in_room": 47.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 5.1872,
+     "allowed": true
+    },
+    "3": {
+     "freshness_kept_pct": 25.7849,
+     "freshness_no_room_pct": 16.1131,
+     "weight_loss_pct": 0.292,
+     "hours_in_room": 71.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 5.2006,
+     "allowed": true
+    }
+   },
+   "poor_practice": {
+    "1": {
+     "freshness_kept_pct": 74.4864,
+     "freshness_no_room_pct": 79.9524,
+     "weight_loss_pct": 1.3753,
+     "hours_in_room": 17.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 4.7222,
+     "allowed": true
+    },
+    "2": {
+     "freshness_kept_pct": 49.6201,
+     "freshness_no_room_pct": 51.6025,
+     "weight_loss_pct": 1.9314,
+     "hours_in_room": 41.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 4.7603,
+     "allowed": true
+    },
+    "3": {
+     "freshness_kept_pct": 26.6739,
+     "freshness_no_room_pct": 23.2536,
+     "weight_loss_pct": 2.4614,
+     "hours_in_room": 65.0,
+     "kg_per_fill": 90.0,
+     "time_to_6C_h": 4.6731,
+     "allowed": true
     }
    }
   },
   "crossandra": {
    "ideal": {
     "1": {
-     "freshness_kept_pct": 76.3267,
+     "freshness_kept_pct": 61.6124,
      "freshness_no_room_pct": 79.8606,
-     "weight_loss_pct": 0.3885,
+     "weight_loss_pct": 0.3711,
      "hours_in_room": 16.0,
      "kg_per_fill": 60.0,
-     "time_to_6C_h": 8.881,
+     "time_to_6C_h": 5.1273,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": -1325.2013
+     "value_saved_INR_per_fill": -6843.0764
     },
     "2": {
-     "freshness_kept_pct": 29.3735,
+     "freshness_kept_pct": 0.0,
      "freshness_no_room_pct": 49.4445,
-     "weight_loss_pct": 0.5521,
+     "weight_loss_pct": 0.4602,
      "hours_in_room": 40.0,
      "kg_per_fill": 60.0,
-     "time_to_6C_h": 19.0525,
+     "time_to_6C_h": 5.1439,
      "allowed": false,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": -7526.6482
+     "value_saved_INR_per_fill": -18541.6971
     },
     "3": {
      "freshness_kept_pct": 0.0,
      "freshness_no_room_pct": 19.0269,
-     "weight_loss_pct": 0.7095,
+     "weight_loss_pct": 0.5418,
      "hours_in_room": 64.0,
      "kg_per_fill": 60.0,
-     "time_to_6C_h": 18.9547,
+     "time_to_6C_h": 5.123,
      "allowed": false,
      "fragrance_kept_pct": null,
      "value_saved_INR_per_fill": -7135.0777
@@ -407,82 +697,140 @@
    },
    "realistic": {
     "1": {
-     "freshness_kept_pct": 77.3267,
+     "freshness_kept_pct": 68.9172,
      "freshness_no_room_pct": 79.515,
-     "weight_loss_pct": 0.4169,
+     "weight_loss_pct": 0.3844,
      "hours_in_room": 16.0,
      "kg_per_fill": 60.0,
-     "time_to_6C_h": 7.6373,
+     "time_to_6C_h": 6.5537,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": -820.6009
+     "value_saved_INR_per_fill": -3974.1418
     },
     "2": {
-     "freshness_kept_pct": 33.9592,
+     "freshness_kept_pct": 6.0873,
      "freshness_no_room_pct": 48.573,
-     "weight_loss_pct": 0.5463,
+     "weight_loss_pct": 0.4836,
      "hours_in_room": 40.0,
      "kg_per_fill": 60.0,
-     "time_to_6C_h": 18.6499,
+     "time_to_6C_h": 6.4892,
      "allowed": false,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": -5480.1948
+     "value_saved_INR_per_fill": -15932.1406
     },
     "3": {
      "freshness_kept_pct": 0.0,
      "freshness_no_room_pct": 17.629,
-     "weight_loss_pct": 0.6661,
+     "weight_loss_pct": 0.5702,
      "hours_in_room": 64.0,
      "kg_per_fill": 60.0,
-     "time_to_6C_h": 18.5761,
+     "time_to_6C_h": 6.4458,
      "allowed": false,
      "fragrance_kept_pct": null,
      "value_saved_INR_per_fill": -6610.8748
+    }
+   },
+   "best_practice": {
+    "1": {
+     "freshness_kept_pct": 47.6871,
+     "freshness_no_room_pct": 70.2998,
+     "weight_loss_pct": 0.2687,
+     "hours_in_room": 23.0,
+     "kg_per_fill": 60.0,
+     "time_to_6C_h": 6.1141,
+     "allowed": true
+    },
+    "2": {
+     "freshness_kept_pct": 0.0202,
+     "freshness_no_room_pct": 39.3511,
+     "weight_loss_pct": 0.3544,
+     "hours_in_room": 47.0,
+     "kg_per_fill": 60.0,
+     "time_to_6C_h": 6.0952,
+     "allowed": false
+    },
+    "3": {
+     "freshness_kept_pct": 0.0,
+     "freshness_no_room_pct": 8.4107,
+     "weight_loss_pct": 0.4479,
+     "hours_in_room": 71.0,
+     "kg_per_fill": 60.0,
+     "time_to_6C_h": 6.0785,
+     "allowed": false
+    }
+   },
+   "poor_practice": {
+    "1": {
+     "freshness_kept_pct": 60.4195,
+     "freshness_no_room_pct": 78.1674,
+     "weight_loss_pct": 1.6518,
+     "hours_in_room": 17.0,
+     "kg_per_fill": 60.0,
+     "time_to_6C_h": 5.9806,
+     "allowed": true
+    },
+    "2": {
+     "freshness_kept_pct": 12.2547,
+     "freshness_no_room_pct": 47.2233,
+     "weight_loss_pct": 2.4949,
+     "hours_in_room": 41.0,
+     "kg_per_fill": 60.0,
+     "time_to_6C_h": 6.1645,
+     "allowed": false
+    },
+    "3": {
+     "freshness_kept_pct": 0.0,
+     "freshness_no_room_pct": 16.2816,
+     "weight_loss_pct": 3.3145,
+     "hours_in_room": 65.0,
+     "kg_per_fill": 60.0,
+     "time_to_6C_h": 6.182,
+     "allowed": false
     }
    }
   },
   "jasmine (in mixed load)": {
    "realistic": {
     "1": {
-     "freshness_kept_pct": 89.8669,
+     "freshness_kept_pct": 90.8035,
      "freshness_no_room_pct": 27.1608,
-     "weight_loss_pct": 0.4698,
+     "weight_loss_pct": 0.4504,
      "hours_in_room": 16.0,
      "kg_per_fill": 30.6,
-     "time_to_6C_h": 9.9356,
+     "time_to_6C_h": 5.6214,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 6603.8928
+     "value_saved_INR_per_fill": 6702.5337
     }
    }
   },
   "marigold (in mixed load)": {
    "realistic": {
     "1": {
-     "freshness_kept_pct": 93.753,
+     "freshness_kept_pct": 94.2429,
      "freshness_no_room_pct": 74.1108,
-     "weight_loss_pct": 0.3433,
+     "weight_loss_pct": 0.3287,
      "hours_in_room": 16.0,
      "kg_per_fill": 29.7,
-     "time_to_6C_h": 9.9356,
+     "time_to_6C_h": 5.6214,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 354.8855
+     "value_saved_INR_per_fill": 363.7369
     }
    }
   },
   "rose (in mixed load)": {
    "realistic": {
     "1": {
-     "freshness_kept_pct": 74.0744,
+     "freshness_kept_pct": 74.9369,
      "freshness_no_room_pct": 55.9926,
-     "weight_loss_pct": 0.4055,
+     "weight_loss_pct": 0.3886,
      "hours_in_room": 16.0,
      "kg_per_fill": 29.7,
-     "time_to_6C_h": 9.9356,
+     "time_to_6C_h": 5.6214,
      "allowed": true,
      "fragrance_kept_pct": null,
-     "value_saved_INR_per_fill": 1226.2136
+     "value_saved_INR_per_fill": 1284.7022
     }
    }
   }

@@ -48,42 +48,61 @@
  "new": {
   "ideal": {
    "days": 310,
-   "days_full_solar_wax": 249,
-   "grid_h_per_year": 73.9812,
-   "grid_kWh_per_year": 17.9706,
-   "electric_kWh_day": 2.6154,
-   "COP_chiller": 2.8577,
-   "COP_system": 1.6211,
-   "solar_used_pct": 41.2136,
-   "pump_kWh_day": 0.3179,
-   "hours_outside_band": 9,
-   "room_mean_C": 4.8428,
+   "days_full_solar_wax": 307,
+   "grid_h_per_year": 33.9489,
+   "grid_kWh_per_year": 9.8886,
+   "electric_kWh_day": 2.565,
+   "COP_chiller": 2.6021,
+   "COP_system": 1.679,
+   "solar_used_pct": 40.8381,
+   "pump_kWh_day": 0.3157,
+   "hours_outside_band": 443,
+   "room_mean_C": 2.4943,
    "T_evap_C": [
     -3.0,
-    -5.0
+    -8.0
+   ],
+   "r290_inside_room_g": 0
+  },
+  "best_practice": {
+   "days": 310,
+   "days_full_solar_wax": 236,
+   "grid_h_per_year": 800.7433,
+   "grid_kWh_per_year": 107.0351,
+   "electric_kWh_day": 4.1288,
+   "COP_chiller": 2.2975,
+   "COP_system": 1.3516,
+   "solar_used_pct": 69.5489,
+   "pump_kWh_day": 0.4694,
+   "hours_outside_band": 20,
+   "room_mean_C": 3.5692,
+   "T_evap_C": [
+    -5.0,
+    -10.0
    ],
    "r290_inside_room_g": 0
   },
   "realistic_smart": {
    "days": 310,
-   "days_full_solar_wax": 0,
-   "grid_h_per_year": 939.7769,
-   "grid_kWh_per_year": 476.2345,
-   "electric_kWh_day": 4.4624,
-   "COP_chiller": 2.66,
-   "COP_system": 1.3586,
-   "solar_used_pct": 56.5792,
-   "pump_kWh_day": 0.498,
-   "hours_outside_band": 116,
-   "room_mean_C": 5.0406,
+   "days_full_solar_wax": 214,
+   "grid_h_per_year": 1145.1384,
+   "grid_kWh_per_year": 163.9062,
+   "electric_kWh_day": 4.4704,
+   "COP_chiller": 2.3279,
+   "COP_system": 1.3956,
+   "solar_used_pct": 73.0335,
+   "pump_kWh_day": 0.4878,
+   "hours_outside_band": 29,
+   "room_mean_C": 3.759,
    "T_evap_C": [
     -5.0,
-    -7.0
+    -10.0
    ],
    "r290_inside_room_g": 0
   }
  },
  "new_wax_kg": 100,
+ "new_storage": "Water / ice with nucleating agent (in the same finned aluminium panels)",
  "old_wax_kg": 115,
  "r290_room_limit_g": 66.88
 }

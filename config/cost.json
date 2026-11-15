@@ -1,30 +1,182 @@
 {
  "_about": "Cost inputs for KoolKisaan Flowers. EVERY price is E (assumption, low / mid / high in rupees) until real quotations arrive. The wax line is calculated: chosen mass x price per kg.",
  "bom": [
-  {"key": "room", "item": "Insulated room 8.8 m³ (100 mm PUF panels) + door + strip curtain", "INR": [90000, 120000, 160000], "in_old": true},
-  {"key": "chiller", "item": "Outdoor factory-sealed R290 glycol chiller, inverter, 1.5 kW cooling", "INR": [70000, 100000, 140000], "glycol_only": true},
-  {"key": "loop", "item": "Glycol pump + expansion tank + 2 motorised valves + insulated pipes + glycol", "INR": [20000, 30000, 45000], "glycol_only": true},
-  {"key": "air_cooler", "item": "Glycol air cooler with EC fan", "INR": [15000, 22000, 32000], "glycol_only": true},
-  {"key": "wax", "item": "Wax (paraffin blend + 7 % graphite)", "INR": "wax", "in_old": false},
-  {"key": "panels", "item": "Aluminium wax panels + fins + glycol coils", "INR": [35000, 50000, 70000], "in_old": true},
-  {"key": "pv", "item": "1.8 kWp solar PV + mounting + drive electronics", "INR": [70000, 90000, 120000], "in_old": true},
-  {"key": "controls", "item": "Controls and sensors (incl. R290 gas sensor at the outdoor unit)", "INR": [15000, 25000, 40000], "in_old": true},
-  {"key": "install", "item": "Installation and testing (nitrogen + vacuum test, commissioning)", "INR": [20000, 30000, 45000], "in_old": true},
-  {"key": "humidity", "item": "Humidity option: PE bags stock, tray, ultrasonic fogger + small RO filter", "INR": [5000, 8000, 12000], "in_old": false}
+  {
+   "key": "room",
+   "item": "Insulated room 8.8 m³ (100 mm PUF panels) + door + strip curtain",
+   "INR": [
+    90000,
+    120000,
+    160000
+   ],
+   "in_old": true
+  },
+  {
+   "key": "racks",
+   "item": "2 racks (L-shape, 4 shelf levels, 12 crate places)",
+   "INR": "racks"
+  },
+  {
+   "key": "chiller",
+   "item": "Outdoor factory-sealed R290 glycol chiller, inverter, 1.5 kW cooling",
+   "INR": [
+    70000,
+    100000,
+    140000
+   ],
+   "glycol_only": true
+  },
+  {
+   "key": "loop",
+   "item": "Glycol pump + expansion tank + 2 motorised valves + insulated pipes + glycol",
+   "INR": [
+    20000,
+    30000,
+    45000
+   ],
+   "glycol_only": true
+  },
+  {
+   "key": "air_cooler",
+   "item": "Glycol air cooler with EC fan",
+   "INR": [
+    15000,
+    22000,
+    32000
+   ],
+   "glycol_only": true
+  },
+  {
+   "key": "wax",
+   "item": "Cold storage: water / ice with nucleating agent, biocide, leak-tight containers",
+   "INR": "storage",
+   "in_old": false
+  },
+  {
+   "key": "panels",
+   "item": "Aluminium ice panels + fins + glycol coils",
+   "INR": [
+    35000,
+    50000,
+    70000
+   ],
+   "in_old": true
+  },
+  {
+   "key": "pv",
+   "item": "1.8 kWp solar PV + mounting + drive electronics",
+   "INR": [
+    70000,
+    90000,
+    120000
+   ],
+   "in_old": true
+  },
+  {
+   "key": "controls",
+   "item": "Controls and sensors (incl. R290 gas sensor at the outdoor unit)",
+   "INR": [
+    15000,
+    25000,
+    40000
+   ],
+   "in_old": true
+  },
+  {
+   "key": "install",
+   "item": "Installation and testing (nitrogen + vacuum test, commissioning)",
+   "INR": [
+    20000,
+    30000,
+    45000
+   ],
+   "in_old": true
+  },
+  {
+   "key": "humidity",
+   "item": "Humidity: ultrasonic fogger + RH controller + small RO filter / RO water can",
+   "INR": "humidity",
+   "in_old": false
+  }
  ],
- "old_design_refrigeration": {"item": "OLD design instead of chiller + loop + air cooler: R290 condensing unit + in-room evaporator + solenoid/TXV valves + copper pipes", "INR": [68000, 97000, 133000]},
+ "old_design_refrigeration": {
+  "item": "Old in-room R290 design: condensing unit + in-room evaporator + solenoid/TXV valves + copper pipes",
+  "INR": [
+   68000,
+   97000,
+   133000
+  ]
+ },
  "running": {
-  "grid_tariff_INR_kWh": [7.0, 8.0, 9.5],
-  "upkeep_INR_yr": [15000, 17500, 20000],
-  "bags_INR_per_kg": [1.0, 1.5, 2.0],
-  "water_INR_per_L": [0.3, 0.5, 1.0]
+  "grid_tariff_INR_kWh": [
+   6.0,
+   7.0,
+   9.0
+  ],
+  "upkeep_INR_yr": [
+   15000,
+   17500,
+   20000
+  ],
+  "bags_INR_per_kg": [
+   1.0,
+   1.5,
+   2.0
+  ]
  },
  "benefit": {
-  "value_factor": [0.7, 1.0, 1.3],
+  "value_factor": [
+   0.7,
+   1.0,
+   1.3
+  ],
   "value_factor_note": "E – the Rs value captured by the seasonal twin run depends on the price model; low/high = -30 % / +30 %.",
-  "rent_INR_kg_day": [3.0, 4.0, 5.0],
-  "subsidy_pct": 35, "subsidy_scheduled_areas_pct": 50,
+  "rent_INR_kg_day": [
+   3.0,
+   4.0,
+   5.0
+  ],
+  "subsidy_pct": 35,
+  "subsidy_scheduled_areas_pct": 50,
   "subsidy_note": "E – MIDH cold-chain subsidy: 35 % of the project cost in general areas, 50 % in scheduled / hilly areas. Check the current scheme and its cost norms."
  },
- "years": 10
+ "years": 10,
+ "humidity": {
+  "_note": "All E. One-time and yearly costs of the humidity options.",
+  "fogger_unit_controller_INR": [
+   2500,
+   4000,
+   7000
+  ],
+  "ro_filter_or_can_INR": [
+   1500,
+   3000,
+   6000
+  ],
+  "tray_INR": [
+   300,
+   600,
+   1000
+  ],
+  "ro_water_INR_per_L": [
+   0.5,
+   1.0,
+   2.0
+  ],
+  "tap_water_INR_per_L": [
+   0.02,
+   0.05,
+   0.1
+  ],
+  "disc_parts_INR_yr": [
+   300,
+   600,
+   1200
+  ],
+  "cleaning_INR_yr": [
+   500,
+   1000,
+   2000
+  ]
+ }
 }
