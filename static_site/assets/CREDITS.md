@@ -1,6 +1,6 @@
 # Image credits (KoolKisaan Flowers)
 
-This site uses only the **real photos** listed under "Real photos" below (copied from the earlier KoolKisaan project with their credits) and design drawings made in code. The AI-generated concept pictures of the earlier site are NOT used here; their list is kept only because this file was copied whole.
+This site uses only the **real photos** listed under "Real photos" below (copied from the earlier KoolKisaan project with their credits) and design drawings made in code. Five **AI-generated concept illustrations** (Google Gemini, supplied by the project owner) are in `web/assets/concept/` and (plus five concept pictures copied from the earlier site: A4, A5, A10, A11, A14) are shown ONLY in the Home page picture viewer, labelled "Concept illustration (AI-generated)". They are not photos of a built unit. The longer list of AI pictures further down belongs to the earlier site and is not used here.
 
 # Image credits
 

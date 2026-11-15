@@ -17,17 +17,34 @@
     if (!(d0 >= 0 && d0 < nd)) d0 = nd - 2;
     const dateOf = d => new Date(Date.UTC(2026, 0, 1) + d * 864e5).toISOString().slice(0, 10);
     const cmp = K.compare;
+    // slides: [file, caption, [[x %, y %, what]...]]. Pictures that are not in assets/concept/ are skipped, so new ones can be added here.
+    const G = D.glycol;
+    const SLIDES = [
+      ['flowers_outside', 'The flower cold room on a farm near Visakhapatnam: crates and baskets of flowers wait at the door', [[50, 22, 'pv'], [78, 70, 'out']]],
+      ['outside_loading', 'Solar panels on top, insulated room below – crates go in through the strip curtain', [[50, 20, 'pv'], [72, 66, 'out'], [50, 55, 'kg']]],
+      ['room_with_chiller', `The R290 chiller stands OUTSIDE on its own pad – ${D.r290_inside_room_g} g of R290 inside the room`, [[80, 72, 'gly'], [55, 22, 'pv']]],
+      ['chiller_outdoor', 'Outdoor R290 chiller, glycol pump (green), expansion tank (red) and the two insulated glycol pipes into the room', [[40, 62, 'gly'], [43, 57, 'pump'], [65, 45, 'src']]],
+      ['outside_takeout', 'Taking flowers out early in the morning – the strip curtain keeps most of the cold in', [[52, 55, 'room'], [80, 68, 'out']]],
+      ['door_curtain_inside', 'From inside: warm air comes in at the top of the door, cold air spills out at the bottom', [[50, 45, 'room'], [20, 60, 'rh']]],
+      ['flowers_inside', `Inside at ${D.band_C.join('–')} °C: marigold, rose, jasmine and tuberose in crates and bags; wax panels on the walls, glycol air cooler above`, [[50, 20, 'gly'], [38, 55, 'wax'], [15, 60, 'kg'], [70, 30, 'rh']]],
+      ['wax_panels_finned', `Finned wax panels: ${f(D.wax_kg)} kg of wax that melts at ${K.pcm.melt_range_C.join('–')} °C – the room's cold battery, with a drip tray below`, [[26, 45, 'wax'], [53, 42, 'vwax'], [70, 55, 'room']]],
+      ['A10_interior_evaporator', `Air cooler: glycol at about ${f(G.supply_room_C)} °C takes the heat out of the room air (picture from the earlier design)`, [[58, 48, 'room'], [84, 56, 'gly'], [14, 68, 'rh']]],
+      ['A14_night_wax_cooling', 'Night: pump off, both valves closed – cold air sinks from the wax fins by itself (picture from the earlier design)', [[50, 50, 'wax'], [50, 25, 'src'], [20, 70, 'room']]],
+      ['A11_solar_canopy_closeup', `${f(D.pv_kWp, 1)} kWp of solar panels run the chiller by day and freeze the wax with what is left over`, [[50, 40, 'pv'], [75, 70, 'src']]],
+    ];
     $('app').innerHTML = `
-      <section class="hero"><h1>${esc(K.project.name)}</h1><p class="tagline">${esc(K.project.tagline)}</p>
-        <p>A small solar cold room for loose flowers in Visakhapatnam. Inside ${D.room_m.join(' × ')} m (${f(D.room_m3, 1)} m³), set to ${f(D.setpoint_C, 0)} °C
-        (normal band ${D.band_C[0]}–${D.band_C[1]} °C), ${f(D.pv_kWp, 1)} kWp of solar panels, ${f(D.wax_kg)} kg of wax that stores cold for the night,
-        and an outdoor R290 chiller that sends cold glycol into the room – so there is <b>${D.r290_inside_room_g} g of R290 inside the room</b>.</p>
-        ${range()}</section>
-      <h2>The room now ${S} <span class="range" id="nowLbl"></span></h2>
-      <div class="ctl"><label>Day <input type="date" id="day" min="${dateOf(0)}" max="${dateOf(nd - 1)}" value="${dateOf(d0)}"></label>
-        <label>Hour <input type="range" id="hour" min="0" max="23" step="1" value="${now.getUTCHours()}"></label><button id="nowBtn">● Now</button></div>
-      <div class="tiles" id="live"></div>
-      <div class="card" style="margin-top:10px"><h3>This day, hour by hour ${S}</h3><canvas id="dayChart" height="90"></canvas></div>
+      <section class="stage" id="stage">
+        <div class="caption" id="cap"></div>
+        <div class="seg" id="modes">${['Auto', 'Day', 'Night', 'Monsoon'].map((m, i) => `<button data-m="${m}" class="${i ? '' : 'on'}">${m}</button>`).join('')}</div>
+        <div id="slides"></div>
+        <div class="ai">Concept illustration (AI-generated) – not a photo of a built unit</div>
+        <div class="dots"><button id="prev" aria-label="previous picture">‹</button><span id="dots"></span><button id="next" aria-label="next picture">›</button></div>
+        <div class="databar"><div id="bar" class="barvals"></div>
+          <div class="barctl"><button id="play" title="Play / pause">▶</button><select id="speed" title="Speed"><option value="0">real time</option><option value="1" selected>1 h per second</option><option value="6">6 h per second</option></select>
+            <input type="date" id="day" min="${dateOf(0)}" max="${dateOf(nd - 1)}" value="${dateOf(d0)}"><input type="range" id="hour" min="0" max="23" step="1" value="${now.getUTCHours()}"><button id="nowBtn">● Now</button>
+            <b id="nowLbl"></b><span class="sim">SIMULATED</span></div></div>
+      </section>
+      <div class="card" style="margin-top:12px"><h3>This day, hour by hour ${S}</h3><canvas id="dayChart" height="90"></canvas></div>
       <h2>Results of the year so far ${S} ${range()}</h2>
       <p class="src">Realistic model + smart controller (the careful numbers). The ideal model is shown in small print.</p>
       <div class="tiles">
@@ -64,17 +81,51 @@
         ['Grid hours/yr – realistic + smart', f(cmp.old.realistic_smart.grid_h_per_year), f(cmp.new.realistic_smart.grid_h_per_year)],
         ['Grid kWh/yr – realistic + smart', f(cmp.old.realistic_smart.grid_kWh_per_year), f(cmp.new.realistic_smart.grid_kWh_per_year)],
       ], { note: 'Comparison only: the two rooms store different produce on different loading plans and have different temperature bands (old 2–8 °C, new ' + D.band_C.join('–') + ' °C).' })}</div>`;
-    let chart = null;
+    // ---- picture viewer: slides, dots, arrow keys
+    let cur = 0, slides = [];
+    function showSlide(k) {
+      if (!slides.length) return;
+      cur = (k + slides.length) % slides.length;
+      slides.forEach((sl, i) => sl.el.classList.toggle('on', i === cur));
+      $('cap').textContent = slides[cur].cap;
+      $('dots').innerHTML = slides.map((_, i) => `<i class="${i === cur ? 'on' : ''}" data-i="${i}"></i>`).join('');
+      draw();
+    }
+    SLIDES.filter(x => K.concept.includes(x[0])).forEach(([file, cap, hs]) => {
+      const el = document.createElement('div');
+      el.className = 'slide';
+      el.innerHTML = `<img alt="${esc(cap)}">` + hs.map(([x, y, what]) => `<button class="hot" style="left:${x}%;top:${y}%" data-w="${what}"><span></span></button>`).join('');
+      const img = el.querySelector('img'), entry = { el, cap };
+      img.onload = () => { slides.push(entry); slides.sort((p, q) => p.order - q.order); $('slides').append(...slides.map(x => x.el)); if (slides.length === 1 || slides[0] === entry) showSlide(0); else showSlide(cur); };
+      entry.order = SLIDES.findIndex(x => x[0] === file);
+      img.src = `assets/concept/${file}.webp`;
+    });
+    $('prev').onclick = () => showSlide(cur - 1);
+    $('next').onclick = () => showSlide(cur + 1);
+    $('dots').onclick = e => { if (e.target.dataset.i) showSlide(+e.target.dataset.i); };
+    document.addEventListener('keydown', e => { if (e.key === 'ArrowRight') showSlide(cur + 1); if (e.key === 'ArrowLeft') showSlide(cur - 1); if (e.key === ' ') { e.preventDefault(); $('play').click(); } });
+    // ---- special days from the twin run (for Day / Night / Monsoon)
+    const daySum = k => Array.from({ length: nd }, (_, d) => H[k].slice(d * 24, d * 24 + 24).reduce((x, y) => x + (y || 0), 0));
+    const pvDay = daySum('P_pv'), argmax = a => a.indexOf(Math.max(...a)), argmin = a => a.indexOf(Math.min(...a));
+    const nightT = Array.from({ length: nd - 1 }, (_, d) => H.T_out.slice(d * 24 + 19, d * 24 + 30).reduce((x, y) => x + y, 0));
+    const monsoonDays = pvDay.map((v, d) => (new Date(Date.UTC(2026, 0, 1) + d * 864e5).getUTCMonth() >= 5 && new Date(Date.UTC(2026, 0, 1) + d * 864e5).getUTCMonth() <= 8 ? v : Infinity));
+    const MODE = { Day: [argmax(pvDay), 12], Night: [argmax(nightT), 23], Monsoon: [argmin(monsoonDays), 13] };
+    let chart = null, timer = null;
+    function values(i) {
+      const on = H.run[i] > 0, src = H.grid[i] > 0 ? 'GRID' : (on ? 'SOLAR' : (H.wax[i] > 0 ? 'WAX' : 'NONE'));
+      return { room: [`${f(H.T_room[i], 1)} °C`, 'Room air'], rh: [`${f(H.RH_room[i], 0)} %`, 'Room humidity'], out: [`${f(H.T_out[i], 1)} °C`, 'Outside air'], pv: [`${f(H.P_pv[i], 2)} kW`, 'Solar power now'],
+        wax: [`${f(H.wax[i], 0)} %`, 'Wax frozen (cold battery)'], gly: [on ? `${f(H.T_sup[i], 1)} / ${f(H.T_ret[i], 1)} °C` : 'pump off', 'Glycol supply / return'],
+        pump: [on ? 'ON' : 'OFF', 'Glycol pump'], vwax: [H.v_wax[i] > 0 ? 'OPEN' : 'CLOSED', 'V-WAX valve'], kg: [`${f(H.kg[i], 0)} kg`, 'Flowers inside'], src: [src, 'Power from'] };
+    }
     function draw() {
       const d = Math.round((Date.parse($('day').value) - Date.UTC(2026, 0, 1)) / 864e5), h = +$('hour').value, i = Math.max(0, Math.min(H.n - 1, d * 24 + h));
-      const on = H.run[i] > 0, src = H.grid[i] > 0 ? 'Grid backup' : (on ? 'Solar' : (H.P_pv[i] > 0.05 ? 'Solar (chiller idle)' : 'Wax (chiller off)'));
-      $('nowLbl').textContent = `Digital twin, ${$('day').value} ${String(h).padStart(2, '0')}:00–${String(h + 1).padStart(2, '0')}:00 IST – simulated, not measured`;
-      const T = H.T_room[i], cls = T > D.alarm_C[1] || T < D.alarm_C[0] ? 'warn' : (T > D.band_C[1] || T < D.band_C[0] ? 'warn' : 'good');
-      $('live').innerHTML = tile('Room', f(T, 1), '°C', `band ${D.band_C.join('–')} °C`, 'big ' + cls) + tile('Humidity', f(H.RH_room[i], 0), '%', `target ${D.rh_target_pct.join('–')} %`, 'big')
-        + tile('Wax (frozen)', f(H.wax[i], 0), '%', H.v_wax[i] > 0 ? 'V-WAX open: charging' : 'V-WAX closed', 'big')
-        + tile('Glycol supply / return', on ? `${f(H.T_sup[i], 1)} / ${f(H.T_ret[i], 1)}` : 'pump off', on ? '°C' : '', on ? '' : 'both valves closed', 'big')
-        + tile('Power source', src, '', `solar now ${f(H.P_pv[i], 2)} kW · using ${f(H.P_comp[i], 2)} kW`, 'big') + tile('Flowers inside', f(H.kg[i], 0), 'kg', '')
-        + tile('Outside', f(H.T_out[i], 1), '°C', `${f(H.RH_out[i], 0)} % RH`);
+      const v = values(i), T = H.T_room[i], bad = T > D.band_C[1] || T < D.band_C[0];
+      $('nowLbl').textContent = `${$('day').value} ${String(h).padStart(2, '0')}:00`;
+      $('stage').classList.toggle('night', H.P_pv[i] < 0.02);
+      const cell = (lab, val, cls = '') => `<div class="bv ${cls}"><small>${lab}</small><b>${val}</b></div>`;
+      $('bar').innerHTML = cell('ROOM', v.room[0], bad ? 'wn' : 'ok') + cell('HUMIDITY', v.rh[0]) + cell('OUTSIDE', v.out[0]) + cell('SOLAR PV', v.pv[0]) + cell('WAX BATTERY', v.wax[0])
+        + cell('GLYCOL SUPPLY / RETURN', v.gly[0]) + cell('FLOWERS INSIDE', v.kg[0]) + cell('POWER FROM', v.src[0], v.src[0] === 'GRID' ? 'wn' : 'ok');
+      document.querySelectorAll('.slide.on .hot').forEach(b => { const x = v[b.dataset.w]; b.querySelector('span').innerHTML = `<small>${x[1]}</small>${x[0]}`; });
       const a = d * 24, lab = Array.from({ length: 24 }, (_, k) => k + ':00'), sl = k => H[k].slice(a, a + 24);
       const ds = [{ label: 'Room °C', data: sl('T_room'), borderColor: '#2a78d6', yAxisID: 'y' }, { label: 'Outside °C', data: sl('T_out'), borderColor: '#f59e0b', yAxisID: 'y' },
         { label: 'Wax %', data: sl('wax'), borderColor: '#14b8a6', yAxisID: 'y2' }, { label: 'Humidity %', data: sl('RH_room'), borderColor: '#8b5cf6', yAxisID: 'y2' }];
@@ -83,8 +134,29 @@
           options: { animation: false, interaction: { mode: 'index', intersect: false }, scales: { y: { title: { display: true, text: '°C' } }, y2: { position: 'right', min: 0, max: 100, title: { display: true, text: '%' }, grid: { drawOnChartArea: false } } } } });
       }
     }
+    function setTime(d, h) { $('day').value = dateOf(Math.max(0, Math.min(nd - 1, d))); $('hour').value = h; draw(); }
+    function tick(hours) {
+      let d = Math.round((Date.parse($('day').value) - Date.UTC(2026, 0, 1)) / 864e5), h = +$('hour').value + hours;
+      while (h > 23) { h -= 24; d += 1; }
+      if (d > nd - 1) d = 0;
+      setTime(d, h);
+    }
+    function play(on) {
+      clearInterval(timer); timer = null;
+      $('play').textContent = on ? '⏸' : '▶';
+      const sp = +$('speed').value;
+      if (on) timer = sp ? setInterval(() => tick(sp), 1000) : setInterval(goNow, 60000);
+    }
+    function goNow() { const n2 = new Date(Date.now() + 5.5 * 3600e3); setTime(d0, n2.getUTCHours()); }
+    $('play').onclick = () => play(!timer);
+    $('speed').onchange = () => { if (timer) play(true); };
     $('day').onchange = $('hour').oninput = draw;
-    $('nowBtn').onclick = () => { $('day').value = dateOf(d0); $('hour').value = new Date(Date.now() + 5.5 * 3600e3).getUTCHours(); draw(); };
+    $('nowBtn').onclick = () => { play(false); setMode('Auto'); };
+    function setMode(m) {
+      document.querySelectorAll('#modes button').forEach(b => b.classList.toggle('on', b.dataset.m === m));
+      if (m === 'Auto') goNow(); else setTime(MODE[m][0], MODE[m][1]);
+    }
+    $('modes').onclick = e => { if (e.target.dataset.m) { play(false); setMode(e.target.dataset.m); } };
     draw();
   };
 

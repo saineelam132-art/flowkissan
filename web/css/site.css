@@ -45,3 +45,40 @@ ul.plain{margin:6px 0;padding-left:20px}
 .dg-zero{font:800 22px var(--font);fill:var(--ok)}
 .foot{color:var(--muted);font-size:12px;margin-top:22px;border-top:1px solid var(--line);padding-top:10px}
 canvas{max-width:100%}
+
+/* ---------- Home: full-screen picture viewer (same idea as the old KoolKisaan home) ---------- */
+body[data-page="home"] main{max-width:none;padding:0 0 40px}
+body[data-page="home"] main>*:not(.stage){max-width:1280px;margin-left:auto;margin-right:auto;padding-left:16px;padding-right:16px}
+body[data-page="home"] main>.card{margin-left:auto;margin-right:auto;width:calc(100% - 32px)}
+.stage{position:relative;height:calc(100vh - 56px);min-height:420px;background:#06121f;overflow:hidden;color:#e8f1f8}
+.slide{position:absolute;inset:0 0 64px 0;opacity:0;transition:opacity 1s ease;pointer-events:none}
+.slide.on{opacity:1;pointer-events:auto}
+.slide img{width:100%;height:100%;object-fit:cover;display:block;animation:kb 40s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.06)}}
+@media (prefers-reduced-motion:reduce){.slide img{animation:none}}
+.stage.night .slide img{filter:brightness(.72) saturate(.85)}
+.caption{position:absolute;left:16px;top:14px;z-index:5;max-width:min(70%,760px);background:rgba(8,24,40,.82);border-left:4px solid #14b8a6;border-radius:6px;padding:8px 14px;font-size:clamp(14px,1.6vw,20px)}
+.stage .seg{position:absolute;right:16px;top:14px;z-index:5;display:flex;background:rgba(8,24,40,.82);border-radius:9px;padding:3px}
+.stage .seg button{background:none;border:0;color:#cfe0ee;padding:6px 11px;border-radius:7px;cursor:pointer;font-size:13.5px}
+.stage .seg button.on{background:#14b8a6;color:#032;font-weight:600}
+.ai{position:absolute;right:12px;bottom:72px;z-index:4;font-size:11.5px;background:rgba(8,24,40,.7);color:#cfe0ee;border-radius:5px;padding:2px 8px}
+.dots{position:absolute;left:50%;bottom:76px;transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:10px;background:rgba(8,24,40,.85);border-radius:999px;padding:6px 14px}
+.dots button{background:none;border:0;color:#fff;font-size:22px;cursor:pointer;line-height:1}
+.dots i{display:inline-block;width:10px;height:10px;border-radius:50%;background:#7b8a99;margin:0 4px;cursor:pointer}
+.dots i.on{background:#14b8a6}
+.hot{position:absolute;z-index:3;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;border:3px solid #fff;background:#14b8a6;cursor:pointer;box-shadow:0 0 0 0 rgba(20,184,166,.7);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 14px rgba(20,184,166,0)}100%{box-shadow:0 0 0 0 rgba(20,184,166,0)}}
+.hot span{position:absolute;left:30px;top:-8px;white-space:nowrap;background:rgba(8,24,40,.9);color:#fff;border-radius:6px;padding:3px 9px;font:700 15px var(--font);text-align:left}
+.hot span small{display:block;font-weight:400;font-size:11px;color:#9fd3ff}
+.databar{position:absolute;left:0;right:0;bottom:0;height:64px;z-index:6;background:#04101c;display:flex;align-items:stretch;gap:0;overflow-x:auto}
+.barvals{display:flex;flex:1}
+.bv{padding:7px 10px;border-right:1px solid #16293b;min-width:84px;white-space:nowrap}
+.bv small{display:block;color:#8fa3b5;font-size:11px;letter-spacing:.4px}
+.bv b{font-size:19px;color:#e8f1f8;font-variant-numeric:tabular-nums}
+.bv.ok b{color:#2dd4bf}.bv.wn b{color:#fbbf24}
+.barctl{display:flex;align-items:center;gap:8px;padding:0 12px;white-space:nowrap}
+.barctl button,.barctl select,.barctl input[type=date]{background:#0f2234;color:#e8f1f8;border:1px solid #2b4a66;border-radius:7px;padding:5px 8px;cursor:pointer}
+.barctl input[type=range]{width:90px}
+.barctl select{max-width:120px}
+.barctl b{font:600 14px Consolas,monospace}
+.sim{font-size:11px;font-weight:700;background:#fbbf24;color:#3a2a00;border-radius:4px;padding:1px 6px}

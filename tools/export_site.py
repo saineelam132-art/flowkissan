@@ -41,6 +41,7 @@ def main():
         "blocked": crops["blocked_flowers"], "rules": crops["flower_rules"],
         "wax_hx": cfg["live_run"]["wax_hx"], "pcm": cfg["pcm"], "humidity_cfg": cfg["humidity"],
         "photos": {k: v for k, v in photos.items() if v.get("kind") == "commons"},
+        "concept": sorted(p.stem for p in (ROOT / "web" / "assets" / "concept").glob("*.webp")),
         "hourly": hourly,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
