@@ -163,6 +163,10 @@
     const fig = (k, cap) => (ph[k] ? `<figure><img src="${ph[k].file}" alt="${esc(ph[k].what)}" loading="lazy"><figcaption>${esc(cap || ph[k].caption)} – a typical example, not our unit. ${esc(ph[k].credit)} · <a href="${ph[k].source}">source</a></figcaption></figure>` : '');
     $('app').innerHTML = `<h2>How it works ${range()}</h2>
       <div class="card diagram"><div class="zero">${D.r290_inside_room_g} g R290 inside the room</div>
+        <figure><img src="assets/how/glycol_loop.jpg" alt="Diagram: outdoor R290 chiller with compressor, condenser and plate heat exchanger; glycol pump; V-ROOM valve to the glycol air cooler; V-WAX valve to the finned storage panels; orange return line" style="height:auto;object-fit:contain">
+          <figcaption><b>System diagram</b> (illustration supplied by the project owner). Its labels were drawn for the first, paraffin-wax version. In today's design the panels hold
+            ${f(D.wax_kg)} kg of ${esc(pcm.word)} that freezes and melts at ${f(pcm.T_melt_C)} °C, and the glycol supply is ${f(g.supply_wax_C)} °C when the ${esc(pcm.word)} is made. The drawing below uses today's values.</figcaption></figure></div>
+      <div class="card diagram"><h3>The same loop with today's design values ${C}</h3>
       <svg viewBox="0 0 900 430" role="img" aria-label="Diagram: outdoor R290 chiller, plate heat exchanger, glycol pump, V-ROOM to the air cooler and V-WAX to the ice panels">
         <rect x="20" y="60" width="250" height="250" rx="10" class="dg-box"/><text x="32" y="82" class="dg-t">OUTDOOR R290 chiller (factory-sealed)</text>
         <rect x="40" y="110" width="90" height="60" rx="6" class="dg-box"/><text x="52" y="136" class="dg-s">compressor</text><text x="52" y="152" class="dg-s">(inverter)</text>

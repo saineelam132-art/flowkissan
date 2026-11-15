@@ -46,6 +46,8 @@ scene** (and its batch animation), where every picture carries the label "Concep
 | B16_finned_panel_cutaway | B | object picture (white background kept) |
 | B17_split_valve_manifold | B | object picture (white background kept) |
 
+`web/assets/how/glycol_loop.jpg` – system diagram illustration supplied by the project owner (shown on How it works; its labels are from the paraffin-wax version, the caption gives today's values).
+
 <!-- photos:start (made by tools/photos.py) -->
 ## Real photos (How it works + component cards)
 
