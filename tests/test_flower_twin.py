@@ -190,3 +190,13 @@ def test_trust_data_has_flowers_and_glycol_check():
     g = D["scenarios"]["normal"]["glycol"]
     assert sum(g["ok"]) / len(g["ok"]) > 0.98                                        # normal run: glycol balance closes inside the band
     assert D["stats"]["glycol_check"]["readings_inside_band_pct"] > 99 and D["stats"]["false_flags_per_year"] < 12
+
+
+def test_static_site_is_an_exact_copy_of_web():
+    """static_site/ (served by Vercel) must match web/ file for file - rebuild with python tools/build_static.py."""
+    import filecmp
+    web, out = ROOT / "web", ROOT / "static_site"
+    a = sorted(str(p.relative_to(web)) for p in web.rglob("*") if p.is_file())
+    b = sorted(str(p.relative_to(out)) for p in out.rglob("*") if p.is_file())
+    assert a == b and (out / "index.html").exists()
+    assert not filecmp.cmpfiles(web, out, a, shallow=False)[1]

@@ -6,4 +6,5 @@ python -m twin.run_all          # all studies -> results/
 python -m engine.cost           # cost and ROI -> results/live/cost_roi.json
 python -m twin.trust_nodes      # Trust & Trade node data + glycol check -> web/trust/data/trust_data.js
 python tools/export_site.py     # results -> web/data/site_data.js
+python tools/build_static.py    # web/ -> static_site/ (the folder Vercel serves)
 python -m pytest -q

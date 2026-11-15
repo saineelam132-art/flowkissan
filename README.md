@@ -46,7 +46,8 @@ then open http://localhost:8000. Hosting on its own Firebase project: **docs/fir
 | `twin/run_all.py`, `twin/reality.py` | All studies, reality check |
 | `twin/live_sim.py`, `legacy/` | The OLD design's twin and config – used only for the comparison table |
 | `results/` | What the twin wrote (`results/live/flowers_2026.json` is the headline file) |
-| `web/` | The website (plain files). `web/data/site_data.js` is generated from `results/` |
+| `web/` | The website source (plain files). `web/data/site_data.js` is generated from `results/` |
+| `static_site/` | Exact copy of `web/` made by `python tools/build_static.py` – the folder Vercel serves (Root Directory = `static_site`) |
 | `tests/` | Automatic checks |
 
 ## Results files
