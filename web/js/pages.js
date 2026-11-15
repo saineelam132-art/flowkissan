@@ -20,16 +20,12 @@
     // slides: [file, caption, [[x %, y %, what]...]]. Pictures that are not in assets/concept/ are skipped, so new ones can be added here.
     const G = D.glycol;
     const SLIDES = [
-      ['flowers_outside', 'The flower cold room on a farm near Visakhapatnam: crates and baskets of flowers wait at the door', [[50, 22, 'pv'], [78, 70, 'out']]],
-      ['outside_loading', 'Solar panels on top, insulated room below – crates go in through the strip curtain', [[50, 20, 'pv'], [72, 66, 'out'], [50, 55, 'kg']]],
-      ['room_with_chiller', `The R290 chiller stands OUTSIDE on its own pad – ${D.r290_inside_room_g} g of R290 inside the room`, [[80, 72, 'gly'], [55, 22, 'pv']]],
-      ['chiller_outdoor', 'Outdoor R290 chiller, glycol pump (green), expansion tank (red) and the two insulated glycol pipes into the room', [[40, 62, 'gly'], [43, 57, 'pump'], [65, 45, 'src']]],
-      ['outside_takeout', 'Taking flowers out early in the morning – the strip curtain keeps most of the cold in', [[52, 55, 'room'], [80, 68, 'out']]],
-      ['door_curtain_inside', 'From inside: warm air comes in at the top of the door, cold air spills out at the bottom', [[50, 45, 'room'], [20, 60, 'rh']]],
-      ['flowers_inside', `Inside at ${D.band_C.join('–')} °C: marigold, rose, jasmine and tuberose in crates and bags; ice panels on the walls, glycol air cooler above`, [[50, 20, 'gly'], [38, 55, 'wax'], [15, 60, 'kg'], [70, 30, 'rh']]],
-      ['wax_panels_finned', `Finned ice panels: ${f(D.wax_kg)} kg of ice that freezes and melts at ${f(K.pcm.T_melt_C)} °C – the room's cold battery, with a drip tray below`, [[26, 45, 'wax'], [53, 42, 'vwax'], [70, 55, 'room']]],
+      ['flowers_outside', 'The flower cold room on a farm near Visakhapatnam: marigold, jasmine and rose wait at the door', [[50, 20, 'pv'], [80, 68, 'out'], [52, 60, 'room']]],
+      ['room_flowers_chiller', `Whole system: insulated room, solar panels on top, and the R290 chiller OUTSIDE on its own pad – ${D.r290_inside_room_g} g of R290 inside the room`, [[42, 22, 'pv'], [77, 70, 'gly'], [32, 55, 'room'], [70, 12, 'out']]],
+      ['flowers_inside', `Inside at ${D.band_C.join('–')} °C: marigold, rose, jasmine and tuberose in crates and bags; finned ice panels on the wall, glycol air cooler above`, [[50, 18, 'gly'], [40, 55, 'wax'], [60, 55, 'vwax'], [14, 62, 'kg'], [80, 30, 'rh']]],
+      ['chiller_outdoor', 'Outdoor R290 chiller with the glycol pump (green), expansion tank (red) and the two insulated glycol pipes into the room', [[37, 68, 'gly'], [43, 72, 'pump'], [65, 52, 'src']]],
+      ['room_with_chiller', 'The chiller, pump and tank sit beside the room; only cold glycol goes through the wall', [[80, 72, 'gly'], [55, 20, 'pv'], [43, 55, 'room']]],
       ['A10_interior_evaporator', `Air cooler: glycol at about ${f(G.supply_room_C)} °C takes the heat out of the room air (picture from the earlier design)`, [[58, 48, 'room'], [84, 56, 'gly'], [14, 68, 'rh']]],
-      ['A14_night_wax_cooling', 'Night: pump off, both valves closed – cold air sinks from the ice fins by itself (picture from the earlier design)', [[50, 50, 'wax'], [50, 25, 'src'], [20, 70, 'room']]],
       ['A11_solar_canopy_closeup', `${f(D.pv_kWp, 1)} kWp of solar panels run the chiller by day and freeze the ice with what is left over`, [[50, 40, 'pv'], [75, 70, 'src']]],
     ];
     $('app').innerHTML = `
@@ -112,9 +108,9 @@
     const MODE = { Day: [argmax(pvDay), 12], Night: [argmax(nightT), 23], Monsoon: [argmin(monsoonDays), 13] };
     let chart = null, timer = null;
     function values(i) {
-      const on = H.run[i] > 0, src = H.grid[i] > 0 ? 'GRID' : (on ? 'SOLAR' : (H.wax[i] > 0 ? 'WAX' : 'NONE'));
+      const on = H.run[i] > 0, src = H.grid[i] > 0 ? 'GRID' : (on ? 'SOLAR' : (H.wax[i] > 0 ? 'ICE' : 'NONE'));
       return { room: [`${f(H.T_room[i], 1)} °C`, 'Room air'], rh: [`${f(H.RH_room[i], 0)} %`, 'Room humidity'], out: [`${f(H.T_out[i], 1)} °C`, 'Outside air'], pv: [`${f(H.P_pv[i], 2)} kW`, 'Solar power now'],
-        wax: [`${f(H.wax[i], 0)} %`, 'Wax frozen (cold battery)'], gly: [on ? `${f(H.T_sup[i], 1)} / ${f(H.T_ret[i], 1)} °C` : 'pump off', 'Glycol supply / return'],
+        wax: [`${f(H.wax[i], 0)} %`, 'Ice frozen (cold battery)'], gly: [on ? `${f(H.T_sup[i], 1)} / ${f(H.T_ret[i], 1)} °C` : 'pump off', 'Glycol supply / return'],
         pump: [on ? 'ON' : 'OFF', 'Glycol pump'], vwax: [H.v_wax[i] > 0 ? 'OPEN' : 'CLOSED', 'V-WAX valve'], kg: [`${f(H.kg[i], 0)} kg`, 'Flowers inside'], src: [src, 'Power from'] };
     }
     function draw() {
