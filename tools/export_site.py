@@ -43,6 +43,8 @@ def main():
         "ice_hx": cfg["live_run"]["ice_hx"], "pcm": cfg["pcm"], "humidity_cfg": cfg["humidity"],
         "photos": {k: v for k, v in photos.items() if v.get("kind") == "commons"},
         "concept": sorted(p.stem for p in (ROOT / "web" / "assets" / "concept").glob("*.webp")),
+        "flower_photos": {p.stem: f"assets/flowers/{p.name}" for p in sorted((ROOT / "web" / "assets" / "flowers").iterdir()) if p.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp")},
+        "flower_credits": J(ROOT / "web" / "assets" / "flowers" / "credits.json"),
         "hourly": hourly,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)

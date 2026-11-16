@@ -87,3 +87,5 @@ body[data-page="home"] main>.card{margin-left:auto;margin-right:auto;width:calc(
 .bar .bt{background:var(--line);border-radius:6px;height:16px;overflow:hidden}.bar .bt i{display:block;height:100%;background:#14b8a6}.bar .bt i.neg{background:#f59e0b}
 .bar b{font-variant-numeric:tabular-nums}.bar em{color:var(--muted);font-style:normal;font-size:12px}
 @media (max-width:700px){.bar{grid-template-columns:1fr 1fr}}
+
+.fpic{width:84px;height:64px;object-fit:cover;border-radius:8px;float:left;margin:0 10px 4px 0}

@@ -7,6 +7,8 @@
   const n = t => ({ t, n: true });
   const crop = k => K.crops[k] || { label: k };
   const gridLine = (h, d, mo, sol, tot) => `${f(h)} grid hours on ${f(d)} days${mo ? ' (mostly ' + mo + ')' : ''} – next to ${f(sol)} of ${f(tot)} days fully on solar + ice`;
+  const fpic = k => (K.flower_photos[k] ? `<img src="${K.flower_photos[k]}" alt="${esc(crop(k).label)}" loading="lazy" class="fpic">` : '');
+  const fcred = () => { const c = Object.entries(K.flower_credits).filter(([k]) => K.flower_photos[k]); return c.length ? `<p class="src">Flower photos: ${c.map(([k, v]) => `${esc(crop(k).label.split(' (')[0])} – ${esc(v.credit)}${v.source ? ` (<a href="${v.source}">source</a>)` : ''}`).join(' · ')}</p>` : ''; };
   const P = {};
 
   // ------------------------------------------------------------------ HOME
@@ -42,6 +44,11 @@
             <b id="nowLbl"></b><span class="sim">SIMULATED</span></div></div>
       </section>
       <div class="card" style="margin-top:12px"><h3>This day, hour by hour ${S}</h3><canvas id="dayChart" height="90"></canvas></div>
+      <h2>Flowers we store ${range()}</h2>
+      <div class="card">${table(['Flower', 'Fit at ' + f(D.setpoint_C) + ' °C', n('Shelf life outside ' + E), n('Bagged at 4 °C ' + E), n('Freshness kept after 1 day in our room ' + S), n('With no cold room ' + S)],
+        Object.entries(K.crops).map(([k, c]) => { const h = ((K.holds.flowers[k] || {}).best_practice || {})['1']; return [`${fpic(k)}<b>${esc(c.label)}</b>`, `<span class="pill ${{ Excellent: 'ok', Good: 'ok', 'Short holds': 'wn', 'Not suitable': 'bd' }[c.fit_at_4C]}">${c.fit_at_4C}</span>`,
+          f(c.shelf_life_ambient_days, 1) + ' days', f(c.shelf_life_bagged_4C_days) + ' days', h ? f(h.freshness_kept_pct) + ' %' : '–', h ? f(h.freshness_no_room_pct) + ' %' : '–']; }),
+        { note: 'More on the <a href="flowers.html">Flowers</a> page. Blocked at check-in: ' + Object.values(K.blocked).map(b => esc(b.label)).join(', ') + '.' })}${fcred()}</div>
       <h2>Results of the year so far ${S} ${range()}</h2>
       <p class="src">Best practice = realistic losses + good design + good operation (the careful, reachable numbers). The ideal model is shown in small print. Poor practice is on the Reality check page.</p>
       <div class="tiles">
@@ -224,7 +231,7 @@
     const rows = Object.entries(K.crops).map(([k, c]) => {
       const h = (H[k] || {}).best_practice || {};
       const cell = d => (h[d] ? (h[d].allowed ? `${f(h[d].freshness_kept_pct)} %` : `<span class="src">${f(h[d].freshness_kept_pct)} % (not allowed)</span>`) : '–');
-      return [`<b>${esc(c.label)}</b><br><span class="src"><i>${esc(c.latin)}</i></span>`, c.best_storage_C[0] === c.best_storage_C[1] ? c.best_storage_C[0] + ' °C' : c.best_storage_C.join('–') + ' °C',
+      return [`${fpic(k)}<b>${esc(c.label)}</b><br><span class="src"><i>${esc(c.latin)}</i></span>`, c.best_storage_C[0] === c.best_storage_C[1] ? c.best_storage_C[0] + ' °C' : c.best_storage_C.join('–') + ' °C',
         c.rh_pct.join('–') + ' %', f(c.shelf_life_ambient_days * 24) + ' h (' + f(c.shelf_life_ambient_days, 1) + ' d)', f(c.shelf_life_bagged_4C_days, 0) + ' days',
         `<span class="pill ${fit[c.fit_at_4C]}">${c.fit_at_4C}</span><br><span class="src">${esc(c.fit_note)}${c.fragrance ? ' ' + esc(c.fragrance.note) : ''}</span>`,
         cell('1'), cell('2'), cell('3'), h['1'] ? f(h['1'].freshness_no_room_pct) + ' %' : '–', c.kg_per_crate.join('–') + ' kg', c.ethylene_sensitivity];
@@ -232,10 +239,10 @@
     $('app').innerHTML = `<h2>Flowers for a ${f(D.setpoint_C)} °C room ${range()}</h2>
       <div class="card">${table(['Flower', n('Best storage °C ' + E), n('RH'), n('Shelf life outside (about 30 °C) ' + E), n('Shelf life bagged at 4 °C ' + E), 'Fit at 4 °C',
         n('Freshness kept in our room after 1 day ' + S), n('2 days ' + S), n('3 days ' + S), n('1 day with no cold room ' + S), n('kg per crate ' + E), 'Ethylene'], rows,
-        { note: 'Freshness = 100 % when picked, 0 % at the end of the reference shelf life. In our room: bagged, loaded at 06:00 at the outside temperature, taken out at 05:00 (so "1 day" is 23 hours); best-practice case.' })}</div>
+        { note: 'Freshness = 100 % when picked, 0 % at the end of the reference shelf life. In our room: bagged, loaded at 06:00 at the outside temperature, taken out at 05:00 (so "1 day" is 23 hours); best-practice case.' })}${fcred()}</div>
       <div class="cols">
        <div class="card"><h3>Check-in rules</h3>
-        ${Object.values(K.blocked).map(b => `<div class="note bd">⛔ <b>${esc(b.label)}</b> – blocked. ${esc(b.warning)}</div>`).join('')}
+        ${Object.entries(K.blocked).map(([bk, b]) => `<div class="note bd">${K.flower_photos[bk] ? `<img src="${K.flower_photos[bk]}" alt="${esc(b.label)}" class="fpic">` : ''}⛔ <b>${esc(b.label)}</b> – blocked. ${esc(b.warning)}</div>`).join('')}
         <div class="note">⚠ <b>${esc(K.crops.crossandra.label)}</b> – allowed for ${K.crops.crossandra.max_hold_days} day only. ${esc(K.crops.crossandra.shelf.warning)}</div>
         <div class="note">🍌 ${esc(K.rules.ethylene)}</div></div>
        <div class="card"><h3>Handling tips</h3><ul class="plain">${K.rules.handling.map(t => `<li>${esc(t)}</li>`).join('')}</ul>
