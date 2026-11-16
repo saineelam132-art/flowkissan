@@ -175,7 +175,7 @@ def test_website_numbers_come_from_results():
     F = json.loads((RES / "flowers_2026.json").read_text(encoding="utf-8"))
     assert K["flowers"]["best_practice"] == F["best_practice"] and K["flowers"]["ideal"] == F["ideal"]
     assert K["cost"] == json.loads((RES / "cost_roi.json").read_text(encoding="utf-8"))
-    for page in ("index", "how", "flowers", "live", "season", "humidity", "safety", "cost", "reality"):
+    for page in ("index", "how", "flowers", "live", "season", "humidity", "safety", "cost", "reality", "control"):
         html = (ROOT / "web" / f"{page}.html").read_text(encoding="utf-8")
         body = html[html.index("<body"):]
         assert not re.search(r"\d", re.sub(r"<script[^>]*>", "", body)), page          # no numbers typed into the pages
@@ -227,6 +227,8 @@ def test_solar_only_study():
 def test_live_report_runs_from_1_january():
     L = json.loads((RES / "live_2026.json").read_text(encoding="utf-8"))
     assert L["date_range"]["from"] == "2026-01-01" and L["date_range"]["days"] == len(L["daily"]) >= 310
+    assert all(d["kind"] in ("normal", "normal_grid", "low_sun", "storm") for d in L["forecast"]["days"])          # forecast days are kept apart from the report
+    assert not {d["date"] for d in L["forecast"]["days"]} & {d["date"] for d in L["daily"]}
     assert L["totals"]["grid_kWh"] == pytest.approx(sum(d["grid_kWh"] for d in L["daily"]), abs=0.1)
 
 
@@ -250,3 +252,13 @@ def test_lower_limit_and_headline_cold_side(fcfg):
     assert F["ideal"]["room_min_C"] > 1.5                             # ideal model: passive ice panels on cold nights, see the Reality check page
     assert fcfg["controller"]["low_stop_C"] == 3.0 and fcfg["controller"]["low_restart_C"] == 4.5
     assert fcfg["project"]["tagline"] == "Cold from the sun, ice for the night, truth in the ledger."
+
+
+def test_control_centre_data():
+    C = json.loads((RES / "control.json").read_text(encoding="utf-8"))
+    m = C["money"]["rows"]
+    assert m[0]["cost_INR"] < m[1]["cost_INR"] < m[2]["cost_INR"]                     # ours < grid only < grid + diesel
+    assert len(C["sensors"]["rows"]) >= 15 and "not measured" in C["sensors"]["about"]
+    assert len(C["calculations"]["rows"]) >= 12 and len(C["what_if"]["rows"]) >= 8
+    hs = C["how_sure"]["cases"]
+    assert hs["cool"]["grid_kWh_per_year"] <= hs["grid"]["grid_kWh_per_year"] <= hs["hot"]["grid_kWh_per_year"]

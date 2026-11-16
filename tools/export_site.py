@@ -27,7 +27,17 @@ def main():
     r = lambda c, k=2: [None if pd.isna(x) else round(float(x), k) for x in H[c]]
     hourly = {"t0": str(H.time_ist.iloc[0]), "n": len(H), "T_out": r("T_out", 1), "RH_out": r("RH_out", 0), "T_room": r("T_room"), "RH_room": r("RH_room", 1),
               "ice": r("pcm_pct", 1), "T_sup": r("T_sup"), "T_ret": r("T_ret"), "P_pv": r("P_pv", 3), "P_grid": r("P_grid", 3), "P_comp": r("P_comp", 3),
-              "run": r("running_h"), "grid": r("grid_on"), "v_ice": r("v_ice"), "kg": r("kg_inside", 1)}
+              "run": r("running_h"), "grid": r("grid_on"), "v_ice": r("v_ice"), "kg": r("kg_inside", 1), "cop": r("cop"),
+              "Q_air": r("Q_air", 3), "Q_ch": r("Q_ch", 3), "Q_ice_room": r("Q_pcm_room", 3), "P_sol": r("P_solar_used", 3)}
+    for c_ in ("ghi", "wind", "is_forecast"):
+        if c_ in H:
+            hourly[c_] = r(c_, 1)
+    hourly["n_actual"] = int((H["is_forecast"] == 0).sum()) if "is_forecast" in H else len(H)
+    two = {}
+    for tag, fn in (("ideal", "hourly_flowers_ideal.csv"), ("best", "hourly_flowers.csv")):
+        Z = pd.read_csv(RES / fn, parse_dates=["time_ist"])
+        z = lambda c, k=2: [None if pd.isna(x) else round(float(x), k) for x in Z[c]]
+        two[tag] = {"t0": str(Z.time_ist.iloc[0]), "n": len(Z), "T_room": z("T_room"), "ice": z("pcm_pct", 1), "grid": z("grid_on"), "P_comp": z("P_comp", 3), "T_out": z("T_out", 1)}
     photos = J(ROOT / "web" / "assets" / "photos.json")["photos"]
     data = {
         "generated": pd.Timestamp.now("Asia/Kolkata").strftime("%Y-%m-%d %H:%M IST"),
@@ -36,7 +46,7 @@ def main():
         "humidity": J(RES / "humidity_options.json"), "reality": J(RES / "reality_check.json"), "night": J(RES / "night_limit.json"),
         "load": J(RES / "load_sweep.json"), "ice": J(RES / "ice_sweep.json"), "cost": J(RES / "cost_roi.json"),
         "compare": J(ROOT / "results" / "compare_old_vs_new.json"),
-        "practice": J(RES / "practice.json"), "pipe": J(RES / "pipe_pump.json"), "solar": J(RES / "solar_only.json"), "live": J(RES / "live_2026.json"),
+        "practice": J(RES / "practice.json"), "control": J(RES / "control.json"), "two": two, "pipe": J(RES / "pipe_pump.json"), "solar": J(RES / "solar_only.json"), "live": J(RES / "live_2026.json"),
         "plan": {k: v for k, v in plan.items() if k not in ("fills_full_year",)}, "fills": plan["fills_full_year"],
         "crops": {k: v for k, v in crops.items() if isinstance(v, dict) and v.get("kind") == "flower"},
         "blocked": crops["blocked_flowers"], "rules": crops["flower_rules"],

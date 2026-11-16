@@ -13,7 +13,7 @@
   const range = () => `<span class="range">${esc(K.flowers.date_range.label)}</span>`;
   const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const PAGES = [['index.html', 'Home'], ['how.html', 'How it works'], ['flowers.html', 'Flowers'], ['live.html', 'Live 2026'], ['season.html', 'Season planner'], ['humidity.html', 'Humidity'],
-    ['safety.html', 'Safety'], ['cost.html', 'Cost & ROI'], ['reality.html', 'Reality check'], ['trust.html', 'Trust & Trade']];
+    ['safety.html', 'Safety'], ['cost.html', 'Cost & ROI'], ['reality.html', 'Reality check'], ['control.html', 'Control centre'], ['trust.html', 'Trust & Trade']];
   function table(head, rows, opt = {}) {
     const th = head.map(h => `<th class="${h.n ? 'n' : ''}">${h.t ?? h}</th>`).join('');
     const tr = rows.map(r => `<tr class="${r.hl ? 'hl' : ''}">${(r.c || r).map((c, i) => `<td class="${head[i] && head[i].n ? 'n' : ''}">${c ?? '–'}</td>`).join('')}</tr>`).join('');
@@ -27,6 +27,8 @@
     top.innerHTML = `<a class="tt-brand" href="index.html"><img src="public/koolkisaan-logo-small.png" alt="KoolKisaan logo"><span><b>${esc(K.project.name)}</b><small>${esc(K.project.tagline)}</small></span></a>
       <nav class="nav">${PAGES.map(([h, t]) => `<a href="${h}" class="${h === here ? 'on' : ''}">${t}</a>`).join('')}</nav>`;
     document.body.prepend(top);
+    const setH = () => document.documentElement.style.setProperty('--topH', top.offsetHeight + 'px');
+    setH(); window.addEventListener('resize', setH);
     const foot = document.createElement('div');
     foot.className = 'foot';
     foot.innerHTML = `${S} = simulated by our digital twin on real 2026 Visakhapatnam weather (not measured). ${E} = assumption to check. ${C} = calculated.

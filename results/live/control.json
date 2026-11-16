@@ -1,0 +1,968 @@
+{
+ "about": "Control centre data.",
+ "date_range": {
+  "from": "2026-01-01",
+  "to": "2026-11-06",
+  "days": 310,
+  "label": "1 Jan 2026 – 6 Nov 2026 (310 days, real Visakhapatnam weather, digital twin)"
+ },
+ "note": "Digital twin (S) and calculations (C). Nothing is measured.",
+ "calculations": {
+  "design_point": {
+   "T_out_C": 35.0,
+   "RH_out_pct": 65.0,
+   "T_room_C": 4.0
+  },
+  "rows": [
+   {
+    "name": "Wall heat leak",
+    "formula": "Q = U × A × (T_out − T_room)",
+    "numbers": "0.22 × 25.6 × (35 − 4)",
+    "value": 174.592,
+    "unit": "W"
+   },
+   {
+    "name": "Door, while open (ASHRAE infiltration, with strip curtain)",
+    "formula": "q = 0.221 A (h_out − h_in) ρ √(1 − ρ_out/ρ_in) √(gH) F_m × D_f × (1 − E)",
+    "numbers": "h_out 95.0, h_in 15.7 kJ/kg; curtain E 0.85",
+    "value": 7167.758,
+    "unit": "W while open"
+   },
+   {
+    "name": "Door, per day (best practice)",
+    "formula": "E = q × openings × seconds",
+    "numbers": "4 × 20 s",
+    "value": 0.1593,
+    "unit": "kWh/day"
+   },
+   {
+    "name": "Cooling one full room of marigold from the field",
+    "formula": "E = m × cp × (T_field − T_room)",
+    "numbers": "90 kg × 3.72 × (35 − 4) / 3600",
+    "value": 2.883,
+    "unit": "kWh"
+   },
+   {
+    "name": "Respiration heat of the flowers at 4 °C",
+    "formula": "Q = m × r(T)",
+    "numbers": "90 kg × 135 mW/kg",
+    "value": 12.1118,
+    "unit": "W"
+   },
+   {
+    "name": "R290 evaporating temperature (room / ice making)",
+    "formula": "T_evap = glycol supply − plate-exchanger approach",
+    "numbers": "0 − 3  /  -5 − 3",
+    "value": null,
+    "text": "-3 / -8 °C",
+    "unit": ""
+   },
+   {
+    "name": "Chiller COP at 35 °C outside (room / ice making)",
+    "formula": "COP = q_evap / w_compressor × motor efficiency (CoolProp R290 cycle)",
+    "numbers": "condensing at 45 °C; pressures 4.3 → 15.3 bar",
+    "value": null,
+    "text": "2.68 / 2.33",
+    "unit": ""
+   },
+   {
+    "name": "Glycol flow",
+    "formula": "m_dot = Q_max / (cp × ΔT)",
+    "numbers": "1.5 / (3.7 × 3.0)",
+    "value": 0.1351,
+    "unit": "kg/s",
+    "digits": 3
+   },
+   {
+    "name": "Glycol energy check",
+    "formula": "Q = m_dot × cp × (T_return − T_supply)",
+    "numbers": "0.135 × 3.7 × 3.0",
+    "value": 1.5,
+    "unit": "kW",
+    "digits": 2
+   },
+   {
+    "name": "Cold stored in the ice",
+    "formula": "E = m × L",
+    "numbers": "100 kg × 334 kJ/kg / 3600",
+    "value": 9.2778,
+    "unit": "kWh",
+    "digits": 2
+   },
+   {
+    "name": "Night heat load at 28 °C outside (walls + flowers + controller)",
+    "formula": "Q = U A ΔT + respiration + electronics",
+    "numbers": "",
+    "value": 157.2798,
+    "unit": "W"
+   },
+   {
+    "name": "Hours the full ice can carry that night load",
+    "formula": "t = E_ice / Q_night",
+    "numbers": "9.28 kWh / 157 W",
+    "value": 58.989,
+    "unit": "h",
+    "digits": 1
+   },
+   {
+    "name": "Largest R290 charge allowed INSIDE this room",
+    "formula": "m = 0.20 × LFL × V",
+    "numbers": "0.20 × 0.038 kg/m³ × 8.8 m³",
+    "value": 66.88,
+    "unit": "g  (ours: 0 g)"
+   },
+   {
+    "name": "Solar panel power",
+    "formula": "P = kWp × G/1000 × PR × (1 + γ (T_cell − 25))",
+    "numbers": "1.8 kWp, PR 0.79, γ -0.004/°C",
+    "value": null,
+    "text": "1.25 kW at 1000 W/m², 55 °C cell",
+    "unit": ""
+   }
+  ]
+ },
+ "how_sure": {
+  "about": "The best-practice year run again with the weather shifted the way a real site can differ from the weather service. Expected errors come from published studies (config/site_error_budget.json); they are NOT our measurements.",
+  "cases": {
+   "grid": {
+    "label": "Weather service as is",
+    "days_full_solar_ice": 297,
+    "grid_h_per_year": 128.9274,
+    "grid_kWh_per_year": 39.7274,
+    "hours_above_band_top": 14,
+    "electric_kWh_day": 3.349,
+    "COP_chiller": 2.4371
+   },
+   "hot": {
+    "label": "Hot site (+1.5 °C, less sun) – used for the headline",
+    "days_full_solar_ice": 266,
+    "grid_h_per_year": 501.1882,
+    "grid_kWh_per_year": 80.8094,
+    "hours_above_band_top": 24,
+    "electric_kWh_day": 3.7088,
+    "COP_chiller": 2.295
+   },
+   "cool": {
+    "label": "Cool site",
+    "days_full_solar_ice": 303,
+    "grid_h_per_year": 70.6452,
+    "grid_kWh_per_year": 33.0563,
+    "hours_above_band_top": 8,
+    "electric_kWh_day": 3.0453,
+    "COP_chiller": 2.5748
+   }
+  },
+  "random": {
+   "n": 16,
+   "days_full_solar_ice": {
+    "p5": 285.0,
+    "median": 290.0,
+    "p95": 296.5
+   },
+   "grid_kWh_per_year": {
+    "p5": 40.4658,
+    "median": 44.427,
+    "p95": 49.6008
+   },
+   "note": "16 random sites, errors that drift over about 6 hours, fixed seed."
+  }
+ },
+ "what_if": {
+  "about": "Best practice with ONE thing changed.",
+  "headline": {
+   "days_full_solar_ice": 266,
+   "grid_h_per_year": 501.1882,
+   "grid_kWh_per_year": 80.8094,
+   "hours_above_band_top": null,
+   "hours_below_2C": 0,
+   "electric_kWh_day": 3.7088,
+   "rh_avg_pct": 92.1057,
+   "value_INR": 631725.3602,
+   "COP_chiller": 2.295
+  },
+  "rows": [
+   {
+    "key": "pv_1_2",
+    "label": "Solar panels 1.2 kWp instead of 1.8",
+    "days_full_solar_ice": 91,
+    "grid_h_per_year": 3036.0739,
+    "grid_kWh_per_year": 337.355,
+    "hours_above_band_top": 9,
+    "hours_below_2C": 0,
+    "electric_kWh_day": 3.6466,
+    "rh_avg_pct": 92.2549,
+    "value_INR": 631798.2438,
+    "COP_chiller": 2.419
+   },
+   {
+    "key": "pv_2_4",
+    "label": "Solar panels 2.4 kWp",
+    "days_full_solar_ice": 287,
+    "grid_h_per_year": 218.1169,
+    "grid_kWh_per_year": 51.4564,
+    "hours_above_band_top": 27,
+    "hours_below_2C": 0,
+    "electric_kWh_day": 3.6885,
+    "rh_avg_pct": 92.1474,
+    "value_INR": 631987.3915,
+    "COP_chiller": 2.3182
+   },
+   {
+    "key": "ice_60",
+    "label": "Ice 60 kg instead of 100",
+    "days_full_solar_ice": 239,
+    "grid_h_per_year": 690.9489,
+    "grid_kWh_per_year": 111.4657,
+    "hours_above_band_top": 23,
+    "hours_below_2C": 0,
+    "electric_kWh_day": 3.7081,
+    "rh_avg_pct": 92.1306,
+    "value_INR": 631684.3064,
+    "COP_chiller": 2.3123
+   },
+   {
+    "key": "ice_140",
+    "label": "Ice 140 kg",
+    "days_full_solar_ice": 278,
+    "grid_h_per_year": 322.1223,
+    "grid_kWh_per_year": 60.6486,
+    "hours_above_band_top": 26,
+    "hours_below_2C": 0,
+    "electric_kWh_day": 3.707,
+    "rh_avg_pct": 92.0921,
+    "value_INR": 631625.8819,
+    "COP_chiller": 2.2833
+   },
+   {
+    "key": "no_curtain",
+    "label": "No strip curtain",
+    "days_full_solar_ice": 257,
+    "grid_h_per_year": 579.1922,
+    "grid_kWh_per_year": 98.0781,
+    "hours_above_band_top": 73,
+    "hours_below_2C": 0,
+    "electric_kWh_day": 3.9477,
+    "rh_avg_pct": 91.9531,
+    "value_INR": 630061.7881,
+    "COP_chiller": 2.2964
+   },
+   {
+    "key": "door_12",
+    "label": "12 door openings a day",
+    "days_full_solar_ice": 264,
+    "grid_h_per_year": 547.9906,
+    "grid_kWh_per_year": 86.6619,
+    "hours_above_band_top": 23,
+    "hours_below_2C": 0,
+    "electric_kWh_day": 3.8217,
+    "rh_avg_pct": 92.2319,
+    "value_INR": 631759.0258,
+    "COP_chiller": 2.2986
+   },
+   {
+    "key": "sp_5",
+    "label": "Set-point 5 °C",
+    "days_full_solar_ice": 266,
+    "grid_h_per_year": 508.2527,
+    "grid_kWh_per_year": 76.975,
+    "hours_above_band_top": 5,
+    "hours_below_2C": 0,
+    "electric_kWh_day": 3.7069,
+    "rh_avg_pct": 92.1537,
+    "value_INR": 629121.1444,
+    "COP_chiller": 2.288
+   },
+   {
+    "key": "sp_3",
+    "label": "Set-point 3 °C",
+    "days_full_solar_ice": 266,
+    "grid_h_per_year": 518.457,
+    "grid_kWh_per_year": 89.2463,
+    "hours_above_band_top": 76,
+    "hours_below_2C": 0,
+    "electric_kWh_day": 3.7335,
+    "rh_avg_pct": 92.0752,
+    "value_INR": 634057.4976,
+    "COP_chiller": 2.306
+   },
+   {
+    "key": "no_fogger",
+    "label": "Bags but no fogger",
+    "days_full_solar_ice": 274,
+    "grid_h_per_year": 430.1505,
+    "grid_kWh_per_year": 49.8272,
+    "hours_above_band_top": 62,
+    "hours_below_2C": 0,
+    "electric_kWh_day": 3.3814,
+    "rh_avg_pct": 74.3949,
+    "value_INR": 625642.5561,
+    "COP_chiller": 2.3012
+   },
+   {
+    "key": "insul_150",
+    "label": "Insulation 150 mm instead of 100 mm",
+    "days_full_solar_ice": 290,
+    "grid_h_per_year": 251.379,
+    "grid_kWh_per_year": 40.2636,
+    "hours_above_band_top": 12,
+    "hours_below_2C": 246,
+    "electric_kWh_day": 2.9333,
+    "rh_avg_pct": 92.2191,
+    "value_INR": 633223.8312,
+    "COP_chiller": 2.3002
+   }
+  ]
+ },
+ "money": {
+  "about": "Running-cost comparison of three rooms with the same flowers and weather (E prices).",
+  "E": {
+   "diesel_INR_L": 93.0,
+   "diesel_L_per_kWh": 0.5,
+   "power_cut_hours": [
+    10,
+    18
+   ],
+   "grid_kg_CO2_kWh": 0.71,
+   "diesel_kg_CO2_L": 2.68,
+   "note": "E – same assumptions as the earlier KoolKisaan money page: diesel Rs 93/L, 0.5 L per kWh from a small genset, power cut 10:00-18:00, CEA grid factor 0.71 kg CO2/kWh, diesel 2.68 kg CO2/L."
+  },
+  "tariff_INR_kWh": 7.0,
+  "rows": [
+   {
+    "label": "Our room (solar + ice, grid backup)",
+    "grid_kWh": 80.8094,
+    "diesel_L": 0.0,
+    "cost_INR": 565.6658,
+    "co2_kg": 57.3747
+   },
+   {
+    "label": "Same room on grid only",
+    "grid_kWh": 1291.0711,
+    "diesel_L": 0.0,
+    "cost_INR": 9037.4975,
+    "co2_kg": 916.6605,
+    "saved_INR": 8471.8317,
+    "co2_saved_kg": 859.2858
+   },
+   {
+    "label": "Grid + diesel genset in the 10:00–18:00 power cut",
+    "grid_kWh": 860.714,
+    "diesel_L": 215.1785,
+    "cost_INR": 26036.5999,
+    "co2_kg": 1187.7854,
+    "saved_INR": 25470.9341,
+    "co2_saved_kg": 1130.4107
+   }
+  ]
+ },
+ "sensors": {
+  "about": "Sensors PLANNED for the KoolKisaan Flowers room (types, ranges and accuracies are typical catalogue values, E). Nothing is installed yet: every value on the website is simulated by the digital twin, not measured.",
+  "rows": [
+   {
+    "id": "t_out",
+    "name": "Outside air temperature",
+    "quantity": "T_out",
+    "unit": "°C",
+    "type": "SHT31 digital T/RH sensor in a radiation shield",
+    "range": "-40 to +125 °C",
+    "accuracy": "±0.3 °C",
+    "protocol": "I²C → ESP32 → Wi-Fi (HTTP JSON)",
+    "location": "Weather mast, 1.5 m high, 1.5 m south-east of the room",
+    "used_in": "Q_wall = U·A·(T_out − T_in); door infiltration enthalpy h_out; T_cond = T_out + 10 K; PV cell temperature"
+   },
+   {
+    "id": "rh_out",
+    "name": "Outside relative humidity",
+    "quantity": "RH_out",
+    "unit": "%",
+    "type": "SHT31 (same chip as outside temperature)",
+    "range": "0 – 100 %RH",
+    "accuracy": "±2 %RH",
+    "protocol": "I²C → ESP32 → Wi-Fi",
+    "location": "Weather mast, in the radiation shield",
+    "used_in": "Humidity ratio W_out → enthalpy h_out → door latent load"
+   },
+   {
+    "id": "wind",
+    "name": "Wind speed",
+    "quantity": "wind",
+    "unit": "m/s",
+    "type": "Cup anemometer (pulse output)",
+    "range": "0 – 30 m/s",
+    "accuracy": "±0.3 m/s",
+    "protocol": "Pulse count → ESP32",
+    "location": "Top of the weather mast, 2.2 m",
+    "used_in": "Logged for context (wind raises door infiltration in real rooms; not in the ASHRAE formula)"
+   },
+   {
+    "id": "pv_power",
+    "name": "Solar PV power",
+    "quantity": "P_pv",
+    "unit": "kW",
+    "type": "DC energy meter (shunt + INA226)",
+    "range": "0 – 3 kW",
+    "accuracy": "±1 %",
+    "protocol": "I²C / Modbus → ESP32",
+    "location": "PV combiner, on the canopy frame",
+    "used_in": "P = P_rated·(G/1000)·PR·[1 − 0.004·(T_cell − 25)]; decides solar vs grid (ATS)"
+   },
+   {
+    "id": "comp_power",
+    "name": "Chiller + pump power",
+    "quantity": "P_comp",
+    "unit": "kW",
+    "type": "AC/DC power meter (PZEM-type)",
+    "range": "0 – 3 kW",
+    "accuracy": "±1 %",
+    "protocol": "Modbus RTU → ESP32",
+    "location": "Outdoor chiller unit",
+    "used_in": "COP_elec = Q_cooling / P_comp; physics check of room temperature"
+   },
+   {
+    "id": "ats",
+    "name": "Grid backup switch (ATS)",
+    "quantity": "grid_on",
+    "unit": "",
+    "type": "Contact on the automatic transfer switch",
+    "range": "SOLAR / GRID",
+    "accuracy": "—",
+    "protocol": "Digital input → ESP32",
+    "location": "Control box, north wall",
+    "used_in": "Grid backup hours; switches when ice < 15 % and no sun"
+   },
+   {
+    "id": "door_switch",
+    "name": "Door switch",
+    "quantity": "door_open",
+    "unit": "",
+    "type": "Magnetic reed switch",
+    "range": "OPEN / CLOSED",
+    "accuracy": "—",
+    "protocol": "Digital input → ESP32",
+    "location": "Top of the door frame, handle side",
+    "used_in": "D_t = fraction of time open → Q_door = q·D_t·D_f·(1 − E)"
+   },
+   {
+    "id": "t_low",
+    "name": "Room temperature – low",
+    "quantity": "T_room",
+    "unit": "°C",
+    "type": "DS18B20 digital probe",
+    "range": "-55 to +125 °C",
+    "accuracy": "±0.5 °C",
+    "protocol": "1-Wire → ESP32",
+    "location": "Back wall, 0.3 m high",
+    "used_in": "Room air temperature (the twin has ONE air node, so all room sensors show the same value in SIMULATED mode)"
+   },
+   {
+    "id": "t_mid",
+    "name": "Room T / RH – middle",
+    "quantity": "T_room_sensor",
+    "unit": "°C",
+    "type": "SHT31 T/RH",
+    "range": "-40 to +125 °C, 0–100 %RH",
+    "accuracy": "±0.3 °C, ±2 %RH",
+    "protocol": "I²C → ESP32",
+    "location": "Back wall, 1.2 m high",
+    "used_in": "Main control sensor; Q_wall, door enthalpy h_in, shelf life"
+   },
+   {
+    "id": "t_high",
+    "name": "Room temperature – high",
+    "quantity": "T_room",
+    "unit": "°C",
+    "type": "DS18B20 digital probe",
+    "range": "-55 to +125 °C",
+    "accuracy": "±0.5 °C",
+    "protocol": "1-Wire → ESP32",
+    "location": "Back wall, 2.0 m high",
+    "used_in": "Stratification check (warm air collects at the top)"
+   },
+   {
+    "id": "t_evap",
+    "name": "Air leaving the glycol air cooler",
+    "quantity": "T_room",
+    "unit": "°C",
+    "type": "DS18B20 digital probe",
+    "range": "-55 to +125 °C",
+    "accuracy": "±0.5 °C",
+    "protocol": "1-Wire → ESP32",
+    "location": "Under the air cooler, back wall",
+    "used_in": "Coil performance check"
+   },
+   {
+    "id": "t_pcm",
+    "name": "Ice panel temperature",
+    "quantity": "T_pcm",
+    "unit": "°C",
+    "type": "Type-T thermocouple in the ice + MAX31856",
+    "range": "-200 to +350 °C",
+    "accuracy": "±0.5 °C",
+    "protocol": "SPI → ESP32",
+    "location": "Inside an ice panel, west wall",
+    "used_in": "ice battery state (with the energy balance) and backup time"
+   },
+   {
+    "id": "t_prod",
+    "name": "Flower (core of the crate) temperature",
+    "quantity": "T_batch",
+    "unit": "°C",
+    "type": "Food probe DS18B20",
+    "range": "-55 to +125 °C",
+    "accuracy": "±0.5 °C",
+    "protocol": "1-Wire → ESP32",
+    "location": "Inside the newest crate, among the flowers",
+    "used_in": "Product pull-down: Q = m·cp·dT/dt; shelf-life model"
+   },
+   {
+    "id": "gas",
+    "name": "Ethylene / VOC gas (optional)",
+    "quantity": "gas_ppm",
+    "unit": "ppm",
+    "type": "MQ-135 / MQ-3 metal-oxide gas sensor",
+    "range": "10 – 1000 ppm (relative)",
+    "accuracy": "relative trend only",
+    "protocol": "Analog → ESP32 ADC",
+    "location": "Back wall, 1.6 m high",
+    "used_in": "Ripening / spoilage trend only. NOT simulated – shows a value only when a real sensor is connected."
+   },
+   {
+    "id": "t_gly_sup",
+    "name": "Glycol supply temperature",
+    "quantity": "T_supply",
+    "unit": "°C",
+    "type": "PT100 / DS18B20 in a pocket on the pipe",
+    "range": "-20 to +60 °C",
+    "accuracy": "±0.1 °C (matched pair)",
+    "protocol": "1-Wire / RTD → ESP32",
+    "location": "Glycol pipe leaving the plate exchanger (outside wall)",
+    "used_in": "Q = m_dot × cp × (T_return − T_supply): the glycol energy-balance check"
+   },
+   {
+    "id": "t_gly_ret",
+    "name": "Glycol return temperature",
+    "quantity": "T_return",
+    "unit": "°C",
+    "type": "PT100 / DS18B20 in a pocket on the pipe",
+    "range": "-20 to +60 °C",
+    "accuracy": "±0.1 °C (matched pair)",
+    "protocol": "1-Wire / RTD → ESP32",
+    "location": "Glycol pipe coming back to the plate exchanger",
+    "used_in": "Q = m_dot × cp × (T_return − T_supply)"
+   },
+   {
+    "id": "gly_flow",
+    "name": "Glycol flow",
+    "quantity": "m_dot",
+    "unit": "kg/s",
+    "type": "Turbine / hall-effect flow meter",
+    "range": "1 to 30 L/min",
+    "accuracy": "±2 %",
+    "protocol": "Pulse → ESP32",
+    "location": "Glycol supply pipe after the pump",
+    "used_in": "Glycol energy-balance check; pump health"
+   },
+   {
+    "id": "rh_room",
+    "name": "Room relative humidity",
+    "quantity": "RH_room",
+    "unit": "%",
+    "type": "SHT31 / capacitive RH sensor rated for 95 %+",
+    "range": "0 to 100 %",
+    "accuracy": "±2 %",
+    "protocol": "I²C → ESP32",
+    "location": "Back wall, 1.2 m high, away from the fogger",
+    "used_in": "Fogger on below 90 %, off at 95 %; flower water loss"
+   },
+   {
+    "id": "r290_leak",
+    "name": "R290 leak sensor",
+    "quantity": "gas alarm",
+    "unit": "% LFL",
+    "type": "Catalytic / infrared hydrocarbon gas sensor",
+    "range": "0 to 100 % LFL",
+    "accuracy": "alarm at 20 % LFL",
+    "protocol": "Relay contact → controller",
+    "location": "Low on the OUTDOOR chiller unit (propane is heavier than air)",
+    "used_in": "Alarm and chiller stop; there is no R290 inside the room"
+   },
+   {
+    "id": "v_room",
+    "name": "V-ROOM valve position",
+    "quantity": "open / closed",
+    "unit": "",
+    "type": "Motorised 2-way valve with end switch",
+    "range": "0 / 1",
+    "accuracy": "–",
+    "protocol": "Relay + feedback contact",
+    "location": "Glycol branch to the air cooler",
+    "used_in": "Controller: room first"
+   },
+   {
+    "id": "v_ice",
+    "name": "V-ICE valve position",
+    "quantity": "open / closed",
+    "unit": "",
+    "type": "Motorised 2-way valve with end switch",
+    "range": "0 / 1",
+    "accuracy": "–",
+    "protocol": "Relay + feedback contact",
+    "location": "Glycol branch to the ice panels",
+    "used_in": "Controller: only with spare solar and ice below 100 %"
+   }
+  ]
+ },
+ "room": {
+  "table": [
+   {
+    "item": "Ice panels + casing + fins (along the walls, incl. drip tray below)",
+    "key": "ice_panels_fins",
+    "floor_m2": 0.36,
+    "volume_m3": 0.675,
+    "pct_of_room": 7.7
+   },
+   {
+    "item": "Keep-clear air in front of the fins (natural convection)",
+    "key": "keep_clear_air",
+    "floor_m2": 0.66,
+    "volume_m3": 1.233,
+    "pct_of_room": 14.0
+   },
+   {
+    "item": "Evaporator unit (above the door)",
+    "key": "evaporator",
+    "floor_m2": 0.18,
+    "volume_m3": 0.072,
+    "pct_of_room": 0.8
+   },
+   {
+    "item": "Free air in front of the evaporator",
+    "key": "evaporator_free_air",
+    "floor_m2": 0.18,
+    "volume_m3": 0.072,
+    "pct_of_room": 0.8
+   },
+   {
+    "item": "Racks with crates and produce (up to the top crate)",
+    "key": "racks_crates_produce",
+    "floor_m2": 1.458,
+    "volume_m3": 2.551,
+    "pct_of_room": 29.0
+   },
+   {
+    "item": "Door walkway + aisle",
+    "key": "door_walkway_aisle",
+    "floor_m2": 1.345,
+    "volume_m3": 2.421,
+    "pct_of_room": 27.5
+   },
+   {
+    "item": "Other free air (above racks, corners, under the panels)",
+    "key": "free_air_other",
+    "floor_m2": 0.0,
+    "volume_m3": 1.776,
+    "pct_of_room": 20.2
+   }
+  ],
+  "layout": {
+   "chosen": "L_shape",
+   "options": {
+    "two_side_racks": {
+     "aisle_m": 0.492,
+     "ok": false,
+     "crates": 16
+    },
+    "L_shape": {
+     "aisle_m": 1.042,
+     "ok": true,
+     "crates": 12
+    },
+    "back_only": {
+     "aisle_m": 1.092,
+     "ok": true,
+     "crates": 8
+    }
+   },
+   "racks": [
+    {
+     "name": "left",
+     "x": [
+      0.204,
+      0.754
+     ],
+     "y": [
+      0.204,
+      1.796
+     ],
+     "crates_per_shelf": 2,
+     "crates": 8
+    },
+    {
+     "name": "back",
+     "x": [
+      0.754,
+      1.796
+     ],
+     "y": [
+      1.246,
+      1.796
+     ],
+     "crates_per_shelf": 1,
+     "crates": 4
+    }
+   ],
+   "door_x": [
+    0.896,
+    1.796
+   ],
+   "shelves_m": [
+    0.1,
+    0.55,
+    1.0,
+    1.45
+   ],
+   "top_crate_m": 1.75,
+   "aisle_m": 1.042
+  },
+  "crate_places": 12,
+  "zones_sum_m3": 8.8,
+  "ice": {
+   "ice_kg": 100,
+   "ice_volume_solid_m3": 0.1136,
+   "ice_volume_liquid_m3": 0.1299,
+   "slab_mm": 10.8225,
+   "panel_area_m2": 12.0,
+   "panel_height_m": 1.7,
+   "wall_length_m": 7.0588,
+   "panel_bottom_m": 0.25,
+   "fin_depth_m": 0.04,
+   "panel_depth_m": 0.0538,
+   "keep_clear_m": 0.1,
+   "band_m": 0.1538
+  }
+ },
+ "fixed_inputs": {
+  "chamber": {
+   "length_m": 2.0,
+   "width_m": 2.0,
+   "height_m": 2.2,
+   "envelope_area_m2": 25.6,
+   "insulation_thickness_m": 0.1,
+   "insulation_k_W_mK": 0.022
+  },
+  "setpoint": {
+   "target_C": 4.0,
+   "band_low_C": 2.0,
+   "band_high_C": 6.0,
+   "alarm_high_C": 8.0,
+   "alarm_low_C": 1.0,
+   "rh_room_pct": 92.5,
+   "rh_target_pct": [
+    90.0,
+    95.0
+   ],
+   "rh_low_alarm_pct": 85.0
+  },
+  "door": {
+   "width_m": 0.8,
+   "height_m": 1.8,
+   "openings_per_hour": 0.25,
+   "seconds_per_opening": 20,
+   "flow_factor_Df": 1.1,
+   "curtain_installed": true,
+   "curtain_effectiveness_E": 0.85
+  },
+  "refrigeration": {
+   "refrigerant": "R290",
+   "coolprop_name": "Propane",
+   "location": "outdoor, factory-sealed glycol chiller (0 g of R290 inside the room)",
+   "T_evap_C": -3.0,
+   "T_cond_design_C": 50.0,
+   "cond_approach_K": 10.0,
+   "superheat_K": 0.0,
+   "subcool_K": 0.0,
+   "eta_isentropic": 0.75,
+   "eta_motor_drive": 0.85,
+   "design_capacity_kW": 1.5
+  },
+  "glycol": {
+   "fluid": "propylene glycol 30-35 % in water",
+   "cp_kJ_kgK": 3.7,
+   "density_kg_m3": 1030.0,
+   "freeze_C": -13.0,
+   "hx_approach_K": 3.0,
+   "supply_room_C": 0.0,
+   "supply_ice_C": -5.0,
+   "design_dT_K": 3.0,
+   "pump_W": 18.0,
+   "pump_heat_to_fluid_frac": 1.0,
+   "pipe_UA_W_K": 1.0,
+   "air_cooler_G_kW_K": 0.25,
+   "air_cooler_air_side_frac": 0.75,
+   "air_cooler_airflow_m3_h": 900,
+   "ice_coil_R_m2K_W": 0.01,
+   "loop_volume_L": 15.0,
+   "min_on_min": 3,
+   "pipe_UA_first_design_W_K": 3.0,
+   "pump_first_design_W": 40.0
+  },
+  "pv": {
+   "rated_kWp": 1.8,
+   "tilt_deg": 17.0,
+   "azimuth_deg": 180.0,
+   "performance_ratio": 0.79,
+   "temp_coeff_per_C": -0.004,
+   "NOCT_C": 45.0,
+   "ground_albedo": 0.2
+  },
+  "pcm": {
+   "name": "Water / ice with nucleating agent (in the same finned aluminium panels)",
+   "T_melt_C": 0.0,
+   "melt_range_C": [
+    0.0,
+    0.0
+   ],
+   "latent_pure_kJ_kg": 334.0,
+   "graphite_wt_frac": 0.0,
+   "latent_kJ_kg": 334.0,
+   "cp_solid_kJ_kgK": 2.1,
+   "cp_liquid_kJ_kgK": 4.19,
+   "k_pure_W_mK": 0.6,
+   "k_multiplier": 1.0,
+   "k_W_mK": 0.6,
+   "density_kg_m3": 1000.0,
+   "mass_kg": 100.0,
+   "mass_sweep_kg": [
+    60,
+    80,
+    100
+   ],
+   "price_INR_kg": 0,
+   "price_range_INR_kg": [
+    0,
+    0
+   ],
+   "slab_area_m2": 12.0,
+   "T_fully_used_C": 6.0,
+   "charge_stop_C": -1.0,
+   "word": "ice",
+   "fixed_cost_INR": [
+    2000,
+    5000,
+    10000
+   ]
+  },
+  "controller": {
+   "ats_pcm_pct": 15.0,
+   "protect_above_C": 6.0,
+   "smart": {
+    "ats_release_C": 5.0,
+    "ats_delay_steps": 3,
+    "solar_first": true
+   },
+   "low_stop_C": 3.0,
+   "low_restart_C": 4.5
+  },
+  "live_run": {
+   "inside_m": [
+    2.0,
+    2.0,
+    2.2
+   ],
+   "insulation_thickness_m": 0.1,
+   "curtain_installed": true,
+   "compressor_max_kW": 1.5,
+   "setpoint_C": 4.0,
+   "band_C": [
+    2.0,
+    6.0
+   ],
+   "load_kg": 90,
+   "load_sweep_kg": [
+    60,
+    90,
+    120,
+    150
+   ],
+   "load_hour": 13,
+   "takeout_hour": 5,
+   "hold_days": 1,
+   "hold_sweep_days": [
+    1,
+    2,
+    3
+   ],
+   "cooled_to_C": 6.0,
+   "loading_window_h": 3,
+   "grid_assist_during_loading": false,
+   "door_openings": [
+    [
+     5,
+     0
+    ],
+    [
+     5,
+     10
+    ],
+    [
+     9,
+     0
+    ],
+    [
+     13,
+     0
+    ],
+    [
+     13,
+     10
+    ],
+    [
+     17,
+     0
+    ]
+   ],
+   "door_seconds": 20,
+   "sun_factor": 0.88,
+   "sun_factor_note": "Open-Meteo sunlight x 0.88 = NASA POWER level (conservative), same as the old twin.",
+   "money": {
+    "grid_tariff_INR_kWh": 7.0
+   }
+  }
+ },
+ "assumptions_E": {
+  "glycol.cp_kJ_kgK": "E – 30-35 % propylene glycol near 0 C: about 3.7 kJ/kg.K (design brief; check the glycol supplier's data sheet).",
+  "glycol.freeze_C": "E – 30-35 % propylene glycol freezes at about -13 C (design brief; check the data sheet).",
+  "glycol.hx_approach_K": "E – brazed-plate heat exchanger approach 3 K: R290 evaporating temperature = glycol supply - 3 K (design brief).",
+  "glycol.supply_room_C": "E – glycol supply about 0 C when only the air cooler is fed (design brief).",
+  "glycol.supply_ice_C": "E – glycol supply about -5 C when the ice is being made (R290 then evaporates at -8 C). 30-35 % glycol freezes at about -13 C, so this is safe.",
+  "glycol.design_dT_K": "E – glycol warms 3 K at full 1.5 kW load; this sets the fixed pump flow (our choice, typical 3-5 K).",
+  "glycol.pump_W": "E – 18 W electronically commutated DC pump (the first design had a plain 40 W pump), runs only with the chiller; same glycol flow assumed. All of it is counted as heat into the glycol (conservative).",
+  "glycol.pipe_UA_W_K": "E – chiller within 1.5 m of the wall (3 m of pipe in total), 32 mm nitrile insulation, insulated tank and plate exchanger: 1.0 W/K to the outside air (first design: 6 m of pipe, 19 mm insulation, 3 W/K). Chosen by results/live/pipe_pump.json.",
+  "glycol.air_cooler_G_kW_K": "E – glycol air cooler with EC fan: 900 m3/h of air (0.32 kW/K), effectiveness about 0.78 -> 0.25 kW per K between room air and mean glycol temperature (our estimate; check the chosen unit).",
+  "glycol.air_cooler_air_side_frac": "E – 75 % of the air cooler's heat resistance is on the air side, so the wet fin surface is warmer than the glycol: T_surface = T_room - 0.75 x (T_room - T_glycol_mean). This decides how much water the coil takes out of the air (our estimate, typical finned coil).",
+  "glycol.ice_coil_R_m2K_W": "E – contact resistance of the coils in the ice panels, same value as the old twin (0.01 m2K/W).",
+  "glycol.loop_volume_L": "E – about 15 L of glycol in pipes, coils and tank (our estimate). Used only in the reality check (re-cooling the loop at every start).",
+  "product.pulldown_hours": "E – flowers in ventilated crates lose 7/8 of their extra warmth in 4 h (same rule as the old twin; flowers are light, so this is likely conservative).",
+  "door": "E – 6 door openings a day (05:00, 05:10, 09:00, 13:00, 13:10, 17:00), 20 s each, strip curtain 85 % effective (design brief + old twin).",
+  "live_run.load_hour": "E – unsold surplus is loaded at 13:00 at that hour's outside air temperature and taken out at 05:00 (design brief).",
+  "live_run.sun_factor": "E – sunlight x 0.88 (old twin: Open-Meteo corrected to the NASA POWER level).",
+  "controller.protect_above_C": "E – grid help when the room stays above 6.0 C (top of the normal band) for 15 min, off again below 5.0 C (our rule). results/live/night_limit.json shows what 5.5 and 6.5 C would give.",
+  "humidity.liner_transpiration_factor": "E – perforated polyethylene crate liners cut the water loss of the flowers to about 25 % of the unlined value (literature for perforated film liners: 50-90 % less weight loss).",
+  "humidity.tray": "E – open water tray 0.5 m2 on the floor, natural convection 4 W/m2K (our estimate).",
+  "humidity.fogger": "E – ultrasonic fogger 0.30 L/h, 30 W, switched on below 90 % RH and off at 95 % (design brief + typical small unit). Needs clean (RO) water.",
+  "humidity.flower_air_speed": "E – air speed around the flowers 0.5 m/s with the cooler fan on, 0.1 m/s with it off (our estimate).",
+  "simulation.structure_heat_capacity_kJ_K": "E – 60 kJ/K for the inner skin of the room (old twin).",
+  "simulation.inverter_min_capacity_frac": "E – inverter chiller runs between 30 % and 100 % (old twin).",
+  "pcm.ice": "E – water with a nucleating agent freezes and melts at about 0 C, latent heat 334 kJ/kg (textbook value). Conductivity of liquid water 0.6 W/m.K is used for the whole slab (careful: ice is 2.2). Water grows 9 % when it freezes: the panels need room for that.",
+  "pcm.fixed_cost_INR": "E – water costs about nothing; Rs 2,000 / 5,000 / 10,000 for nucleating agent, biocide and leak-tight containers.",
+  "pcm.charge_stop_C": "E – charging stops when the ice is 1 K below freezing.",
+  "reality.racks": "E – rack masses, heat capacities and prices (FRP, HDPE, steel).",
+  "reality.best.door": "E – best practice: 4 door openings a day (05:00, 05:10, 06:00, 06:10), 20 s, good curtain (85 %) and a door closer.",
+  "reality.best.load_hour": "E – best practice: flowers are loaded at 06:00 (cool morning, a full day of sun ahead), never 11:00-15:00.",
+  "reality.best.night_fan": "E – 12 W EC circulation fan runs when the chiller is off and the room is more than 0.5 K above the set-point; it doubles the heat flow from the fins (mixed convection, our estimate); its power comes from the grid at night and is counted.",
+  "reality.poor.roof_solar": "E – poor practice: no shade, dark roof (absorptance 0.7, outside film 20 W/m2K, 4.84 m2).",
+  "reality.poor.floor": "E – poor practice: floor not insulated: 3.1 W/K extra to ground at 28 C (concrete on soil about 1.0 W/m2K instead of 0.22, 4 m2).",
+  "controller.low_stop_C": "Controller lower limit: the air cooler valve (V-ROOM) closes when the room reaches 3.0 C and opens again at 4.5 C, so the chiller never pulls the room below 3 C.",
+  "flowers.respiration_above_20C": "E – respiration heat is held at the 20 C table value above 20 C (no data there) and fades in step with the freshness that is left."
+ }
+}

@@ -60,3 +60,20 @@ then open http://localhost:8000. Hosting on its own Firebase project: **docs/fir
 
 Copied from the old project: the physics engine, the 2026 weather file, the real photos (credits in
 `web/assets/CREDITS.md`), the ledger and Φ check. Not copied: secrets, service-account files, the ISHRAE weather file.
+
+## On a laptop without internet
+
+Double-click `start.bat` (Windows): it serves `static_site/` at http://localhost:8000. On the Home page, `?judge=1` gives
+the full-screen looping demo and `?t=2026-05-23T14:00` opens a chosen moment.
+
+## Updating the Live 2026 report and the forecast
+
+```
+python -m twin.live_run --fetch
+python tools/export_site.py
+python tools/build_static.py
+```
+
+Then commit and push. (There is no automatic update job in this repository yet.)
+
+`docs/schemas/` holds the ledger block and telemetry JSON Schemas copied from the earlier project.
