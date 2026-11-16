@@ -71,14 +71,15 @@ def main(fetch=False):
            "weather_update": (meta or {}).get("last_attempt"), "weather_errors": (meta or {}).get("errors"),
            "note": "Digital twin (S). Nothing is measured. Best practice = realistic losses (hot-site weather correction included) + good design + good operation. Prices are E.",
            "headline": {k: m.get(k) for k in RA.KEYS_SHORT + ["hours_above_band_top", "kg_stored", "days_with_stock", "value_INR", "price_uplift_INR", "loss_avoided_INR",
-                                                               "solar_available_kWh_day", "solar_used_kWh_day", "water_fog_L_day", "fills_done"]},
+                                                               "solar_available_kWh_day", "solar_used_kWh_day", "water_fog_L_day", "fills_done", "surplus_held_INR", "high_value_days"]},
            "totals": {"days": dr["days"], "electric_kWh": float(H.P_comp.sum()), "solar_kWh": float(H.P_solar_used.sum()), "grid_kWh": float(H.P_grid.sum()),
-                      "grid_h": float(H.grid_on.sum()), "pv_available_kWh": float(H.P_pv.sum()), "days_fully_solar": int(sum(x["fully_solar"] for x in daily)),
+                      "grid_h": float(H.grid_on.sum()), "pv_available_kWh": float(H.P_pv.sum()), "days_fully_solar": int(sum(x["fully_solar"] for x in daily)), "days_with_grid": int(sum(not x["fully_solar"] for x in daily)), "grid_months": study.grid_months(H),
+                      "hours_below_2C": int((H.T_room < 2.0).sum()), "room_min_C": float(H.T_room.min()), "room_max_C": float(H.T_room.max()),
                       "grid_bill_INR": float(H.P_grid.sum() * cfg["live_run"]["money"]["grid_tariff_INR_kWh"]), "tariff_INR_kWh": cfg["live_run"]["money"]["grid_tariff_INR_kWh"]},
            "by_flower": m["by_flower"], "by_season": m["by_season"], "monthly": monthly, "daily": daily}
     RA.write("live_2026.json", out)
     cols = ["time_ist", "T_out", "RH_out", "T_room", "RH_room", "pcm_pct", "T_pcm", "T_sup", "T_ret", "P_pv", "P_solar_used", "P_grid", "P_comp", "P_pump",
-            "grid_on", "running_h", "v_room", "v_wax", "kg_inside", "Q_air", "Q_ch", "Q_pcm_room", "Q_chill", "cop", "door_s"]
+            "grid_on", "running_h", "v_room", "v_ice", "kg_inside", "Q_air", "Q_ch", "Q_pcm_room", "Q_chill", "cop", "door_s"]
     H[cols].round({c_: 3 for c_ in cols[1:]}).to_csv(RA.RES / "hourly_live.csv", index=False)
     t = out["totals"]
     print(dr["label"], "| fully solar days", t["days_fully_solar"], "| grid kWh", round(t["grid_kWh"], 1), "h", round(t["grid_h"]), "| electric", round(t["electric_kWh"]),

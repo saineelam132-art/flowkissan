@@ -1,13 +1,13 @@
 """Glycol loop between the OUTDOOR R290 chiller and the room (0 g of R290 inside the room).
 
-    outdoor R290 chiller  ->  plate heat exchanger  ->  glycol pump  ->  V-ROOM (air cooler)  /  V-WAX (wax panels)
+    outdoor R290 chiller  ->  plate heat exchanger  ->  glycol pump  ->  V-ROOM (air cooler)  /  V-ICE (ice panels)
 
 Physics used by the twin (values in config/design.json -> glycol, the E ones are assumptions):
-    T_evap   = glycol supply - plate-exchanger approach                (supply 0 C for the room, -2 C for the wax)
+    T_evap   = glycol supply - plate-exchanger approach                (supply 0 C for the room, -2 C for the ice)
     COP      = R290 cycle from CoolProp at T_evap and T_cond = outside air + 10 K (engine/r290.py, same as the old twin)
     m_dot    = design capacity / (cp * design dT)                      fixed-speed pump, runs only with the chiller
     Q_glycol = m_dot * cp * (T_return - T_supply)                      what the two glycol sensors + the flow meter see
-    Q_glycol = cold to the room air cooler + cold into the wax + pipe heat gain + pump heat
+    Q_glycol = cold to the room air cooler + cold into the ice + pipe heat gain + pump heat
     P_el     = Q_glycol / COP  (+ pump + cooler fan)
 Air cooler:  Q_sensible = G * (T_room - T_glycol_mean),  T_glycol_mean = T_supply + Q / (2 m_dot cp)
 """
@@ -24,7 +24,7 @@ def m_dot(cfg):
 
 def evap_T(cfg, mode, approach=None):
     g = cfg["glycol"]
-    sup = g["supply_wax_C"] if mode == "wax" else g["supply_room_C"]
+    sup = g["supply_ice_C"] if mode == "ice" else g["supply_room_C"]
     return sup - (g["hx_approach_K"] if approach is None else approach)
 
 
@@ -33,7 +33,7 @@ def cop_tables(cfg, approach=None):
     r = cfg["refrigeration"]
     T = np.arange(-5.0, 55.01, 0.25)
     out = {}
-    for mode in ("room", "wax"):
+    for mode in ("room", "ice"):
         Te = evap_T(cfg, mode, approach)
         rows = [r290.cycle(Te, t + r["cond_approach_K"], 1.0, r["eta_isentropic"], r["eta_motor_drive"],
                            r["superheat_K"], r["subcool_K"], r["coolprop_name"]) for t in T]

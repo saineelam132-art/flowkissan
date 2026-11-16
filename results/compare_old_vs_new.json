@@ -1,5 +1,5 @@
 {
- "about": "OLD design (R290 direct expansion inside the room, pomegranate 150 kg a day, 5 °C, band 2–8 °C, 115 kg wax melting at 4 °C) against the NEW flower design (outdoor R290 chiller + glycol loop, 4 °C, band 2–6 °C), same room, same PV, same 2026 weather. Comparison only: the two rooms store different produce on different loading plans.",
+ "about": "OLD design (R290 direct expansion inside the room, pomegranate 150 kg a day, 5 °C, band 2–8 °C, 115 kg ice melting at 4 °C) against the NEW flower design (outdoor R290 chiller + glycol loop, 4 °C, band 2–6 °C), same room, same PV, same 2026 weather. Comparison only: the two rooms store different produce on different loading plans.",
  "date_range": {
   "from": "2026-01-01",
   "to": "2026-11-06",
@@ -10,7 +10,7 @@
  "old": {
   "ideal": {
    "days": 310,
-   "days_full_solar_wax": 293,
+   "days_full_solar_ice": 293,
    "grid_h_per_year": 140.8978,
    "grid_kWh_per_year": 19.9513,
    "electric_kWh_day": 2.9854,
@@ -28,7 +28,7 @@
   },
   "realistic_smart": {
    "days": 310,
-   "days_full_solar_wax": 58,
+   "days_full_solar_ice": 58,
    "grid_h_per_year": 690.9489,
    "grid_kWh_per_year": 165.2641,
    "electric_kWh_day": 3.9393,
@@ -48,16 +48,16 @@
  "new": {
   "ideal": {
    "days": 310,
-   "days_full_solar_wax": 307,
-   "grid_h_per_year": 33.9489,
-   "grid_kWh_per_year": 9.8886,
-   "electric_kWh_day": 2.565,
-   "COP_chiller": 2.6021,
-   "COP_system": 1.679,
-   "solar_used_pct": 40.8381,
-   "pump_kWh_day": 0.3157,
-   "hours_outside_band": 443,
-   "room_mean_C": 2.4943,
+   "days_full_solar_ice": 307,
+   "grid_h_per_year": 44.2513,
+   "grid_kWh_per_year": 18.2211,
+   "electric_kWh_day": 2.4487,
+   "COP_chiller": 2.6144,
+   "COP_system": 2.0552,
+   "solar_used_pct": 38.5816,
+   "pump_kWh_day": 0.1398,
+   "hours_outside_band": 115,
+   "room_mean_C": 2.6555,
    "T_evap_C": [
     -3.0,
     -8.0
@@ -66,16 +66,16 @@
   },
   "best_practice": {
    "days": 310,
-   "days_full_solar_wax": 236,
-   "grid_h_per_year": 800.7433,
-   "grid_kWh_per_year": 107.0351,
-   "electric_kWh_day": 4.1288,
-   "COP_chiller": 2.2975,
-   "COP_system": 1.3516,
-   "solar_used_pct": 69.5489,
-   "pump_kWh_day": 0.4694,
-   "hours_outside_band": 20,
-   "room_mean_C": 3.5692,
+   "days_full_solar_ice": 266,
+   "grid_h_per_year": 501.1882,
+   "grid_kWh_per_year": 80.8094,
+   "electric_kWh_day": 3.7088,
+   "COP_chiller": 2.295,
+   "COP_system": 1.7085,
+   "solar_used_pct": 63.6688,
+   "pump_kWh_day": 0.2001,
+   "hours_outside_band": 24,
+   "room_mean_C": 3.3889,
    "T_evap_C": [
     -5.0,
     -10.0
@@ -84,16 +84,16 @@
   },
   "realistic_smart": {
    "days": 310,
-   "days_full_solar_wax": 214,
-   "grid_h_per_year": 1145.1384,
-   "grid_kWh_per_year": 163.9062,
-   "electric_kWh_day": 4.4704,
-   "COP_chiller": 2.3279,
-   "COP_system": 1.3956,
-   "solar_used_pct": 73.0335,
-   "pump_kWh_day": 0.4878,
-   "hours_outside_band": 29,
-   "room_mean_C": 3.759,
+   "days_full_solar_ice": 243,
+   "grid_h_per_year": 735.4946,
+   "grid_kWh_per_year": 106.0396,
+   "electric_kWh_day": 4.0079,
+   "COP_chiller": 2.3206,
+   "COP_system": 1.7642,
+   "solar_used_pct": 68.2193,
+   "pump_kWh_day": 0.2117,
+   "hours_outside_band": 31,
+   "room_mean_C": 3.6493,
    "T_evap_C": [
     -5.0,
     -10.0
@@ -101,8 +101,8 @@
    "r290_inside_room_g": 0
   }
  },
- "new_wax_kg": 100,
+ "new_ice_kg": 100,
  "new_storage": "Water / ice with nucleating agent (in the same finned aluminium panels)",
- "old_wax_kg": 115,
+ "old_ice_kg": 115,
  "r290_room_limit_g": 66.88
 }

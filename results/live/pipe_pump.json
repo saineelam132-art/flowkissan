@@ -1,0 +1,117 @@
+{
+ "about": "Pipe and pump options on the best-practice case (seasonal plan).",
+ "date_range": {
+  "from": "2026-01-01",
+  "to": "2026-11-06",
+  "days": 310,
+  "label": "1 Jan 2026 – 6 Nov 2026 (310 days, real Visakhapatnam weather, digital twin)"
+ },
+ "note": "Digital twin (S). Prices E. Rule: keep the combination that saves the most electricity, as long as its extra cost per kWh saved over 10 years is below the grid tariff.",
+ "tariff_INR_kWh": 7.0,
+ "options": {
+  "first": {
+   "pipe_UA_W_K": 3.0,
+   "pump_W": 40.0,
+   "electric_kWh_per_year": 1680.0128,
+   "grid_kWh_per_year": 178.1553,
+   "days_full_solar_ice": 213,
+   "pipe_loss_kWh_day": 1.4108,
+   "pump_kWh_day": 0.4854,
+   "pump_heat_kWh_day": 0.4888,
+   "COP_system": 1.3752,
+   "electric_kWh_saved_per_year": 0.0,
+   "grid_kWh_saved_per_year": 0.0,
+   "extra_cost_INR": {
+    "low": 0,
+    "mid": 0,
+    "high": 0
+   },
+   "INR_per_kWh_saved_10yr": null,
+   "INR_per_grid_kWh_saved_10yr": null
+  },
+  "pipe": {
+   "pipe_UA_W_K": 1.0,
+   "pump_W": 40.0,
+   "electric_kWh_per_year": 1486.3235,
+   "grid_kWh_per_year": 109.8262,
+   "days_full_solar_ice": 251,
+   "pipe_loss_kWh_day": 0.4601,
+   "pump_kWh_day": 0.4471,
+   "pump_heat_kWh_day": 0.4744,
+   "COP_system": 1.5551,
+   "electric_kWh_saved_per_year": 193.6893,
+   "grid_kWh_saved_per_year": 68.3291,
+   "extra_cost_INR": {
+    "low": 1500,
+    "mid": 3000,
+    "high": 5000
+   },
+   "INR_per_kWh_saved_10yr": 1.5489,
+   "INR_per_grid_kWh_saved_10yr": 4.3905
+  },
+  "pump": {
+   "pipe_UA_W_K": 3.0,
+   "pump_W": 18.0,
+   "electric_kWh_per_year": 1544.1498,
+   "grid_kWh_per_year": 112.6541,
+   "days_full_solar_ice": 243,
+   "pipe_loss_kWh_day": 1.4432,
+   "pump_kWh_day": 0.22,
+   "pump_heat_kWh_day": 0.224,
+   "COP_system": 1.497,
+   "electric_kWh_saved_per_year": 135.8629,
+   "grid_kWh_saved_per_year": 65.5012,
+   "extra_cost_INR": {
+    "low": 1500,
+    "mid": 3000,
+    "high": 5000
+   },
+   "INR_per_kWh_saved_10yr": 2.2081,
+   "INR_per_grid_kWh_saved_10yr": 4.5801
+  },
+  "both": {
+   "pipe_UA_W_K": 1.0,
+   "pump_W": 18.0,
+   "electric_kWh_per_year": 1353.6957,
+   "grid_kWh_per_year": 80.8094,
+   "days_full_solar_ice": 266,
+   "pipe_loss_kWh_day": 0.4764,
+   "pump_kWh_day": 0.2001,
+   "pump_heat_kWh_day": 0.2208,
+   "COP_system": 1.7085,
+   "electric_kWh_saved_per_year": 326.3171,
+   "grid_kWh_saved_per_year": 97.3459,
+   "extra_cost_INR": {
+    "low": 3000,
+    "mid": 6000,
+    "high": 10000
+   },
+   "INR_per_kWh_saved_10yr": 1.8387,
+   "INR_per_grid_kWh_saved_10yr": 6.1636
+  }
+ },
+ "best": "both",
+ "E": {
+  "pipe_UA_W_K": 1.0,
+  "pump_W": 18.0,
+  "cost_INR": {
+   "pipe": [
+    1500,
+    3000,
+    5000
+   ],
+   "pump": [
+    1500,
+    3000,
+    5000
+   ]
+  },
+  "note": "E – extra cost of thicker (32 mm) insulation and insulating the tank and plate exchanger, less the saving from 3 m less pipe; extra cost of an 18 W electronically commutated DC pump over a plain 40 W pump."
+ },
+ "labels": {
+  "first": "First design: 6 m of pipe (3 W/K), 40 W pump",
+  "pipe": "Short, well-insulated pipes (1 W/K)",
+  "pump": "18 W DC pump",
+  "both": "Short insulated pipes + 18 W DC pump"
+ }
+}

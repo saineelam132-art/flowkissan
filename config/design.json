@@ -2,7 +2,7 @@
   "_about": "ALL design values for KoolKisaan Flowers live here. Change a number here and every run, test and page uses the new value. Keys starting with '_' and '..._note' are notes. Values tagged E are assumptions: their source is in config 'assumptions_E' and they are listed again in every results file.",
   "project": {
     "name": "KoolKisaan Flowers",
-    "tagline": "Cold from the sun, wax for the night, truth in the ledger.",
+    "tagline": "Cold from the sun, ice for the night, truth in the ledger.",
     "chamber_id": "CH-FLOWER"
   },
   "site": {
@@ -72,18 +72,20 @@
     "freeze_C": -13.0,
     "hx_approach_K": 3.0,
     "supply_room_C": 0.0,
-    "supply_wax_C": -5.0,
+    "supply_ice_C": -5.0,
     "design_dT_K": 3.0,
-    "pump_W": 40.0,
+    "pump_W": 18.0,
     "pump_heat_to_fluid_frac": 1.0,
-    "pipe_UA_W_K": 3.0,
+    "pipe_UA_W_K": 1.0,
     "air_cooler_G_kW_K": 0.25,
     "air_cooler_air_side_frac": 0.75,
     "air_cooler_airflow_m3_h": 900,
-    "wax_coil_R_m2K_W": 0.01,
+    "ice_coil_R_m2K_W": 0.01,
     "loop_volume_L": 15.0,
     "min_on_min": 3,
-    "_note": "E values (sources in assumptions_E). Chiller evaporating temperature = glycol supply - hx_approach_K. Flow is fixed: m_dot = design capacity / (cp x design_dT_K). The pump runs only when the chiller runs."
+    "_note": "E values (sources in assumptions_E). Chiller evaporating temperature = glycol supply - hx_approach_K. Flow is fixed: m_dot = design capacity / (cp x design_dT_K). The pump runs only when the chiller runs.",
+    "pipe_UA_first_design_W_K": 3.0,
+    "pump_first_design_W": 40.0
   },
   "pv": {
     "rated_kWp": 1.8,
@@ -125,7 +127,7 @@
     "slab_area_m2": 12.0,
     "T_fully_used_C": 6.0,
     "charge_stop_C": -1.0,
-    "_note": "Design change (owner's decision, to save cost): the paraffin + graphite wax is replaced by water / ice in the same 12 m2 of finned panels. mass_kg = the mass chosen by the storage sweep (results/live/wax_sweep.json). fixed_cost_INR = nucleating agent, biocide and leak-tight containers (E, low/mid/high).",
+    "_note": "Design change (owner's decision, to save cost): the paraffin + graphite wax is replaced by water / ice in the same 12 m2 of finned panels. mass_kg = the mass chosen by the storage sweep (results/live/ice_sweep.json). fixed_cost_INR = nucleating agent, biocide and leak-tight containers (E, low/mid/high).",
     "word": "ice",
     "fixed_cost_INR": [
       2000,
@@ -147,7 +149,9 @@
       "ats_delay_steps": 3,
       "solar_first": true
     },
-    "_note": "Room first. V-WAX opens only with spare solar and wax below 100 %. Grid (automatic transfer switch) only when wax < 15 % and no sun, or the room stays above 6.0 C (top of the normal 2-6 C band) for 15 min; by day the grid helps only if the sun is too weak for a hot room. 'smart' = the smart controller rules of the old reality check, which are the DESIGN controller here: grid only after 15 min above the limit, sun first, grid off again below 5.0 C. 'simple_controller' in the reality check switches them off."
+    "_note": "Room first. V-ICE opens only with spare solar and ice below 100 %. Grid (automatic transfer switch) only when ice < 15 % and no sun, or the room stays above 6.0 C (top of the normal 2-6 C band) for 15 min; by day the grid helps only if the sun is too weak for a hot room. 'smart' = the smart controller rules of the old reality check, which are the DESIGN controller here: grid only after 15 min above the limit, sun first, grid off again below 5.0 C. 'simple_controller' in the reality check switches them off.",
+    "low_stop_C": 3.0,
+    "low_restart_C": 4.5
   },
   "simulation": {
     "dt_s": 300,
@@ -222,7 +226,7 @@
     },
     "sun_factor": 0.88,
     "sun_factor_note": "Open-Meteo sunlight x 0.88 = NASA POWER level (conservative), same as the old twin.",
-    "wax_hx": {
+    "ice_hx": {
       "kind": "fins",
       "L": 1.7,
       "S": 0.023,
@@ -373,7 +377,7 @@
       "heater_W": 0,
       "fan_on": true
     },
-    "wax": {
+    "ice": {
       "latent_frac": 0.9,
       "melt_range_C": [
         -0.5,
@@ -393,11 +397,11 @@
       "pv_wiring_loss": 0.03
     },
     "glycol": {
-      "pump_W": 55.0,
       "pipe_UA_factor": 1.5,
       "hx_approach_K": 5.0,
       "air_cooler_G_frac": 0.8,
-      "loop_restart": true
+      "loop_restart": true,
+      "pump_W_factor": 1.375
     },
     "load_random_frac": [
       0.5,
@@ -609,13 +613,13 @@
     "glycol.freeze_C": "E – 30-35 % propylene glycol freezes at about -13 C (design brief; check the data sheet).",
     "glycol.hx_approach_K": "E – brazed-plate heat exchanger approach 3 K: R290 evaporating temperature = glycol supply - 3 K (design brief).",
     "glycol.supply_room_C": "E – glycol supply about 0 C when only the air cooler is fed (design brief).",
-    "glycol.supply_wax_C": "E – glycol supply about -5 C when the ice is being made (R290 then evaporates at -8 C). 30-35 % glycol freezes at about -13 C, so this is safe.",
+    "glycol.supply_ice_C": "E – glycol supply about -5 C when the ice is being made (R290 then evaporates at -8 C). 30-35 % glycol freezes at about -13 C, so this is safe.",
     "glycol.design_dT_K": "E – glycol warms 3 K at full 1.5 kW load; this sets the fixed pump flow (our choice, typical 3-5 K).",
-    "glycol.pump_W": "E – small DC circulation pump 40 W, runs only with the chiller (design brief). All of it is counted as heat into the glycol (conservative).",
-    "glycol.pipe_UA_W_K": "E – about 6 m of insulated outdoor glycol pipe plus plate exchanger, tank and valves: 3 W/K to the outside air (our estimate: 19 mm nitrile foam on 22 mm pipe is about 0.25 W/m.K; doubled for fittings).",
+    "glycol.pump_W": "E – 18 W electronically commutated DC pump (the first design had a plain 40 W pump), runs only with the chiller; same glycol flow assumed. All of it is counted as heat into the glycol (conservative).",
+    "glycol.pipe_UA_W_K": "E – chiller within 1.5 m of the wall (3 m of pipe in total), 32 mm nitrile insulation, insulated tank and plate exchanger: 1.0 W/K to the outside air (first design: 6 m of pipe, 19 mm insulation, 3 W/K). Chosen by results/live/pipe_pump.json.",
     "glycol.air_cooler_G_kW_K": "E – glycol air cooler with EC fan: 900 m3/h of air (0.32 kW/K), effectiveness about 0.78 -> 0.25 kW per K between room air and mean glycol temperature (our estimate; check the chosen unit).",
     "glycol.air_cooler_air_side_frac": "E – 75 % of the air cooler's heat resistance is on the air side, so the wet fin surface is warmer than the glycol: T_surface = T_room - 0.75 x (T_room - T_glycol_mean). This decides how much water the coil takes out of the air (our estimate, typical finned coil).",
-    "glycol.wax_coil_R_m2K_W": "E – contact resistance of the coils in the wax panels, same value as the old twin (0.01 m2K/W).",
+    "glycol.ice_coil_R_m2K_W": "E – contact resistance of the coils in the ice panels, same value as the old twin (0.01 m2K/W).",
     "glycol.loop_volume_L": "E – about 15 L of glycol in pipes, coils and tank (our estimate). Used only in the reality check (re-cooling the loop at every start).",
     "product.pulldown_hours": "E – flowers in ventilated crates lose 7/8 of their extra warmth in 4 h (same rule as the old twin; flowers are light, so this is likely conservative).",
     "door": "E – 6 door openings a day (05:00, 05:10, 09:00, 13:00, 13:10, 17:00), 20 s each, strip curtain 85 % effective (design brief + old twin).",
@@ -636,6 +640,8 @@
     "reality.best.load_hour": "E – best practice: flowers are loaded at 06:00 (cool morning, a full day of sun ahead), never 11:00-15:00.",
     "reality.best.night_fan": "E – 12 W EC circulation fan runs when the chiller is off and the room is more than 0.5 K above the set-point; it doubles the heat flow from the fins (mixed convection, our estimate); its power comes from the grid at night and is counted.",
     "reality.poor.roof_solar": "E – poor practice: no shade, dark roof (absorptance 0.7, outside film 20 W/m2K, 4.84 m2).",
-    "reality.poor.floor": "E – poor practice: floor not insulated: 3.1 W/K extra to ground at 28 C (concrete on soil about 1.0 W/m2K instead of 0.22, 4 m2)."
+    "reality.poor.floor": "E – poor practice: floor not insulated: 3.1 W/K extra to ground at 28 C (concrete on soil about 1.0 W/m2K instead of 0.22, 4 m2).",
+    "controller.low_stop_C": "Controller lower limit: the air cooler valve (V-ROOM) closes when the room reaches 3.0 C and opens again at 4.5 C, so the chiller never pulls the room below 3 C.",
+    "flowers.respiration_above_20C": "E – respiration heat is held at the 20 C table value above 20 C (no data there) and fades in step with the freshness that is left."
   }
 }

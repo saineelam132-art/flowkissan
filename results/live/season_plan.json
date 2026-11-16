@@ -4,6 +4,66 @@
  "simulated_until": "2026-11-06",
  "fills_full_year": [
   {
+   "in_day": 0,
+   "out_day": 1,
+   "in_date": "2026-01-01",
+   "out_date": "2026-01-02",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sankranti",
+   "event": "surplus"
+  },
+  {
+   "in_day": 2,
+   "out_day": 3,
+   "in_date": "2026-01-03",
+   "out_date": "2026-01-04",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sankranti",
+   "event": "surplus"
+  },
+  {
+   "in_day": 3,
+   "out_day": 4,
+   "in_date": "2026-01-04",
+   "out_date": "2026-01-05",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sankranti",
+   "event": "surplus"
+  },
+  {
+   "in_day": 5,
+   "out_day": 6,
+   "in_date": "2026-01-06",
+   "out_date": "2026-01-07",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sankranti",
+   "event": "surplus"
+  },
+  {
    "in_day": 7,
    "out_day": 8,
    "in_date": "2026-01-08",
@@ -32,6 +92,141 @@
    "reason": "hold for sale day",
    "season": "sankranti",
    "event": "Friday"
+  },
+  {
+   "in_day": 9,
+   "out_day": 11,
+   "in_date": "2026-01-10",
+   "out_date": "2026-01-12",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sankranti",
+   "event": "surplus"
+  },
+  {
+   "in_day": 10,
+   "out_day": 11,
+   "in_date": "2026-01-11",
+   "out_date": "2026-01-12",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sankranti",
+   "event": "surplus"
+  },
+  {
+   "in_day": 11,
+   "out_day": 12,
+   "in_date": "2026-01-12",
+   "out_date": "2026-01-13",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sankranti",
+   "event": "surplus"
+  },
+  {
+   "in_day": 12,
+   "out_day": 13,
+   "in_date": "2026-01-13",
+   "out_date": "2026-01-14",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sankranti",
+   "event": "surplus"
+  },
+  {
+   "in_day": 13,
+   "out_day": 14,
+   "in_date": "2026-01-14",
+   "out_date": "2026-01-15",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sankranti",
+   "event": "surplus"
+  },
+  {
+   "in_day": 14,
+   "out_day": 15,
+   "in_date": "2026-01-15",
+   "out_date": "2026-01-16",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sankranti",
+   "event": "surplus"
+  },
+  {
+   "in_day": 16,
+   "out_day": 17,
+   "in_date": "2026-01-17",
+   "out_date": "2026-01-18",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sankranti",
+   "event": "surplus"
+  },
+  {
+   "in_day": 17,
+   "out_day": 18,
+   "in_date": "2026-01-18",
+   "out_date": "2026-01-19",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sankranti",
+   "event": "surplus"
+  },
+  {
+   "in_day": 18,
+   "out_day": 20,
+   "in_date": "2026-01-19",
+   "out_date": "2026-01-21",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sankranti",
+   "event": "surplus"
   },
   {
    "in_day": 19,
@@ -108,6 +303,21 @@
    "reason": "hold for sale day",
    "season": "sankranti",
    "event": "muhurtham Sunday"
+  },
+  {
+   "in_day": 26,
+   "out_day": 27,
+   "in_date": "2026-01-27",
+   "out_date": "2026-01-28",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sankranti",
+   "event": "surplus"
   },
   {
    "in_day": 28,
@@ -230,6 +440,36 @@
    "event": "Friday"
   },
   {
+   "in_day": 64,
+   "out_day": 66,
+   "in_date": "2026-03-06",
+   "out_date": "2026-03-08",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 65,
+   "out_day": 66,
+   "in_date": "2026-03-07",
+   "out_date": "2026-03-08",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
    "in_day": 68,
    "out_day": 71,
    "in_date": "2026-03-10",
@@ -260,6 +500,36 @@
    "event": "Friday"
   },
   {
+   "in_day": 71,
+   "out_day": 73,
+   "in_date": "2026-03-13",
+   "out_date": "2026-03-15",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 72,
+   "out_day": 73,
+   "in_date": "2026-03-14",
+   "out_date": "2026-03-15",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
    "in_day": 74,
    "out_day": 77,
    "in_date": "2026-03-16",
@@ -290,6 +560,51 @@
    "reason": "hold for festival",
    "season": "summer_jasmine",
    "event": "Ugadi"
+  },
+  {
+   "in_day": 78,
+   "out_day": 79,
+   "in_date": "2026-03-20",
+   "out_date": "2026-03-21",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 79,
+   "out_day": 80,
+   "in_date": "2026-03-21",
+   "out_date": "2026-03-22",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 80,
+   "out_day": 81,
+   "in_date": "2026-03-22",
+   "out_date": "2026-03-23",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
   },
   {
    "in_day": 82,
@@ -322,6 +637,51 @@
    "reason": "hold for festival",
    "season": "summer_jasmine",
    "event": "Sri Rama Navami"
+  },
+  {
+   "in_day": 86,
+   "out_day": 87,
+   "in_date": "2026-03-28",
+   "out_date": "2026-03-29",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 87,
+   "out_day": 88,
+   "in_date": "2026-03-29",
+   "out_date": "2026-03-30",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 88,
+   "out_day": 89,
+   "in_date": "2026-03-30",
+   "out_date": "2026-03-31",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
   },
   {
    "in_day": 89,
@@ -356,6 +716,36 @@
    "event": "Friday"
   },
   {
+   "in_day": 93,
+   "out_day": 94,
+   "in_date": "2026-04-04",
+   "out_date": "2026-04-05",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 94,
+   "out_day": 95,
+   "in_date": "2026-04-05",
+   "out_date": "2026-04-06",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
    "in_day": 96,
    "out_day": 99,
    "in_date": "2026-04-07",
@@ -388,6 +778,51 @@
    "event": "Friday"
   },
   {
+   "in_day": 100,
+   "out_day": 101,
+   "in_date": "2026-04-11",
+   "out_date": "2026-04-12",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 101,
+   "out_day": 102,
+   "in_date": "2026-04-12",
+   "out_date": "2026-04-13",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 103,
+   "out_day": 104,
+   "in_date": "2026-04-14",
+   "out_date": "2026-04-15",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
    "in_day": 105,
    "out_day": 108,
    "in_date": "2026-04-16",
@@ -418,6 +853,21 @@
    "reason": "hold for festival",
    "season": "summer_jasmine",
    "event": "Akshaya Tritiya"
+  },
+  {
+   "in_day": 109,
+   "out_day": 110,
+   "in_date": "2026-04-20",
+   "out_date": "2026-04-21",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
   },
   {
    "in_day": 110,
@@ -452,6 +902,36 @@
    "event": "Friday"
   },
   {
+   "in_day": 113,
+   "out_day": 115,
+   "in_date": "2026-04-24",
+   "out_date": "2026-04-26",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 114,
+   "out_day": 115,
+   "in_date": "2026-04-25",
+   "out_date": "2026-04-26",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
    "in_day": 117,
    "out_day": 120,
    "in_date": "2026-04-28",
@@ -482,6 +962,36 @@
    "reason": "hold for sale day",
    "season": "summer_jasmine",
    "event": "Friday"
+  },
+  {
+   "in_day": 120,
+   "out_day": 122,
+   "in_date": "2026-05-01",
+   "out_date": "2026-05-03",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 121,
+   "out_day": 122,
+   "in_date": "2026-05-02",
+   "out_date": "2026-05-03",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
   },
   {
    "in_day": 124,
@@ -516,6 +1026,36 @@
    "event": "Friday"
   },
   {
+   "in_day": 127,
+   "out_day": 129,
+   "in_date": "2026-05-08",
+   "out_date": "2026-05-10",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 128,
+   "out_day": 129,
+   "in_date": "2026-05-09",
+   "out_date": "2026-05-10",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
    "in_day": 131,
    "out_day": 134,
    "in_date": "2026-05-12",
@@ -546,6 +1086,36 @@
    "reason": "hold for sale day",
    "season": "summer_jasmine",
    "event": "Friday"
+  },
+  {
+   "in_day": 134,
+   "out_day": 136,
+   "in_date": "2026-05-15",
+   "out_date": "2026-05-17",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 135,
+   "out_day": 136,
+   "in_date": "2026-05-16",
+   "out_date": "2026-05-17",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
   },
   {
    "in_day": 138,
@@ -580,6 +1150,36 @@
    "event": "Friday"
   },
   {
+   "in_day": 141,
+   "out_day": 143,
+   "in_date": "2026-05-22",
+   "out_date": "2026-05-24",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 142,
+   "out_day": 143,
+   "in_date": "2026-05-23",
+   "out_date": "2026-05-24",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
    "in_day": 145,
    "out_day": 148,
    "in_date": "2026-05-26",
@@ -610,6 +1210,36 @@
    "reason": "hold for sale day",
    "season": "summer_jasmine",
    "event": "Friday"
+  },
+  {
+   "in_day": 148,
+   "out_day": 150,
+   "in_date": "2026-05-29",
+   "out_date": "2026-05-31",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 149,
+   "out_day": 150,
+   "in_date": "2026-05-30",
+   "out_date": "2026-05-31",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
   },
   {
    "in_day": 152,
@@ -644,6 +1274,36 @@
    "event": "Friday"
   },
   {
+   "in_day": 155,
+   "out_day": 157,
+   "in_date": "2026-06-05",
+   "out_date": "2026-06-07",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 156,
+   "out_day": 157,
+   "in_date": "2026-06-06",
+   "out_date": "2026-06-07",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
    "in_day": 159,
    "out_day": 162,
    "in_date": "2026-06-09",
@@ -674,6 +1334,36 @@
    "reason": "hold for sale day",
    "season": "summer_jasmine",
    "event": "Friday"
+  },
+  {
+   "in_day": 162,
+   "out_day": 164,
+   "in_date": "2026-06-12",
+   "out_date": "2026-06-14",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 163,
+   "out_day": 164,
+   "in_date": "2026-06-13",
+   "out_date": "2026-06-14",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
   },
   {
    "in_day": 166,
@@ -708,6 +1398,36 @@
    "event": "Friday"
   },
   {
+   "in_day": 170,
+   "out_day": 171,
+   "in_date": "2026-06-20",
+   "out_date": "2026-06-21",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 171,
+   "out_day": 172,
+   "in_date": "2026-06-21",
+   "out_date": "2026-06-22",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
    "in_day": 173,
    "out_day": 176,
    "in_date": "2026-06-23",
@@ -740,6 +1460,36 @@
    "event": "Friday"
   },
   {
+   "in_day": 177,
+   "out_day": 178,
+   "in_date": "2026-06-27",
+   "out_date": "2026-06-28",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 178,
+   "out_day": 179,
+   "in_date": "2026-06-28",
+   "out_date": "2026-06-29",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
    "in_day": 180,
    "out_day": 183,
    "in_date": "2026-06-30",
@@ -769,6 +1519,36 @@
    "reason": "hold for sale day",
    "season": "summer_jasmine",
    "event": "Friday"
+  },
+  {
+   "in_day": 184,
+   "out_day": 185,
+   "in_date": "2026-07-04",
+   "out_date": "2026-07-05",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 185,
+   "out_day": 186,
+   "in_date": "2026-07-05",
+   "out_date": "2026-07-06",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
   },
   {
    "in_day": 187,
@@ -803,6 +1583,36 @@
    "event": "Friday"
   },
   {
+   "in_day": 191,
+   "out_day": 192,
+   "in_date": "2026-07-11",
+   "out_date": "2026-07-12",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 192,
+   "out_day": 193,
+   "in_date": "2026-07-12",
+   "out_date": "2026-07-13",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
    "in_day": 194,
    "out_day": 197,
    "in_date": "2026-07-14",
@@ -833,6 +1643,36 @@
    "reason": "hold for sale day",
    "season": "summer_jasmine",
    "event": "Friday"
+  },
+  {
+   "in_day": 198,
+   "out_day": 199,
+   "in_date": "2026-07-18",
+   "out_date": "2026-07-19",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 199,
+   "out_day": 200,
+   "in_date": "2026-07-19",
+   "out_date": "2026-07-20",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
   },
   {
    "in_day": 201,
@@ -867,6 +1707,36 @@
    "event": "Friday"
   },
   {
+   "in_day": 205,
+   "out_day": 206,
+   "in_date": "2026-07-25",
+   "out_date": "2026-07-26",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
+   "in_day": 206,
+   "out_day": 207,
+   "in_date": "2026-07-26",
+   "out_date": "2026-07-27",
+   "parts": {
+    "jasmine": 60.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "summer_jasmine",
+   "event": "surplus"
+  },
+  {
    "in_day": 208,
    "out_day": 211,
    "in_date": "2026-07-28",
@@ -899,6 +1769,51 @@
    "event": "Friday"
   },
   {
+   "in_day": 212,
+   "out_day": 213,
+   "in_date": "2026-08-01",
+   "out_date": "2026-08-02",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 213,
+   "out_day": 214,
+   "in_date": "2026-08-02",
+   "out_date": "2026-08-03",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 215,
+   "out_day": 216,
+   "in_date": "2026-08-04",
+   "out_date": "2026-08-05",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
    "in_day": 217,
    "out_day": 218,
    "in_date": "2026-08-06",
@@ -929,6 +1844,426 @@
    "event": "Friday"
   },
   {
+   "in_day": 219,
+   "out_day": 220,
+   "in_date": "2026-08-08",
+   "out_date": "2026-08-09",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 220,
+   "out_day": 221,
+   "in_date": "2026-08-09",
+   "out_date": "2026-08-10",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 221,
+   "out_day": 223,
+   "in_date": "2026-08-10",
+   "out_date": "2026-08-12",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 222,
+   "out_day": 223,
+   "in_date": "2026-08-11",
+   "out_date": "2026-08-12",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 223,
+   "out_day": 224,
+   "in_date": "2026-08-12",
+   "out_date": "2026-08-13",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 224,
+   "out_day": 225,
+   "in_date": "2026-08-13",
+   "out_date": "2026-08-14",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 226,
+   "out_day": 227,
+   "in_date": "2026-08-15",
+   "out_date": "2026-08-16",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 227,
+   "out_day": 228,
+   "in_date": "2026-08-16",
+   "out_date": "2026-08-17",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 228,
+   "out_day": 230,
+   "in_date": "2026-08-17",
+   "out_date": "2026-08-19",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 229,
+   "out_day": 230,
+   "in_date": "2026-08-18",
+   "out_date": "2026-08-19",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 230,
+   "out_day": 231,
+   "in_date": "2026-08-19",
+   "out_date": "2026-08-20",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 231,
+   "out_day": 232,
+   "in_date": "2026-08-20",
+   "out_date": "2026-08-21",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 233,
+   "out_day": 234,
+   "in_date": "2026-08-22",
+   "out_date": "2026-08-23",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 234,
+   "out_day": 235,
+   "in_date": "2026-08-23",
+   "out_date": "2026-08-24",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 235,
+   "out_day": 237,
+   "in_date": "2026-08-24",
+   "out_date": "2026-08-26",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 236,
+   "out_day": 237,
+   "in_date": "2026-08-25",
+   "out_date": "2026-08-26",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 237,
+   "out_day": 238,
+   "in_date": "2026-08-26",
+   "out_date": "2026-08-27",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 238,
+   "out_day": 239,
+   "in_date": "2026-08-27",
+   "out_date": "2026-08-28",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 240,
+   "out_day": 241,
+   "in_date": "2026-08-29",
+   "out_date": "2026-08-30",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 241,
+   "out_day": 242,
+   "in_date": "2026-08-30",
+   "out_date": "2026-08-31",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 242,
+   "out_day": 244,
+   "in_date": "2026-08-31",
+   "out_date": "2026-09-02",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 243,
+   "out_day": 244,
+   "in_date": "2026-09-01",
+   "out_date": "2026-09-02",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 244,
+   "out_day": 245,
+   "in_date": "2026-09-02",
+   "out_date": "2026-09-03",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 245,
+   "out_day": 246,
+   "in_date": "2026-09-03",
+   "out_date": "2026-09-04",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 247,
+   "out_day": 248,
+   "in_date": "2026-09-05",
+   "out_date": "2026-09-06",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "sravana",
+   "event": "surplus"
+  },
+  {
+   "in_day": 248,
+   "out_day": 249,
+   "in_date": "2026-09-06",
+   "out_date": "2026-09-07",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 249,
+   "out_day": 251,
+   "in_date": "2026-09-07",
+   "out_date": "2026-09-09",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 250,
+   "out_day": 251,
+   "in_date": "2026-09-08",
+   "out_date": "2026-09-09",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
    "in_day": 252,
    "out_day": 253,
    "in_date": "2026-09-10",
@@ -957,6 +2292,96 @@
    "reason": "hold for sale day",
    "season": "dasara_deepavali_karthika",
    "event": "Friday"
+  },
+  {
+   "in_day": 253,
+   "out_day": 254,
+   "in_date": "2026-09-11",
+   "out_date": "2026-09-12",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 254,
+   "out_day": 255,
+   "in_date": "2026-09-12",
+   "out_date": "2026-09-13",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 255,
+   "out_day": 256,
+   "in_date": "2026-09-13",
+   "out_date": "2026-09-14",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 257,
+   "out_day": 258,
+   "in_date": "2026-09-15",
+   "out_date": "2026-09-16",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 258,
+   "out_day": 259,
+   "in_date": "2026-09-16",
+   "out_date": "2026-09-17",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 259,
+   "out_day": 261,
+   "in_date": "2026-09-17",
+   "out_date": "2026-09-19",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
   },
   {
    "in_day": 260,
@@ -975,6 +2400,51 @@
    "event": "Vinayaka Chavithi surplus"
   },
   {
+   "in_day": 261,
+   "out_day": 262,
+   "in_date": "2026-09-19",
+   "out_date": "2026-09-20",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 262,
+   "out_day": 263,
+   "in_date": "2026-09-20",
+   "out_date": "2026-09-21",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 264,
+   "out_day": 265,
+   "in_date": "2026-09-22",
+   "out_date": "2026-09-23",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
    "in_day": 266,
    "out_day": 267,
    "in_date": "2026-09-24",
@@ -1003,6 +2473,51 @@
    "reason": "hold for sale day",
    "season": "dasara_deepavali_karthika",
    "event": "Friday"
+  },
+  {
+   "in_day": 268,
+   "out_day": 269,
+   "in_date": "2026-09-26",
+   "out_date": "2026-09-27",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 269,
+   "out_day": 270,
+   "in_date": "2026-09-27",
+   "out_date": "2026-09-28",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 271,
+   "out_day": 272,
+   "in_date": "2026-09-29",
+   "out_date": "2026-09-30",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
   },
   {
    "in_day": 273,
@@ -1035,6 +2550,51 @@
    "event": "Friday"
   },
   {
+   "in_day": 275,
+   "out_day": 276,
+   "in_date": "2026-10-03",
+   "out_date": "2026-10-04",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 276,
+   "out_day": 277,
+   "in_date": "2026-10-04",
+   "out_date": "2026-10-05",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 278,
+   "out_day": 279,
+   "in_date": "2026-10-06",
+   "out_date": "2026-10-07",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
    "in_day": 280,
    "out_day": 281,
    "in_date": "2026-10-08",
@@ -1063,6 +2623,51 @@
    "reason": "hold for sale day",
    "season": "dasara_deepavali_karthika",
    "event": "Friday"
+  },
+  {
+   "in_day": 282,
+   "out_day": 283,
+   "in_date": "2026-10-10",
+   "out_date": "2026-10-11",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 283,
+   "out_day": 284,
+   "in_date": "2026-10-11",
+   "out_date": "2026-10-12",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 285,
+   "out_day": 286,
+   "in_date": "2026-10-13",
+   "out_date": "2026-10-14",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
   },
   {
    "in_day": 287,
@@ -1095,6 +2700,111 @@
    "reason": "hold for sale day",
    "season": "dasara_deepavali_karthika",
    "event": "Friday"
+  },
+  {
+   "in_day": 288,
+   "out_day": 289,
+   "in_date": "2026-10-16",
+   "out_date": "2026-10-17",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 289,
+   "out_day": 290,
+   "in_date": "2026-10-17",
+   "out_date": "2026-10-18",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 290,
+   "out_day": 291,
+   "in_date": "2026-10-18",
+   "out_date": "2026-10-19",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 291,
+   "out_day": 292,
+   "in_date": "2026-10-19",
+   "out_date": "2026-10-20",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 293,
+   "out_day": 294,
+   "in_date": "2026-10-21",
+   "out_date": "2026-10-22",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 294,
+   "out_day": 295,
+   "in_date": "2026-10-22",
+   "out_date": "2026-10-23",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 295,
+   "out_day": 297,
+   "in_date": "2026-10-23",
+   "out_date": "2026-10-25",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
   },
   {
    "in_day": 296,
@@ -1113,6 +2823,36 @@
    "event": "Dasara surplus"
   },
   {
+   "in_day": 297,
+   "out_day": 298,
+   "in_date": "2026-10-25",
+   "out_date": "2026-10-26",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 299,
+   "out_day": 300,
+   "in_date": "2026-10-27",
+   "out_date": "2026-10-28",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
    "in_day": 301,
    "out_day": 302,
    "in_date": "2026-10-29",
@@ -1141,6 +2881,51 @@
    "reason": "hold for sale day",
    "season": "dasara_deepavali_karthika",
    "event": "Friday"
+  },
+  {
+   "in_day": 303,
+   "out_day": 304,
+   "in_date": "2026-10-31",
+   "out_date": "2026-11-01",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 304,
+   "out_day": 305,
+   "in_date": "2026-11-01",
+   "out_date": "2026-11-02",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 306,
+   "out_day": 307,
+   "in_date": "2026-11-03",
+   "out_date": "2026-11-04",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
   },
   {
    "in_day": 308,
@@ -1173,6 +2958,66 @@
    "reason": "hold for sale day",
    "season": "dasara_deepavali_karthika",
    "event": "Friday"
+  },
+  {
+   "in_day": 309,
+   "out_day": 310,
+   "in_date": "2026-11-06",
+   "out_date": "2026-11-07",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 310,
+   "out_day": 311,
+   "in_date": "2026-11-07",
+   "out_date": "2026-11-08",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 312,
+   "out_day": 313,
+   "in_date": "2026-11-09",
+   "out_date": "2026-11-10",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 313,
+   "out_day": 314,
+   "in_date": "2026-11-10",
+   "out_date": "2026-11-11",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
   },
   {
    "in_day": 315,
@@ -1205,12 +3050,237 @@
    "reason": "hold for sale day",
    "season": "dasara_deepavali_karthika",
    "event": "Friday"
+  },
+  {
+   "in_day": 316,
+   "out_day": 317,
+   "in_date": "2026-11-13",
+   "out_date": "2026-11-14",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 317,
+   "out_day": 318,
+   "in_date": "2026-11-14",
+   "out_date": "2026-11-15",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 318,
+   "out_day": 319,
+   "in_date": "2026-11-15",
+   "out_date": "2026-11-16",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 320,
+   "out_day": 321,
+   "in_date": "2026-11-17",
+   "out_date": "2026-11-18",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 321,
+   "out_day": 322,
+   "in_date": "2026-11-18",
+   "out_date": "2026-11-19",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 322,
+   "out_day": 324,
+   "in_date": "2026-11-19",
+   "out_date": "2026-11-21",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 323,
+   "out_day": 324,
+   "in_date": "2026-11-20",
+   "out_date": "2026-11-21",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 324,
+   "out_day": 325,
+   "in_date": "2026-11-21",
+   "out_date": "2026-11-22",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 325,
+   "out_day": 326,
+   "in_date": "2026-11-22",
+   "out_date": "2026-11-23",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 327,
+   "out_day": 328,
+   "in_date": "2026-11-24",
+   "out_date": "2026-11-25",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 328,
+   "out_day": 329,
+   "in_date": "2026-11-25",
+   "out_date": "2026-11-26",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 329,
+   "out_day": 331,
+   "in_date": "2026-11-26",
+   "out_date": "2026-11-28",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 330,
+   "out_day": 331,
+   "in_date": "2026-11-27",
+   "out_date": "2026-11-28",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 331,
+   "out_day": 332,
+   "in_date": "2026-11-28",
+   "out_date": "2026-11-29",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
+  },
+  {
+   "in_day": 332,
+   "out_day": 333,
+   "in_date": "2026-11-29",
+   "out_date": "2026-11-30",
+   "parts": {
+    "marigold": 45.0
+   },
+   "crates": 6,
+   "bag": true,
+   "boric": false,
+   "reason": "everyday surplus hold",
+   "season": "dasara_deepavali_karthika",
+   "event": "surplus"
   }
  ],
- "fills_simulated": 73,
- "days_with_stock_full_year": 84,
+ "fills_simulated": 192,
+ "days_with_stock_full_year": 222,
  "high_value_days_full_year": 13,
- "days_with_stock_simulated": 82,
+ "days_with_stock_simulated": 201,
  "high_value_days_simulated": 12,
  "research_estimate": {
   "days_with_stock": [
@@ -4192,7 +6262,10 @@
    "slack_day_multiplier": 0.8,
    "peak_supply_multiplier": 0.85,
    "off_season_multiplier": 1.5,
-   "note": "E – price = base price of the month (data/crops.json) x supply factor x day factor. 2 days up to and on a festival x2.5 (brief: x2-3); 4 days after x0.4 (brief: x0.3-0.5 for 3-5 days); muhurtham-proxy days x1.4, slack days x0.8. Anchors (Vizag press, E): marigold Rs 50 -> 150-200/kg before Deepavali 2025, jasmine Rs 250-300/kg; Sravana: marigold 160 -> 200, rose 280 -> 500, chamanthi 380 -> 600; marigold crash to about Rs 50 a basket after Deepavali."
+   "note": "E – price = base price of the month (data/crops.json) x supply factor x day factor. 2 days up to and on a festival x2.5 (brief: x2-3); 4 days after x0.4 (brief: x0.3-0.5 for 3-5 days); muhurtham-proxy days x1.4, slack days x0.8. Anchors (Vizag press, E): marigold Rs 50 -> 150-200/kg before Deepavali 2025, jasmine Rs 250-300/kg; Sravana: marigold 160 -> 200, rose 280 -> 500, chamanthi 380 -> 600; marigold crash to about Rs 50 a basket after Deepavali.",
+   "surplus_min_freshness": 0.8,
+   "surplus_distress_factor": 0.5,
+   "surplus_note": "E – everyday surplus: flowers not sold by the end of the day are held whenever the expected freshness after the hold is at least 80 % and the expected price on the sale day is not below today's price. Without the room this surplus would fetch only half of today's price (distress sale), so value = kg sold x sale price x freshness - kg x 0.5 x today's price."
   },
   "research_estimate": {
    "days_with_stock": [

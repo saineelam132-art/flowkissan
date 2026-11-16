@@ -19,6 +19,24 @@ def date_range(w):
             "label": f"{w.time_ist.min():%-d %b %Y} – {w.time_ist.max():%-d %b %Y} ({w.time_ist.dt.date.nunique()} days, real Visakhapatnam weather, digital twin)"}
 
 
+MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+
+def grid_months(H):
+    """The run of months that holds most (at least 80 %) of the grid hours, e.g. 'May–Oct'."""
+    g = H.groupby(H.time_ist.dt.month).grid_on.sum()
+    if g.sum() <= 0:
+        return None
+    best = None
+    ms = list(g.index)
+    for a in range(len(ms)):
+        for b in range(a, len(ms)):
+            if g.iloc[a:b + 1].sum() >= 0.8 * g.sum() and (best is None or b - a < best[1] - best[0]):
+                best = (a, b)
+    a, b = best
+    return MONTHS[ms[a] - 1] if a == b else f"{MONTHS[ms[a] - 1]}–{MONTHS[ms[b] - 1]}"
+
+
 def metrics(H, T, bt, cfg):
     """The numbers the brief asks for, from one run (hourly table H, totals T, batches bt)."""
     lo, hi = cfg["live_run"]["band_C"]
@@ -38,8 +56,9 @@ def metrics(H, T, bt, cfg):
     cool = float((H.Q_air + H.Q_ch).sum())
     done = bt.dropna(subset=["F_room"]) if len(bt) else bt
     o = {
-        "days": n, "days_full_solar_wax": int((g == 0).sum()),
-        "grid_h_per_year": float(H.grid_on.sum() * 365 / n), "grid_kWh_per_year": float(H.P_grid.sum() * 365 / n),
+        "days": n, "days_full_solar_ice": int((g == 0).sum()),
+        "grid_h_per_year": float(H.grid_on.sum() * 365 / n), "grid_h": float(H.grid_on.sum()), "days_with_grid": int((g > 0).sum()),
+        "grid_months": grid_months(H), "hours_below_2C": int((H.T_room < 2.0).sum()), "grid_kWh_per_year": float(H.P_grid.sum() * 365 / n),
         "solar_available_kWh_day": pv_ / n, "solar_used_kWh_day": used / n, "solar_used_pct": 100 * used / pv_ if pv_ else 0.0,
         "COP_chiller": float(H.Q_chill.sum() / H.P_chiller.sum()) if H.P_chiller.sum() else None,
         "COP_system": float(cool / H.P_comp.sum()) if H.P_comp.sum() else None,
@@ -49,8 +68,8 @@ def metrics(H, T, bt, cfg):
         "solar_share_of_electricity_pct": float(100 * H.P_solar_used.sum() / H.P_comp.sum()) if H.P_comp.sum() else None,
         "grid_h_per_day": float(H.grid_on.sum() / n),
         "pipe_loss_kWh_day": float(H.Q_pipe.sum() / n), "pump_heat_kWh_day": float(H.Q_pump.sum() / n),
-        "cold_to_room_kWh_day": float(H.Q_air.sum() / n), "cold_into_wax_kWh_day": float(H.Q_ch.sum() / n),
-        "cold_wax_to_room_kWh_day": float(H.Q_pcm_room.clip(lower=0).sum() / n),
+        "cold_to_room_kWh_day": float(H.Q_air.sum() / n), "cold_into_ice_kWh_day": float(H.Q_ch.sum() / n),
+        "cold_ice_to_room_kWh_day": float(H.Q_pcm_room.clip(lower=0).sum() / n),
         "hours_outside_band": int(outband.sum()), "hours_outside_band_per_day": float(outband.sum() / n),
         "hours_outside_band_loading": int((outband & hod.isin(load_h)).sum()),
         "hours_outside_band_other": int((outband & ~hod.isin(load_h)).sum()),
@@ -71,10 +90,10 @@ def metrics(H, T, bt, cfg):
         "rh_in_90_95_pct_of_flower_hours": float(100 * ((H.RH_room[inside] >= 89.5) & (H.RH_room[inside] <= 95.5)).sum() / n_in),
         "flower_hours_per_day": float(inside.sum() / n),
         "water_fog_L_day": float(H.w_fog.sum() * 3600 / n), "water_tray_L_day": float(H.w_tray.sum() * 3600 / n),
-        "water_condensed_coil_L_day": float(H.w_coil.sum() * 3600 / n), "water_condensed_wax_L_day": float(H.w_wax.sum() * 3600 / n),
+        "water_condensed_coil_L_day": float(H.w_coil.sum() * 3600 / n), "water_condensed_ice_L_day": float(H.w_ice.sum() * 3600 / n),
         "water_from_flowers_L_day": float(H.w_transp.sum() * 3600 / n),
-        "wax_sunrise_mean_pct": float(H.pcm_pct[hod == 6].mean()), "wax_sunrise_worst_pct": float(H.pcm_pct[hod == 6].min()),
-        "wax_sunset_mean_pct": float(H.pcm_pct[hod == 18].mean()), "wax_sunset_worst_pct": float(H.pcm_pct[hod == 18].min()),
+        "ice_sunrise_mean_pct": float(H.pcm_pct[hod == 6].mean()), "ice_sunrise_worst_pct": float(H.pcm_pct[hod == 6].min()),
+        "ice_sunset_mean_pct": float(H.pcm_pct[hod == 18].mean()), "ice_sunset_worst_pct": float(H.pcm_pct[hod == 18].min()),
         "glycol_supply_mean_C": float(H.T_sup.mean()), "glycol_return_mean_C": float(H.T_ret.mean()),
         "energy_balance_error_pct": T["energy_balance_error_pct"],
         "fills": int(len(done)),

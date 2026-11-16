@@ -8,7 +8,7 @@ Nodes (every 5 min):
     plus outside air (W) and the compressor electrical power P_el (S, energy meter).
 
 How the node values are made (so a NORMAL run is physically consistent by construction):
-    T_r, T_core, door, P_el and the wax numbers come straight from twin/live_sim.py.
+    T_r, T_core, door, P_el and the ice numbers come straight from twin/live_sim.py.
     RH_r = room set point (90 %).  v = evaporator airflow / coil face area while the fan runs, else 0.
     T_s is solved so that the air side carries exactly the twin's cooling Q_air:
         m_dot * (cp (T_r - T_s) + h_fg (W_r - W_s)) = Q_air,   W_s = min(W_r, 0.98 W_sat(T_s)).
@@ -116,7 +116,7 @@ def truth_nodes(S, cfg, door_leak=0.0):
         "grid_on": S["grid_on"].values, "running": on.astype(float), "pcm_pct": S["pcm_pct"].values,
         "T_sup": T_sup, "T_ret": T_ret, "Q_gly_true_kW": S["Q_chill"].values, "P_chiller_kW": S["P_chiller"].values,
         "Q_room_side_kW": S["Q_air"].values + S["Q_ch"].values + S["Q_pipe"].values + S["Q_pump"].values,
-        "v_room": S["v_room"].values, "v_wax": S["v_wax"].values, "kg_inside": S["kg_inside"].values,
+        "v_room": S["v_room"].values, "v_ice": S["v_ice"].values, "kg_inside": S["kg_inside"].values,
     }, index=S.index)
 
 
@@ -209,7 +209,7 @@ def detection_steps(R, cfg, const, sigma, start, horizon=36, how=None):
 
 def glycol_check(R, cfg, const):
     """Glycol energy balance: Q = m_dot cp (T_return - T_supply) must match (a) the room side
-    (air cooler + wax + pipe gain + pump heat) and (b) COP x chiller electric power, inside the error band.
+    (air cooler + ice + pipe gain + pump heat) and (b) COP x chiller electric power, inside the error band.
     Band = what the sensor noise gives (2 glycol sensors, flow meter, power meter), 3 sigma, 15-minute means."""
     sn = cfg["trust"]["sensor_noise"]
     mcp = const["glycol_m_dot_kg_s"] * const["glycol_cp_kJ_kgK"]
@@ -292,7 +292,7 @@ def scenario_streams(cfg, const, sigma):
     w = study_weather()
     d0 = hottest_day(w) - pd.Timedelta(days=1)
     i0 = int(np.where(w.time_ist == d0)[0][0])
-    # warm-up: run the 3 days before so the room, wax and produce start from a real state
+    # warm-up: run the 3 days before so the room, ice and produce start from a real state
     warm = w.iloc[i0 - 72:i0].reset_index(drop=True)
     _, _, st, _ = simulate(warm, cfg=cfg, crop_key=cfg["trust"]["crop"])
     st["nodes"] = []                                              # the demo starts with an empty room; one fill at 13:00
@@ -333,7 +333,7 @@ def scenario_streams(cfg, const, sigma):
                     "grid_on": r(R.grid_on, 0), "pcm_pct": r(R.pcm_pct, 1)},
             "glycol": {"T_sup": r(R.T_sup, 2), "T_ret": r(R.T_ret, 2), "Q_gly_kW": r(gc["Q_gly_kW"], 3), "Q_room_kW": r(gc["Q_room_kW"], 3),
                        "Q_el_kW": r(gc["Q_el_kW"], 3), "band_kW": r(gc["band_kW"], 3), "ok": [int(x) for x in gc["ok"]],
-                       "v_room": r(R.v_room, 0), "v_wax": r(R.v_wax, 0)},
+                       "v_room": r(R.v_room, 0), "v_ice": r(R.v_ice, 0)},
             "phi": r(phi, 2), "flags": PC.phi_flags(phi, p["red_at"], p["red_steps"]),
             "freshness": r(Fv, 2), "T_room_true": r(S.T_room, 2), "T_core_true": r(S.T_batch, 2),
         }

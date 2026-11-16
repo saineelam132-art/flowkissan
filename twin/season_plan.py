@@ -9,6 +9,8 @@ Rules (data/season_calendar.json -> plan, price_model):
     until the price crash is over ('glut saving').
   * Kanakambaram: Thursday in, Friday out (1 day only), 2 crates.
   * A flower is held only if it should pay: sale price x expected freshness > 1.05 x the price on the loading day.
+  * Everyday surplus: on any day with free crates, unsold flowers of the season are held 1-3 days if the expected
+    freshness after the hold is at least 80 % and the expected price is not below today's price.
   * Never more crates than the space model allows (12 places; 'extra racks' option 16).
 """
 import datetime as dt
@@ -103,7 +105,7 @@ def build(places=12, year_end=dt.date(2026, 12, 31), cal=None, crops=None):
         flowers = flowers[:2]
         hold = min([i1 - i0] + [crops[f].get("plan_hold_days", crops[f]["max_hold_days"]) for f in flowers])
         i0 = i1 - hold
-        if "surplus" not in reason:                                # hold only what should pay: sale price x expected freshness > today's price
+        if "surplus" not in reason and "everyday" not in reason:   # hold only what should pay: sale price x expected freshness > today's price
             d0, d1 = Y0 + dt.timedelta(days=i0), Y0 + dt.timedelta(days=i1)
             flowers = [f for f in flowers if price(cal, crops, f, d1) * max(0.0, 1 - 1.3 * hold / crops[f]["shelf_life_bagged_4C_days"])
                        > 1.05 * price(cal, crops, f, d0)]
@@ -141,6 +143,32 @@ def build(places=12, year_end=dt.date(2026, 12, 31), cal=None, crops=None):
             for lead in (3, 2):
                 add(d - dt.timedelta(days=lead), d, MONTH_FLOWERS[d.month], half, "hold for sale day", "Friday" if wd == "Fri" else "muhurtham Sunday")
         d += dt.timedelta(days=1)
+    pm = cal["price_model"]                                      # 4) everyday surplus: hold while it stays fresh and the price is not lower
+    d = Y0
+    while d <= year_end:
+        i0 = (d - Y0).days
+        free = places - occ[i0]
+        cands = []
+        for f in MONTH_FLOWERS[d.month]:
+            if cal["supply"][f][d.month - 1] == 0:
+                continue
+            best = None
+            for hd in range(1, crops[f].get("plan_hold_days", 1) + 1):
+                d1 = d + dt.timedelta(days=hd)
+                fr = max(0.0, 1 - 1.3 * hd / crops[f]["shelf_life_bagged_4C_days"])
+                if d1 > year_end or fr < pm["surplus_min_freshness"] or price(cal, crops, f, d1) < price(cal, crops, f, d):
+                    continue
+                if places - max(occ[i0:i0 + hd + 1]) < 1:
+                    continue
+                sc_ = price(cal, crops, f, d1) * fr
+                if best is None or sc_ > best[0]:
+                    best = (sc_, hd)
+            if best:
+                cands.append((f, best[1]))
+        if free >= 1 and cands:
+            f, hd = max(cands, key=lambda x: price(cal, crops, x[0], d + dt.timedelta(days=x[1])))
+            add(d, d + dt.timedelta(days=hd), [f], min(half, free), "everyday surplus hold", "surplus")
+        d += dt.timedelta(days=1)
     fills.sort(key=lambda f: (f["in_day"], f["out_day"]))
     return fills
 
@@ -148,7 +176,8 @@ def build(places=12, year_end=dt.date(2026, 12, 31), cal=None, crops=None):
 def value_batches(bt, cal=None, crops=None):
     """Add prices and Rs value to the batches table of a seasonal run (all E).
     value captured = kg sold x price at sale x freshness  -  kg x price on the storage day     (hold for a sale day)
-    loss avoided   = kg sold x price at sale x freshness                                      (surplus that had no buyer)"""
+    loss avoided   = kg sold x price at sale x freshness                                      (post-festival surplus that had no buyer)
+    surplus held   = kg sold x price at sale x freshness  -  kg x 0.5 x price on the storage day (everyday surplus: distress sale otherwise)"""
     cal = cal or load_calendar()
     crops = crops or load_crops()
     bt = bt.dropna(subset=["F_room"]).copy()
@@ -158,11 +187,13 @@ def value_batches(bt, cal=None, crops=None):
         d_out = d_in + dt.timedelta(days=int(round((r.hours + 8) / 24.0)))
         pi, po = price(cal, crops, r.crop, d_in), price(cal, crops, r.crop, d_out)
         sold = r.kg * (1 - r.wl_pct / 100.0) * po * r.F_room / 100.0
-        surplus = "surplus" in (r.reason or "")
+        reason = r.reason or ""
+        glut = "post-festival" in reason
+        everyday = "everyday" in reason
         P_in.append(pi)
         P_out.append(po)
-        val.append(sold if surplus else sold - r.kg * pi)
-        kind.append("loss avoided" if surplus else "price uplift")
+        val.append(sold if glut else (sold - r.kg * pi * cal["price_model"]["surplus_distress_factor"] if everyday else sold - r.kg * pi))
+        kind.append("loss avoided" if glut else ("surplus held" if everyday else "price uplift"))
     bt["price_in"], bt["price_out"], bt["value_INR"], bt["value_kind"] = P_in, P_out, val, kind
     bt["out_date"] = [str(D(a) + dt.timedelta(days=int(round((h + 8) / 24.0)))) for a, h in zip(bt.date, bt.hours)]
     return bt
@@ -174,6 +205,6 @@ def stock_days(schedule, n_days, cal=None):
     for f in schedule:
         for j in range(f["in_day"], min(f["out_day"], n_days)):
             stock.add(j)
-            if "surplus" in f["reason"] or "festival" in f["reason"]:
+            if "post-festival" in f["reason"] or "festival" in f["reason"]:
                 high.add(j)
     return len(stock), len(high)

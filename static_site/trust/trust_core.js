@@ -131,8 +131,8 @@
       const j = i ? i - 1 : 0, Trp = d.T_r[j], Tcp = d.T_core[j], Tpp = d.T_pcm[j];
       const Qresp = c.m_kg * c.r_ref_W_kg * Math.pow(c.Q10, (Tcp - c.T_ref_C) / 10) / 1000;
       const Qprod = Qresp + c.m_kg * c.cp_kJ_kgK / c.tau_s * (Tcp - Trp);
-      const Qwax = d.G_wax_kW_K[i] * (Trp - Tpp);
-      const rhs = c.UA_kW_K * (d.T_out[i] - Trp) + d.Q_door_kW[i] + Qprod + d.Q_int_kW[i] - Qwax - qa;
+      const Qice = d.G_wax_kW_K[i] * (Trp - Tpp);
+      const rhs = c.UA_kW_K * (d.T_out[i] - Trp) + d.Q_door_kW[i] + Qprod + d.Q_int_kW[i] - Qice - qa;
       r3[i] = (c.C_room_kJ_K * (Tr - Trp) / c.dt_s - rhs) * 1000;
       r4[i] = Tc - (Tcp + (Trp - Tcp) * (1 - Math.exp(-c.dt_s / c.tau_s)));
       if (d.load_event[i] > 0.5) { r3[i] = 0; r4[i] = 0; }

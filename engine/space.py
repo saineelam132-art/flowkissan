@@ -2,7 +2,7 @@
 
     python -m engine.space         ->  results/live/space_budget.json + figures/final_11_space_budget.png/.svg
 
-Method: the room is cut into 1 cm cubes. Each zone (wax panels + fins, keep-clear air in front of the fins,
+Method: the room is cut into 1 cm cubes. Each zone (ice panels + fins, keep-clear air in front of the fins,
 evaporator + the free air in front of it, door walkway / aisle, racks with their shelves and crates) is
 "painted" in turn, so no cube is counted twice and the zones always add up to exactly 8.8 m3.
 Then the racks are filled with crates (one crate high per shelf, air gaps between crates) and the crates
@@ -23,8 +23,8 @@ RES = 0.01                                     # 1 cm cubes
 
 # ------------------------------------------------------------------ inputs (E = assumption, edit here)
 E = {
-    "wax_density_solid_kg_m3": (880, "E – typical paraffin (solid); the datasheet of the chosen wax must confirm"),
-    "wax_density_liquid_kg_m3": (770, "E – typical paraffin (liquid); used for the container volume (wax expands when it melts)"),
+    "ice_density_solid_kg_m3": (880, "E – typical paraffin (solid); the datasheet of the chosen ice must confirm"),
+    "ice_density_liquid_kg_m3": (770, "E – typical paraffin (liquid); used for the container volume (ice expands when it melts)"),
     "casing_mm": (3, "E – aluminium panel casing, total of both faces"),
     "casing_sheet_mm_each_face": (1.0, "E – 1 mm aluminium sheet on each face of the panel"),
     "al_density_kg_m3": (2700, "aluminium"),
@@ -58,8 +58,8 @@ def _box(g, x0, x1, y0, y1, z0, z1):
 def layouts(cfg):
     """Rack layouts that could fit; each must leave the aisle (>= 0.6 m) from the door."""
     W, L, H = cfg["live_run"]["inside_m"][0], cfg["live_run"]["inside_m"][1], cfg["live_run"]["inside_m"][2]
-    hx = cfg["live_run"]["wax_hx"]
-    band = wax_band(cfg)["band_m"]
+    hx = cfg["live_run"]["ice_hx"]
+    band = ice_band(cfg)["band_m"]
     off = band + V["rack_gap_from_keep_clear_m"]
     d = V["rack_depth_m"]
     door = V["door_clear_width_m"]
@@ -79,14 +79,14 @@ def layouts(cfg):
     return out
 
 
-def wax_band(cfg):
-    pc, hx = cfg["pcm"], cfg["live_run"]["wax_hx"]
+def ice_band(cfg):
+    pc, hx = cfg["pcm"], cfg["live_run"]["ice_hx"]
     m = cfg["live_run"]["designs"]["current"]["pcm_kg"]
     A = pc["slab_area_m2"]
-    vol_liq = m / V["wax_density_liquid_kg_m3"]
+    vol_liq = m / V["ice_density_liquid_kg_m3"]
     slab = vol_liq / A
     depth = slab + V["casing_mm"] / 1000 + hx["b"]
-    return {"wax_kg": m, "wax_volume_solid_m3": m / V["wax_density_solid_kg_m3"], "wax_volume_liquid_m3": vol_liq,
+    return {"ice_kg": m, "ice_volume_solid_m3": m / V["ice_density_solid_kg_m3"], "ice_volume_liquid_m3": vol_liq,
             "slab_mm": 1000 * slab, "panel_area_m2": A, "panel_height_m": hx["L"], "wall_length_m": A / hx["L"],
             "panel_bottom_m": hx["panel_bottom_m"], "fin_depth_m": hx["b"], "panel_depth_m": depth,
             "keep_clear_m": hx["keep_clear_m"], "band_m": depth + hx["keep_clear_m"]}
@@ -108,13 +108,13 @@ def build(cfg=None, crop_key="pomegranate"):
     W, L, H = cfg["live_run"]["inside_m"]
     nx, ny, nz = int(round(W / RES)), int(round(L / RES)), int(round(H / RES))
     zone = np.zeros((nx, ny, nz), np.uint8)      # 0 = free air
-    ZN = {1: "wax_panels_fins", 2: "keep_clear_air", 3: "evaporator", 4: "evaporator_free_air", 5: "racks_crates_produce", 6: "door_walkway_aisle"}
-    wb = wax_band(cfg)
+    ZN = {1: "ice_panels_fins", 2: "keep_clear_air", 3: "evaporator", 4: "evaporator_free_air", 5: "racks_crates_produce", 6: "door_walkway_aisle"}
+    wb = ice_band(cfg)
     lay = layouts(cfg)
     choice = max((k for k in lay if lay[k]["ok"]), key=lambda k: sum(crates_on(r, V["shelf_levels"])[1] for r in lay[k]["racks"]))
     Lc = lay[choice]
     door_x = Lc["door_x"]
-    # wax panels on every wall except the door; from panel_bottom (drip tray below) to panel_bottom + 1.7 m
+    # ice panels on every wall except the door; from panel_bottom (drip tray below) to panel_bottom + 1.7 m
     pd, kc, z0, z1 = wb["panel_depth_m"], wb["keep_clear_m"], 0.0, wb["panel_bottom_m"] + wb["panel_height_m"]
     walls = [("front", (0, W), (0, pd), (0, W), (pd, pd + kc)), ("back", (0, W), (L - pd, L), (0, W), (L - pd - kc, L - pd)),
              ("left", (0, pd), (0, L), (pd, pd + kc), (0, L)), ("right", (W - pd, W), (0, L), (W - pd - kc, W - pd), (0, L))]
@@ -161,18 +161,18 @@ def build(cfg=None, crop_key="pomegranate"):
     inner = float(np.prod(V["crate_inner_m"]))
     al_casing = wb["panel_area_m2"] * 2 * V["casing_sheet_mm_each_face"] / 1000 * V["al_density_kg_m3"]
     from . import fins as FINS
-    hx = cfg["live_run"]["wax_hx"]
+    hx = cfg["live_run"]["ice_hx"]
     al_fins = FINS.array(wb["panel_area_m2"], hx["L"], hx["S"], hx["b"], hx["t"], 0.03, 3.0)["al_kg"]
     steel = len(Lc["racks"]) * V["rack_steel_kg_each"]
     contents = {
-        "wax_m3_liquid": wb["wax_volume_liquid_m3"], "aluminium_m3": (al_casing + al_fins) / V["al_density_kg_m3"],
+        "ice_m3_liquid": wb["ice_volume_liquid_m3"], "aluminium_m3": (al_casing + al_fins) / V["al_density_kg_m3"],
         "crates_outer_m3": n_crates * float(np.prod(V["crate_outer_m"])),
         "produce_net_fruit_m3": cap / rho_fruit, "produce_bulk_m3": cap / bulk,
         "rack_steel_m3": steel / 7850.0,
     }
     total = 8.8
     rows = []
-    label = {"wax_panels_fins": "Wax panels + casing + fins (along the walls, incl. drip tray below)", "keep_clear_air": "Keep-clear air in front of the fins (natural convection)",
+    label = {"ice_panels_fins": "Ice panels + casing + fins (along the walls, incl. drip tray below)", "keep_clear_air": "Keep-clear air in front of the fins (natural convection)",
              "evaporator": "Evaporator unit (above the door)", "evaporator_free_air": "Free air in front of the evaporator",
              "racks_crates_produce": "Racks with crates and produce (up to the top crate)", "door_walkway_aisle": "Door walkway + aisle",
              "free_air_other": "Other free air (above racks, corners, under the panels)"}
@@ -182,7 +182,7 @@ def build(cfg=None, crop_key="pomegranate"):
     fruits_per_kg = 1000.0 / fruit_g
     out = {
         "room": {"inside_m": [W, L, H], "floor_m2": W * L, "volume_m3": W * L * H},
-        "wax": wb, "aluminium_kg": {"fins": al_fins, "casing": al_casing, "total": al_fins + al_casing},
+        "ice": wb, "aluminium_kg": {"fins": al_fins, "casing": al_casing, "total": al_fins + al_casing},
         "layout": {"chosen": choice, "options": {k: {"aisle_m": round(v["aisle_m"], 3), "ok": v["ok"],
                                                       "crates": sum(crates_on(r, V["shelf_levels"])[1] for r in v["racks"])} for k, v in lay.items()},
                    "racks": [{"name": r[0], "x": [round(r[1], 3), round(r[2], 3)], "y": [round(r[3], 3), round(r[4], 3)],
@@ -247,7 +247,7 @@ def draw(out, zone, Lc, path=FIG):
     ax[0].add_patch(Rectangle(((ev[0] + ev[1]) / 2 - ew / 2, 0), ew, V["evaporator_m"][2], fill=False, ec="#41566b", lw=2, ls="--"))
     ax[0].text((ev[0] + ev[1]) / 2, V["evaporator_m"][2] + 0.03, "evaporator above door", ha="center", fontsize=11, color="#41566b")
     ax[1].set_xlabel("depth (m)"); ax[1].set_ylabel("height (m)")
-    names = ["Wax panels + fins", "Keep-clear air", "Evaporator", "Evaporator air", "Racks + crates", "Door walkway / aisle"]
+    names = ["Ice panels + fins", "Keep-clear air", "Evaporator", "Evaporator air", "Racks + crates", "Door walkway / aisle"]
     from matplotlib.patches import Patch
     fig.legend([Patch(color=c, ec="#999") for c in cols[1:]], names, loc="lower center", ncol=6, fontsize=13, frameon=False)
     fig.suptitle(f"Room 2.0 × 2.0 × 2.2 m = 8.8 m³ · {out['crate_places']} crate places × {out['kg_per_crate']} kg = "

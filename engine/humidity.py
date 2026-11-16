@@ -9,11 +9,11 @@ Water vapour in the room air (humidity ratio W, kg water per kg dry air), one ba
     flower transpiration m K_t sqrt(v) liner p/0.622          saturated at FLOWER temp    W < W_j   (flowers give water)
     water tray           h A / cp_air                         saturated at room temp      W < W_j
     air cooler coil      duty x G_coil / cp_air               saturated at coil surface   W > W_j   (water condenses)
-    wax panels           G_wax / cp_air                       saturated at wax temp       W > W_j   (water condenses)
+    ice panels           G_wax / cp_air                       saturated at ice temp       W > W_j   (water condenses)
     fogger               S_fog [kg/s], only enough to reach its target RH
 
 The room air holds very little water (about 11 kg of air), so the balance is solved implicitly (stable for any step).
-Latent heat: water that condenses on the coil is extra load on the chiller; on the wax it melts wax; water that
+Latent heat: water that condenses on the coil is extra load on the chiller; on the ice it melts ice; water that
 evaporates (flowers, tray, fog) cools what it leaves. H_V = 2501 kJ/kg everywhere, so the energy balance closes.
 """
 from . import psychro

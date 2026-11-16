@@ -17,12 +17,14 @@ BLOCK_KEY = "blocked_flowers"
 
 
 def respiration_W_kg(crop, T_C):
-    """Respiration heat [W/kg]: log-linear between the table values at 0/5/10/20 C (extrapolated with the same slope)."""
-    T_C = min(35.0, max(-5.0, T_C))          # above about 35 C the tissue is heat-damaged and respiration stops rising (E)
+    """Respiration heat [W/kg]: log-linear between the table values at 0/5/10/20 C. Above 20 C it is held at the 20 C value:
+    there is no data there, and extrapolating with Q10 made the flowers heat an unpowered room far above the outside air (bug, fixed)."""
+    T_C = max(-5.0, T_C)
     tab = crop.get("respiration_mW_kg")
     if not tab:
         return crop.get("respiration_W_per_kg_at_ref", 0.0) * crop["Q10"] ** ((T_C - crop["T_ref_C"]) / 10.0)
     xs = sorted((float(k), math.log(v)) for k, v in tab.items())
+    T_C = min(T_C, xs[-1][0])                # no data above the last table point (20 C): held at that value, never extrapolated (E)
     if T_C <= xs[0][0]:
         (x0, y0), (x1, y1) = xs[0], xs[1]
     elif T_C >= xs[-1][0]:

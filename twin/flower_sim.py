@@ -3,13 +3,13 @@
 New design (all values in config/design.json):
   * OUTDOOR factory-sealed R290 chiller -> plate heat exchanger -> 30-35 % propylene glycol loop -> room.
     0 g of R290 inside the room. Chiller max 1.5 kW cooling, inverter 30-100 %.
-  * Two motorised valves: V-ROOM (glycol air cooler with EC fan) and V-WAX (glycol coils inside the wax panels).
-    Room first. V-WAX opens only with spare SOLAR and wax below 100 %. At night: pump off, both valves closed,
-    the wax panels cool the room by natural convection. Minimum ON time 3 min.
+  * Two motorised valves: V-ROOM (glycol air cooler with EC fan) and V-ICE (glycol coils inside the ice panels).
+    Room first. V-ICE opens only with spare SOLAR and ice below 100 %. At night: pump off, both valves closed,
+    the ice panels cool the room by natural convection. Minimum ON time 3 min.
   * Chiller evaporating temperature = glycol supply - plate-exchanger approach; supply 0 C for the air cooler,
-    -2 C when the wax is charged. COP from CoolProp R290 at that temperature (engine/glycol.py).
+    -2 C when the ice is charged. COP from CoolProp R290 at that temperature (engine/glycol.py).
     Pump power, pump heat and pipe heat gain are counted.
-  * Wax: paraffin blend + 7 % expanded graphite, melts over 3.0-4.0 C, 177 kJ/kg, conductivity x5.
+  * Ice: paraffin blend + 7 % expanded graphite, melts over 3.0-4.0 C, 177 kJ/kg, conductivity x5.
   * Flowers arrive at the outside air temperature at 13:00 and leave at 05:00 after 1, 2 or 3 days ('hold').
     With a hold of N days the room is filled every N days (one fill inside at a time).
   * Humidity: water balance of the room air every step (engine/humidity.py) with 4 options
@@ -107,11 +107,11 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
     # ---- chiller + glycol loop
     Tt, CT = GLY.cop_tables(cfg, R.get("hx_approach_K"))
     cop_room = np.interp(T_out, Tt, CT["room"]["COP_elec"])
-    cop_wax = np.interp(T_out, Tt, CT["wax"]["COP_elec"])
+    cop_ice = np.interp(T_out, Tt, CT["ice"]["COP_elec"])
     if R.get("cop_hot_penalty"):
         ch = R["cop_hot_penalty"]
         pen = np.where(T_out > ch["above_T_out_C"], 1 - ch["frac"], 1.0)
-        cop_room, cop_wax = cop_room * pen, cop_wax * pen
+        cop_room, cop_ice = cop_room * pen, cop_ice * pen
     Qmax = lr["compressor_max_kW"]
     Qmin = cfg["simulation"]["inverter_min_capacity_frac"] * Qmax
     mcp = GLY.m_dot(cfg) * gl["cp_kJ_kgK"]                              # kW/K
@@ -121,7 +121,7 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
     G_coil = gl["air_cooler_G_kW_K"] * R.get("air_cooler_G_frac", 1.0)
     f_air = gl["air_cooler_air_side_frac"]                                # share of the coil resistance on the air side
     G_cm = G_coil / f_air / CPA                                           # moisture conductance of the wet fin surface, kg/s
-    Ts_room, Ts_wax = gl["supply_room_C"], gl["supply_wax_C"]
+    Ts_room, Ts_ice = gl["supply_room_C"], gl["supply_ice_C"]
     min_on = gl["min_on_min"] * 60.0 / DT
     C_loop = gl["loop_volume_L"] / 1000.0 * gl["density_kg_m3"] * gl["cp_kJ_kgK"] if R.get("loop_restart") else 0.0
 
@@ -159,28 +159,28 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
     fog_kW = hu["fogger_W"] / 1000.0
     rh_fog = 0.5 * (hu["fogger_on_below_pct"] + hu["fogger_off_at_pct"])
 
-    # ---- wax
+    # ---- ice
     m_p = float(lr["designs"]["current"]["pcm_kg"] if pcm_kg is None else pcm_kg)
     L = pc["latent_kJ_kg"] * R.get("latent_frac", 1.0)
     cps, cpl = pc["cp_solid_kJ_kgK"], pc["cp_liquid_kJ_kgK"]
     mlo, mhi = R.get("melt_range_C") or pc["melt_range_C"]
-    k_wax = pc["k_pure_W_mK"] * (R.get("k_multiplier") or pc["k_multiplier"])
-    hx = dict(lr["wax_hx"])
+    k_ice = pc["k_pure_W_mK"] * (R.get("k_multiplier") or pc["k_multiplier"])
+    hx = dict(lr["ice_hx"])
     if R.get("fin_UA_frac"):
         hx["h_scale"] = hx.get("h_scale", 1.0) * R["fin_UA_frac"]
-    wax_info = None
+    ice_info = None
     if m_p > 0:
         A = pc["slab_area_m2"]
-        half = m_p / (pc["density_kg_m3"] * A) / 2 / k_wax
-        UA_ch = A / (half + gl["wax_coil_R_m2K_W"]) / 1000.0
+        half = m_p / (pc["density_kg_m3"] * A) / 2 / k_ice
+        UA_ch = A / (half + gl["ice_coil_R_m2K_W"]) / 1000.0
         _, _, dTs, G_nat_tab, _ = FINS.conductance_tables(A, hx["L"], hx["S"], hx["b"], hx["t"], half, None)
         G_nat_tab = hx.get("h_scale", 1.0) * G_nat_tab / 1000.0          # kW/K
-        wax_info = {"kind": "fins", "A_m2": A, "R_wax_m2K_W": half, "UA_charge_kW_K": UA_ch, "k_W_mK": k_wax,
+        ice_info = {"kind": "fins", "A_m2": A, "R_ice_m2K_W": half, "UA_charge_kW_K": UA_ch, "k_W_mK": k_ice,
                     "calc_2K": FINS.array(A, hx["L"], hx["S"], hx["b"], hx["t"], half, 2.0)}
     else:
         UA_ch, dTs, G_nat_tab = 0.0, np.array([0.0, 1.0]), np.array([0.0, 0.0])
     h_min = cps * min(0.0, pc["charge_stop_C"] - mlo)
-    T_gm_wax = Ts_wax + gl["design_dT_K"] / 2.0
+    T_gm_ice = Ts_ice + gl["design_dT_K"] / 2.0
 
     def T_pcm_of(h):
         if h < 0:
@@ -232,14 +232,16 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
     T_loop = st.get("T_loop", Ts_room)
     debt = 0.0
     comp_on, was_running, hot_run = True, False, 0
+    low_stop, low_restart = cfg["controller"]["low_stop_C"] + shift, cfg["controller"]["low_restart_C"] + shift
+    low_lock = False
     last_load = None
     E0 = C_room * T_r + M_air * W_r * HV + m_p * h + sum(nd["C"] * nd["T"] for nd in nodes)
 
     keys = ("T_room", "RH_room", "W_room", "T_batch", "pcm_pct", "T_pcm", "pcm_h", "Q_wall", "Q_door", "Q_door_lat", "Q_batch", "Q_resp",
             "Q_int", "Q_air", "Q_air_sens", "Q_air_lat", "Q_ch", "Q_pcm_room", "Q_wax_lat", "Q_pipe", "Q_pump", "Q_chill",
             "P_comp", "P_chiller", "P_pump", "P_fan", "P_fog", "P_pv", "P_solar_used", "P_grid", "grid_on", "running", "run_frac",
-            "door_s", "solar_ok", "G_wax", "cop", "T_out", "RH_out", "poa", "v_room", "v_wax", "T_sup", "T_ret",
-            "w_transp", "w_coil", "w_wax", "w_fog", "w_tray", "w_door", "kg_inside", "valve_duty", "Q_evap_air", "ps_Pa", "load_event", "Q_other", "P_nfan")
+            "door_s", "solar_ok", "G_wax", "cop", "T_out", "RH_out", "poa", "v_room", "v_ice", "T_sup", "T_ret",
+            "w_transp", "w_coil", "w_ice", "w_fog", "w_tray", "w_door", "kg_inside", "valve_duty", "Q_evap_air", "ps_Pa", "load_event", "Q_other", "P_nfan")
     out = {k: np.zeros(n) for k in keys}
     acc = dict(in_=0.0, out=0.0, prod_in=0.0, prod_out=0.0)
     batches = []
@@ -296,7 +298,7 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
             hot = hot_run >= R["ats_delay_steps"]
         aux = fan_kW + pump_kW
         Q_sun_room = min(Qmax, max(0.0, P_pv[i] - aux) * cop_room[i])
-        Q_sun_wax = min(Qmax, max(0.0, P_pv[i] - aux) * cop_wax[i])
+        Q_sun_ice = min(Qmax, max(0.0, P_pv[i] - aux) * cop_ice[i])
         solar_ok = Q_sun_room >= Qmin
         hot_day = False
         if solar_ok:
@@ -328,13 +330,15 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
         heat_def = (R["defrost"].get("heater_W", 0.0) / 1000.0 + (fan_kW if R["defrost"].get("fan_on") else 0.0)) if defrost[i] else 0.0
         Q_bs = [nd["C"] / tau * (nd["T"] - T_r - nd.get("off", 0.0)) for nd in nodes]
         Q_b = sum(Q_bs)
-        Q_rs = [nd["m"] * FL.respiration_W_kg(crops[nd["crop"]], nd["T"]) / 1000.0 for nd in nodes]
+        # respiration fades as the flowers use up their life: spent flowers no longer respire (E)
+        Q_rs = [nd["m"] * FL.respiration_W_kg(crops[nd["crop"]], nd["T"]) * max(0.0, 1.0 - nd["fresh"].life_used) / 1000.0 for nd in nodes]
 
         dTw = T_r - T_p if m_p > 0 else 0.0
         G_w = float(np.interp(max(dTw, 0.0), dTs, G_nat_tab)) if m_p > 0 else 0.0
         Q_pa = G_w * dTw if dTw > 0 else (G_nat_tab[1] * dTw if m_p > 0 else 0.0)
         P_nf = 0.0
-        if nfan and m_p > 0 and Q_avail <= 0 and dTw > 0 and T_r > Tset + nfan["on_above_setpoint_K"]:
+        powered = (not no_grid) or P_pv[i] > 0.05                         # with no grid, small loads run only while the sun gives power
+        if nfan and powered and m_p > 0 and Q_avail <= 0 and dTw > 0 and T_r > Tset + nfan["on_above_setpoint_K"]:
             G_w *= nfan["fin_G_factor"]                                   # stirred air: more heat from the fins (E)
             Q_pa = G_w * dTw
             P_nf = nfan["W"] / 1000.0
@@ -350,6 +354,12 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
             target = Tset - band
         Q_req = base + fan_kW - Q_pa + C_room * (T_r - target) / DT
         if band and not comp_on:
+            Q_req = 0.0
+        if T_r <= low_stop:                                               # lower limit: V-ROOM closes at 3 C, opens again at 4.5 C
+            low_lock = True
+        elif T_r >= low_restart:
+            low_lock = False
+        if low_lock and not (fault and sc.get("setpoint_C") is not None):
             Q_req = 0.0
         pipe_room = UA_pipe * max(0.0, T_out[i] - (Ts_room + gl["design_dT_K"] / 2))
         loss_room = pipe_room + pump_heat
@@ -372,18 +382,19 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
                 grid_mode, Q_avail = True, Qmax
                 continue
             break
-        want_wax = m_p > 0 and solar_ok and not grid_mode and not defrost[i] and h > h_min + 1e-9
-        if want_wax:                                                      # spare solar after the room -> V-WAX, supply -2 C
-            q_s1w = GLY.coil_sensible_kW(G_coil, T_r, Ts_wax, mcp)
+        want_ice = m_p > 0 and solar_ok and not grid_mode and not defrost[i] and h > h_min + 1e-9
+        if want_ice:                                                      # spare solar after the room -> V-ICE, supply -2 C
+            q_s1w = GLY.coil_sensible_kW(G_coil, T_r, Ts_ice, mcp)
             duty_w = min(1.0, Q_req / q_s1w) if (Q_req > 1e-9 and q_s1w > 1e-9) else 0.0
-            T_surf_w = T_r - f_air * (T_r - (Ts_wax + q_s1w / (2 * mcp)))
+            T_surf_w = T_r - f_air * (T_r - (Ts_ice + q_s1w / (2 * mcp)))
             q_l1w = G_cm * max(0.0, W_r - HUM.w_sat(T_surf_w, p)) * HV
-            pipe_w = UA_pipe * max(0.0, T_out[i] - T_gm_wax)
-            spare = Q_sun_wax - pipe_w - pump_heat - duty_w * (q_s1w + q_l1w)
-            ch_max = min(UA_ch * max(0.0, T_p - T_gm_wax), m_p * (h - h_min) / DT)
+            pipe_w = UA_pipe * max(0.0, T_out[i] - T_gm_ice)
+            spare = Q_sun_ice - pipe_w - pump_heat - duty_w * (q_s1w + q_l1w)
+            h_lim = 0.0 if T_r < low_restart else h_min                  # near the lower limit: make ice, but do not sub-cool it
+            ch_max = min(UA_ch * max(0.0, T_p - T_gm_ice), max(0.0, m_p * (h - h_lim) / DT))
             if spare > 1e-6 and ch_max > 1e-6 and duty_w * q_s1w >= min(Q_req, duty * q_s1 if duty > 0 else Q_req) - 1e-9:
                 Q_ch = min(spare, ch_max)
-                Ts, duty, q_s1, T_surf, loss_room = Ts_wax, duty_w, q_s1w, T_surf_w, pipe_w + pump_heat
+                Ts, duty, q_s1, T_surf, loss_room = Ts_ice, duty_w, q_s1w, T_surf_w, pipe_w + pump_heat
         if duty > 0 and Q_ch <= 0:                                        # V-ROOM alone: at least the minimum speed for 3 min
             need = min(Q_avail, Qmin) * min(1.0, min_on) - loss_room
             if duty * q_s1 < need:
@@ -405,12 +416,12 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
         coil_i = len(terms)
         if duty > 0:
             terms.append((duty * G_cm, HUM.w_sat(T_surf, p), "sink"))
-        wax_i = len(terms)
+        ice_i = len(terms)
         if m_p > 0 and G_w > 0:
             terms.append((G_w / CPA, HUM.w_sat(T_p, p), "sink"))
         W_new, fl = HUM.solve(W_r, M_air, DT, terms)
         S_fog = 0.0
-        if fog_rate > 0 and nodes:
+        if fog_rate > 0 and nodes and powered:
             W_t = HUM.w_of(rh_fog, T_r, p)
             if W_new < W_t:
                 den = M_air / DT + sum(g for (g, Wt, kind), f_ in zip(terms, fl) if f_ != 0.0 or kind == "both")
@@ -423,11 +434,11 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
         w_tr = fl[tr_i0:tray_i]
         w_tray = fl[tray_i] if g_tray > 0 else 0.0
         w_coil = -fl[coil_i] if duty > 0 else 0.0
-        w_wax = -fl[wax_i] if (m_p > 0 and G_w > 0) else 0.0
+        w_ice = -fl[ice_i] if (m_p > 0 and G_w > 0) else 0.0
         Q_air_s = duty * q_s1 if duty > 0 else 0.0
         Q_air_l = w_coil * HV
         Q_air = Q_air_s + Q_air_l
-        Q_wax_l = w_wax * HV
+        Q_wax_l = w_ice * HV
 
         # ---- chiller
         running = (Q_air + Q_ch) > 1e-9
@@ -437,7 +448,7 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
             debt -= pay
             Q_chill += pay / DT
         run_frac = min(1.0, max(Q_chill / Qmin, min(1.0, min_on))) if running else 0.0
-        cop_i = cop_wax[i] if Q_ch > 0 else cop_room[i]
+        cop_i = cop_ice[i] if Q_ch > 0 else cop_room[i]
         P_chiller = Q_chill / cop_i if running else 0.0
         P_fan = fan_kW * run_frac if Q_air > 0 else 0.0
         P_pump = pump_kW * run_frac
@@ -455,6 +466,8 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
         else:
             P_sol = min(P_comp, P_pv[i]) if running else min(P_fog + P_nf, P_pv[i])
             P_grid = P_comp - P_sol if not running else 0.0               # fogger at night: from the grid / battery
+        if no_grid:
+            P_grid = 0.0
         if C_loop > 0:
             if running:
                 T_loop = Ts
@@ -507,8 +520,8 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
                          ("P_comp", P_comp), ("P_chiller", P_chiller), ("P_pump", P_pump), ("P_fan", P_fan), ("P_fog", P_fog), ("P_pv", P_pv[i]),
                          ("P_solar_used", P_sol), ("P_grid", P_grid), ("grid_on", float(grid_mode)), ("running", float(running)),
                          ("run_frac", run_frac), ("door_s", door[i]), ("solar_ok", float(solar_ok)), ("G_wax", G_w * 1000), ("cop", cop_i),
-                         ("T_out", T_out[i]), ("RH_out", RH_o[i]), ("poa", poa[i]), ("v_room", float(Q_air > 1e-9)), ("v_wax", float(Q_ch > 1e-9)),
-                         ("T_sup", Ts if running else np.nan), ("T_ret", Tret), ("w_transp", sum(w_tr)), ("w_coil", w_coil), ("w_wax", w_wax),
+                         ("T_out", T_out[i]), ("RH_out", RH_o[i]), ("poa", poa[i]), ("v_room", float(Q_air > 1e-9)), ("v_ice", float(Q_ch > 1e-9)),
+                         ("T_sup", Ts if running else np.nan), ("T_ret", Tret), ("w_transp", sum(w_tr)), ("w_coil", w_coil), ("w_ice", w_ice),
                          ("w_fog", S_fog), ("w_tray", w_tray), ("w_door", w_door), ("kg_inside", sum(nd["m"] for nd in nodes)),
                          ("valve_duty", duty), ("Q_evap_air", evap_air), ("ps_Pa", p), ("load_event", load_ev), ("Q_other", Q_other), ("P_nfan", P_nf)):
             out[key][i] = val
@@ -541,7 +554,7 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
               "humidity": humidity or hu["default_option"], "setpoint_C": Tset0,
               "energy_in_kWh": heat_in / 3600, "energy_out_kWh": heat_out / 3600, "stored_change_kWh": (E1 - E0) / 3600,
               "energy_balance_error_kWh": bal / 3600, "energy_balance_error_pct": 100 * abs(bal) / heat_out if heat_out else 0.0,
-              "wax": wax_info, "glycol": {"m_dot_kg_s": GLY.m_dot(cfg), "T_evap_room_C": CT["room"]["T_evap_C"], "T_evap_wax_C": CT["wax"]["T_evap_C"]}}
+              "ice": ice_info, "glycol": {"m_dot_kg_s": GLY.m_dot(cfg), "T_evap_room_C": CT["room"]["T_evap_C"], "T_evap_ice_C": CT["ice"]["T_evap_C"]}}
     end_state = {"T_room": T_r, "W_room": W_r, "pcm_h": h, "grid_mode": grid_mode, "T_loop": T_loop,
                  "nodes": [{"crop": nd["crop"], "m": nd["m"], "C": nd["C"], "T": nd["T"], "b": None, "off": nd.get("off", 0.0), "liner": nd.get("liner", 1.0),
                             "fresh_state": nd["fresh"].state(), "amb_state": nd["amb"].state()} for nd in nodes]}

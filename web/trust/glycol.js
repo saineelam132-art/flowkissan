@@ -1,7 +1,7 @@
 // Glycol energy-balance check (new for KoolKisaan Flowers). Data: TRUST_DATA.scenarios[*].glycol, made by twin/trust_nodes.py.
 //   Q_glycol = m_dot × cp × (T_return − T_supply)     from the two glycol sensors and the flow meter
 // must match, inside the error band (sensor noise, 3 sigma, 15-minute mean):
-//   (a) the room side: cold to the air cooler + cold into the wax + pipe heat gain + pump heat
+//   (a) the room side: cold to the air cooler + cold into the ice + pipe heat gain + pump heat
 //   (b) COP × electric power of the chiller
 (function () {
   'use strict';
@@ -20,9 +20,9 @@
     const mean = k => g[k].slice(a, i + 1).reduce((x, y) => x + y, 0) / (i + 1 - a);
     const q = mean('Q_gly_kW'), qr = mean('Q_room_kW'), qe = mean('Q_el_kW'), band = g.band_kW[i], ok = g.ok[i] === 1;
     const node = (t, v, sub) => `<div class="node"><small>${t}</small><b>${v}</b><span>${sub || ''}</span></div>`;
-    $('glyNow').innerHTML = node('Glycol supply / return', on ? `${f(g.T_sup[i], 1)} / ${f(g.T_ret[i], 1)} °C` : 'pump off', `V-ROOM ${g.v_room[i] ? 'open' : 'closed'} · V-WAX ${g.v_wax[i] ? 'open' : 'closed'}`)
+    $('glyNow').innerHTML = node('Glycol supply / return', on ? `${f(g.T_sup[i], 1)} / ${f(g.T_ret[i], 1)} °C` : 'pump off', `V-ROOM ${g.v_room[i] ? 'open' : 'closed'} · V-ICE ${g.v_ice[i] ? 'open' : 'closed'}`)
       + node('Q = ṁ × cp × (T return − T supply)', f(q) + ' kW', `ṁ ${f(gc.m_dot_kg_s, 3)} kg/s × cp ${f(gc.cp_kJ_kgK, 1)} kJ/kg·K`)
-      + node('Room heat balance', f(qr) + ' kW', 'air cooler + wax + pipe gain + pump heat')
+      + node('Room heat balance', f(qr) + ' kW', 'air cooler + ice + pipe gain + pump heat')
       + node('COP × electric power', f(qe) + ' kW', 'chiller energy meter')
       + node('Check', ok ? '✔ inside the band' : '⚠ outside the band', `error band ± ${f(band)} kW`);
     $('glyNote').textContent = `15-minute means. In a normal year ${f(st.readings_inside_band_pct, 1)} % of the readings are inside the band (mean band ± ${f(st.band_mean_kW)} kW). `

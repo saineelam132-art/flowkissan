@@ -6,6 +6,7 @@
   const N = { t: '', n: true };
   const n = t => ({ t, n: true });
   const crop = k => K.crops[k] || { label: k };
+  const gridLine = (h, d, mo, sol, tot) => `${f(h)} grid hours on ${f(d)} days${mo ? ' (mostly ' + mo + ')' : ''} – next to ${f(sol)} of ${f(tot)} days fully on solar + ice`;
   const P = {};
 
   // ------------------------------------------------------------------ HOME
@@ -22,7 +23,7 @@
     const SLIDES = [
       ['flowers_outside', 'The flower cold room on a farm near Visakhapatnam: marigold, jasmine and rose wait at the door', [[50, 20, 'pv'], [80, 68, 'out'], [52, 60, 'room']]],
       ['room_flowers_chiller', `Whole system: insulated room, solar panels on top, and the R290 chiller OUTSIDE on its own pad – ${D.r290_inside_room_g} g of R290 inside the room`, [[42, 22, 'pv'], [77, 70, 'gly'], [32, 55, 'room'], [70, 12, 'out']]],
-      ['flowers_inside', `Inside at ${D.band_C.join('–')} °C: marigold, rose, jasmine and tuberose in crates and bags; finned ice panels on the wall, glycol air cooler above`, [[50, 18, 'gly'], [40, 55, 'wax'], [60, 55, 'vwax'], [14, 62, 'kg'], [80, 30, 'rh']]],
+      ['flowers_inside', `Inside at ${D.band_C.join('–')} °C: marigold, rose, jasmine and tuberose in crates and bags; finned ice panels on the wall, glycol air cooler above`, [[50, 18, 'gly'], [40, 55, 'ice'], [60, 55, 'vice'], [14, 62, 'kg'], [80, 30, 'rh']]],
       ['chiller_outdoor', 'Outdoor R290 chiller with the glycol pump (green), expansion tank (red) and the two insulated glycol pipes into the room', [[37, 68, 'gly'], [43, 72, 'pump'], [65, 52, 'src']]],
       ['room_with_chiller', 'The chiller, pump and tank sit beside the room; only cold glycol goes through the wall', [[80, 72, 'gly'], [55, 20, 'pv'], [43, 55, 'room']]],
       ['A10_interior_evaporator', `Air cooler: glycol at about ${f(G.supply_room_C)} °C takes the heat out of the room air (picture from the earlier design)`, [[58, 48, 'room'], [84, 56, 'gly'], [14, 68, 'rh']]],
@@ -44,7 +45,7 @@
       <h2>Results of the year so far ${S} ${range()}</h2>
       <p class="src">Best practice = realistic losses + good design + good operation (the careful, reachable numbers). The ideal model is shown in small print. Poor practice is on the Reality check page.</p>
       <div class="tiles">
-        ${tile('Days fully on solar + ice', f(RS.days_full_solar_wax), `of ${DAYS}`, `ideal model: ${f(ID.days_full_solar_wax)} of ${DAYS}`, 'big')}
+        ${tile('Days fully on solar + ice', f(RS.days_full_solar_ice), `of ${DAYS}`, `ideal model: ${f(ID.days_full_solar_ice)} of ${DAYS}`, 'big')}
         ${tile('Electricity from the sun', f(RS.solar_share_of_electricity_pct), '%', `ideal: ${f(ID.solar_share_of_electricity_pct)} %`, 'big good')}
         ${tile('Grid backup', f(RS.grid_h_per_year), 'h/yr', `${f(RS.grid_kWh_per_year)} kWh/yr · ideal: ${f(ID.grid_h_per_year)} h, ${f(ID.grid_kWh_per_year)} kWh`, 'big')}
         ${tile('Chiller COP', f(RS.COP_chiller, 2), '', `ideal: ${f(ID.COP_chiller, 2)}`)}
@@ -53,10 +54,10 @@
         ${tile('Flowers stored', f(RS.kg_stored), 'kg', `${f(RS.days_with_stock)} days with stock`)}
         ${tile('Value captured ' + E, inr(RS.value_INR), '', 'price model is an assumption')}
       </div>
-      <div class="note ok">Grid electricity is a small top-up: about ${f(RS.grid_kWh_per_year)} kWh a year, ${inr(K.practice.cases.best_practice.grid_bill_INR_per_year.mid)} a year ${E}.
+      <div class="note ok">${gridLine(RS.grid_h, RS.days_with_grid, RS.grid_months, RS.days_full_solar_ice, DAYS)}. Grid electricity is a small top-up: about ${f(RS.grid_kWh_per_year)} kWh a year, ${inr(K.practice.cases.best_practice.grid_bill_INR_per_year.mid)} a year ${E}.
         Up-to-date numbers from 1 January to the newest weather are in the <a href="live.html">Live 2026 report</a>.</div>
       <h2>Pages</h2>
-      <div class="cols">${[['how.html', 'How it works', 'Outdoor R290 chiller → glycol pump → V-ROOM / V-WAX.'], ['flowers.html', 'Flowers', 'Which flowers fit a 4 °C room and how long they keep.'],
+      <div class="cols">${[['how.html', 'How it works', 'Outdoor R290 chiller → glycol pump → V-ROOM / V-ICE.'], ['flowers.html', 'Flowers', 'Which flowers fit a 4 °C room and how long they keep.'],
         ['season.html', 'Season planner', 'Jan–Dec: flowers, festivals, prices, what the room does.'], ['humidity.html', 'Humidity', '4 options compared.'],
         ['safety.html', 'Safety', 'R290 facts, room limit, standards.'], ['cost.html', 'Cost & ROI', 'Bill of materials and payback.'],
         ['reality.html', 'Reality check', 'Each loophole alone, then all together.'], ['trust.html', 'Trust & Trade', 'Ledger, Φ check and glycol energy check.']]
@@ -71,8 +72,8 @@
         ['Chiller COP – realistic', f(cmp.old.realistic_smart.COP_chiller, 2), f(cmp.new.realistic_smart.COP_chiller, 2)],
         ['Electricity kWh/day – ideal', f(cmp.old.ideal.electric_kWh_day, 2), f(cmp.new.ideal.electric_kWh_day, 2)],
         ['Electricity kWh/day – realistic', f(cmp.old.realistic_smart.electric_kWh_day, 2), f(cmp.new.realistic_smart.electric_kWh_day, 2)],
-        [`Days fully on solar + ice (of ${DAYS}) – ideal`, f(cmp.old.ideal.days_full_solar_wax), f(cmp.new.ideal.days_full_solar_wax)],
-        [`Days fully on solar + ice – realistic + smart`, f(cmp.old.realistic_smart.days_full_solar_wax), f(cmp.new.realistic_smart.days_full_solar_wax)],
+        [`Days fully on solar + ice (of ${DAYS}) – ideal`, f(cmp.old.ideal.days_full_solar_ice), f(cmp.new.ideal.days_full_solar_ice)],
+        [`Days fully on solar + ice – realistic + smart`, f(cmp.old.realistic_smart.days_full_solar_ice), f(cmp.new.realistic_smart.days_full_solar_ice)],
         ['Grid hours/yr – ideal', f(cmp.old.ideal.grid_h_per_year), f(cmp.new.ideal.grid_h_per_year)],
         ['Grid hours/yr – realistic + smart', f(cmp.old.realistic_smart.grid_h_per_year), f(cmp.new.realistic_smart.grid_h_per_year)],
         ['Grid kWh/yr – realistic + smart', f(cmp.old.realistic_smart.grid_kWh_per_year), f(cmp.new.realistic_smart.grid_kWh_per_year)],
@@ -108,10 +109,10 @@
     const MODE = { Day: [argmax(pvDay), 12], Night: [argmax(nightT), 23], Monsoon: [argmin(monsoonDays), 13] };
     let chart = null, timer = null;
     function values(i) {
-      const on = H.run[i] > 0, src = H.grid[i] > 0 ? 'GRID' : (on ? 'SOLAR' : (H.wax[i] > 0 ? 'ICE' : 'NONE'));
+      const on = H.run[i] > 0, src = H.grid[i] > 0 ? 'GRID' : (on ? 'SOLAR' : (H.ice[i] > 0 ? 'ICE' : 'NONE'));
       return { room: [`${f(H.T_room[i], 1)} °C`, 'Room air'], rh: [`${f(H.RH_room[i], 0)} %`, 'Room humidity'], out: [`${f(H.T_out[i], 1)} °C`, 'Outside air'], pv: [`${f(H.P_pv[i], 2)} kW`, 'Solar power now'],
-        wax: [`${f(H.wax[i], 0)} %`, 'Ice frozen (cold battery)'], gly: [on ? `${f(H.T_sup[i], 1)} / ${f(H.T_ret[i], 1)} °C` : 'pump off', 'Glycol supply / return'],
-        pump: [on ? 'ON' : 'OFF', 'Glycol pump'], vwax: [H.v_wax[i] > 0 ? 'OPEN' : 'CLOSED', 'V-WAX valve'], kg: [`${f(H.kg[i], 0)} kg`, 'Flowers inside'], src: [src, 'Power from'] };
+        ice: [`${f(H.ice[i], 0)} %`, 'Ice frozen (cold battery)'], gly: [on ? `${f(H.T_sup[i], 1)} / ${f(H.T_ret[i], 1)} °C` : 'pump off', 'Glycol supply / return'],
+        pump: [on ? 'ON' : 'OFF', 'Glycol pump'], vice: [H.v_ice[i] > 0 ? 'OPEN' : 'CLOSED', 'V-ICE valve'], kg: [`${f(H.kg[i], 0)} kg`, 'Flowers inside'], src: [src, 'Power from'] };
     }
     function draw() {
       const d = Math.round((Date.parse($('day').value) - Date.UTC(2026, 0, 1)) / 864e5), h = +$('hour').value, i = Math.max(0, Math.min(H.n - 1, d * 24 + h));
@@ -119,12 +120,12 @@
       $('nowLbl').textContent = `${$('day').value} ${String(h).padStart(2, '0')}:00`;
       $('stage').classList.toggle('night', H.P_pv[i] < 0.02);
       const cell = (lab, val, cls = '') => `<div class="bv ${cls}"><small>${lab}</small><b>${val}</b></div>`;
-      $('bar').innerHTML = cell('ROOM', v.room[0], bad ? 'wn' : 'ok') + cell('HUMIDITY', v.rh[0]) + cell('OUTSIDE', v.out[0]) + cell('SOLAR PV', v.pv[0]) + cell('ICE BATTERY', v.wax[0])
+      $('bar').innerHTML = cell('ROOM', v.room[0], bad ? 'wn' : 'ok') + cell('HUMIDITY', v.rh[0]) + cell('OUTSIDE', v.out[0]) + cell('SOLAR PV', v.pv[0]) + cell('ICE BATTERY', v.ice[0])
         + cell('GLYCOL SUPPLY / RETURN', v.gly[0]) + cell('FLOWERS INSIDE', v.kg[0]) + cell('POWER FROM', v.src[0], v.src[0] === 'GRID' ? 'wn' : 'ok');
       document.querySelectorAll('.slide.on .hot').forEach(b => { const x = v[b.dataset.w]; b.querySelector('span').innerHTML = `<small>${x[1]}</small>${x[0]}`; });
       const a = d * 24, lab = Array.from({ length: 24 }, (_, k) => k + ':00'), sl = k => H[k].slice(a, a + 24);
       const ds = [{ label: 'Room °C', data: sl('T_room'), borderColor: '#2a78d6', yAxisID: 'y' }, { label: 'Outside °C', data: sl('T_out'), borderColor: '#f59e0b', yAxisID: 'y' },
-        { label: 'Wax %', data: sl('wax'), borderColor: '#14b8a6', yAxisID: 'y2' }, { label: 'Humidity %', data: sl('RH_room'), borderColor: '#8b5cf6', yAxisID: 'y2' }];
+        { label: 'Ice %', data: sl('ice'), borderColor: '#14b8a6', yAxisID: 'y2' }, { label: 'Humidity %', data: sl('RH_room'), borderColor: '#8b5cf6', yAxisID: 'y2' }];
       if (chart) { chart.data.datasets.forEach((s, k) => { s.data = ds[k].data; }); chart.update('none'); } else if (window.Chart) {
         chart = new Chart($('dayChart'), { type: 'line', data: { labels: lab, datasets: ds.map(s => ({ ...s, pointRadius: 0, borderWidth: 2, tension: .3 })) },
           options: { animation: false, interaction: { mode: 'index', intersect: false }, scales: { y: { title: { display: true, text: '°C' } }, y2: { position: 'right', min: 0, max: 100, title: { display: true, text: '%' }, grid: { drawOnChartArea: false } } } } });
@@ -158,16 +159,16 @@
 
   // ------------------------------------------------------------------ HOW IT WORKS
   P.how = () => {
-    const g = D.glycol, ph = K.photos, hx = K.wax_hx, pcm = K.pcm;
-    const slab = Math.round(1000 * D.wax_kg / (pcm.density_kg_m3 * pcm.slab_area_m2));
+    const g = D.glycol, ph = K.photos, hx = K.ice_hx, pcm = K.pcm;
+    const slab = Math.round(1000 * D.ice_kg / (pcm.density_kg_m3 * pcm.slab_area_m2));
     const fig = (k, cap) => (ph[k] ? `<figure><img src="${ph[k].file}" alt="${esc(ph[k].what)}" loading="lazy"><figcaption>${esc(cap || ph[k].caption)} – a typical example, not our unit. ${esc(ph[k].credit)} · <a href="${ph[k].source}">source</a></figcaption></figure>` : '');
     $('app').innerHTML = `<h2>How it works ${range()}</h2>
       <div class="card diagram"><div class="zero">${D.r290_inside_room_g} g R290 inside the room</div>
-        <figure><img src="assets/how/glycol_loop.jpg" alt="Diagram: outdoor R290 chiller with compressor, condenser and plate heat exchanger; glycol pump; V-ROOM valve to the glycol air cooler; V-WAX valve to the finned storage panels; orange return line" style="height:auto;object-fit:contain">
-          <figcaption><b>System diagram</b> (illustration supplied by the project owner). Its labels were drawn for the first, paraffin-wax version. In today's design the panels hold
-            ${f(D.wax_kg)} kg of ${esc(pcm.word)} that freezes and melts at ${f(pcm.T_melt_C)} °C, and the glycol supply is ${f(g.supply_wax_C)} °C when the ${esc(pcm.word)} is made. The drawing below uses today's values.</figcaption></figure></div>
+        <figure><img src="assets/how/glycol_loop.jpg" alt="Diagram: outdoor R290 chiller with compressor, condenser and plate heat exchanger; glycol pump; V-ROOM valve to the glycol air cooler; V-ICE valve to the finned storage panels; orange return line" style="height:auto;object-fit:contain">
+          <figcaption><b>System diagram</b> (illustration supplied by the project owner). Its labels were drawn for the first, paraffin-ice version. In today's design the panels hold
+            ${f(D.ice_kg)} kg of ${esc(pcm.word)} that freezes and melts at ${f(pcm.T_melt_C)} °C, and the glycol supply is ${f(g.supply_ice_C)} °C when the ${esc(pcm.word)} is made. The drawing below uses today's values.</figcaption></figure></div>
       <div class="card diagram"><h3>The same loop with today's design values ${C}</h3>
-      <svg viewBox="0 0 900 430" role="img" aria-label="Diagram: outdoor R290 chiller, plate heat exchanger, glycol pump, V-ROOM to the air cooler and V-WAX to the ice panels">
+      <svg viewBox="0 0 900 430" role="img" aria-label="Diagram: outdoor R290 chiller, plate heat exchanger, glycol pump, V-ROOM to the air cooler and V-ICE to the ice panels">
         <rect x="20" y="60" width="250" height="250" rx="10" class="dg-box"/><text x="32" y="82" class="dg-t">OUTDOOR R290 chiller (factory-sealed)</text>
         <rect x="40" y="110" width="90" height="60" rx="6" class="dg-box"/><text x="52" y="136" class="dg-s">compressor</text><text x="52" y="152" class="dg-s">(inverter)</text>
         <rect x="40" y="220" width="90" height="60" rx="6" class="dg-box"/><text x="50" y="246" class="dg-s">condenser</text><text x="50" y="262" class="dg-s">+ fan</text>
@@ -178,21 +179,21 @@
         <path d="M370 180 H470 V110 H560 M470 180 V290 H560" class="dg-cold"/>
         <rect x="455" y="20" width="430" height="390" rx="12" class="dg-room"/><text x="470" y="44" class="dg-t">COLD ROOM ${D.room_m.join(' × ')} m · ${f(D.setpoint_C)} °C</text>
         <path d="M560 95 l24 30 l-24 0 l24 -30 z" class="dg-box"/><text x="548" y="84" class="dg-t">V-ROOM</text>
-        <path d="M560 275 l24 30 l-24 0 l24 -30 z" class="dg-box"/><text x="548" y="264" class="dg-t">V-WAX</text>
+        <path d="M560 275 l24 30 l-24 0 l24 -30 z" class="dg-box"/><text x="548" y="264" class="dg-t">V-ICE</text>
         <path d="M584 110 H650" class="dg-cold"/><rect x="650" y="75" width="200" height="70" rx="8" class="dg-box"/><text x="662" y="103" class="dg-t">Glycol air cooler + EC fan</text><text x="662" y="122" class="dg-s">glycol supply about ${f(g.supply_room_C)} °C</text>
-        <path d="M584 290 H650" class="dg-cold"/><rect x="650" y="255" width="200" height="80" rx="8" class="dg-box"/><text x="662" y="283" class="dg-t">Ice panels (${f(D.wax_kg)} kg) + fins</text><text x="662" y="302" class="dg-s">glycol coils inside · supply ${f(g.supply_wax_C)} °C</text><text x="662" y="320" class="dg-s">freezes and melts at ${f(pcm.T_melt_C)} °C</text>
+        <path d="M584 290 H650" class="dg-cold"/><rect x="650" y="255" width="200" height="80" rx="8" class="dg-box"/><text x="662" y="283" class="dg-t">Ice panels (${f(D.ice_kg)} kg) + fins</text><text x="662" y="302" class="dg-s">glycol coils inside · supply ${f(g.supply_ice_C)} °C</text><text x="662" y="320" class="dg-s">freezes and melts at ${f(pcm.T_melt_C)} °C</text>
         <path d="M850 110 H870 V370 H300 V230 H240 M850 295 H870" class="dg-warm"/><text x="480" y="390" class="dg-s">orange = glycol return (warmer)</text>
         <text x="32" y="352" class="dg-s">blue = cold glycol (${esc(g.fluid)})</text>
       </svg></div>
       <div class="cols">
        <div class="card"><h3>Control rules</h3><ul class="plain">
         <li><b>Room first.</b> V-ROOM opens when the room needs cold.</li>
-        <li><b>V-WAX</b> opens only with spare solar power and when the ice is below 100 %.</li>
+        <li><b>V-ICE</b> opens only with spare solar power and when the ice is below 100 %.</li>
         <li><b>At night</b> the pump is off and both valves are closed. The ice cools the room by natural air flow over the fins.</li>
         <li>Minimum ON time ${f(g.min_on_min)} min. The grid is only a backup (ice below ${f(D.controller.ats_pcm_pct)} % with no sun, or the room above ${f(D.controller.protect_above_C, 1)} °C for 15 min).</li></ul></div>
        <div class="card"><h3>The physics in the twin ${C} ${E}</h3>${table(['', N], [
-        ['Glycol supply for the air cooler ' + E, f(g.supply_room_C) + ' °C'], ['Glycol supply when charging ice ' + E, f(g.supply_wax_C) + ' °C'],
-        ['Plate heat-exchanger approach ' + E, f(g.hx_approach_K) + ' K'], ['R290 evaporating temperature (room / ice) ' + C, `${f(D.T_evap_room_C)} / ${f(D.T_evap_wax_C)} °C`],
+        ['Glycol supply for the air cooler ' + E, f(g.supply_room_C) + ' °C'], ['Glycol supply when charging ice ' + E, f(g.supply_ice_C) + ' °C'],
+        ['Plate heat-exchanger approach ' + E, f(g.hx_approach_K) + ' K'], ['R290 evaporating temperature (room / ice) ' + C, `${f(D.T_evap_room_C)} / ${f(D.T_evap_ice_C)} °C`],
         ['Glycol heat capacity ' + E, f(g.cp_kJ_kgK, 1) + ' kJ/kg·K'], ['Glycol freezes at ' + E, f(g.freeze_C) + ' °C'], ['Glycol flow ' + C, f(D.glycol_m_dot_kg_s, 3) + ' kg/s'],
         ['Pump ' + E, f(g.pump_W) + ' W, only when the chiller runs'], ['Pipe heat gain ' + E, f(g.pipe_UA_W_K) + ' W/K to the outside air'],
         ['Chiller COP over the year ' + S, `${f(RS.COP_chiller, 2)} (realistic) · ${f(ID.COP_chiller, 2)} (ideal)`],
@@ -278,7 +279,7 @@
         ${tile('Days with stock (full-year plan)', f(K.plan.days_with_stock_full_year), 'days', `research estimate ${cal.research_estimate.days_with_stock.join('–')} ${''}`)}
         ${tile('High-value days (full-year plan)', f(K.plan.high_value_days_full_year), 'days', `research estimate ${cal.research_estimate.high_value_days.join('–')}`)}
         ${tile('Busiest month', MONTHS[K.monthly.busiest_month - 1], '', 'most kg per day')}
-        ${tile('Hardest month for the room', MONTHS[K.monthly.hardest_month - 1], '', `${f(hm[0].grid_h_per_day, 1)} grid h/day, outside ${f(hm[0].outside_avg_C, 1)} °C, ice down to ${f(hm[0].wax_sunrise_worst_pct)} % at sunrise`)}
+        ${tile('Hardest month for the room', MONTHS[K.monthly.hardest_month - 1], '', `${f(hm[0].grid_h_per_day, 1)} grid h/day, outside ${f(hm[0].outside_avg_C, 1)} °C, ice down to ${f(hm[0].ice_sunrise_worst_pct)} % at sunrise`)}
       </div>
       <div class="note">Our plan stores flowers on fewer days than the research estimate, because the plan only holds a flower when the sale price × expected freshness beats today's price (${E} price model).
         High-value days = ${esc(K.plan.high_value_definition)}.</div>
@@ -367,27 +368,33 @@
           x.mid.payback_years && x.mid.payback_years < 40 ? f(x.mid.payback_years, 1) + ' yr' : '<span class="pill bd">does not pay back</span>',
           (x.payback_best_years ? f(x.payback_best_years, 1) : '–') + ' – ' + (x.payback_worst_years ? f(x.payback_worst_years, 1) + ' yr' : 'never'), inr(x.mid.ten_year_net_INR)]),
         { note: `(a) ${esc(c.benefit.farmer_group.how)}. (b) ${esc(c.benefit.rent_only.how)}. ${esc(c.assumptions_E.benefit.subsidy_note)}` })}</div>
-      <div class="card"><h3>ROI by season ${E}</h3>${table(['Season', n('kg stored ' + S), n('Price uplift'), n('Losses avoided'), n('₹ value'), n('Share of running cost'), n('Net'), n('ROI on total cost')],
-        Object.values(c.seasons).map(s => [esc(s.label), f(s.kg), inr(s.price_uplift_INR), inr(s.loss_avoided_INR), inr(s.value_INR), inr(s.running_share_INR), inr(s.net_INR), f(s.roi_on_total_cost_pct, 1) + ' %']),
+      <div class="card"><h3>Money sensitivity: farmer-group payback if prices rise less ${E}</h3>
+        ${table(['Festival price multiplier', ...c.sensitivity.sale_day_multiplier.map(x => n('Sale-day uplift ×' + x))], c.sensitivity.rows.map(row => ['×' + row.festival_multiplier,
+          ...row.cells.map(x => (x.payback_years ? `<b>${f(x.payback_years, 1)} yr</b>` : '<span class="pill bd">no payback</span>') + `<br><span class="src">${inr(x.benefit_INR_yr)}/yr · with ${c.assumptions_E.benefit.subsidy_pct} % subsidy ${x.payback_35_years ? f(x.payback_35_years, 1) + ' yr' : '–'}</span>`)]),
+          { note: esc(c.sensitivity.note) + ` Our base case is ×${c.sensitivity.base.festival_multiplier} and ×${c.sensitivity.base.sale_day_multiplier}. Total and running cost: mid values.` })}</div>
+      <div class="card"><h3>ROI by season ${E}</h3>${table(['Season', n('kg stored ' + S), n('Price uplift'), n('Surplus held'), n('Losses avoided'), n('₹ value'), n('Share of running cost'), n('Net'), n('ROI on total cost')],
+        Object.values(c.seasons).map(s => [esc(s.label), f(s.kg), inr(s.price_uplift_INR), inr(s.surplus_held_INR), inr(s.loss_avoided_INR), inr(s.value_INR), inr(s.running_share_INR), inr(s.net_INR), f(s.roi_on_total_cost_pct, 1) + ' %']),
         { note: esc(c.season_note) })}</div>`;
   };
 
   // ------------------------------------------------------------------ REALITY CHECK
   P.reality = () => {
-    const r = K.reality, L = r.leave_one_out, w = K.wax, ld = K.load, sp = K.flowers.setpoint_5C, xr = K.flowers.extra_racks, pr = K.practice, so = K.solar, rk = pr.racks;
+    const r = K.reality, L = r.leave_one_out, w = K.ice, ld = K.load, sp = K.flowers.setpoint_5C, xr = K.flowers.extra_racks, pr = K.practice, so = K.solar, rk = pr.racks;
     const head = ['Case', n(`Days fully on solar + ice (of ${DAYS})`), n('Grid h/yr'), n('Grid kWh/yr'), n('Sun share of electricity'), n('Hours outside band'), n('Hours above alarm'), n('Night room max °C'), n('Chiller COP')];
-    const row = (lab, c, hl) => ({ hl, c: [lab, f(c.days_full_solar_wax), f(c.grid_h_per_year), f(c.grid_kWh_per_year), f(c.solar_share_of_electricity_pct) + ' %', f(c.hours_outside_band), f(c.hours_above_alarm), f(c.night_room_max_C, 1), f(c.COP_chiller, 2)] });
+    const row = (lab, c, hl) => ({ hl, c: [lab, f(c.days_full_solar_ice), f(c.grid_h_per_year), f(c.grid_kWh_per_year), f(c.solar_share_of_electricity_pct) + ' %', f(c.hours_outside_band), f(c.hours_above_alarm), f(c.night_room_max_C, 1), f(c.COP_chiller, 2)] });
     const fr = c => ['jasmine', 'marigold', 'rose'].map(k => `${crop(k).label.split(' (')[0]} ${Object.values(c.freshness_after_days[k]).map(x => f(x)).join(' / ')}`).join('<br>');
     const pc = pr.cases, maxS = Math.max(...pr.items_alone.rows.map(x => Math.abs(x.grid_kWh_saved_per_year)));
     const cur = so.options.current, bestS = so.options[so.best];
     $('app').innerHTML = `<h2>Reality check ${S} ${range()}</h2>
       <h2>Three cases side by side</h2>
       <div class="card">${table(['', n('Ideal'), n('<b>Best practice (optimum) – headline</b>'), n('Poor practice')], [
-        [`Days fully on solar + ice (of ${DAYS})`, ...['ideal', 'best_practice', 'poor_practice'].map(k => f(pc[k].days_full_solar_wax))],
+        [`Days fully on solar + ice (of ${DAYS})`, ...['ideal', 'best_practice', 'poor_practice'].map(k => f(pc[k].days_full_solar_ice))],
         ['Grid hours a year', ...['ideal', 'best_practice', 'poor_practice'].map(k => f(pc[k].grid_h_per_year))],
+        ['Grid use in the simulated days', ...['ideal', 'best_practice', 'poor_practice'].map(k => `${f(pc[k].grid_h)} hours on ${f(pc[k].days_with_grid)} days${pc[k].grid_months ? '<br>(mostly ' + pc[k].grid_months + ')' : ''}`)],
         ['Grid kWh a year', ...['ideal', 'best_practice', 'poor_practice'].map(k => f(pc[k].grid_kWh_per_year))],
         ['Yearly grid bill ' + E, ...['ideal', 'best_practice', 'poor_practice'].map(k => inr(pc[k].grid_bill_INR_per_year.mid))],
         ['Hours above ' + D.band_C[1] + ' °C', ...['ideal', 'best_practice', 'poor_practice'].map(k => f(pc[k].hours_above_band_top))],
+        ['Hours below 2 °C (must be 0) · coldest room °C', ...['ideal', 'best_practice', 'poor_practice'].map(k => `${f(pc[k].hours_below_2C)} · ${f(pc[k].room_min_C, 1)} °C`)],
         ['Freshness kept after 1 / 2 / 3 days (%)', ...['ideal', 'best_practice', 'poor_practice'].map(k => fr(pc[k]))],
         ['₹ value captured ' + E, ...['ideal', 'best_practice', 'poor_practice'].map(k => inr(pc[k].value_INR))]],
         { note: `Best practice = realistic losses + ${pr.best_practice_rules.map(x => esc(x.toLowerCase())).join('; ')}. Poor practice = realistic losses + ${esc(pr.poor_practice_is)}. ${esc(pr.ideal_freshness_note)} ${esc(pr.night_fan_note)}` })}</div>
@@ -400,6 +407,11 @@
         ${table(['Rack material ' + E, n('Mass kg'), n('Heat capacity kJ/K'), n('Electricity kWh/yr ' + S), n('Grid kWh/yr ' + S), n('Hours to 6 °C ' + S), n('Cost low'), n('Cost mid'), n('Cost high')],
           Object.entries(rk.options).map(([k, v]) => ({ hl: k === rk.chosen, c: [esc(v.label) + (k === rk.chosen ? ' <span class="pill ok">chosen</span>' : '') + `<br><span class="src">${esc(v.note)}</span>`, f(v.kg_total), f(v.heat_capacity_kJ_K, 1),
             f(v.electric_kWh_per_year), f(v.grid_kWh_per_year, 1), f(v.time_to_6C_h_avg, 1), inr(v.INR.low), inr(v.INR.mid), inr(v.INR.high)] })), { note: esc(rk.about) })}</div>
+      <div class="card"><h3>Pipe and pump losses ${S}</h3>
+        ${table(['Option', n('Pipe heat gain W/K ' + E), n('Pump W ' + E), n('Pipe loss kWh/day'), n('Pump kWh/day'), n('Electricity kWh/yr'), n('Saved kWh/yr'), n('Grid kWh/yr'), n('Days fully solar + ice'), n('Extra cost (mid) ' + E), n('₹ per kWh saved, 10 years')],
+          Object.entries(K.pipe.options).map(([k, v]) => ({ hl: k === K.pipe.best, c: [esc(K.pipe.labels[k]) + (k === K.pipe.best ? ' <span class="pill ok">chosen</span>' : ''), f(v.pipe_UA_W_K, 1), f(v.pump_W), f(v.pipe_loss_kWh_day, 2), f(v.pump_kWh_day, 2),
+            f(v.electric_kWh_per_year), f(v.electric_kWh_saved_per_year), f(v.grid_kWh_per_year), f(v.days_full_solar_ice), inr(v.extra_cost_INR.mid), v.INR_per_kWh_saved_10yr ? '₹' + f(v.INR_per_kWh_saved_10yr, 2) : '–'] })),
+          { note: esc(K.pipe.note) + ` Tariff ₹${f(K.pipe.tariff_INR_kWh)}/kWh ${E}. ` + esc(K.pipe.E.note) })}</div>
       <h2>Can it run on solar only (no grid at all)?</h2>
       <div class="note bd">Not fully. With the grid removed, even the best option has ${f(bestS.no_grid.nights_failed_above_8C)} nights a year-so-far above ${D.alarm_C[1]} °C.
         The failures come on dull monsoon days with too little sun to run the chiller at all, not from the night storage. Grid backup is a small top-up: the first design (paraffin) needs
@@ -417,13 +429,13 @@
       <p class="src">Loading at 13:00 and 6 door openings, as in the first plan. "Realistic + smart" here is the middle case between best and poor practice.</p>
       <div class="card">${table(head, r.order.map(k => row(esc(r.cases[k].label) + (r.cases[k].E ? `<br><span class="src">${E} ${esc(r.cases[k].E)}</span>` : ''), r.cases[k], k === 'realistic_smart')))}</div>
       <div class="card"><h3>Leave one out: which loophole matters most?</h3>${table(['REALISTIC + smart controller, but without…', n('Days on solar + ice'), n('Grid h/yr'), n('Grid kWh/yr')],
-        [[`<b>(all loopholes on)</b>`, f(L.with_all.days_full_solar_wax), f(L.with_all.grid_h_per_year), f(L.with_all.grid_kWh_per_year)]].concat(
-          Object.entries(L.without).sort((a, b) => a[1].grid_kWh_per_year - b[1].grid_kWh_per_year).map(([k, c]) => [esc(r.cases[k].label), f(c.days_full_solar_wax), f(c.grid_h_per_year), f(c.grid_kWh_per_year)])), { note: esc(L.about) })}</div>
+        [[`<b>(all loopholes on)</b>`, f(L.with_all.days_full_solar_ice), f(L.with_all.grid_h_per_year), f(L.with_all.grid_kWh_per_year)]].concat(
+          Object.entries(L.without).sort((a, b) => a[1].grid_kWh_per_year - b[1].grid_kWh_per_year).map(([k, c]) => [esc(r.cases[k].label), f(c.days_full_solar_ice), f(c.grid_h_per_year), f(c.grid_kWh_per_year)])), { note: esc(L.about) })}</div>
       <div class="card"><h3>Ice mass: ${f(w.chosen_kg)} kg chosen</h3>${table([n('Ice kg'), n('Storage cost ' + E), n('Grid kWh/yr – realistic'), n('10-year cost (storage + grid) ' + E), n('Days on solar + ice – ideal'), n('Grid kWh/yr – ideal')],
-        w.rows.map(x => ({ hl: x.wax_kg === w.chosen_kg, c: [f(x.wax_kg), inr(x.wax_cost_INR), f(x.realistic.grid_kWh_per_year), inr(x.ten_year_cost_INR), f(x.ideal.days_full_solar_wax), f(x.ideal.grid_kWh_per_year)] })),
-        { note: esc(w.about) + ' ' + esc(w.why) + ` Same room with no storage: ${f(w.no_wax_realistic.grid_kWh_per_year)} grid kWh/yr.` })}</div>
+        w.rows.map(x => ({ hl: x.ice_kg === w.chosen_kg, c: [f(x.ice_kg), inr(x.ice_cost_INR), f(x.realistic.grid_kWh_per_year), inr(x.ten_year_cost_INR), f(x.ideal.days_full_solar_ice), f(x.ideal.grid_kWh_per_year)] })),
+        { note: esc(w.about) + ' ' + esc(w.why) + ` Same room with no storage: ${f(w.no_ice_realistic.grid_kWh_per_year)} grid kWh/yr.` })}</div>
       <div class="card"><h3>Grid-help limit</h3><p>${esc(K.night.why)}</p>${table([n('Grid may help above'), n('Days on solar + ice – realistic'), n('Grid kWh/yr – realistic'), n('Days on solar + ice – ideal')],
-        K.night.rows.map(x => ({ hl: x.grid_help_above_C === D.controller.protect_above_C, c: [f(x.grid_help_above_C, 1) + ' °C', f(x.realistic_smart.days_full_solar_wax), f(x.realistic_smart.grid_kWh_per_year), f(x.ideal.days_full_solar_wax)] })))}</div>
+        K.night.rows.map(x => ({ hl: x.grid_help_above_C === D.controller.protect_above_C, c: [f(x.grid_help_above_C, 1) + ' °C', f(x.realistic_smart.days_full_solar_ice), f(x.realistic_smart.grid_kWh_per_year), f(x.ideal.days_full_solar_ice)] })))}</div>
       <div class="card"><h3>Load per fill (marigold, one fill a day)</h3>${table([n('kg per fill'), n('Crates needed'), 'Fits the ' + ld.crate_places + ' crate places?', n('Grid kWh/yr'), n('Hours outside band'), n('Hours to 6 °C'), n('Freshness kept')],
         ld.rows.map(x => [f(x.kg_per_fill), f(x.crates_needed), x.fits ? '<span class="pill ok">yes</span>' : '<span class="pill bd">no – flowers are bulky</span>', f(x.grid_kWh_per_year), f(x.hours_outside_band), f(x.time_to_6C_h_avg, 1), f(x.freshness_kept_pct) + ' %']))}
         ${table(['Flower', n('kg per crate ' + E), n('Full room, ' + ld.crate_places + ' crates'), n('With extra racks, ' + xr.crate_places + ' crates')], Object.entries(ld.capacity_kg_by_flower).map(([k, v]) => [esc(crop(k).label), v.kg_per_crate.join('–'), f(v.room_kg) + ' kg', f(v.room_kg_extra_racks) + ' kg']))}
@@ -440,13 +452,14 @@
       <div class="tiles">
         ${tile('Days fully on solar + ice', f(t.days_fully_solar), `of ${f(t.days)}`, '', 'big good')}${tile('Grid backup', f(t.grid_kWh, 1), 'kWh', `${f(t.grid_h)} hours · bill ${inr(t.grid_bill_INR)} at ₹${f(t.tariff_INR_kWh)}/kWh ${E}`, 'big')}
         ${tile('Electricity used', f(t.electric_kWh), 'kWh', `${f(t.solar_kWh)} kWh from the sun (${f(100 * t.solar_kWh / t.electric_kWh)} %)`, 'big')}${tile('Solar available', f(t.pv_available_kWh), 'kWh', `${f(100 * t.solar_kWh / t.pv_available_kWh)} % used`)}
-        ${tile('Flowers stored', f(h.kg_stored), 'kg', `${f(h.days_with_stock)} days with stock, ${f(h.fills_done)} fills`)}${tile('Value captured ' + E, inr(h.value_INR), '', `uplift ${inr(h.price_uplift_INR)} + losses avoided ${inr(h.loss_avoided_INR)}`)}
+        ${tile('Flowers stored', f(h.kg_stored), 'kg', `${f(h.days_with_stock)} days with stock, ${f(h.fills_done)} fills`)}${tile('Value captured ' + E, inr(h.value_INR), '', `uplift ${inr(h.price_uplift_INR)} + surplus held ${inr(h.surplus_held_INR)} + losses avoided ${inr(h.loss_avoided_INR)}`)}
         ${tile('Hours outside ' + D.band_C.join('–') + ' °C', f(h.hours_outside_band), 'h', `above alarm: ${f(h.hours_above_alarm)} h`)}${tile('Humidity (flowers inside)', f(h.rh_avg_pct, 1), '%', `fogger water ${f(h.water_fog_L_day, 2)} L/day`)}
         ${tile('Chiller COP', f(h.COP_chiller, 2), '', `${f(h.electric_kWh_day, 2)} kWh/day`)}</div>
+      <div class="note ok">${gridLine(t.grid_h, t.days_with_grid, t.grid_months, t.days_fully_solar, t.days)}. Hours below 2 °C: ${f(t.hours_below_2C)} (coldest room ${f(t.room_min_C, 1)} °C).</div>
       <div class="card"><h3>Day by day ${lr}</h3><canvas id="lc" height="80"></canvas></div>
       <div class="card"><h3>Month by month</h3>${table(['Month', n('Days'), n('kg stored'), n('Days with stock'), n('Electricity kWh'), n('Solar kWh'), n('Grid kWh'), n('Grid h'), n('Room avg °C'), n('Room max °C'), n('RH %'), n('Outside avg °C'), n('Ice at sunrise, worst %'), n('₹ captured ' + E)],
         v.monthly.map(m => [MONTHS[m.month - 1], f(m.days), f(m.kg_stored), f(m.days_with_stock), f(m.energy_kWh), f(m.solar_kWh), f(m.grid_kWh, 1), f(m.grid_h), f(m.room_avg_C, 1), f(m.room_max_C, 1), m.rh_avg_pct ? f(m.rh_avg_pct) : '–',
-          f(m.outside_avg_C, 1), f(m.wax_sunrise_worst_pct), inr(m.value_INR)]))}</div>
+          f(m.outside_avg_C, 1), f(m.ice_sunrise_worst_pct), inr(m.value_INR)]))}</div>
       <div class="card"><h3>By flower</h3>${table(['Flower', n('kg'), n('Fills'), n('Days held (avg)'), n('Freshness at take-out'), n('Worst'), n('With no cold room'), n('₹ captured ' + E)],
         Object.entries(v.by_flower).map(([k, x]) => [esc(crop(k).label), f(x.kg), f(x.fills), f(x.hold_days_avg, 1), f(x.freshness_kept_pct) + ' %', f(x.freshness_kept_worst_pct) + ' %', f(x.freshness_no_room_pct) + ' %', inr(x.value_INR)]))}</div>
       <div class="card"><h3>Every day</h3><div style="max-height:520px;overflow:auto">${table(['Date', n('Outside max °C'), n('Sun kWh/m²'), n('Room avg °C'), n('Room max °C'), n('RH %'), n('Ice at sunrise %'), n('Flowers inside kg'), n('Solar kWh'), n('Grid kWh'), n('Grid h'), ''],

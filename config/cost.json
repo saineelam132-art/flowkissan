@@ -1,5 +1,5 @@
 {
- "_about": "Cost inputs for KoolKisaan Flowers. EVERY price is E (assumption, low / mid / high in rupees) until real quotations arrive. The wax line is calculated: chosen mass x price per kg.",
+ "_about": "Cost inputs for KoolKisaan Flowers. EVERY price is E (assumption, low / mid / high in rupees) until real quotations arrive. The ice line is calculated: chosen mass x price per kg.",
  "bom": [
   {
    "key": "room",
@@ -28,11 +28,11 @@
   },
   {
    "key": "loop",
-   "item": "Glycol pump + expansion tank + 2 motorised valves + insulated pipes + glycol",
+   "item": "18 W DC glycol pump + expansion tank + 2 motorised valves + 3 m of pipe with 32 mm insulation + insulated tank and plate exchanger + glycol",
    "INR": [
-    20000,
-    30000,
-    45000
+    23000,
+    36000,
+    55000
    ],
    "glycol_only": true
   },
@@ -47,7 +47,7 @@
    "glycol_only": true
   },
   {
-   "key": "wax",
+   "key": "ice",
    "item": "Cold storage: water / ice with nucleating agent, biocide, leak-tight containers",
    "INR": "storage",
    "in_old": false
@@ -138,7 +138,20 @@
   ],
   "subsidy_pct": 35,
   "subsidy_scheduled_areas_pct": 50,
-  "subsidy_note": "E – MIDH cold-chain subsidy: 35 % of the project cost in general areas, 50 % in scheduled / hilly areas. Check the current scheme and its cost norms."
+  "subsidy_note": "E – MIDH cold-chain subsidy: 35 % of the project cost in general areas, 50 % in scheduled / hilly areas. Check the current scheme and its cost norms.",
+  "sensitivity": {
+   "festival_multiplier": [
+    1.5,
+    2.0,
+    2.5
+   ],
+   "sale_day_multiplier": [
+    1.1,
+    1.25,
+    1.4
+   ],
+   "note": "E – how the farmer-group payback moves if festivals lift prices less, or muhurtham / Friday sale days lift them less. The loading plan is kept as simulated; only the prices change."
+  }
  },
  "years": 10,
  "humidity": {

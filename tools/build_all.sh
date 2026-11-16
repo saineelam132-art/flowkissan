@@ -3,6 +3,7 @@
 set -e
 cd "$(dirname "$0")/.."
 python -m twin.run_all          # all studies -> results/
+python -m twin.pipe_pump       # pipe / pump options -> results/live/pipe_pump.json
 python -m twin.solar_only      # solar-only options -> results/live/solar_only.json
 python -m twin.live_run        # Live 2026 report, 1 Jan -> newest saved weather (add --fetch to download)
 python -m engine.cost           # cost and ROI -> results/live/cost_roi.json

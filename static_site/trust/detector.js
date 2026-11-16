@@ -49,7 +49,7 @@
 
   const WHICH = [['moisture', 'Moisture link: water in the supply air vs the return air', ['humidity', 'room_air']],
     ['energy', 'Energy link: heat removed by the coil vs electricity × COP', ['room_air']],
-    ['heat', 'Room heat-balance link: walls + door + flowers + fans − wax − air cooler', ['room_air', 'core', 'door', 'outside']],
+    ['heat', 'Room heat-balance link: walls + door + flowers + fans − ice − air cooler', ['room_air', 'core', 'door', 'outside']],
     ['core', 'Core-lag link: the flower core probe follows the air with a lag', ['core', 'room_air']]];
 
   class Detector {
@@ -58,7 +58,7 @@
       this.P = D.trust_cfg.phi; this.hist = []; this.run = 0; this.runOut = 0; this.runPair = 0; this.miss = {}; this.same = {}; this.prev = {}; this.active = {};
       this.window = Math.max(4, this.P.window_steps + 2);
     }
-    // the residuals need the controller log of the same steps (compressor COP, wax, fans) – from the twin data
+    // the residuals need the controller log of the same steps (compressor COP, ice, fans) – from the twin data
     input(rows) {
       const s = this.D.scenarios[this.sc], d = {};
       const fill = (k, def) => rows.map(r => (r.rep[k] === null || r.rep[k] === undefined ? (r.last[k] ?? def) : r.rep[k]));

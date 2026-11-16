@@ -397,7 +397,10 @@
   "slack_day_multiplier": 0.8,
   "peak_supply_multiplier": 0.85,
   "off_season_multiplier": 1.5,
-  "note": "E – price = base price of the month (data/crops.json) x supply factor x day factor. 2 days up to and on a festival x2.5 (brief: x2-3); 4 days after x0.4 (brief: x0.3-0.5 for 3-5 days); muhurtham-proxy days x1.4, slack days x0.8. Anchors (Vizag press, E): marigold Rs 50 -> 150-200/kg before Deepavali 2025, jasmine Rs 250-300/kg; Sravana: marigold 160 -> 200, rose 280 -> 500, chamanthi 380 -> 600; marigold crash to about Rs 50 a basket after Deepavali."
+  "note": "E – price = base price of the month (data/crops.json) x supply factor x day factor. 2 days up to and on a festival x2.5 (brief: x2-3); 4 days after x0.4 (brief: x0.3-0.5 for 3-5 days); muhurtham-proxy days x1.4, slack days x0.8. Anchors (Vizag press, E): marigold Rs 50 -> 150-200/kg before Deepavali 2025, jasmine Rs 250-300/kg; Sravana: marigold 160 -> 200, rose 280 -> 500, chamanthi 380 -> 600; marigold crash to about Rs 50 a basket after Deepavali.",
+  "surplus_min_freshness": 0.8,
+  "surplus_distress_factor": 0.5,
+  "surplus_note": "E – everyday surplus: flowers not sold by the end of the day are held whenever the expected freshness after the hold is at least 80 % and the expected price on the sale day is not below today's price. Without the room this surplus would fetch only half of today's price (distress sale), so value = kg sold x sale price x freshness - kg x 0.5 x today's price."
  },
  "research_estimate": {
   "days_with_stock": [

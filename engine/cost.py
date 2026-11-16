@@ -17,7 +17,7 @@ def build():
     cfg = load_config()
     C = json.loads((ROOT / "config" / "cost.json").read_text(encoding="utf-8"))
     F = json.loads((RES / "flowers_2026.json").read_text(encoding="utf-8"))
-    W = json.loads((RES / "wax_sweep.json").read_text(encoding="utf-8"))
+    W = json.loads((RES / "ice_sweep.json").read_text(encoding="utf-8"))
     P = json.loads((RES / "season_plan.json").read_text(encoding="utf-8"))
     HU = json.loads((RES / "humidity_options.json").read_text(encoding="utf-8"))
     case_key = F["headline_case"]
@@ -31,7 +31,7 @@ def build():
     bom, tot = [], [0.0, 0.0, 0.0]
     for b in C["bom"]:
         v = special[b["INR"]] if isinstance(b["INR"], str) else b["INR"]
-        item = b["item"] + (f" – {W['chosen_kg']} kg" if b["key"] == "wax" else "") + (f" – {rk['label']}" if b["key"] == "racks" else "")
+        item = b["item"] + (f" – {W['chosen_kg']} kg" if b["key"] == "ice" else "") + (f" – {rk['label']}" if b["key"] == "racks" else "")
         bom.append({"item": item, "key": b["key"], **dict(zip(LV, v))})
         tot = [a + x for a, x in zip(tot, v)]
     by = {b["key"]: b for b in bom}
@@ -81,7 +81,7 @@ def build():
     value_year = m["value_INR"] * scale
     B = C["benefit"]
     benefit = {
-        "farmer_group": {"label": "(a) Farmer group: value captured (price uplift + losses avoided)", "INR_yr": [value_year * f for f in B["value_factor"]],
+        "farmer_group": {"label": "(a) Farmer group: value captured (price uplift + surplus held + losses avoided)", "INR_yr": [value_year * f for f in B["value_factor"]],
                          "how": f"seasonal twin run (best practice): ₹{m['value_INR']:,.0f} in {days} days × {scale:.2f} (kg planned for the full year / kg simulated), × 0.7 / 1.0 / 1.3"},
         "rent_only": {"label": "(b) Rent only", "INR_yr": [kg_days_year * x for x in B["rent_INR_kg_day"]],
                       "how": f"₹3 / 4 / 5 per kg per day × {kg_days_year:,.0f} kg-days a year from the seasonal plan"},
@@ -110,8 +110,26 @@ def build():
         share = s["kg"] / kg_sim if kg_sim else 0
         run_share = running[1]["total_INR"] * share
         seasons[k] = {"label": s["label"], "kg": s["kg"], "value_INR": s["value_INR"], "price_uplift_INR": s["price_uplift_INR"],
-                      "loss_avoided_INR": s["loss_avoided_INR"], "running_share_INR": run_share, "net_INR": s["value_INR"] - run_share,
+                      "loss_avoided_INR": s["loss_avoided_INR"], "surplus_held_INR": s.get("surplus_held_INR", 0.0), "running_share_INR": run_share, "net_INR": s["value_INR"] - run_share,
                       "roi_on_total_cost_pct": 100 * (s["value_INR"] - run_share) / tot[1]}
+    # ---- money sensitivity: same simulated fills, other price multipliers (E)
+    import pandas as pd
+    from engine.config import load_crops
+    from twin import season_plan as SP
+    fills = pd.read_csv(RES / "fills_flowers.csv")
+    cal0, crops = SP.load_calendar(), load_crops()
+    sens_rows = []
+    sn = B["sensitivity"]
+    for fm in sn["festival_multiplier"]:
+        row = {"festival_multiplier": fm, "cells": []}
+        for sm in sn["sale_day_multiplier"]:
+            cal = json.loads(json.dumps(cal0))
+            cal["price_model"].update(pre_festival_multiplier=fm, sale_day_multiplier=sm)
+            val = float(SP.value_batches(fills, cal, crops).value_INR.sum()) * scale
+            net = val - running[1]["total_INR"]
+            row["cells"].append({"sale_day_multiplier": sm, "benefit_INR_yr": val, "payback_years": tot[1] / net if net > 0 else None,
+                                 "payback_35_years": tot[1] * (1 - B["subsidy_pct"] / 100.0) / net if net > 0 else None})
+        sens_rows.append(row)
     out = {
         "about": "Cost and ROI of KoolKisaan Flowers (ice-panel design). ALL PRICES ARE E (assumptions) – replace with quotations. Energy, water, kg and Rs value come from the twin (best-practice case, seasonal plan).",
         "date_range": F["date_range"], "note": "Simple payback, no interest, no tax. E = assumption. Nothing is measured.", "twin_case": case_key,
@@ -132,6 +150,9 @@ def build():
                         "kg_days_per_year": kg_days_year, "value_INR_simulated": m["value_INR"], "days_simulated": days,
                         "pump_note": "Pump energy is already inside the electricity numbers; most of it is solar."},
         "benefit": benefit, "cases": cases, "seasons": seasons,
+        "sensitivity": {"rows": sens_rows, "sale_day_multiplier": sn["sale_day_multiplier"], "note": sn["note"],
+                        "base": {"festival_multiplier": cal0["price_model"]["pre_festival_multiplier"], "sale_day_multiplier": cal0["price_model"]["sale_day_multiplier"]},
+                        "cost_used": "total cost and running cost: mid"},
         "season_note": "ROI per season = (Rs value captured in that season - its share of the yearly running cost) / total cost (mid). Simulated period only; mid-Nov to Dec is not in the weather file yet.",
         "assumptions_E": {"prices": "every BOM line, tariff, upkeep, bag, water, fogger part and cleaning price (config/cost.json)", "benefit": B, "price_model": "data/season_calendar.json -> price_model"},
     }

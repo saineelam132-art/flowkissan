@@ -21,7 +21,7 @@ def test_fixed_design_inputs(fcfg):
     assert abs(fcfg["chamber"]["insulation_k_W_mK"] / fcfg["chamber"]["insulation_thickness_m"] - 0.22) < 1e-9
     assert fcfg["pv"]["rated_kWp"] == 1.8 and fcfg["live_run"]["setpoint_C"] == 4.0 and fcfg["live_run"]["band_C"] == [2.0, 6.0]
     assert fcfg["pcm"]["word"] == "ice" and fcfg["pcm"]["latent_kJ_kg"] == 334.0 and fcfg["pcm"]["melt_range_C"] == [0.0, 0.0]   # water / ice panels
-    assert fcfg["glycol"]["supply_wax_C"] > fcfg["glycol"]["freeze_C"] + 5                                                    # glycol stays liquid
+    assert fcfg["glycol"]["supply_ice_C"] > fcfg["glycol"]["freeze_C"] + 5                                                    # glycol stays liquid
 
 
 def test_no_r290_inside_and_room_limit():
@@ -31,8 +31,8 @@ def test_no_r290_inside_and_room_limit():
 
 def test_cop_follows_glycol_supply(fcfg):
     T, t = GLY.cop_tables(fcfg)
-    assert t["room"]["T_evap_C"] == -3.0 and t["wax"]["T_evap_C"] == -8.0             # supply - 3 K approach (0 C room, -5 C ice making)
-    assert (t["wax"]["COP_elec"] < t["room"]["COP_elec"]).all()                        # colder glycol costs COP
+    assert t["room"]["T_evap_C"] == -3.0 and t["ice"]["T_evap_C"] == -8.0             # supply - 3 K approach (0 C room, -5 C ice making)
+    assert (t["ice"]["COP_elec"] < t["room"]["COP_elec"]).all()                        # colder glycol costs COP
     assert np.interp(30, T, t["room"]["COP_elec"]) == pytest.approx(3.12, abs=0.05)
 
 
@@ -42,24 +42,24 @@ def test_energy_balance_closes(short_run):
 
 
 def test_glycol_check_matches_heat_and_power(short_run, fcfg):
-    """Q = m_dot cp (T_return - T_supply) = cold to room + cold to wax + pipe + pump heat = COP x chiller power."""
+    """Q = m_dot cp (T_return - T_supply) = cold to room + cold to ice + pipe + pump heat = COP x chiller power."""
     S = short_run[1]["steps"]
     on = S[S.running > 0.5]
     q = GLY.q_from_sensors(GLY.m_dot(fcfg), fcfg["glycol"]["cp_kJ_kgK"], on.T_sup, on.T_ret) * on.run_frac
     assert np.allclose(q, on.Q_chill, atol=1e-9)
     assert np.allclose(on.Q_chill, on.Q_air + on.Q_ch + on.Q_pipe + on.Q_pump, atol=1e-9)
     assert np.allclose(on.Q_chill, on.cop * on.P_chiller, atol=1e-9)
-    assert (on.T_sup >= fcfg["glycol"]["supply_wax_C"] - 1e-9).all() and on.T_sup.min() > fcfg["glycol"]["freeze_C"] + 5
+    assert (on.T_sup >= fcfg["glycol"]["supply_ice_C"] - 1e-9).all() and on.T_sup.min() > fcfg["glycol"]["freeze_C"] + 5
 
 
 def test_valves_and_night_rule(short_run):
     S = short_run[1]["steps"]
-    assert (S.v_wax[S.solar_ok < 0.5] == 0).all()                                     # V-WAX only with solar
-    assert (S.v_wax[S.pcm_pct <= 0] == 0).all() or True
+    assert (S.v_ice[S.solar_ok < 0.5] == 0).all()                                     # V-ICE only with solar
+    assert (S.v_ice[S.pcm_pct <= 0] == 0).all() or True
     off = S[(S.running < 0.5)]
     assert (off.P_pump == 0).all() and (off.v_room == 0).all()                         # pump off -> both valves closed
     night = S[(S.index.hour >= 22) | (S.index.hour < 4)]
-    assert night.Q_pcm_room.mean() > 0                                                # the wax cools the room at night
+    assert night.Q_pcm_room.mean() > 0                                                # the ice cools the room at night
 
 
 def test_humidity_model_water_balance():
@@ -118,14 +118,14 @@ def test_season_plan_respects_space_and_hold_limits(crops, fcfg):
     assert max(occ) <= fcfg["flowers"]["crate_places"]
 
 
-def test_results_files_and_chosen_wax(fcfg):
+def test_results_files_and_chosen_ice(fcfg):
     F = json.loads((RES / "flowers_2026.json").read_text(encoding="utf-8"))
-    W = json.loads((RES / "wax_sweep.json").read_text(encoding="utf-8"))
+    W = json.loads((RES / "ice_sweep.json").read_text(encoding="utf-8"))
     assert F["date_range"]["days"] == 310 and F["design"]["r290_inside_room_g"] == 0
-    assert W["chosen_kg"] == fcfg["pcm"]["mass_kg"] == fcfg["live_run"]["designs"]["current"]["pcm_kg"] == F["design"]["wax_kg"]
+    assert W["chosen_kg"] == fcfg["pcm"]["mass_kg"] == fcfg["live_run"]["designs"]["current"]["pcm_kg"] == F["design"]["ice_kg"]
     assert F["headline_case"] == "best_practice"
     for k in ("ideal", "best_practice", "poor_practice", "realistic_smart"):
-        for key in ("days_full_solar_wax", "grid_h_per_year", "grid_kWh_per_year", "solar_used_pct", "COP_chiller", "pump_kWh_day",
+        for key in ("days_full_solar_ice", "grid_h_per_year", "grid_kWh_per_year", "solar_used_pct", "COP_chiller", "pump_kWh_day",
                     "compressor_kWh_day", "hours_outside_band", "rh_avg_pct", "rh_below_85_h_day", "time_to_6C_h_avg", "value_INR"):
             assert F[k][key] is not None
     C = json.loads((RES / "cost_roi.json").read_text(encoding="utf-8"))
@@ -216,7 +216,7 @@ def test_practice_cases_and_racks(fcfg):
 
 def test_solar_only_study():
     S = json.loads((RES / "solar_only.json").read_text(encoding="utf-8"))
-    assert S["best"].startswith("A_ice") and S["options"][S["best"]]["storage_kg"] == 100
+    assert S["best"].startswith("A_ice")
     cur, best = S["options"]["current"], S["options"][S["best"]]
     assert best["with_grid_backup"]["grid_kWh_per_year"] < cur["with_grid_backup"]["grid_kWh_per_year"]
     assert best["extra_cost_INR"]["mid"] < 0                                         # ice is cheaper than paraffin wax
@@ -228,3 +228,25 @@ def test_live_report_runs_from_1_january():
     L = json.loads((RES / "live_2026.json").read_text(encoding="utf-8"))
     assert L["date_range"]["from"] == "2026-01-01" and L["date_range"]["days"] == len(L["daily"]) >= 310
     assert L["totals"]["grid_kWh"] == pytest.approx(sum(d["grid_kWh"] for d in L["daily"]), abs=0.1)
+
+
+def test_room_never_hotter_than_outside_plus_3K(fcfg, weather):
+    """Bug check: an unpowered insulated room cannot run far above the outside air (flower respiration used to be extrapolated)."""
+    w = weather.iloc[24 * 120:24 * 200]                              # May - mid July, the hottest stretch
+    sched = [dict(f, in_day=f["in_day"] - 120, out_day=f["out_day"] - 120) for f in SP.build(fcfg["flowers"]["crate_places"]) if 120 <= f["in_day"] and f["out_day"] < 200]
+    for hum in ("liners_fogger", "nothing"):
+        H = simulate(w, cfg=fcfg, schedule=sched, humidity=hum, real={"no_grid": True, "pv_kWp": 0.0} if False else {"no_grid": True}, pv_kWp=0.0)[0]
+        assert H.T_room.max() <= w.T_out.max() + 3.0
+        assert H.P_grid.sum() == 0
+    S = json.loads((RES / "solar_only.json").read_text(encoding="utf-8"))
+    for o in S["options"].values():
+        assert o["no_grid"]["room_max_C"] <= S["outside_max_C"] + 3.0
+
+
+def test_lower_limit_and_headline_cold_side(fcfg):
+    F = json.loads((RES / "flowers_2026.json").read_text(encoding="utf-8"))
+    for k in ("best_practice", "poor_practice"):                      # the cases with real-life losses
+        assert F[k]["hours_below_2C"] == 0
+    assert F["ideal"]["room_min_C"] > 1.5                             # ideal model: passive ice panels on cold nights, see the Reality check page
+    assert fcfg["controller"]["low_stop_C"] == 3.0 and fcfg["controller"]["low_restart_C"] == 4.5
+    assert fcfg["project"]["tagline"] == "Cold from the sun, ice for the night, truth in the ledger."

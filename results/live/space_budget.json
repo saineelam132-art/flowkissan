@@ -8,10 +8,10 @@
   "floor_m2": 4.0,
   "volume_m3": 8.8
  },
- "wax": {
-  "wax_kg": 100,
-  "wax_volume_solid_m3": 0.1136,
-  "wax_volume_liquid_m3": 0.1299,
+ "ice": {
+  "ice_kg": 100,
+  "ice_volume_solid_m3": 0.1136,
+  "ice_volume_liquid_m3": 0.1299,
   "slab_mm": 10.8225,
   "panel_area_m2": 12.0,
   "panel_height_m": 1.7,
@@ -89,8 +89,8 @@
  },
  "table": [
   {
-   "item": "Wax panels + casing + fins (along the walls, incl. drip tray below)",
-   "key": "wax_panels_fins",
+   "item": "Ice panels + casing + fins (along the walls, incl. drip tray below)",
+   "key": "ice_panels_fins",
    "floor_m2": 0.36,
    "volume_m3": 0.675,
    "pct_of_room": 7.7
@@ -140,7 +140,7 @@
  ],
  "zones_sum_m3": 8.8,
  "contents_m3": {
-  "wax_m3_liquid": 0.1299,
+  "ice_m3_liquid": 0.1299,
   "aluminium_m3": 0.044,
   "crates_outer_m3": 0.864,
   "produce_net_fruit_m3": 0.18,
@@ -169,13 +169,13 @@
   "fill_of_crate_pct": 48.3
  },
  "assumptions_E": {
-  "wax_density_solid_kg_m3": {
+  "ice_density_solid_kg_m3": {
    "value": 880,
-   "note": "E – typical paraffin (solid); the datasheet of the chosen wax must confirm"
+   "note": "E – typical paraffin (solid); the datasheet of the chosen ice must confirm"
   },
-  "wax_density_liquid_kg_m3": {
+  "ice_density_liquid_kg_m3": {
    "value": 770,
-   "note": "E – typical paraffin (liquid); used for the container volume (wax expands when it melts)"
+   "note": "E – typical paraffin (liquid); used for the container volume (ice expands when it melts)"
   },
   "casing_mm": {
    "value": 3,

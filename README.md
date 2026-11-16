@@ -1,13 +1,13 @@
 # KoolKisaan Flowers
 
-*Cold from the sun, wax for the night, truth in the ledger.*
+*Cold from the sun, ice for the night, truth in the ledger.*
 
 A solar cold room for loose flowers (jasmine, marigold, rose, tuberose, chamanthi) in Visakhapatnam, with its digital twin
 and website. New project, new repository: the earlier KoolKisaan (pomegranate) project was used only as a source and is not changed.
 
 * Room: inside 2.0 × 2.0 × 2.2 m = 8.8 m³, U = 0.22 W/m²K, set-point 4 °C, normal band 2–6 °C.
 * Refrigeration: **outdoor** factory-sealed R290 chiller + glycol loop → **0 g of R290 inside the room**.
-  Two motorised valves: V-ROOM (air cooler) and V-WAX (glycol coils in the wax panels).
+  Two motorised valves: V-ROOM (air cooler) and V-ICE (glycol coils in the ice panels).
 * Cold storage for the night: 100 kg of water / ice (0 °C) in finned aluminium panels – it replaced the paraffin + graphite wax to save cost (`results/live/solar_only.json`).
 * Headline numbers = the **best-practice** case (realistic losses + good design + good operation); ideal and poor practice are shown next to it.
 * Solar: 1.8 kWp. Grid only as backup.
@@ -54,7 +54,7 @@ then open http://localhost:8000. Hosting on its own Firebase project: **docs/fir
 ## Results files
 
 `results/live/`: `flowers_2026.json` (final design, ideal and realistic + smart controller), `monthly_2026.json`,
-`season_plan.json`, `holds.json` (freshness after 1/2/3 days), `wax_sweep.json`, `load_sweep.json`,
+`season_plan.json`, `holds.json` (freshness after 1/2/3 days), `ice_sweep.json`, `load_sweep.json`,
 `humidity_options.json`, `reality_check.json`, `practice.json` (ideal / best / poor practice, each rule alone, racks), `solar_only.json`, `live_2026.json` (1 Jan → newest weather; `python -m twin.live_run --fetch` downloads newer weather), `night_limit.json`, `cost_roi.json`, `hourly_flowers.csv`;
 `results/compare_old_vs_new.json`.
 

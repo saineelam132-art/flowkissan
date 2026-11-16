@@ -21,7 +21,7 @@ from twin import study
 ICE = {"name": "Water / ice with nucleating agent", "word": "ice", "T_melt_C": 0.0, "melt_range_C": [0.0, 0.0], "latent_kJ_kg": 334.0,
        "latent_pure_kJ_kg": 334.0, "graphite_wt_frac": 0.0, "cp_solid_kJ_kgK": 2.1, "cp_liquid_kJ_kgK": 4.19, "k_pure_W_mK": 0.6, "k_multiplier": 1.0,
        "k_W_mK": 0.6, "density_kg_m3": 1000.0, "charge_stop_C": -1.0, "price_INR_kg": 0}
-ICE_GLY = {"supply_wax_C": -5.0}
+ICE_GLY = {"supply_ice_C": -5.0}
 ICE_REAL = {"latent_frac": 0.90, "melt_range_C": [-0.5, 0.0], "k_multiplier": 1.0}     # reality check for ice: 90 % freezes, slight supercooling
 
 
@@ -30,19 +30,19 @@ def options(cfg):
     para = {"name": "Paraffin blend + 7 % graphite", "word": "wax", "T_melt_C": 3.5, "melt_range_C": [3.0, 4.0], "latent_kJ_kg": 176.7, "latent_pure_kJ_kg": 190.0,
             "graphite_wt_frac": 0.07, "cp_solid_kJ_kgK": 1.8, "cp_liquid_kJ_kgK": 2.1, "k_pure_W_mK": 0.2, "k_multiplier": 5.0, "k_W_mK": 1.0,
             "density_kg_m3": 800.0, "charge_stop_C": 2.0, "price_INR_kg": 1000}
-    gly = {"supply_wax_C": -2.0}
-    wax_real = {"latent_frac": 0.90, "melt_range_C": [2.5, 4.5], "k_multiplier": 3.0}
-    o = {"current": {"label": f"Paraffin wax + graphite, melts 3–4 °C, {w:.0f} kg (first flower design)", "pcm": para, "gly": gly, "kg": w, "real": wax_real,
+    gly = {"supply_ice_C": -2.0}
+    ice_real = {"latent_frac": 0.90, "melt_range_C": [2.5, 4.5], "k_multiplier": 3.0}
+    o = {"current": {"label": f"Paraffin wax + graphite, melts 3–4 °C, {w:.0f} kg (first flower design)", "pcm": para, "gly": gly, "kg": w, "real": ice_real,
                      "extra_cost_INR": [0, 0, 0], "cost_note": "reference"}}
     for m in (60, 80, 100):
         o[f"A_ice_{m}"] = {"label": f"A. Water / ice panels at 0 °C, {m} kg, glycol −5 °C when charging", "pcm": ICE, "gly": ICE_GLY, "kg": m, "real": ICE_REAL,
                            "extra_cost_INR": [2000 - w * 600, 5000 - w * 1000, 10000 - w * 1600],
                            "cost_note": "E – water costs about nothing; Rs 2,000 / 5,000 / 10,000 for nucleating agent, biocide and leak-tight containers, MINUS the paraffin wax that is no longer bought"}
-    o["B_wax_1_2"] = {"label": f"B. Paraffin blend melting 1–2 °C, {w:.0f} kg", "pcm": dict(para, T_melt_C=1.5, melt_range_C=[1.0, 2.0], charge_stop_C=0.0), "gly": {"supply_wax_C": -4.0},
-                      "kg": w, "real": dict(wax_real, melt_range_C=[0.5, 2.5]), "extra_cost_INR": [0, 0, 0], "cost_note": "E – same price per kg assumed (Rs 1,000/kg)"}
-    o["D_night_5_6"] = {"label": "D. Current wax, night room allowed to 5–6 °C (grid help only above 7 °C)", "pcm": para, "gly": gly, "kg": w, "real": wax_real, "protect": 7.0,
+    o["B_paraffin_1_2"] = {"label": f"B. Paraffin blend melting 1–2 °C, {w:.0f} kg", "pcm": dict(para, T_melt_C=1.5, melt_range_C=[1.0, 2.0], charge_stop_C=0.0), "gly": {"supply_ice_C": -4.0},
+                      "kg": w, "real": dict(ice_real, melt_range_C=[0.5, 2.5]), "extra_cost_INR": [0, 0, 0], "cost_note": "E – same price per kg assumed (Rs 1,000/kg)"}
+    o["D_night_5_6"] = {"label": "D. Paraffin wax, night room allowed to 5–6 °C (grid help only above 7 °C)", "pcm": para, "gly": gly, "kg": w, "real": ice_real, "protect": 7.0,
                         "extra_cost_INR": [0, 0, 0], "cost_note": "no hardware"}
-    o["E_more_pv_storage"] = {"label": f"E. Current wax +30 % ({w * 1.3:.0f} kg) and +0.6 kWp PV (2.4 kWp)", "pcm": para, "gly": gly, "kg": w * 1.3, "real": wax_real, "pv": 2.4,
+    o["E_more_pv_storage"] = {"label": f"E. Paraffin wax +30 % ({w * 1.3:.0f} kg) and +0.6 kWp PV (2.4 kWp)", "pcm": para, "gly": gly, "kg": w * 1.3, "real": ice_real, "pv": 2.4,
                               "extra_cost_INR": [0.6 * 39000 + 0.3 * w * 600, 0.6 * 50000 + 0.3 * w * 1000, 0.6 * 67000 + 0.3 * w * 1600],
                               "cost_note": "E – PV at the BOM price per kWp + 30 % more wax"}
     return o
@@ -105,7 +105,7 @@ def main():
         g, ng = r[(k, "grid")], r[(k, "nogrid")]
         rows[k] = {
             "label": o["label"], "storage_kg": o["kg"], "extra_cost_INR": dict(zip(("low", "mid", "high"), o["extra_cost_INR"])), "cost_note": o["cost_note"],
-            "with_grid_backup": {"days_full_solar": g["days_full_solar_wax"], "grid_h_per_year": g["grid_h_per_year"], "grid_kWh_per_year": g["grid_kWh_per_year"],
+            "with_grid_backup": {"days_full_solar": g["days_full_solar_ice"], "grid_h_per_year": g["grid_h_per_year"], "grid_kWh_per_year": g["grid_kWh_per_year"],
                                  "grid_bill_INR_per_year": dict(zip(("low", "mid", "high"), [g["grid_kWh_per_year"] * t for t in tariff])),
                                  "hours_above_6C_per_year": g["hours_above_band_top_per_year"], "hours_above_8C_per_year": g["hours_above_alarm_per_year"],
                                  "hours_below_2C_per_year": g["hours_below_band_low_per_year"], "COP_chiller": g["COP_chiller"], "electric_kWh_day": g["electric_kWh_day"],
@@ -115,7 +115,7 @@ def main():
                         "room_min_C": ng["room_min_C"], "nights_failed_above_8C": ng["nights_failed"], "nights_above_6C": ng["nights_above_band_top"], "nights": ng["nights"],
                         "hours_above_6C_by_month": ng["hours_above_band_top_by_month"], "hours_above_6C_by_hour": ng["hours_above_band_top_by_hour"],
                         "failed_nights_freshness": failed_night_freshness(ng["_H"], ng["_bt"], alarm), "value_INR": ng["value_INR"],
-                        "storage_sunrise_worst_pct": ng["wax_sunrise_worst_pct"], "storage_sunrise_mean_pct": ng["wax_sunrise_mean_pct"]},
+                        "storage_sunrise_worst_pct": ng["ice_sunrise_worst_pct"], "storage_sunrise_mean_pct": ng["ice_sunrise_mean_pct"]},
             "chilling_check": {"panel_min_C": g["panel_min_C"], "panel_hours_below_2C_with_flowers": g["panel_hours_below_2C_with_flowers"],
                                "room_hours_below_2C_per_year": g["hours_below_band_low_per_year"],
                                "note": "Panels colder than 2 °C can chill jasmine, tuberose, marigold and kanakambaram that touch them: keep the 10 cm keep-clear gap in front of the panels."},
@@ -127,7 +127,7 @@ def main():
     cur = rows["current"]
     out = {"about": "Solar-only study: every option on the seasonal plan, realistic model + smart controller, with grid backup and with NO grid at all.",
            "date_range": study.date_range(RA._G["w"]), "note": "Digital twin (S). Nothing is measured. E = assumption. Hours are scaled to a full year (x 365 / 310).",
-           "tariff_INR_kWh": dict(zip(("low", "mid", "high"), tariff)), "options": rows, "order": list(rows),
+           "tariff_INR_kWh": dict(zip(("low", "mid", "high"), tariff)), "outside_max_C": float(RA._G["hot"].T_out.max()), "options": rows, "order": list(rows),
            "option_C": "Not modelled (night fan on the fins + small battery): the owner chose to go straight to water / ice panels.",
            "best": best, "best_rule": "cheapest option with 0 grid hours a year in the realistic model; if none reaches 0, the one with the smallest yearly grid bill (fewest grid kWh)",
            "best_reaches_zero_grid": bool(zero),
@@ -135,7 +135,7 @@ def main():
            "why_current_fails": {
                "cause": "The paraffin wax melts at 3–4 °C and the room must stay at or below 6 °C, so there is only about 2 K between wax and room air. With natural convection only (no fan at night) the fins then move too little heat for the night heat load (walls, door openings, warm flowers, and by day the pump and pipe losses eat part of the solar cold that should have gone into the wax).",
                "hours_above_6C_by_hour": cur["no_grid"]["hours_above_6C_by_hour"], "hours_above_6C_by_month": cur["no_grid"]["hours_above_6C_by_month"]},
-           "E": {"ice": ICE, "ice_glycol_supply_C": ICE_GLY["supply_wax_C"], "ice_reality": ICE_REAL,
+           "E": {"ice": ICE, "ice_glycol_supply_C": ICE_GLY["supply_ice_C"], "ice_reality": ICE_REAL,
                  "ice_note": "E – water with a nucleating agent freezes at about 0 °C (supercooling 0.5 K in the reality check); 334 kJ/kg; conductivity of liquid water (0.6 W/m.K) used for the whole slab (careful: ice is 2.2); glycol supply −5 °C when charging -> R290 evaporates at −8 °C. Glycol 30–35 % freezes at about −13 °C, so −5 °C is safe. Water expands 9 % when it freezes: panels need room for that."}}
     RA.write("solar_only.json", out)
     for k, v in rows.items():

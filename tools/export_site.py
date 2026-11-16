@@ -26,21 +26,21 @@ def main():
     H = pd.read_csv(RES / ("hourly_live.csv" if (RES / "hourly_live.csv").exists() else "hourly_flowers.csv"), parse_dates=["time_ist"])
     r = lambda c, k=2: [None if pd.isna(x) else round(float(x), k) for x in H[c]]
     hourly = {"t0": str(H.time_ist.iloc[0]), "n": len(H), "T_out": r("T_out", 1), "RH_out": r("RH_out", 0), "T_room": r("T_room"), "RH_room": r("RH_room", 1),
-              "wax": r("pcm_pct", 1), "T_sup": r("T_sup"), "T_ret": r("T_ret"), "P_pv": r("P_pv", 3), "P_grid": r("P_grid", 3), "P_comp": r("P_comp", 3),
-              "run": r("running_h"), "grid": r("grid_on"), "v_wax": r("v_wax"), "kg": r("kg_inside", 1)}
+              "ice": r("pcm_pct", 1), "T_sup": r("T_sup"), "T_ret": r("T_ret"), "P_pv": r("P_pv", 3), "P_grid": r("P_grid", 3), "P_comp": r("P_comp", 3),
+              "run": r("running_h"), "grid": r("grid_on"), "v_ice": r("v_ice"), "kg": r("kg_inside", 1)}
     photos = J(ROOT / "web" / "assets" / "photos.json")["photos"]
     data = {
         "generated": pd.Timestamp.now("Asia/Kolkata").strftime("%Y-%m-%d %H:%M IST"),
         "project": cfg["project"],
         "flowers": J(RES / "flowers_2026.json"), "monthly": J(RES / "monthly_2026.json"), "holds": J(RES / "holds.json"),
         "humidity": J(RES / "humidity_options.json"), "reality": J(RES / "reality_check.json"), "night": J(RES / "night_limit.json"),
-        "load": J(RES / "load_sweep.json"), "wax": J(RES / "wax_sweep.json"), "cost": J(RES / "cost_roi.json"),
+        "load": J(RES / "load_sweep.json"), "ice": J(RES / "ice_sweep.json"), "cost": J(RES / "cost_roi.json"),
         "compare": J(ROOT / "results" / "compare_old_vs_new.json"),
-        "practice": J(RES / "practice.json"), "solar": J(RES / "solar_only.json"), "live": J(RES / "live_2026.json"),
+        "practice": J(RES / "practice.json"), "pipe": J(RES / "pipe_pump.json"), "solar": J(RES / "solar_only.json"), "live": J(RES / "live_2026.json"),
         "plan": {k: v for k, v in plan.items() if k not in ("fills_full_year",)}, "fills": plan["fills_full_year"],
         "crops": {k: v for k, v in crops.items() if isinstance(v, dict) and v.get("kind") == "flower"},
         "blocked": crops["blocked_flowers"], "rules": crops["flower_rules"],
-        "wax_hx": cfg["live_run"]["wax_hx"], "pcm": cfg["pcm"], "humidity_cfg": cfg["humidity"],
+        "ice_hx": cfg["live_run"]["ice_hx"], "pcm": cfg["pcm"], "humidity_cfg": cfg["humidity"],
         "photos": {k: v for k, v in photos.items() if v.get("kind") == "commons"},
         "concept": sorted(p.stem for p in (ROOT / "web" / "assets" / "concept").glob("*.webp")),
         "hourly": hourly,

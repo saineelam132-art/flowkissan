@@ -407,7 +407,7 @@
       node('N3 door', p.N3.open === null ? '<span class="bd">no reading</span>' : p.N3.open ? 'OPEN' : 'closed', `leak ${f0(p.N3.Q_door_W)} W (ASHRAE)`, 'S') +
       node('N4 return air', v(p.N4.T_r, '°C'), `RH ${p.N4.RH_r === null ? 'no reading' : f1(p.N4.RH_r) + ' %'}`, 'S') +
       node('Outside air', v(p.out.T_out, '°C'), `RH ${f0(p.out.RH_out)} %`, 'W') +
-      node('Compressor power', `${f0(p.P_el_W)} W`, `${s.ctl.grid_on[i] ? 'GRID backup on' : 'solar / wax'} · wax ${f0(s.ctl.pcm_pct[i])} % frozen`, 'S');
+      node('Compressor power', `${f0(p.P_el_W)} W`, `${s.ctl.grid_on[i] ? 'GRID backup on' : 'solar / ice'} · ice ${f0(s.ctl.pcm_pct[i])} % frozen`, 'S');
     // 24 h of shared telemetry
     const tt = store.tele.filter(x => x.scenario === scKey() && x.step > i - 288);
     const data = { labels: tt.map(x => hhmm(x.ts)), datasets: [
