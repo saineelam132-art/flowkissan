@@ -291,24 +291,15 @@
     const rows = Object.entries(K.crops).map(([k, c]) => {
       const h = (H[k] || {}).best_practice || {};
       const cell = d => (h[d] ? (h[d].allowed ? `${f(h[d].freshness_kept_pct)} %` : `<span class="src">${f(h[d].freshness_kept_pct)} % (not allowed)</span>`) : '–');
-      return [`${fpic(k)}<b>${esc(c.label)}</b><br><span class="src"><i>${esc(c.latin)}</i></span>`, c.best_storage_C[0] === c.best_storage_C[1] ? c.best_storage_C[0] + ' °C' : c.best_storage_C.join('–') + ' °C',
+      return [`<div class="fcell">${fpic(k)}<div><b>${esc(c.label)}</b><br><span class="src"><i>${esc(c.latin)}</i></span></div></div>`, c.best_storage_C[0] === c.best_storage_C[1] ? c.best_storage_C[0] + ' °C' : c.best_storage_C.join('–') + ' °C',
         c.rh_pct.join('–') + ' %', f(c.shelf_life_ambient_days * 24) + ' h (' + f(c.shelf_life_ambient_days, 1) + ' d)', f(c.shelf_life_bagged_4C_days, 0) + ' days',
-        `<span class="pill ${fit[c.fit_at_4C]}">${c.fit_at_4C}</span><br><span class="src">${esc(c.fit_note)}${c.fragrance ? ' ' + esc(c.fragrance.note) : ''}</span>`,
+        `<span class="pill ${fit[c.fit_at_4C]}">${c.fit_at_4C}</span> <span class="src">${esc(c.fit_note)}</span>`,
         cell('1'), cell('2'), cell('3'), h['1'] ? f(h['1'].freshness_no_room_pct) + ' %' : '–', c.kg_per_crate.join('–') + ' kg', c.ethylene_sensitivity];
     });
-    $('app').innerHTML = `<h2>Flowers for a ${f(D.setpoint_C)} °C room ${range()}</h2>
-      <div class="card">${table(['Flower', n('Best storage °C ' + E), n('RH'), n('Shelf life outside (about 30 °C) ' + E), n('Shelf life bagged at 4 °C ' + E), 'Fit at 4 °C',
+    $('app').innerHTML = `<div class="wide"><h2>Flowers for a ${f(D.setpoint_C)} °C room ${range()}</h2>
+      <div class="card ftable">${table(['Flower', n('Best storage °C ' + E), n('RH'), n('Shelf life outside (about 30 °C) ' + E), n('Shelf life bagged at 4 °C ' + E), 'Fit at 4 °C',
         n('Freshness kept in our room after 1 day ' + S), n('2 days ' + S), n('3 days ' + S), n('1 day with no cold room ' + S), n('kg per crate ' + E), 'Ethylene'], rows,
         { note: 'Freshness = 100 % when picked, 0 % at the end of the reference shelf life. In our room: bagged, loaded at 06:00 at the outside temperature, taken out at 05:00 (so "1 day" is 23 hours); best-practice case.' })}${fcred()}</div>
-      <div class="cols">
-       <div class="card"><h3>Check-in rules</h3>
-        ${Object.entries(K.blocked).map(([bk, b]) => `<div class="note bd">${K.flower_photos[bk] ? `<img src="${K.flower_photos[bk]}" alt="${esc(b.label)}" class="fpic">` : ''}⛔ <b>${esc(b.label)}</b> – blocked. ${esc(b.warning)}</div>`).join('')}
-        <div class="note">⚠ <b>${esc(K.crops.crossandra.label)}</b> – allowed for ${K.crops.crossandra.max_hold_days} day only. ${esc(K.crops.crossandra.shelf.warning)}</div>
-        <div class="note">🍌 ${esc(K.rules.ethylene)}</div></div>
-       <div class="card"><h3>Handling tips</h3><ul class="plain">${K.rules.handling.map(t => `<li>${esc(t)}</li>`).join('')}</ul>
-        <p class="src">${esc(K.rules.water)} ${esc(K.rules.fogger_water)}</p></div>
-       <div class="card"><h3>FAQ</h3><p><b>${esc(K.rules.faq_months.q)}</b></p><p>${esc(K.rules.faq_months.a)}</p></div>
-      </div>
       <h2>Where each value comes from</h2>
       <div class="card">${Object.values(K.crops).map(c => `<details><summary>${esc(c.label)}</summary><ul class="plain src">
         <li>Best temperature: ${esc(c.best_storage_source)}</li><li>Shelf life outside: ${esc(c.shelf_life_ambient_source)}</li><li>Shelf life bagged at 4 °C: ${esc(c.shelf_life_bagged_source)}</li>
@@ -316,7 +307,7 @@
         <li>Heat capacity ${c.cp_kJ_kgK} kJ/kg·K: ${esc(c.cp_source)}</li><li>Bulk density ${c.bulk_density_kg_m3} kg/m³: ${esc(c.bulk_density_source)} ${esc(c.kg_per_crate_source)}</li>
         <li>Ethylene: ${esc(c.ethylene_source)}</li><li>Chilling limit ${c.chill_injury_below_C} °C: ${esc(c.chill_source)}</li>
         <li>Water loss: ${esc(c.freshness.K_t_source)} ${esc(c.freshness.WL_max_source)}</li>${c.boric_acid_dip ? `<li>Boric-acid dip: ${esc(c.boric_source)}</li>` : ''}
-        <li>Prices: ${esc(c.price_source)}</li></ul></details>`).join('')}</div>`;
+        <li>Prices: ${esc(c.price_source)}</li></ul></details>`).join('')}</div></div>`;
   };
 
   // ------------------------------------------------------------------ SEASON PLANNER

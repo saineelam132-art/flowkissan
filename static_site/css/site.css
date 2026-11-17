@@ -151,3 +151,13 @@ body.judge .stage{height:100vh}body.judge .bv b{font-size:26px}body.judge .tour{
   .dots{padding:4px 10px;gap:4px;bottom:72px}.dots i{width:8px;height:8px;margin:0 2px}
   .ai{font-size:10px;bottom:118px;right:6px;left:auto;max-width:70%}
 }
+/* ---------- Flowers page: full width, short rows, photos ---------- */
+body[data-page="flowers"] main{max-width:none;padding-left:16px;padding-right:16px}
+.ftable table.t td,.ftable table.t th{padding:8px 10px;vertical-align:middle}
+.ftable table.t td:first-child{width:250px;min-width:210px}
+.ftable table.t td:nth-child(6){min-width:220px;max-width:280px}
+.ftable table.t td:nth-child(6) .src{display:inline;font-size:12.5px}
+.ftable .fpic{width:72px;height:72px;margin-right:12px}
+.ftable table.t{font-size:13px}.ftable table.t th{white-space:normal;font-size:12px}
+.fcell{display:flex;align-items:center;gap:10px}.fcell .fpic{float:none;margin:0;flex:none;width:64px;height:64px}
+.ftable table.t td:first-child{width:auto;min-width:200px}
