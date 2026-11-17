@@ -312,43 +312,75 @@
 
   // ------------------------------------------------------------------ SEASON PLANNER
   P.season = () => {
-    const cal = K.plan.calendar, M = K.monthly.realistic_smart, pm = cal.price_model;
-    const sup = { 2: 'peak', 1: 'some', 0: 'off' };
-    const rows = MONTHS.map((mn, i) => {
-      const inS = Object.keys(K.crops).filter(k => cal.supply[k][i] > 0).map(k => `${crop(k).label.split(' (')[0]}${cal.supply[k][i] === 2 ? ' <b>(peak)</b>' : ''}`).join(', ');
-      const fest = cal.festivals.filter(x => +x.date.slice(5, 7) === i + 1).map(x => `${esc(x.name)} ${+x.date.slice(8)}${x.confirmed ? '' : ' ' + E}`);
-      const wed = cal.windows.filter(w => +w.from.slice(5, 7) <= i + 1 && (+w.to.slice(0, 4) > 2026 || +w.to.slice(5, 7) >= i + 1) && +w.from.slice(0, 4) === 2026).map(w => esc(w.name));
-      const peak = Object.keys(K.crops).filter(k => cal.supply[k][i] === 2), has = fest.length > 0;
-      const price = (peak.length ? `Glut of ${peak.map(k => crop(k).label.split(' (')[0]).join(', ')} (low prices)` : 'No big glut') + (has ? '; scarcity before festivals (×' + pm.pre_festival_multiplier + '), crash after (×' + pm.post_crash_multiplier + ')' : '');
-      const m = M.find(x => x.month === i + 1);
-      return [`<b>${mn}</b>`, inS, [...fest, ...wed].join('<br>') || '–', price, esc(cal.plan.months[i + 1]),
-        m ? f(m.kg_stored) : '<span class="src">not simulated yet</span>', m ? f(m.days_with_stock) : '–', m ? f(m.energy_kWh) : '–', m ? f(m.grid_h) : '–',
-        m ? f(m.room_avg_C, 1) : '–', m && m.rh_avg_pct ? f(m.rh_avg_pct) : '–',
-        m ? Object.entries(m.freshness_at_takeout_pct).map(([k, v]) => `${crop(k).label.split(' (')[0]} ${f(v)} %`).join('<br>') || '–' : '–', m ? inr(m.value_INR) : '–'];
-    });
-    const unconf = cal.festivals.filter(x => !x.confirmed).map(x => `${x.name} (${x.date})`).concat(cal.windows.filter(w => !w.confirmed).map(w => `${w.name} (${w.from} → ${w.to})`));
-    const hm = K.monthly.hardest_months;
+    const cal = K.plan.calendar, M = K.monthly.best_practice, pm = cal.price_model, FK = Object.keys(K.crops);
+    const COL = { jasmine: '#2a78d6', marigold: '#eb6834', rose: '#1baf7a', tuberose: '#eda100', chamanthi: '#e87ba4', crossandra: '#008300' };      // fixed order, validated
+    const short = k => crop(k).label.split(' (')[0];
+    const mOf = m => M.find(x => x.month === m);
+    const SUP = ['off season', 'in season', 'peak'];
+    // ---- season calendar: flowers × months, shade = supply; festivals and weddings on top
+    const fest = cal.festivals.map(x => ({ ...x, m: +x.date.slice(5, 7), d: +x.date.slice(8) }));
+    const wed = m => cal.windows.filter(w => w.weddings && +w.from.slice(0, 4) === 2026 && +w.from.slice(5, 7) <= m && (+w.to.slice(0, 4) > 2026 || +w.to.slice(5, 7) >= m)).length > 0;
+    const noWed = m => cal.windows.some(w => !w.weddings && +w.from.slice(0, 4) === 2026 && +w.from.slice(5, 7) <= m && (+w.to.slice(0, 4) > 2026 || +w.to.slice(5, 7) >= m));
+    const grid = `<div class="scal" role="table" aria-label="Season calendar">
+      <div class="sc-h"></div>${MONTHS.map(m => `<div class="sc-h">${m}</div>`).join('')}
+      <div class="sc-l">Festivals</div>${MONTHS.map((_, i) => `<div class="sc-f">${fest.filter(x => x.m === i + 1).map(x => `<span class="fdot ${x.confirmed ? '' : 'unc'}" data-tip="${esc(x.name)} – ${x.d} ${MONTHS[i]}${x.confirmed ? '' : ' (date not confirmed, E)'}">${x.d}</span>`).join('')}</div>`).join('')}
+      <div class="sc-l">Weddings</div>${MONTHS.map((_, i) => `<div class="sc-w ${wed(i + 1) ? 'on' : ''} ${noWed(i + 1) ? 'no' : ''}" data-tip="${wed(i + 1) ? 'Wedding season' : ''}${noWed(i + 1) ? (wed(i + 1) ? ' · ' : '') + 'No-wedding period (Ashadha / Dhanurmasam)' : ''}${!wed(i + 1) && !noWed(i + 1) ? 'No wedding season' : ''}"></div>`).join('')}
+      ${FK.map(k => `<div class="sc-l">${fpic(k)}${esc(short(k))}</div>${MONTHS.map((mn, i) => { const sv = cal.supply[k][i], m = mOf(i + 1), fr = m && m.freshness_at_takeout_pct[k];
+        return `<div class="sc-c s${sv}" data-tip="${esc(short(k))}, ${mn}: ${SUP[sv]}${fr != null ? ` · freshness at take-out ${f(fr)} %` : ''}">${fr != null ? `<b>${f(fr)}</b>` : ''}</div>`; }).join('')}`).join('')}
+      <div class="sc-l">What the room does</div>${MONTHS.map((mn, i) => `<div class="sc-n" data-tip="${esc(mn)}: ${esc(cal.plan.months[i + 1])}">ⓘ</div>`).join('')}
+    </div>
+    <div class="sc-key"><span><i class="sw s2"></i> peak supply (prices low – glut)</span><span><i class="sw s1"></i> in season</span><span><i class="sw s0"></i> off season (prices high)</span>
+      <span><b class="fdot">14</b> festival day</span><span><b class="fdot unc">27</b> date not confirmed ${E}</span><span><i class="sw wd"></i> wedding season</span><span><i class="sw nw"></i> no weddings</span>
+      <span>Number in a cell = freshness kept at take-out (%) ${S}</span></div>`;
+    const chart = (id, title, unit, tag) => `<div class="card mini"><h3>${title} ${tag}</h3><div class="cbox"><canvas id="${id}" aria-label="${esc(title)} by month"></canvas></div><p class="src">${unit}</p></div>`;
+    const tot = k => M.reduce((a, m) => a + (m[k] || 0), 0);
     $('app').innerHTML = `<h2>Season planner – January to December ${E} ${range()}</h2>
-      <p>Which flowers are in season, which festivals and weddings pull the price up, and what the cold room does. The last columns are the twin's results for the months it has weather for.</p>
-      <div class="card">${table(['Month', 'Flowers in season ' + E, 'Festivals and weddings', 'Price behaviour ' + E, 'What the cold room does',
-        n('kg stored ' + S), n('Days with stock ' + S), n('Energy kWh ' + S), n('Grid h ' + S), n('Room °C ' + S), n('RH % ' + S), 'Freshness at take-out ' + S, n('₹ captured ' + E)], rows,
-        { note: esc(K.monthly.value_definition) + ' Best-practice case.' })}</div>
       <div class="tiles">
-        ${tile('Days with stock (full-year plan)', f(K.plan.days_with_stock_full_year), 'days', `research estimate ${cal.research_estimate.days_with_stock.join('–')} ${''}`)}
-        ${tile('High-value days (full-year plan)', f(K.plan.high_value_days_full_year), 'days', `research estimate ${cal.research_estimate.high_value_days.join('–')}`)}
-        ${tile('Busiest month', MONTHS[K.monthly.busiest_month - 1], '', 'most kg per day')}
-        ${tile('Hardest month for the room', MONTHS[K.monthly.hardest_month - 1], '', `${f(hm[0].grid_h_per_day, 1)} grid h/day, outside ${f(hm[0].outside_avg_C, 1)} °C, ice down to ${f(hm[0].ice_sunrise_worst_pct)} % at sunrise`)}
+        ${tile('Flowers stored', f(tot('kg_stored')), 'kg', 'in the simulated days', 'big')}
+        ${tile('Days with stock', f(K.plan.days_with_stock_full_year), 'days', `full-year plan · research estimate ${cal.research_estimate.days_with_stock.join('–')}`, 'big')}
+        ${tile('Value captured ' + E, inr(tot('value_INR')), '', 'in the simulated days', 'big')}
+        ${tile('Busiest month', MONTHS[K.monthly.busiest_month - 1], '', 'most kg per day', 'big')}
+        ${tile('Hardest month for the room', MONTHS[K.monthly.hardest_month - 1], '', `${f(K.monthly.hardest_months[0].grid_h_per_day, 1)} grid h/day, ice down to ${f(K.monthly.hardest_months[0].wax_sunrise_worst_pct ?? K.monthly.hardest_months[0].ice_sunrise_worst_pct)} % at sunrise`, 'big')}
       </div>
-      <div class="note">Our plan stores flowers on fewer days than the research estimate, because the plan only holds a flower when the sale price × expected freshness beats today's price (${E} price model).
-        High-value days = ${esc(K.plan.high_value_definition)}.</div>
-      <div class="card"><h3>Price model ${E} – ₹/kg through 2026</h3><canvas id="pc" height="90"></canvas><p class="src">${esc(pm.note)}</p></div>
-      <div class="card"><h3>Dates we could not confirm ${E}</h3><ul class="plain src">${unconf.map(u => `<li>${esc(u)}</li>`).join('')}</ul>
-        <p class="src">${esc(cal.muhurtham_proxy.note)}</p></div>`;
-    if (window.Chart) {
-      const col = { jasmine: '#2a78d6', marigold: '#f59e0b', rose: '#ef4444', tuberose: '#14b8a6', chamanthi: '#8b5cf6', crossandra: '#fb7185' }, pr = K.plan.prices_INR_kg;
-      new Chart($('pc'), { type: 'line', data: { labels: pr.dates, datasets: Object.keys(K.crops).map(k => ({ label: crop(k).label.split(' (')[0], data: pr[k], borderColor: col[k], pointRadius: 0, borderWidth: 1.5, stepped: true })) },
-        options: { animation: false, scales: { x: { ticks: { maxTicksLimit: 12 } }, y: { title: { display: true, text: '₹/kg (E)' } } } } });
-    }
+      <div class="card"><h3>The flower year at a glance</h3>${grid}</div>
+      <h2>Month by month ${S}</h2>
+      <div class="minis">${chart('cKg', 'Flowers stored', 'kg a month', S)}${chart('cVal', 'Value captured', '₹ a month', E)}${chart('cEn', 'Electricity: sun and grid', 'kWh a month', S)}
+        ${chart('cDays', 'Days with flowers inside', 'days a month', S)}${chart('cRoom', 'Room temperature', '°C, monthly average', S)}${chart('cRh', 'Room humidity', '%, monthly average with flowers inside', S)}</div>
+      <div class="card"><h3>Price model ${E} – ₹/kg through 2026</h3><div class="leg">${FK.map(k => `<span><i style="background:${COL[k]}"></i>${esc(short(k))}</span>`).join('')}</div><div class="cbox tall"><canvas id="pc"></canvas></div><p class="src">${esc(pm.note)}</p></div>
+      <details class="card"><summary>Show all of this as a table</summary>${table(['Month', 'In season', 'Festivals', 'What the room does', n('kg stored'), n('Days with stock'), n('Energy kWh'), n('Grid h'), n('Room °C'), n('RH %'), n('₹ captured')],
+        MONTHS.map((mn, i) => { const m = mOf(i + 1); return [mn, FK.filter(k => cal.supply[k][i] > 0).map(short).join(', '), fest.filter(x => x.m === i + 1).map(x => `${esc(x.name)} ${x.d}`).join('<br>') || '–', esc(cal.plan.months[i + 1]),
+          m ? f(m.kg_stored) : '–', m ? f(m.days_with_stock) : '–', m ? f(m.energy_kWh) : '–', m ? f(m.grid_h) : '–', m ? f(m.room_avg_C, 1) : '–', m && m.rh_avg_pct ? f(m.rh_avg_pct) : '–', m ? inr(m.value_INR) : '–']; }),
+        { note: esc(K.monthly.value_definition) + ' Months without weather yet are shown as –.' })}</details>
+      <p class="src">${esc(cal.muhurtham_proxy.note)} High-value days = ${esc(K.plan.high_value_definition)}.</p>
+      <div class="tip" id="tip" hidden></div>`;
+    // tooltip for the calendar cells
+    const tip = $('tip');
+    document.querySelectorAll('[data-tip]').forEach(el => {
+      el.addEventListener('mouseenter', () => { tip.textContent = el.dataset.tip; tip.hidden = false; const r = el.getBoundingClientRect(); tip.style.left = Math.min(window.innerWidth - 300, r.left + window.scrollX) + 'px'; tip.style.top = (r.bottom + window.scrollY + 6) + 'px'; });
+      el.addEventListener('mouseleave', () => { tip.hidden = true; });
+      el.tabIndex = 0; el.addEventListener('focus', () => el.dispatchEvent(new Event('mouseenter'))); el.addEventListener('blur', () => { tip.hidden = true; });
+    });
+    if (!window.Chart) return;
+    const dark = matchMedia('(prefers-color-scheme: dark)').matches, ink = dark ? '#c3c2b7' : '#52514e', gridc = dark ? 'rgba(255,255,255,.08)' : 'rgba(0,0,0,.07)';
+    const labels = M.map(m => MONTHS[m.month - 1]);
+    const base = (yt, extra = {}) => ({ animation: false, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
+      scales: { x: { grid: { display: false }, ticks: { color: ink, maxRotation: 0, autoSkip: false, font: { size: 11 } } }, y: { beginAtZero: true, grid: { color: gridc }, ticks: { color: ink, maxTicksLimit: 5, callback: v => (v >= 1000 ? (v / 1000) + 'k' : v) }, title: { display: false, text: yt } } }, ...extra });
+    const bar = (id, data, col, yt) => new Chart($(id), { type: 'bar', data: { labels, datasets: [{ label: yt, data, backgroundColor: col, borderRadius: { topLeft: 4, topRight: 4 }, maxBarThickness: 26 }] }, options: base(yt) });
+    const line = (id, data, col, yt, mn, mx) => new Chart($(id), { type: 'line', data: { labels, datasets: [{ label: yt, data, borderColor: col, backgroundColor: col, borderWidth: 2, pointRadius: 4, pointHoverRadius: 6 }] },
+      options: base(yt, { scales: { x: { grid: { display: false }, ticks: { color: ink } }, y: { min: mn, max: mx, grid: { color: gridc }, ticks: { color: ink, maxTicksLimit: 5 } } } }) });
+    bar('cKg', M.map(m => m.kg_stored), '#2a78d6', 'kg stored');
+    bar('cVal', M.map(m => m.value_INR), '#2a78d6', '₹ captured');
+    bar('cDays', M.map(m => m.days_with_stock), '#2a78d6', 'days with stock');
+    new Chart($('cEn'), { type: 'bar', data: { labels, datasets: [{ label: 'From the sun', data: M.map(m => m.solar_kWh), backgroundColor: '#eda100', borderColor: dark ? '#1a1a19' : '#fcfcfb', borderWidth: { top: 2 }, stack: 'e', maxBarThickness: 26 },
+      { label: 'From the grid', data: M.map(m => m.grid_kWh), backgroundColor: '#e34948', borderRadius: { topLeft: 4, topRight: 4 }, stack: 'e', maxBarThickness: 26 }] },
+      options: base('kWh', { plugins: { legend: { display: true, position: 'top', align: 'start', labels: { color: ink, boxWidth: 12, boxHeight: 12 } }, tooltip: { mode: 'index', intersect: false } },
+        scales: { x: { stacked: true, grid: { display: false }, ticks: { color: ink } }, y: { stacked: true, beginAtZero: true, grid: { color: gridc }, ticks: { color: ink, maxTicksLimit: 5 } } } }) });
+    line('cRoom', M.map(m => m.room_avg_C), '#2a78d6', '°C', 0, 8);
+    line('cRh', M.map(m => m.rh_avg_pct), '#2a78d6', 'RH %', 80, 100);
+    const pr = K.plan.prices_INR_kg;
+    new Chart($('pc'), { type: 'line', data: { labels: pr.dates, datasets: FK.map(k => ({ label: short(k), data: pr[k], borderColor: COL[k], backgroundColor: COL[k], pointRadius: 0, borderWidth: 2, stepped: true })) },
+      options: { animation: false, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, plugins: { legend: { display: false } },
+        scales: { x: { grid: { display: false }, ticks: { color: ink, maxTicksLimit: 12 } }, y: { grid: { color: gridc }, ticks: { color: ink }, title: { display: true, text: '₹/kg (E)', color: ink } } } } });
   };
 
   // ------------------------------------------------------------------ HUMIDITY
