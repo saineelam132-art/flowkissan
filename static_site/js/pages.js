@@ -31,13 +31,13 @@
       ['A10_interior_evaporator', `Air cooler: glycol at about ${f(G.supply_room_C)} °C takes the heat out of the room air (picture from the earlier design)`, [[58, 48, 'room'], [84, 56, 'gly'], [14, 68, 'rh']]],
       ['A11_solar_canopy_closeup', `${f(D.pv_kWp, 1)} kWp of solar panels run the chiller by day and freeze the ice with what is left over`, [[50, 40, 'pv'], [75, 70, 'src']]],
     ];
+    $('hdrTools').innerHTML = `<div class="seg" id="modes">${['Auto', 'Day', 'Night', 'Monsoon'].map((m, i) => `<button data-m="${m}" class="${i ? '' : 'on'}">${m}</button>`).join('')}</div>
+      <button id="tourBtn">▶ Start demo</button><button id="calBtn" title="Pick a day">📅 Calendar</button><button id="outBtn">🌤 Outside now</button>
+      <label class="chk"><input type="checkbox" id="lowg"> Low graphics</label>`;
+    $('sideExtra').innerHTML = `<b>This picture</b><p id="cap"></p>`;
     $('app').innerHTML = `
       <section class="stage" id="stage">
-        <div class="caption" id="cap"></div>
-        <div class="seg" id="modes">${['Auto', 'Day', 'Night', 'Monsoon'].map((m, i) => `<button data-m="${m}" class="${i ? '' : 'on'}">${m}</button>`).join('')}</div>
         <div id="slides"></div>
-        <div class="tools2"><button id="tourBtn">▶ Start demo</button><button id="calBtn" title="Pick a day">📅 Calendar</button><button id="outBtn">☰ Outside now</button>
-          <label><input type="checkbox" id="lowg"> Low graphics</label></div>
         <div class="panel" id="panel" hidden></div>
         <div class="tour" id="tourBox" hidden><span id="tourTx"></span><span class="tb"><button id="tPrev">◀</button><button id="tPause">❚❚</button><button id="tNext">▶</button><button id="tStop">■</button></span></div>
         <div class="ai">Concept illustration (AI-generated) – not a photo of a built unit</div>
