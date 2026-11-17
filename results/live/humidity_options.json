@@ -10,75 +10,75 @@
  "options": {
   "nothing": {
    "label": "(a) Nothing",
-   "rh_avg_pct": 77.3438,
-   "rh_below_85_h_day": 10.9419,
-   "weight_loss_pct_per_day": 1.4432,
+   "rh_avg_pct": 77.4438,
+   "rh_below_85_h_day": 10.8677,
+   "weight_loss_pct_per_day": 1.4409,
    "extra_energy_kWh_day": 0.0,
-   "electric_kWh_day": 3.7323,
+   "electric_kWh_day": 3.7481,
    "water_use_L_day": 0.0,
    "freshness_kept_pct": {
-    "chamanthi": 77.1143,
-    "jasmine": 74.9501,
-    "marigold": 87.2517,
-    "rose": 69.6504,
-    "tuberose": 68.1477
+    "chamanthi": 77.1289,
+    "jasmine": 74.9504,
+    "marigold": 87.2441,
+    "rose": 69.6671,
+    "tuberose": 68.1445
    },
-   "value_INR": 461762.073,
-   "water_condensed_L_day": 0.8709
+   "value_INR": 461773.4238,
+   "water_condensed_L_day": 0.8711
   },
   "liners": {
    "label": "(b) Perforated PE bags / liners",
-   "rh_avg_pct": 74.7859,
-   "rh_below_85_h_day": 11.8194,
-   "weight_loss_pct_per_day": 0.4427,
-   "extra_energy_kWh_day": -0.0013,
-   "electric_kWh_day": 3.731,
+   "rh_avg_pct": 74.9216,
+   "rh_below_85_h_day": 11.8032,
+   "weight_loss_pct_per_day": 0.4421,
+   "extra_energy_kWh_day": -0.0018,
+   "electric_kWh_day": 3.7463,
    "water_use_L_day": 0.0,
    "freshness_kept_pct": {
-    "chamanthi": 83.018,
-    "jasmine": 85.5041,
-    "marigold": 93.8981,
-    "rose": 75.3663,
-    "tuberose": 78.9678
+    "chamanthi": 83.0179,
+    "jasmine": 85.4987,
+    "marigold": 93.8949,
+    "rose": 75.3528,
+    "tuberose": 78.9592
    },
-   "value_INR": 630084.013,
-   "water_condensed_L_day": 0.4973
+   "value_INR": 630011.5412,
+   "water_condensed_L_day": 0.4975
   },
   "liners_tray": {
    "label": "(c) Bags + water tray",
-   "rh_avg_pct": 75.9731,
-   "rh_below_85_h_day": 11.3613,
+   "rh_avg_pct": 76.109,
+   "rh_below_85_h_day": 11.2742,
    "weight_loss_pct_per_day": 0.4324,
-   "extra_energy_kWh_day": 0.0012,
-   "electric_kWh_day": 3.7335,
-   "water_use_L_day": 0.205,
+   "extra_energy_kWh_day": 0.0008,
+   "electric_kWh_day": 3.7489,
+   "water_use_L_day": 0.2043,
    "freshness_kept_pct": {
     "chamanthi": 83.021,
-    "jasmine": 85.5408,
-    "marigold": 93.9073,
+    "jasmine": 85.5298,
+    "marigold": 93.9049,
     "rose": 75.357,
-    "tuberose": 79.0154
+    "tuberose": 79.0012
    },
-   "value_INR": 630738.5867,
-   "water_condensed_L_day": 0.6955
+   "value_INR": 630616.9531,
+   "water_condensed_L_day": 0.6945
   },
   "liners_fogger": {
    "label": "(d) Bags + ultrasonic fogger",
-   "rh_avg_pct": 92.1162,
+   "rh_avg_pct": 92.1114,
    "rh_below_85_h_day": 0.1194,
-   "weight_loss_pct_per_day": 0.3159,
-   "extra_energy_kWh_day": 0.2756,
-   "electric_kWh_day": 4.0079,
-   "water_use_L_day": 1.7155,
+   "weight_loss_pct_per_day": 0.3163,
+   "extra_energy_kWh_day": 0.2721,
+   "electric_kWh_day": 4.0202,
+   "water_use_L_day": 1.709,
    "freshness_kept_pct": {
     "chamanthi": 83.0446,
-    "jasmine": 85.7992,
-    "marigold": 93.9923,
+    "jasmine": 85.7924,
+    "marigold": 93.9906,
     "rose": 75.4784,
-    "tuberose": 79.3284
+    "tuberose": 79.3242
    },
-   "value_INR": 636633.61,
-   "water_condensed_L_day": 2.1425
+   "value_INR": 636537.8966,
+   "water_condensed_L_day": 2.1355
   }
  },
  "best": "liners_fogger",

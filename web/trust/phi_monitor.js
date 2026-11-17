@@ -154,8 +154,7 @@
     <p class="sr-only" id="pmSR" aria-live="polite"></p>`;
 
   const ul = $('pmSensors');
-  ul.innerHTML = SENS.map(([k, name, ic]) => `<li class="pm-s" id="pmS_${k}" data-k="${k}"><span class="pm-ic" aria-hidden="true">${ic}</span><span class="pm-name">${name}</span>
-    <span class="pm-badge" hidden>MANIPULATED</span><span class="pm-badge q" hidden>QUARANTINED</span><b class="pm-val" id="pmV_${k}">–</b></li>`).join('');
+  ul.innerHTML = SENS.map(([k, name, ic]) => `<li class="pm-s" id="pmS_${k}" data-k="${k}"><span class="pm-ic" aria-hidden="true">${ic}</span><span class="pm-name">${name}<span class="pm-badges"><span class="pm-badge" hidden>MANIPULATED</span><span class="pm-badge q" hidden>QUARANTINED</span></span></span><b class="pm-val" id="pmV_${k}">–</b></li>`).join('');
   $('pmPick').innerHTML = PC.OWNER.map(k => `<label><input type="checkbox" value="${k}" ${k === 'T_out_s' ? 'checked' : ''}> ${SENS.find(s => s[0] === k)[1]}</label>`).join('');
   $('pmChips').innerHTML = CHIPS.map(([lab], i) => `<span class="pm-chip" id="pmC${i}">${lab}</span>`).join('');
 

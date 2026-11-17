@@ -15,15 +15,15 @@
    "days": 310,
    "days_full_solar_ice": 307,
    "grid_h_per_year": 44.2513,
-   "grid_kWh_per_year": 18.2211,
-   "solar_used_pct": 38.5816,
-   "COP_chiller": 2.6144,
-   "COP_system": 2.0552,
-   "electric_kWh_day": 2.4487,
-   "solar_share_of_electricity_pct": 97.8051,
+   "grid_kWh_per_year": 18.3521,
+   "solar_used_pct": 38.6395,
+   "COP_chiller": 2.6143,
+   "COP_system": 2.0551,
+   "electric_kWh_day": 2.4488,
+   "solar_share_of_electricity_pct": 97.9467,
    "grid_h_per_day": 0.1212,
    "pump_kWh_day": 0.1398,
-   "compressor_kWh_day": 2.1187,
+   "compressor_kWh_day": 2.1188,
    "hours_outside_band": 115,
    "hours_outside_band_loading": 0,
    "hours_outside_band_other": 115,
@@ -38,27 +38,27 @@
    "rh_below_85_h_day": 0.029,
    "time_to_6C_h_avg": 4.4477,
    "time_to_6C_h_worst": 4.9167,
-   "ice_sunrise_mean_pct": 73.6442,
+   "ice_sunrise_mean_pct": 73.5762,
    "ice_sunrise_worst_pct": 0.0,
    "hours_above_band_top": 0,
    "hours_above_band_top_per_year": 0.0,
    "hours_above_alarm_per_year": 0.0,
    "night_fan_kWh_per_year": 0.0,
-   "value_INR": 636578.2131,
+   "value_INR": 636578.2115,
    "kg_stored": 9754.5,
    "grid_bill_INR_per_year": {
-    "low": 109.3269,
-    "mid": 127.548,
-    "high": 163.9903
+    "low": 110.1124,
+    "mid": 128.4645,
+    "high": 165.1686
    },
    "freshness_after_days": {
     "jasmine": {
      "1": 92.221,
-     "2": 86.5939,
+     "2": 86.594,
      "3": 81.1397
     },
     "marigold": {
-     "1": 94.8122,
+     "1": 94.8123,
      "2": 89.4588,
      "3": 84.1523
     },
@@ -82,138 +82,138 @@
   "best_practice": {
    "label": "Best practice (optimum) – headline",
    "days": 310,
-   "days_full_solar_ice": 266,
-   "grid_h_per_year": 501.1882,
-   "grid_kWh_per_year": 80.8094,
-   "solar_used_pct": 63.6688,
-   "COP_chiller": 2.295,
-   "COP_system": 1.7085,
-   "electric_kWh_day": 3.7088,
-   "solar_share_of_electricity_pct": 90.62,
-   "grid_h_per_day": 1.3731,
-   "pump_kWh_day": 0.2001,
-   "compressor_kWh_day": 3.263,
+   "days_full_solar_ice": 264,
+   "grid_h_per_year": 535.8239,
+   "grid_kWh_per_year": 94.8254,
+   "solar_used_pct": 65.5804,
+   "COP_chiller": 2.2877,
+   "COP_system": 1.7024,
+   "electric_kWh_day": 3.7216,
+   "solar_share_of_electricity_pct": 93.0192,
+   "grid_h_per_day": 1.468,
+   "pump_kWh_day": 0.202,
+   "compressor_kWh_day": 3.2732,
    "hours_outside_band": 24,
    "hours_outside_band_loading": 24,
    "hours_outside_band_other": 0,
    "hours_above_alarm": 2,
-   "night_room_max_C": 4.5223,
-   "grid_h": 425.6667,
-   "days_with_grid": 44,
+   "night_room_max_C": 4.695,
+   "grid_h": 455.0833,
+   "days_with_grid": 46,
    "grid_months": "Jun–Sep",
    "hours_below_2C": 0,
    "room_min_C": 2.1052,
-   "rh_avg_pct": 92.1057,
+   "rh_avg_pct": 92.1055,
    "rh_below_85_h_day": 0.2645,
-   "time_to_6C_h_avg": 4.8902,
+   "time_to_6C_h_avg": 4.9008,
    "time_to_6C_h_worst": 5.75,
-   "ice_sunrise_mean_pct": 53.6208,
+   "ice_sunrise_mean_pct": 53.1583,
    "ice_sunrise_worst_pct": 0.0,
    "hours_above_band_top": 24,
    "hours_above_band_top_per_year": 28.2581,
    "hours_above_alarm_per_year": 2.3548,
-   "night_fan_kWh_per_year": 1.9745,
-   "value_INR": 631725.3602,
+   "night_fan_kWh_per_year": 1.9816,
+   "value_INR": 631672.8862,
    "kg_stored": 9784.984,
    "grid_bill_INR_per_year": {
-    "low": 484.8564,
-    "mid": 565.6658,
-    "high": 727.2846
+    "low": 568.9523,
+    "mid": 663.7776,
+    "high": 853.4284
    },
    "freshness_after_days": {
     "jasmine": {
-     "1": 91.478,
-     "2": 85.9279,
-     "3": 80.3576
+     "1": 91.479,
+     "2": 85.9359,
+     "3": 80.3599
     },
     "marigold": {
-     "1": 93.5073,
-     "2": 88.1626,
-     "3": 82.8283
+     "1": 93.5059,
+     "2": 88.1631,
+     "3": 82.8268
     },
     "tuberose": {
-     "1": 90.298,
-     "2": 82.5997,
-     "3": 74.9029
+     "1": 90.2956,
+     "2": 82.6,
+     "3": 74.9006
     },
     "rose": {
-     "1": 66.0616,
-     "2": 32.7113,
-     "3": 0.0142
+     "1": 66.0608,
+     "2": 32.7106,
+     "3": 0.0141
     },
     "chamanthi": {
-     "1": 75.7981,
-     "2": 50.7971,
-     "3": 25.7971
+     "1": 75.798,
+     "2": 50.797,
+     "3": 25.7969
     }
    }
   },
   "poor_practice": {
    "label": "Poor practice",
    "days": 310,
-   "days_full_solar_ice": 168,
-   "grid_h_per_year": 1543.0081,
-   "grid_kWh_per_year": 201.8794,
-   "solar_used_pct": 75.1667,
-   "COP_chiller": 2.3731,
-   "COP_system": 1.8921,
-   "electric_kWh_day": 4.6091,
-   "solar_share_of_electricity_pct": 86.0869,
-   "grid_h_per_day": 4.2274,
-   "pump_kWh_day": 0.2447,
-   "compressor_kWh_day": 4.2303,
-   "hours_outside_band": 69,
-   "hours_outside_band_loading": 64,
+   "days_full_solar_ice": 158,
+   "grid_h_per_year": 1670.6599,
+   "grid_kWh_per_year": 220.8487,
+   "solar_used_pct": 76.0694,
+   "COP_chiller": 2.3749,
+   "COP_system": 1.8882,
+   "electric_kWh_day": 4.6205,
+   "solar_share_of_electricity_pct": 86.9049,
+   "grid_h_per_day": 4.5772,
+   "pump_kWh_day": 0.2476,
+   "compressor_kWh_day": 4.2348,
+   "hours_outside_band": 71,
+   "hours_outside_band_loading": 66,
    "hours_outside_band_other": 5,
-   "hours_above_alarm": 21,
-   "night_room_max_C": 5.1702,
-   "grid_h": 1310.5,
-   "days_with_grid": 142,
+   "hours_above_alarm": 20,
+   "night_room_max_C": 5.1645,
+   "grid_h": 1418.9167,
+   "days_with_grid": 152,
    "grid_months": "May–Sep",
    "hours_below_2C": 0,
-   "room_min_C": 3.2466,
-   "rh_avg_pct": 76.4335,
-   "rh_below_85_h_day": 10.6548,
-   "time_to_6C_h_avg": 4.4778,
-   "time_to_6C_h_worst": 5.5833,
-   "ice_sunrise_mean_pct": 27.8341,
+   "room_min_C": 3.1565,
+   "rh_avg_pct": 76.6021,
+   "rh_below_85_h_day": 10.5935,
+   "time_to_6C_h_avg": 4.4806,
+   "time_to_6C_h_worst": 5.6667,
+   "ice_sunrise_mean_pct": 25.5468,
    "ice_sunrise_worst_pct": 0.0,
-   "hours_above_band_top": 69,
-   "hours_above_band_top_per_year": 81.2419,
-   "hours_above_alarm_per_year": 24.7258,
+   "hours_above_band_top": 71,
+   "hours_above_band_top_per_year": 83.5968,
+   "hours_above_alarm_per_year": 23.5484,
    "night_fan_kWh_per_year": 0.0,
-   "value_INR": 433408.7048,
+   "value_INR": 433421.4056,
    "kg_stored": 9784.984,
    "grid_bill_INR_per_year": {
-    "low": 1211.2766,
-    "mid": 1413.156,
-    "high": 1816.9148
+    "low": 1325.0919,
+    "mid": 1545.9406,
+    "high": 1987.6379
    },
    "freshness_after_days": {
     "jasmine": {
-     "1": 81.5078,
-     "2": 72.2196,
-     "3": 63.7672
+     "1": 81.5091,
+     "2": 72.2375,
+     "3": 63.7802
     },
     "marigold": {
-     "1": 86.0644,
-     "2": 77.6893,
-     "3": 69.8759
+     "1": 86.067,
+     "2": 77.6999,
+     "3": 69.8876
     },
     "tuberose": {
-     "1": 82.3517,
-     "2": 71.5907,
-     "3": 61.7215
+     "1": 82.3529,
+     "2": 71.6071,
+     "3": 61.7311
     },
     "rose": {
-     "1": 66.6248,
-     "2": 34.6466,
-     "3": 5.6605
+     "1": 66.6242,
+     "2": 34.6493,
+     "3": 5.6609
     },
     "chamanthi": {
-     "1": 74.7496,
-     "2": 49.8116,
-     "3": 26.7998
+     "1": 74.7518,
+     "2": 49.8204,
+     "3": 26.8027
     }
    }
   }
@@ -233,95 +233,95 @@
  "poor_practice_is": "8 door openings with a worn curtain, loading at 12:00, no bags, steel racks, no shade (dark roof), floor not insulated, lights partly on, 10 W fan always on",
  "items_alone": {
   "baseline": "Poor practice",
-  "baseline_grid_kWh_per_year": 201.8794,
+  "baseline_grid_kWh_per_year": 220.8487,
   "rows": [
    {
     "key": "floor",
     "label": "Insulated floor",
-    "grid_kWh_per_year": 74.4503,
-    "grid_h_per_year": 703.4099,
-    "days_full_solar_ice": 250,
-    "hours_above_band_top": 46,
-    "grid_kWh_saved_per_year": 127.4291,
-    "electric_kWh_saved_per_year": 282.8656,
-    "value_gain_INR": 19087.4793
+    "grid_kWh_per_year": 88.9184,
+    "grid_h_per_year": 808.5927,
+    "days_full_solar_ice": 232,
+    "hours_above_band_top": 50,
+    "grid_kWh_saved_per_year": 131.9303,
+    "electric_kWh_saved_per_year": 281.8584,
+    "value_gain_INR": 19148.8333
    },
    {
     "key": "door",
     "label": "4 door openings a day, good curtain + door closer",
-    "grid_kWh_per_year": 162.7505,
-    "grid_h_per_year": 1257.4839,
-    "days_full_solar_ice": 197,
-    "hours_above_band_top": 49,
-    "grid_kWh_saved_per_year": 39.1289,
-    "electric_kWh_saved_per_year": 60.6734,
-    "value_gain_INR": -279.4824
+    "grid_kWh_per_year": 178.0474,
+    "grid_h_per_year": 1349.4207,
+    "days_full_solar_ice": 186,
+    "hours_above_band_top": 51,
+    "grid_kWh_saved_per_year": 42.8012,
+    "electric_kWh_saved_per_year": 60.4787,
+    "value_gain_INR": -246.9697
    },
    {
     "key": "load",
     "label": "Load at 06:00, never 11:00–15:00",
-    "grid_kWh_per_year": 170.9039,
-    "grid_h_per_year": 1166.2339,
-    "days_full_solar_ice": 207,
-    "hours_above_band_top": 161,
-    "grid_kWh_saved_per_year": 30.9756,
-    "electric_kWh_saved_per_year": 40.9393,
-    "value_gain_INR": 4213.693
-   },
-   {
-    "key": "roof",
-    "label": "Shade over the room + white roof",
-    "grid_kWh_per_year": 185.9113,
-    "grid_h_per_year": 1407.3105,
-    "days_full_solar_ice": 185,
-    "hours_above_band_top": 69,
-    "grid_kWh_saved_per_year": 15.9681,
-    "electric_kWh_saved_per_year": 30.3999,
-    "value_gain_INR": 1254.2408
+    "grid_kWh_per_year": 188.7527,
+    "grid_h_per_year": 1188.0161,
+    "days_full_solar_ice": 206,
+    "hours_above_band_top": 158,
+    "grid_kWh_saved_per_year": 32.096,
+    "electric_kWh_saved_per_year": 43.0799,
+    "value_gain_INR": 4124.3056
    },
    {
     "key": "fan",
     "label": "Night circulation fan (12 W EC) instead of an always-on fan",
-    "grid_kWh_per_year": 185.951,
-    "grid_h_per_year": 1460.1962,
-    "days_full_solar_ice": 182,
+    "grid_kWh_per_year": 203.2834,
+    "grid_h_per_year": 1594.7164,
+    "days_full_solar_ice": 166,
     "hours_above_band_top": 63,
-    "grid_kWh_saved_per_year": 15.9284,
-    "electric_kWh_saved_per_year": 28.6009,
-    "value_gain_INR": 5869.5335
+    "grid_kWh_saved_per_year": 17.5652,
+    "electric_kWh_saved_per_year": 28.4484,
+    "value_gain_INR": 6019.3656
+   },
+   {
+    "key": "roof",
+    "label": "Shade over the room + white roof",
+    "grid_kWh_per_year": 203.9713,
+    "grid_h_per_year": 1523.1882,
+    "days_full_solar_ice": 167,
+    "hours_above_band_top": 65,
+    "grid_kWh_saved_per_year": 16.8774,
+    "electric_kWh_saved_per_year": 30.0525,
+    "value_gain_INR": 1321.8297
    },
    {
     "key": "led",
     "label": "LED light only when the door is open",
-    "grid_kWh_per_year": 199.425,
-    "grid_h_per_year": 1530.2527,
-    "days_full_solar_ice": 170,
-    "hours_above_band_top": 70,
-    "grid_kWh_saved_per_year": 2.4544,
-    "electric_kWh_saved_per_year": 4.0398,
-    "value_gain_INR": 130.685
+    "grid_kWh_per_year": 218.2204,
+    "grid_h_per_year": 1657.2177,
+    "days_full_solar_ice": 159,
+    "hours_above_band_top": 71,
+    "grid_kWh_saved_per_year": 2.6283,
+    "electric_kWh_saved_per_year": 4.1163,
+    "value_gain_INR": 322.9209
    },
    {
     "key": "rack",
     "label": "FRP racks instead of steel",
-    "grid_kWh_per_year": 204.7288,
-    "grid_h_per_year": 1578.8212,
-    "days_full_solar_ice": 166,
+    "grid_kWh_per_year": 223.2732,
+    "grid_h_per_year": 1695.1895,
+    "days_full_solar_ice": 156,
     "hours_above_band_top": 65,
-    "grid_kWh_saved_per_year": -2.8494,
-    "electric_kWh_saved_per_year": 1.9429,
-    "value_gain_INR": 118.0895
+    "grid_kWh_saved_per_year": -2.4245,
+    "electric_kWh_saved_per_year": 2.3846,
+    "value_gain_INR": 383.9854
    },
    {
     "key": "bags",
     "label": "Flowers in perforated bags (+ fogger)",
-    "grid_kWh_per_year": 273.0009,
-    "grid_h_per_year": 1874.5497,
-    "days_full_solar_ice": 140,
-    "hours_above_band_top": 49,
-    "grid_kWh_saved_per_year": -71.1215,
-    "electric_kWh_saved_per_year": -116.9214,
-    "value_gain_INR": 194536.0589
+    "grid_kWh_per_year": 292.4316,
+    "grid_h_per_year": 1988.6613,
+    "days_full_solar_ice": 127,
+    "hours_above_band_top": 50,
+    "grid_kWh_saved_per_year": -71.583,
+    "electric_kWh_saved_per_year": -114.6197,
+    "value_gain_INR": 194366.7453
    }
   ],
   "about": "Poor practice with ONE best-practice rule switched on: grid kWh saved a year shows which rule matters most."
@@ -340,10 +340,10 @@
      "high": 26000
     },
     "note": "E – 2 racks x about 15 kg; does not rust in a wet, 90 % RH room",
-    "electric_kWh_per_year": 1353.6957,
-    "grid_kWh_per_year": 80.8094,
-    "days_full_solar_ice": 266,
-    "time_to_6C_h_avg": 4.8902
+    "electric_kWh_per_year": 1358.3762,
+    "grid_kWh_per_year": 94.8254,
+    "days_full_solar_ice": 264,
+    "time_to_6C_h_avg": 4.9008
    },
    "hdpe": {
     "label": "Food-grade HDPE racks",
@@ -356,10 +356,10 @@
      "high": 18000
     },
     "note": "E – 2 racks x about 18 kg; easy to wash, bends more under load",
-    "electric_kWh_per_year": 1352.7881,
-    "grid_kWh_per_year": 79.797,
-    "days_full_solar_ice": 267,
-    "time_to_6C_h_avg": 4.898
+    "electric_kWh_per_year": 1357.3611,
+    "grid_kWh_per_year": 93.6266,
+    "days_full_solar_ice": 265,
+    "time_to_6C_h_avg": 4.9082
    },
    "steel": {
     "label": "Galvanised steel racks (old design)",
@@ -372,10 +372,10 @@
      "high": 12000
     },
     "note": "E – 2 racks x 25 kg; rusts in a wet room",
-    "electric_kWh_per_year": 1353.7137,
-    "grid_kWh_per_year": 80.5783,
-    "days_full_solar_ice": 266,
-    "time_to_6C_h_avg": 4.8983
+    "electric_kWh_per_year": 1358.3797,
+    "grid_kWh_per_year": 94.6506,
+    "days_full_solar_ice": 264,
+    "time_to_6C_h_avg": 4.9071
    }
   },
   "crate_places": 12,

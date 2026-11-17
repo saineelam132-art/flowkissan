@@ -138,7 +138,7 @@ def evaluate(cfg: dict | None = None, P: dict | None = None, use_cache: bool = F
             ctx["fake_shift"] = PL.make_readings(Sf, w, cfg, P, seed=99)
         if "fake_same" in case.needs and "fake_same" not in ctx:
             Sf, _ = PL.run_truth(w, cfg, P, dither=zeros, dither_sup=zeros)
-            ctx["fake_same"] = PL.make_readings(Sf, w, cfg, P, seed=99)
+            ctx["fake_same"] = PL.make_readings(Sf, w, cfg, P)          # attacker knows their own sensors: same offsets and noise
         rows = []
         for k in st:
             d = k // SPD

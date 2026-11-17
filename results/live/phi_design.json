@@ -1,0 +1,807 @@
+{
+ "_note": "S (simulated) rank test on the honest 2026 run; 'visible' means a unit bias moves the residuals by at least 1.0 σ in one hour (E, config/phi.json → design).",
+ "unit_bias": {
+  "T_out_s": 0.5,
+  "RH_out_s": 2.0,
+  "P_el": 0.1,
+  "T_mid": 0.5,
+  "RH_mid": 2.0,
+  "T_high": 0.5,
+  "T_flower": 0.5,
+  "T_ice": 0.5,
+  "T_sup": 0.5,
+  "T_ret": 0.5,
+  "flow": 0.1
+ },
+ "states": {
+  "summer day, chiller charging ice": {
+   "time": "2026-05-14 07:40:00",
+   "single": {
+    "physics only": {
+     "T_out_s": 0.0,
+     "RH_out_s": 0.0,
+     "P_el": 3.73,
+     "T_mid": 22.35,
+     "RH_mid": 5.0,
+     "T_high": 19.04,
+     "T_flower": 1.08,
+     "T_ice": 9.7,
+     "T_sup": 21.17,
+     "T_ret": 9.24,
+     "flow": 3.06
+    },
+    "physics + external references": {
+     "T_out_s": 1.83,
+     "RH_out_s": 1.16,
+     "P_el": 23.77,
+     "T_mid": 22.35,
+     "RH_mid": 5.0,
+     "T_high": 19.04,
+     "T_flower": 1.08,
+     "T_ice": 9.7,
+     "T_sup": 21.17,
+     "T_ret": 9.24,
+     "flow": 3.06
+    }
+   },
+   "blind": {
+    "physics only": [
+     {
+      "set": [
+       "T_out_s"
+      ],
+      "sigma_min": 0.0,
+      "fixed_by_sealed_duplicate_of": [
+       "T_out_s"
+      ]
+     },
+     {
+      "set": [
+       "RH_out_s"
+      ],
+      "sigma_min": 0.0,
+      "fixed_by_sealed_duplicate_of": [
+       "RH_out_s"
+      ]
+     },
+     {
+      "set": [
+       "P_el",
+       "T_sup"
+      ],
+      "sigma_min": 0.561,
+      "fixed_by_sealed_duplicate_of": [
+       "P_el"
+      ]
+     },
+     {
+      "set": [
+       "P_el",
+       "T_ret"
+      ],
+      "sigma_min": 0.284,
+      "fixed_by_sealed_duplicate_of": [
+       "P_el",
+       "T_ret"
+      ]
+     },
+     {
+      "set": [
+       "P_el",
+       "flow"
+      ],
+      "sigma_min": 0.035,
+      "fixed_by_sealed_duplicate_of": [
+       "P_el",
+       "flow"
+      ]
+     },
+     {
+      "set": [
+       "T_sup",
+       "T_ret"
+      ],
+      "sigma_min": 0.615,
+      "fixed_by_sealed_duplicate_of": [
+       "T_sup",
+       "T_ret"
+      ]
+     },
+     {
+      "set": [
+       "T_sup",
+       "flow"
+      ],
+      "sigma_min": 0.506,
+      "fixed_by_sealed_duplicate_of": [
+       "flow"
+      ]
+     },
+     {
+      "set": [
+       "T_ret",
+       "flow"
+      ],
+      "sigma_min": 0.281,
+      "fixed_by_sealed_duplicate_of": [
+       "flow"
+      ]
+     },
+     {
+      "set": [
+       "T_mid",
+       "T_high",
+       "T_ice"
+      ],
+      "sigma_min": 0.595,
+      "fixed_by_sealed_duplicate_of": [
+       "T_mid",
+       "T_high",
+       "T_ice"
+      ]
+     }
+    ],
+    "physics + external references": [
+     {
+      "set": [
+       "T_out_s",
+       "RH_out_s"
+      ],
+      "sigma_min": 0.643,
+      "fixed_by_sealed_duplicate_of": [
+       "T_out_s",
+       "RH_out_s"
+      ]
+     },
+     {
+      "set": [
+       "T_sup",
+       "T_ret"
+      ],
+      "sigma_min": 0.615,
+      "fixed_by_sealed_duplicate_of": [
+       "T_sup",
+       "T_ret"
+      ]
+     },
+     {
+      "set": [
+       "T_sup",
+       "flow"
+      ],
+      "sigma_min": 0.506,
+      "fixed_by_sealed_duplicate_of": [
+       "flow"
+      ]
+     },
+     {
+      "set": [
+       "T_ret",
+       "flow"
+      ],
+      "sigma_min": 0.281,
+      "fixed_by_sealed_duplicate_of": [
+       "flow"
+      ]
+     },
+     {
+      "set": [
+       "T_mid",
+       "T_high",
+       "T_ice"
+      ],
+      "sigma_min": 0.595,
+      "fixed_by_sealed_duplicate_of": [
+       "T_mid",
+       "T_high",
+       "T_ice"
+      ]
+     }
+    ]
+   }
+  },
+  "summer day, chiller cooling the room": {
+   "time": "2026-08-06 07:50:00",
+   "single": {
+    "physics only": {
+     "T_out_s": 0.0,
+     "RH_out_s": 0.0,
+     "P_el": 4.38,
+     "T_mid": 19.99,
+     "RH_mid": 6.2,
+     "T_high": 18.54,
+     "T_flower": 0.61,
+     "T_ice": 5.88,
+     "T_sup": 13.88,
+     "T_ret": 7.84,
+     "flow": 3.7
+    },
+    "physics + external references": {
+     "T_out_s": 1.77,
+     "RH_out_s": 1.11,
+     "P_el": 4.38,
+     "T_mid": 19.99,
+     "RH_mid": 6.2,
+     "T_high": 18.54,
+     "T_flower": 0.61,
+     "T_ice": 5.88,
+     "T_sup": 13.88,
+     "T_ret": 7.84,
+     "flow": 3.7
+    }
+   },
+   "blind": {
+    "physics only": [
+     {
+      "set": [
+       "T_out_s"
+      ],
+      "sigma_min": 0.0,
+      "fixed_by_sealed_duplicate_of": [
+       "T_out_s"
+      ]
+     },
+     {
+      "set": [
+       "RH_out_s"
+      ],
+      "sigma_min": 0.0,
+      "fixed_by_sealed_duplicate_of": [
+       "RH_out_s"
+      ]
+     },
+     {
+      "set": [
+       "T_flower"
+      ],
+      "sigma_min": 0.611,
+      "fixed_by_sealed_duplicate_of": [
+       "T_flower"
+      ]
+     },
+     {
+      "set": [
+       "P_el",
+       "T_sup"
+      ],
+      "sigma_min": 0.787,
+      "fixed_by_sealed_duplicate_of": [
+       "P_el",
+       "T_sup"
+      ]
+     },
+     {
+      "set": [
+       "P_el",
+       "T_ret"
+      ],
+      "sigma_min": 0.243,
+      "fixed_by_sealed_duplicate_of": [
+       "P_el",
+       "T_ret"
+      ]
+     },
+     {
+      "set": [
+       "P_el",
+       "flow"
+      ],
+      "sigma_min": 0.02,
+      "fixed_by_sealed_duplicate_of": [
+       "P_el",
+       "flow"
+      ]
+     },
+     {
+      "set": [
+       "T_sup",
+       "flow"
+      ],
+      "sigma_min": 0.688,
+      "fixed_by_sealed_duplicate_of": [
+       "T_sup",
+       "flow"
+      ]
+     },
+     {
+      "set": [
+       "T_ret",
+       "flow"
+      ],
+      "sigma_min": 0.236,
+      "fixed_by_sealed_duplicate_of": [
+       "T_ret",
+       "flow"
+      ]
+     },
+     {
+      "set": [
+       "T_mid",
+       "RH_mid",
+       "T_high"
+      ],
+      "sigma_min": 0.794,
+      "fixed_by_sealed_duplicate_of": [
+       "T_mid",
+       "RH_mid",
+       "T_high"
+      ]
+     },
+     {
+      "set": [
+       "RH_mid",
+       "T_sup",
+       "T_ret"
+      ],
+      "sigma_min": 0.882,
+      "fixed_by_sealed_duplicate_of": [
+       "T_sup",
+       "T_ret"
+      ]
+     }
+    ],
+    "physics + external references": [
+     {
+      "set": [
+       "T_flower"
+      ],
+      "sigma_min": 0.611,
+      "fixed_by_sealed_duplicate_of": [
+       "T_flower"
+      ]
+     },
+     {
+      "set": [
+       "T_out_s",
+       "RH_out_s"
+      ],
+      "sigma_min": 0.646,
+      "fixed_by_sealed_duplicate_of": [
+       "T_out_s",
+       "RH_out_s"
+      ]
+     },
+     {
+      "set": [
+       "P_el",
+       "T_sup"
+      ],
+      "sigma_min": 0.787,
+      "fixed_by_sealed_duplicate_of": [
+       "P_el",
+       "T_sup"
+      ]
+     },
+     {
+      "set": [
+       "P_el",
+       "T_ret"
+      ],
+      "sigma_min": 0.243,
+      "fixed_by_sealed_duplicate_of": [
+       "P_el",
+       "T_ret"
+      ]
+     },
+     {
+      "set": [
+       "P_el",
+       "flow"
+      ],
+      "sigma_min": 0.02,
+      "fixed_by_sealed_duplicate_of": [
+       "P_el",
+       "flow"
+      ]
+     },
+     {
+      "set": [
+       "T_sup",
+       "flow"
+      ],
+      "sigma_min": 0.688,
+      "fixed_by_sealed_duplicate_of": [
+       "T_sup",
+       "flow"
+      ]
+     },
+     {
+      "set": [
+       "T_ret",
+       "flow"
+      ],
+      "sigma_min": 0.236,
+      "fixed_by_sealed_duplicate_of": [
+       "T_ret",
+       "flow"
+      ]
+     },
+     {
+      "set": [
+       "T_mid",
+       "RH_mid",
+       "T_high"
+      ],
+      "sigma_min": 0.794,
+      "fixed_by_sealed_duplicate_of": [
+       "T_mid",
+       "RH_mid",
+       "T_high"
+      ]
+     },
+     {
+      "set": [
+       "RH_mid",
+       "T_sup",
+       "T_ret"
+      ],
+      "sigma_min": 0.882,
+      "fixed_by_sealed_duplicate_of": [
+       "T_sup",
+       "T_ret"
+      ]
+     }
+    ]
+   }
+  },
+  "night, chiller off (ice panels only)": {
+   "time": "2026-06-11 02:20:00",
+   "single": {
+    "physics only": {
+     "T_out_s": 0.0,
+     "RH_out_s": 0.0,
+     "P_el": 0.0,
+     "T_mid": 24.56,
+     "RH_mid": 5.85,
+     "T_high": 20.23,
+     "T_flower": 0.99,
+     "T_ice": 11.5,
+     "T_sup": 0.0,
+     "T_ret": 0.0,
+     "flow": 0.0
+    },
+    "physics + external references": {
+     "T_out_s": 1.76,
+     "RH_out_s": 0.91,
+     "P_el": 0.0,
+     "T_mid": 24.56,
+     "RH_mid": 5.85,
+     "T_high": 20.23,
+     "T_flower": 0.99,
+     "T_ice": 11.5,
+     "T_sup": 0.0,
+     "T_ret": 0.0,
+     "flow": 0.0
+    }
+   },
+   "blind": {
+    "physics only": [
+     {
+      "set": [
+       "T_out_s"
+      ],
+      "sigma_min": 0.0,
+      "fixed_by_sealed_duplicate_of": [
+       "T_out_s"
+      ]
+     },
+     {
+      "set": [
+       "RH_out_s"
+      ],
+      "sigma_min": 0.0,
+      "fixed_by_sealed_duplicate_of": [
+       "RH_out_s"
+      ]
+     },
+     {
+      "set": [
+       "P_el"
+      ],
+      "sigma_min": 0.0,
+      "fixed_by_sealed_duplicate_of": [
+       "P_el"
+      ]
+     },
+     {
+      "set": [
+       "T_flower"
+      ],
+      "sigma_min": 0.994,
+      "fixed_by_sealed_duplicate_of": [
+       "T_flower"
+      ]
+     },
+     {
+      "set": [
+       "T_sup"
+      ],
+      "sigma_min": 0.0,
+      "fixed_by_sealed_duplicate_of": [
+       "T_sup"
+      ]
+     },
+     {
+      "set": [
+       "T_ret"
+      ],
+      "sigma_min": 0.0,
+      "fixed_by_sealed_duplicate_of": [
+       "T_ret"
+      ]
+     },
+     {
+      "set": [
+       "flow"
+      ],
+      "sigma_min": 0.0,
+      "fixed_by_sealed_duplicate_of": [
+       "flow"
+      ]
+     },
+     {
+      "set": [
+       "T_mid",
+       "T_high",
+       "T_ice"
+      ],
+      "sigma_min": 0.553,
+      "fixed_by_sealed_duplicate_of": [
+       "T_mid",
+       "T_high",
+       "T_ice"
+      ]
+     }
+    ],
+    "physics + external references": [
+     {
+      "set": [
+       "RH_out_s"
+      ],
+      "sigma_min": 0.911,
+      "fixed_by_sealed_duplicate_of": [
+       "RH_out_s"
+      ]
+     },
+     {
+      "set": [
+       "P_el"
+      ],
+      "sigma_min": 0.0,
+      "fixed_by_sealed_duplicate_of": [
+       "P_el"
+      ]
+     },
+     {
+      "set": [
+       "T_flower"
+      ],
+      "sigma_min": 0.994,
+      "fixed_by_sealed_duplicate_of": [
+       "T_flower"
+      ]
+     },
+     {
+      "set": [
+       "T_sup"
+      ],
+      "sigma_min": 0.0,
+      "fixed_by_sealed_duplicate_of": [
+       "T_sup"
+      ]
+     },
+     {
+      "set": [
+       "T_ret"
+      ],
+      "sigma_min": 0.0,
+      "fixed_by_sealed_duplicate_of": [
+       "T_ret"
+      ]
+     },
+     {
+      "set": [
+       "flow"
+      ],
+      "sigma_min": 0.0,
+      "fixed_by_sealed_duplicate_of": [
+       "flow"
+      ]
+     },
+     {
+      "set": [
+       "T_mid",
+       "T_high",
+       "T_ice"
+      ],
+      "sigma_min": 0.553,
+      "fixed_by_sealed_duplicate_of": [
+       "T_mid",
+       "T_high",
+       "T_ice"
+      ]
+     }
+    ]
+   }
+  },
+  "winter day, chiller running": {
+   "time": "2026-02-09 12:40:00",
+   "single": {
+    "physics only": {
+     "T_out_s": 0.0,
+     "RH_out_s": 0.0,
+     "P_el": 5.65,
+     "T_mid": 20.57,
+     "RH_mid": 2.53,
+     "T_high": 19.76,
+     "T_flower": 0.0,
+     "T_ice": 4.43,
+     "T_sup": 23.62,
+     "T_ret": 15.42,
+     "flow": 4.55
+    },
+    "physics + external references": {
+     "T_out_s": 1.81,
+     "RH_out_s": 1.73,
+     "P_el": 16.33,
+     "T_mid": 20.57,
+     "RH_mid": 2.53,
+     "T_high": 19.76,
+     "T_flower": 0.0,
+     "T_ice": 4.43,
+     "T_sup": 23.62,
+     "T_ret": 15.42,
+     "flow": 4.55
+    }
+   },
+   "blind": {
+    "physics only": [
+     {
+      "set": [
+       "T_out_s"
+      ],
+      "sigma_min": 0.0,
+      "fixed_by_sealed_duplicate_of": [
+       "T_out_s"
+      ]
+     },
+     {
+      "set": [
+       "RH_out_s"
+      ],
+      "sigma_min": 0.0,
+      "fixed_by_sealed_duplicate_of": [
+       "RH_out_s"
+      ]
+     },
+     {
+      "set": [
+       "T_flower"
+      ],
+      "sigma_min": 0.0,
+      "fixed_by_sealed_duplicate_of": [
+       "T_flower"
+      ]
+     },
+     {
+      "set": [
+       "P_el",
+       "T_sup"
+      ],
+      "sigma_min": 0.233,
+      "fixed_by_sealed_duplicate_of": [
+       "P_el"
+      ]
+     },
+     {
+      "set": [
+       "P_el",
+       "T_ret"
+      ],
+      "sigma_min": 0.341,
+      "fixed_by_sealed_duplicate_of": [
+       "P_el",
+       "T_ret"
+      ]
+     },
+     {
+      "set": [
+       "P_el",
+       "flow"
+      ],
+      "sigma_min": 0.164,
+      "fixed_by_sealed_duplicate_of": [
+       "P_el",
+       "flow"
+      ]
+     },
+     {
+      "set": [
+       "T_sup",
+       "T_ret"
+      ],
+      "sigma_min": 0.585,
+      "fixed_by_sealed_duplicate_of": [
+       "T_sup",
+       "T_ret"
+      ]
+     },
+     {
+      "set": [
+       "T_sup",
+       "flow"
+      ],
+      "sigma_min": 0.138,
+      "fixed_by_sealed_duplicate_of": [
+       "flow"
+      ]
+     },
+     {
+      "set": [
+       "T_ret",
+       "flow"
+      ],
+      "sigma_min": 0.093,
+      "fixed_by_sealed_duplicate_of": [
+       "flow"
+      ]
+     }
+    ],
+    "physics + external references": [
+     {
+      "set": [
+       "T_flower"
+      ],
+      "sigma_min": 0.0,
+      "fixed_by_sealed_duplicate_of": [
+       "T_flower"
+      ]
+     },
+     {
+      "set": [
+       "T_out_s",
+       "RH_out_s"
+      ],
+      "sigma_min": 0.893,
+      "fixed_by_sealed_duplicate_of": [
+       "T_out_s",
+       "RH_out_s"
+      ]
+     },
+     {
+      "set": [
+       "T_sup",
+       "T_ret"
+      ],
+      "sigma_min": 0.585,
+      "fixed_by_sealed_duplicate_of": [
+       "T_sup",
+       "T_ret"
+      ]
+     },
+     {
+      "set": [
+       "T_sup",
+       "flow"
+      ],
+      "sigma_min": 0.138,
+      "fixed_by_sealed_duplicate_of": [
+       "flow"
+      ]
+     },
+     {
+      "set": [
+       "T_ret",
+       "flow"
+      ],
+      "sigma_min": 0.093,
+      "fixed_by_sealed_duplicate_of": [
+       "flow"
+      ]
+     }
+    ]
+   }
+  }
+ },
+ "all_owner_sensors": "If EVERY owner sensor and the controller log are replaced by a consistent model run, every physics residual stays small by construction: undetectable by physics. Only the external references (weather service, inverter log, utility meter) and the secret watermark can see it."
+}

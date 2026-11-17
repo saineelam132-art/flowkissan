@@ -65,7 +65,7 @@ def build(cfg: dict | None = None, P: dict | None = None) -> dict[str, Any]:
     honest = _frame(win, COLS)
     zeros = np.zeros(len(R))
     Sf, _ = PL.run_truth(w, cfg, P, dither=zeros, dither_sup=zeros)
-    fake = _frame(PL.make_readings(Sf, w, cfg, P, seed=99).iloc[a0:a1], PL.OWNER + COMMANDS)
+    fake = _frame(PL.make_readings(Sf, w, cfg, P).iloc[a0:a1], PL.OWNER + COMMANDS)   # same sensor offsets as the real room
     k_off = a0 + (WARM + 3) * SPD + 144                          # shown day 4, 12:00
     So, _ = PL.run_truth(w, cfg, P, scenario={"from_step": k_off, "chiller_off": True})
     off = _frame(PL.make_readings(So, w, cfg, P).iloc[a0:a1], PL.OWNER + COMMANDS)

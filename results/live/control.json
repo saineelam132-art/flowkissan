@@ -126,43 +126,43 @@
   "cases": {
    "grid": {
     "label": "Weather service as is",
-    "days_full_solar_ice": 297,
-    "grid_h_per_year": 128.9274,
-    "grid_kWh_per_year": 39.7274,
+    "days_full_solar_ice": 295,
+    "grid_h_per_year": 140.7997,
+    "grid_kWh_per_year": 50.1676,
     "hours_above_band_top": 14,
-    "electric_kWh_day": 3.349,
-    "COP_chiller": 2.4371
+    "electric_kWh_day": 3.3602,
+    "COP_chiller": 2.428
    },
    "hot": {
     "label": "Hot site (+1.5 °C, less sun) – used for the headline",
-    "days_full_solar_ice": 266,
-    "grid_h_per_year": 501.1882,
-    "grid_kWh_per_year": 80.8094,
+    "days_full_solar_ice": 264,
+    "grid_h_per_year": 535.8239,
+    "grid_kWh_per_year": 94.8254,
     "hours_above_band_top": 24,
-    "electric_kWh_day": 3.7088,
-    "COP_chiller": 2.295
+    "electric_kWh_day": 3.7216,
+    "COP_chiller": 2.2877
    },
    "cool": {
     "label": "Cool site",
     "days_full_solar_ice": 303,
-    "grid_h_per_year": 70.6452,
-    "grid_kWh_per_year": 33.0563,
+    "grid_h_per_year": 72.7056,
+    "grid_kWh_per_year": 41.2391,
     "hours_above_band_top": 8,
-    "electric_kWh_day": 3.0453,
-    "COP_chiller": 2.5748
+    "electric_kWh_day": 3.0557,
+    "COP_chiller": 2.565
    }
   },
   "random": {
    "n": 16,
    "days_full_solar_ice": {
-    "p5": 285.0,
-    "median": 290.0,
-    "p95": 296.5
+    "p5": 282.75,
+    "median": 288.0,
+    "p95": 294.25
    },
    "grid_kWh_per_year": {
-    "p5": 40.4658,
-    "median": 44.427,
-    "p95": 49.6008
+    "p5": 50.8978,
+    "median": 55.1156,
+    "p95": 59.6086
    },
    "note": "16 random sites, errors that drift over about 6 hours, fixed seed."
   }
@@ -170,146 +170,146 @@
  "what_if": {
   "about": "Best practice with ONE thing changed.",
   "headline": {
-   "days_full_solar_ice": 266,
-   "grid_h_per_year": 501.1882,
-   "grid_kWh_per_year": 80.8094,
+   "days_full_solar_ice": 264,
+   "grid_h_per_year": 535.8239,
+   "grid_kWh_per_year": 94.8254,
    "hours_above_band_top": null,
    "hours_below_2C": 0,
-   "electric_kWh_day": 3.7088,
-   "rh_avg_pct": 92.1057,
-   "value_INR": 631725.3602,
-   "COP_chiller": 2.295
+   "electric_kWh_day": 3.7216,
+   "rh_avg_pct": 92.1055,
+   "value_INR": 631672.8862,
+   "COP_chiller": 2.2877
   },
   "rows": [
    {
     "key": "pv_1_2",
     "label": "Solar panels 1.2 kWp instead of 1.8",
-    "days_full_solar_ice": 91,
-    "grid_h_per_year": 3036.0739,
-    "grid_kWh_per_year": 337.355,
-    "hours_above_band_top": 9,
+    "days_full_solar_ice": 66,
+    "grid_h_per_year": 3176.4812,
+    "grid_kWh_per_year": 352.0963,
+    "hours_above_band_top": 10,
     "hours_below_2C": 0,
-    "electric_kWh_day": 3.6466,
-    "rh_avg_pct": 92.2549,
-    "value_INR": 631798.2438,
-    "COP_chiller": 2.419
+    "electric_kWh_day": 3.6463,
+    "rh_avg_pct": 92.276,
+    "value_INR": 631814.6812,
+    "COP_chiller": 2.4229
    },
    {
     "key": "pv_2_4",
     "label": "Solar panels 2.4 kWp",
-    "days_full_solar_ice": 287,
-    "grid_h_per_year": 218.1169,
-    "grid_kWh_per_year": 51.4564,
+    "days_full_solar_ice": 286,
+    "grid_h_per_year": 239.9973,
+    "grid_kWh_per_year": 64.9833,
     "hours_above_band_top": 27,
     "hours_below_2C": 0,
-    "electric_kWh_day": 3.6885,
-    "rh_avg_pct": 92.1474,
-    "value_INR": 631987.3915,
-    "COP_chiller": 2.3182
+    "electric_kWh_day": 3.7019,
+    "rh_avg_pct": 92.1478,
+    "value_INR": 631957.8289,
+    "COP_chiller": 2.309
    },
    {
     "key": "ice_60",
     "label": "Ice 60 kg instead of 100",
     "days_full_solar_ice": 239,
-    "grid_h_per_year": 690.9489,
-    "grid_kWh_per_year": 111.4657,
+    "grid_h_per_year": 709.8858,
+    "grid_kWh_per_year": 124.6639,
     "hours_above_band_top": 23,
     "hours_below_2C": 0,
-    "electric_kWh_day": 3.7081,
-    "rh_avg_pct": 92.1306,
-    "value_INR": 631684.3064,
-    "COP_chiller": 2.3123
+    "electric_kWh_day": 3.7204,
+    "rh_avg_pct": 92.1313,
+    "value_INR": 631690.9667,
+    "COP_chiller": 2.3045
    },
    {
     "key": "ice_140",
     "label": "Ice 140 kg",
-    "days_full_solar_ice": 278,
-    "grid_h_per_year": 322.1223,
-    "grid_kWh_per_year": 60.6486,
-    "hours_above_band_top": 26,
+    "days_full_solar_ice": 275,
+    "grid_h_per_year": 357.6411,
+    "grid_kWh_per_year": 74.93,
+    "hours_above_band_top": 25,
     "hours_below_2C": 0,
-    "electric_kWh_day": 3.707,
-    "rh_avg_pct": 92.0921,
-    "value_INR": 631625.8819,
-    "COP_chiller": 2.2833
+    "electric_kWh_day": 3.7187,
+    "rh_avg_pct": 92.0976,
+    "value_INR": 631670.0161,
+    "COP_chiller": 2.276
    },
    {
     "key": "no_curtain",
     "label": "No strip curtain",
-    "days_full_solar_ice": 257,
-    "grid_h_per_year": 579.1922,
-    "grid_kWh_per_year": 98.0781,
-    "hours_above_band_top": 73,
+    "days_full_solar_ice": 250,
+    "grid_h_per_year": 610.8844,
+    "grid_kWh_per_year": 114.0459,
+    "hours_above_band_top": 72,
     "hours_below_2C": 0,
-    "electric_kWh_day": 3.9477,
-    "rh_avg_pct": 91.9531,
-    "value_INR": 630061.7881,
-    "COP_chiller": 2.2964
+    "electric_kWh_day": 3.9581,
+    "rh_avg_pct": 91.9584,
+    "value_INR": 630076.7863,
+    "COP_chiller": 2.2911
    },
    {
     "key": "door_12",
     "label": "12 door openings a day",
-    "days_full_solar_ice": 264,
-    "grid_h_per_year": 547.9906,
-    "grid_kWh_per_year": 86.6619,
+    "days_full_solar_ice": 262,
+    "grid_h_per_year": 581.2527,
+    "grid_kWh_per_year": 102.5766,
     "hours_above_band_top": 23,
     "hours_below_2C": 0,
-    "electric_kWh_day": 3.8217,
-    "rh_avg_pct": 92.2319,
-    "value_INR": 631759.0258,
-    "COP_chiller": 2.2986
+    "electric_kWh_day": 3.8333,
+    "rh_avg_pct": 92.2316,
+    "value_INR": 631723.2032,
+    "COP_chiller": 2.2924
    },
    {
     "key": "sp_5",
     "label": "Set-point 5 °C",
-    "days_full_solar_ice": 266,
-    "grid_h_per_year": 508.2527,
-    "grid_kWh_per_year": 76.975,
+    "days_full_solar_ice": 264,
+    "grid_h_per_year": 550.4435,
+    "grid_kWh_per_year": 86.8846,
     "hours_above_band_top": 5,
     "hours_below_2C": 0,
-    "electric_kWh_day": 3.7069,
-    "rh_avg_pct": 92.1537,
-    "value_INR": 629121.1444,
-    "COP_chiller": 2.288
+    "electric_kWh_day": 3.7208,
+    "rh_avg_pct": 92.1497,
+    "value_INR": 628983.7934,
+    "COP_chiller": 2.2795
    },
    {
     "key": "sp_3",
     "label": "Set-point 3 °C",
-    "days_full_solar_ice": 266,
-    "grid_h_per_year": 518.457,
-    "grid_kWh_per_year": 89.2463,
-    "hours_above_band_top": 76,
+    "days_full_solar_ice": 264,
+    "grid_h_per_year": 538.375,
+    "grid_kWh_per_year": 105.1728,
+    "hours_above_band_top": 77,
     "hours_below_2C": 0,
-    "electric_kWh_day": 3.7335,
-    "rh_avg_pct": 92.0752,
-    "value_INR": 634057.4976,
-    "COP_chiller": 2.306
+    "electric_kWh_day": 3.743,
+    "rh_avg_pct": 92.0749,
+    "value_INR": 634042.5274,
+    "COP_chiller": 2.3007
    },
    {
     "key": "no_fogger",
     "label": "Bags but no fogger",
-    "days_full_solar_ice": 274,
-    "grid_h_per_year": 430.1505,
-    "grid_kWh_per_year": 49.8272,
-    "hours_above_band_top": 62,
+    "days_full_solar_ice": 272,
+    "grid_h_per_year": 461.254,
+    "grid_kWh_per_year": 63.3248,
+    "hours_above_band_top": 61,
     "hours_below_2C": 0,
-    "electric_kWh_day": 3.3814,
-    "rh_avg_pct": 74.3949,
-    "value_INR": 625642.5561,
-    "COP_chiller": 2.3012
+    "electric_kWh_day": 3.3926,
+    "rh_avg_pct": 74.4189,
+    "value_INR": 625563.3115,
+    "COP_chiller": 2.2942
    },
    {
     "key": "insul_150",
     "label": "Insulation 150 mm instead of 100 mm",
-    "days_full_solar_ice": 290,
-    "grid_h_per_year": 251.379,
-    "grid_kWh_per_year": 40.2636,
+    "days_full_solar_ice": 287,
+    "grid_h_per_year": 281.4032,
+    "grid_kWh_per_year": 50.4232,
     "hours_above_band_top": 12,
     "hours_below_2C": 246,
-    "electric_kWh_day": 2.9333,
-    "rh_avg_pct": 92.2191,
-    "value_INR": 633223.8312,
-    "COP_chiller": 2.3002
+    "electric_kWh_day": 2.9486,
+    "rh_avg_pct": 92.2202,
+    "value_INR": 633200.7527,
+    "COP_chiller": 2.2887
    }
   ]
  },
@@ -330,10 +330,10 @@
   "rows": [
    {
     "label": "Our room (solar + ice, grid backup)",
-    "grid_kWh": 80.8094,
+    "grid_kWh": 94.8254,
     "diesel_L": 0.0,
-    "cost_INR": 565.6658,
-    "co2_kg": 57.3747
+    "cost_INR": 663.7778,
+    "co2_kg": 67.326
    },
    {
     "label": "Same room on grid only",
@@ -341,8 +341,8 @@
     "diesel_L": 0.0,
     "cost_INR": 9037.4975,
     "co2_kg": 916.6605,
-    "saved_INR": 8471.8317,
-    "co2_saved_kg": 859.2858
+    "saved_INR": 8373.7197,
+    "co2_saved_kg": 849.3344
    },
    {
     "label": "Grid + diesel genset in the 10:00–18:00 power cut",
@@ -350,8 +350,8 @@
     "diesel_L": 215.1785,
     "cost_INR": 26036.5999,
     "co2_kg": 1187.7854,
-    "saved_INR": 25470.9341,
-    "co2_saved_kg": 1130.4107
+    "saved_INR": 25372.8221,
+    "co2_saved_kg": 1120.4593
    }
   ]
  },

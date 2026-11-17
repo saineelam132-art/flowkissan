@@ -1,0 +1,619 @@
+{
+ "_note": "S (simulated): truth plant ≠ checker model, simulated sensors and attacks. Nothing here is measured. All assumptions are in config/phi.json (E).",
+ "starts_per_case": 50,
+ "horizon_h": 48,
+ "honest_year": {
+  "days_scored": 288.6,
+  "false_flags": 15,
+  "false_flags_per_30_days": 1.56,
+  "flagged_fraction": 0.0294,
+  "by_residual": {
+   "R10": 5,
+   "R1": 5,
+   "R5": 4,
+   "R7T": 1
+  },
+  "by_layer": {
+   "daily": 5,
+   "instant": 5,
+   "slow (CUSUM)": 5
+  },
+  "phi_inst_ge3_fraction": 0.0068,
+  "watermark_days": 286,
+  "watermark_false_days": 0,
+  "watermark_z_p1": 6.0,
+  "watermark_z_median": 10.5
+ },
+ "cases": [
+  {
+   "key": "honest",
+   "label": "Honest (4 door openings a day)",
+   "kind": "none",
+   "sensors": [],
+   "n": 50,
+   "detection_rate": 0.1,
+   "median_ttf_min": 765.0,
+   "p90_ttf_min": 1291.0,
+   "by_layer_rate": {
+    "physics": 0.1
+   },
+   "first_layer": {
+    "physics": 5
+   },
+   "fired": {
+    "R10": 2,
+    "R1": 1,
+    "R9": 1,
+    "R5": 1
+   },
+   "isolation_correct_rate": null,
+   "isolation_exact_rate": null,
+   "median_bias_estimate": null,
+   "suspects_top": null
+  },
+  {
+   "key": "room_offset_2",
+   "label": "Room T offset −2 K",
+   "kind": "offset",
+   "sensors": [
+    "T_mid"
+   ],
+   "n": 50,
+   "detection_rate": 1.0,
+   "median_ttf_min": 10.0,
+   "p90_ttf_min": 10.0,
+   "by_layer_rate": {
+    "physics": 1.0
+   },
+   "first_layer": {
+    "physics": 50
+   },
+   "fired": {
+    "R9": 50
+   },
+   "isolation_correct_rate": 0.96,
+   "isolation_exact_rate": 0.36,
+   "median_bias_estimate": {
+    "T_mid": -2.03
+   },
+   "suspects_top": {
+    "T_mid": 18,
+    "T_mid,T_high": 9,
+    "T_mid,T_ice": 8
+   }
+  },
+  {
+   "key": "room_offset_5",
+   "label": "Room T offset −5 K",
+   "kind": "offset",
+   "sensors": [
+    "T_mid"
+   ],
+   "n": 50,
+   "detection_rate": 1.0,
+   "median_ttf_min": 10.0,
+   "p90_ttf_min": 10.0,
+   "by_layer_rate": {
+    "physics": 1.0
+   },
+   "first_layer": {
+    "physics": 50
+   },
+   "fired": {
+    "R9": 48,
+    "H2": 2
+   },
+   "isolation_correct_rate": 0.4,
+   "isolation_exact_rate": 0.08,
+   "median_bias_estimate": {
+    "T_mid": -5.02
+   },
+   "suspects_top": {
+    "RH_mid,T_high,T_ice": 17,
+    "T_mid,RH_mid,T_ice": 12,
+    "T_high,T_ice": 9
+   }
+  },
+  {
+   "key": "room_frozen",
+   "label": "Room T frozen at 4.0 °C while the chiller is really off",
+   "kind": "physical",
+   "sensors": [
+    "T_mid"
+   ],
+   "n": 50,
+   "detection_rate": 1.0,
+   "median_ttf_min": 10.0,
+   "p90_ttf_min": 655.0,
+   "by_layer_rate": {
+    "physics": 1.0
+   },
+   "first_layer": {
+    "physics": 50
+   },
+   "fired": {
+    "R9": 43,
+    "R6": 5,
+    "R10": 1,
+    "R2": 1
+   },
+   "isolation_correct_rate": 0.64,
+   "isolation_exact_rate": 0.34,
+   "median_bias_estimate": {
+    "T_mid": 0.51
+   },
+   "suspects_top": {
+    "T_mid": 17,
+    "T_out_s,T_mid": 6,
+    "T_high,T_ice": 5
+   }
+  },
+  {
+   "key": "out_offset_2",
+   "label": "Outside T −2 K",
+   "kind": "offset",
+   "sensors": [
+    "T_out_s"
+   ],
+   "n": 50,
+   "detection_rate": 0.18,
+   "median_ttf_min": 335.0,
+   "p90_ttf_min": 1512.0,
+   "by_layer_rate": {
+    "physics": 0.04,
+    "external": 0.14
+   },
+   "first_layer": {
+    "external": 7,
+    "physics": 2
+   },
+   "fired": {
+    "R7T": 5,
+    "R7W": 2,
+    "R10": 1,
+    "R5": 1
+   },
+   "isolation_correct_rate": 0.667,
+   "isolation_exact_rate": 0.444,
+   "median_bias_estimate": {
+    "T_out_s": -2.8
+   },
+   "suspects_top": {
+    "T_out_s": 4,
+    "T_out_s,RH_mid,T_ice": 1,
+    "T_out_s,RH_mid": 1
+   }
+  },
+  {
+   "key": "out_offset_5",
+   "label": "Outside T −5 K",
+   "kind": "offset",
+   "sensors": [
+    "T_out_s"
+   ],
+   "n": 50,
+   "detection_rate": 0.96,
+   "median_ttf_min": 62.0,
+   "p90_ttf_min": 1232.0,
+   "by_layer_rate": {
+    "external": 0.9,
+    "physics": 0.06
+   },
+   "first_layer": {
+    "external": 45,
+    "physics": 3
+   },
+   "fired": {
+    "R7T": 43,
+    "R5": 2,
+    "R7W": 2,
+    "R1": 1
+   },
+   "isolation_correct_rate": 0.854,
+   "isolation_exact_rate": 0.688,
+   "median_bias_estimate": {
+    "T_out_s": -5.14
+   },
+   "suspects_top": {
+    "T_out_s": 33,
+    "T_out_s,RH_mid,T_ice": 2,
+    "T_out_s,T_ice": 2
+   }
+  },
+  {
+   "key": "out_offset_8",
+   "label": "Outside T −8 K",
+   "kind": "offset",
+   "sensors": [
+    "T_out_s"
+   ],
+   "n": 50,
+   "detection_rate": 1.0,
+   "median_ttf_min": 10.0,
+   "p90_ttf_min": 10.0,
+   "by_layer_rate": {
+    "external": 1.0
+   },
+   "first_layer": {
+    "external": 50
+   },
+   "fired": {
+    "R7T": 47,
+    "R7W": 3
+   },
+   "isolation_correct_rate": 1.0,
+   "isolation_exact_rate": 0.92,
+   "median_bias_estimate": {
+    "T_out_s": -8.03
+   },
+   "suspects_top": {
+    "T_out_s": 46,
+    "T_out_s,T_ice": 2,
+    "T_out_s,T_mid": 1
+   }
+  },
+  {
+   "key": "out8_power20",
+   "label": "Outside T −8 K and power −20 %",
+   "kind": "offset",
+   "sensors": [
+    "T_out_s",
+    "P_el"
+   ],
+   "n": 50,
+   "detection_rate": 1.0,
+   "median_ttf_min": 10.0,
+   "p90_ttf_min": 10.0,
+   "by_layer_rate": {
+    "external": 1.0
+   },
+   "first_layer": {
+    "external": 50
+   },
+   "fired": {
+    "R7T": 33,
+    "R8": 14,
+    "R7W": 3
+   },
+   "isolation_correct_rate": 0.36,
+   "isolation_exact_rate": 0.3,
+   "median_bias_estimate": {
+    "T_out_s": -8.03,
+    "P_el": -0.25
+   },
+   "suspects_top": {
+    "T_out_s": 31,
+    "T_out_s,P_el": 15,
+    "T_out_s,P_el,T_ice": 1
+   }
+  },
+  {
+   "key": "glycol_fake",
+   "label": "Glycol supply and return both reported 2 K colder",
+   "kind": "offset",
+   "sensors": [
+    "T_sup",
+    "T_ret"
+   ],
+   "n": 50,
+   "detection_rate": 0.48,
+   "median_ttf_min": 705.0,
+   "p90_ttf_min": 2232.0,
+   "by_layer_rate": {
+    "watermark": 0.28,
+    "physics": 0.28
+   },
+   "first_layer": {
+    "watermark": 12,
+    "physics": 12
+   },
+   "fired": {
+    "R6": 6,
+    "R10": 4,
+    "R3": 2,
+    "R9": 2
+   },
+   "isolation_correct_rate": 0.071,
+   "isolation_exact_rate": 0.071,
+   "median_bias_estimate": {
+    "T_sup": -1.77,
+    "T_ret": -2.96
+   },
+   "suspects_top": {
+    "RH_mid": 4,
+    "T_out_s": 2,
+    "T_mid,T_high": 1
+   }
+  },
+  {
+   "key": "power_20",
+   "label": "Chiller power −20 %",
+   "kind": "gain",
+   "sensors": [
+    "P_el"
+   ],
+   "n": 50,
+   "detection_rate": 1.0,
+   "median_ttf_min": 170.0,
+   "p90_ttf_min": 833.0,
+   "by_layer_rate": {
+    "external": 0.68,
+    "physics": 0.32
+   },
+   "first_layer": {
+    "external": 34,
+    "physics": 16
+   },
+   "fired": {
+    "R8": 34,
+    "H1": 15,
+    "R2": 1
+   },
+   "isolation_correct_rate": 0.9,
+   "isolation_exact_rate": 0.66,
+   "median_bias_estimate": {
+    "P_el": -0.25
+   },
+   "suspects_top": {
+    "P_el": 33,
+    "T_out_s,P_el": 6,
+    "P_el,RH_mid": 2
+   }
+  },
+  {
+   "key": "power_40",
+   "label": "Chiller power −40 %",
+   "kind": "gain",
+   "sensors": [
+    "P_el"
+   ],
+   "n": 50,
+   "detection_rate": 1.0,
+   "median_ttf_min": 142.0,
+   "p90_ttf_min": 738.0,
+   "by_layer_rate": {
+    "external": 0.5,
+    "physics": 0.5
+   },
+   "first_layer": {
+    "external": 25,
+    "physics": 25
+   },
+   "fired": {
+    "R8": 25,
+    "H1": 25
+   },
+   "isolation_correct_rate": 0.94,
+   "isolation_exact_rate": 0.66,
+   "median_bias_estimate": {
+    "P_el": -0.66
+   },
+   "suspects_top": {
+    "P_el": 33,
+    "P_el,T_high": 5,
+    "T_out_s,P_el": 5
+   }
+  },
+  {
+   "key": "drift",
+   "label": "Room T slow drift −0.1 K per hour",
+   "kind": "drift",
+   "sensors": [
+    "T_mid"
+   ],
+   "n": 50,
+   "detection_rate": 1.0,
+   "median_ttf_min": 250.0,
+   "p90_ttf_min": 290.0,
+   "by_layer_rate": {
+    "physics": 0.98,
+    "external": 0.02
+   },
+   "first_layer": {
+    "physics": 49,
+    "external": 1
+   },
+   "fired": {
+    "R9": 47,
+    "R2": 1,
+    "R7T": 1,
+    "R10": 1
+   },
+   "isolation_correct_rate": 0.82,
+   "isolation_exact_rate": 0.64,
+   "median_bias_estimate": {
+    "T_mid": -0.3
+   },
+   "suspects_top": {
+    "T_mid": 32,
+    "T_out_s,T_mid": 8,
+    "T_high": 5
+   }
+  },
+  {
+   "key": "consistent_shift",
+   "label": "All owner sensors from a model run with outside T 4 K lower",
+   "kind": "consistent",
+   "sensors": [
+    "T_out_s",
+    "RH_out_s",
+    "P_el",
+    "T_mid",
+    "RH_mid",
+    "T_high",
+    "T_flower",
+    "T_ice",
+    "T_sup",
+    "T_ret",
+    "flow"
+   ],
+   "n": 50,
+   "detection_rate": 1.0,
+   "median_ttf_min": 10.0,
+   "p90_ttf_min": 10.0,
+   "by_layer_rate": {
+    "physics": 0.72,
+    "watermark": 1.0,
+    "external": 0.28
+   },
+   "first_layer": {
+    "physics": 36,
+    "external": 14
+   },
+   "fired": {
+    "R9": 36,
+    "R8": 12,
+    "R7W": 2
+   },
+   "isolation_correct_rate": null,
+   "isolation_exact_rate": null,
+   "median_bias_estimate": null,
+   "suspects_top": null
+  },
+  {
+   "key": "consistent_same",
+   "label": "All owner sensors from a model run on the real weather (no watermark)",
+   "kind": "consistent",
+   "sensors": [
+    "T_out_s",
+    "RH_out_s",
+    "P_el",
+    "T_mid",
+    "RH_mid",
+    "T_high",
+    "T_flower",
+    "T_ice",
+    "T_sup",
+    "T_ret",
+    "flow"
+   ],
+   "n": 50,
+   "detection_rate": 1.0,
+   "median_ttf_min": 1265.0,
+   "p90_ttf_min": 2108.0,
+   "by_layer_rate": {
+    "watermark": 1.0,
+    "external": 0.54,
+    "physics": 0.08
+   },
+   "first_layer": {
+    "watermark": 26,
+    "external": 20,
+    "physics": 4
+   },
+   "fired": {
+    "R8": 26,
+    "R8d": 1,
+    "R1": 1,
+    "R9": 1
+   },
+   "isolation_correct_rate": null,
+   "isolation_exact_rate": null,
+   "median_bias_estimate": null,
+   "suspects_top": null
+  },
+  {
+   "key": "replay",
+   "label": "Replay of yesterday (all owner sensors and logs)",
+   "kind": "replay",
+   "sensors": [
+    "T_out_s",
+    "RH_out_s",
+    "P_el",
+    "T_mid",
+    "RH_mid",
+    "T_high",
+    "T_flower",
+    "T_ice",
+    "T_sup",
+    "T_ret",
+    "flow"
+   ],
+   "n": 50,
+   "detection_rate": 1.0,
+   "median_ttf_min": 45.0,
+   "p90_ttf_min": 55.0,
+   "by_layer_rate": {
+    "external": 0.84,
+    "watermark": 1.0,
+    "hash": 1.0,
+    "physics": 0.16
+   },
+   "first_layer": {
+    "hash": 24,
+    "external": 19,
+    "physics": 7
+   },
+   "fired": {
+    "R8": 36,
+    "R1": 7,
+    "R8d": 3,
+    "R7T": 2
+   },
+   "isolation_correct_rate": null,
+   "isolation_exact_rate": null,
+   "median_bias_estimate": null,
+   "suspects_top": null
+  },
+  {
+   "key": "ice_fake",
+   "label": "Ice-panel T faked as 'still frozen' (−0.4 °C)",
+   "kind": "freeze",
+   "sensors": [
+    "T_ice"
+   ],
+   "n": 50,
+   "detection_rate": 0.2,
+   "median_ttf_min": 815.0,
+   "p90_ttf_min": 1980.0,
+   "by_layer_rate": {
+    "physics": 0.18,
+    "external": 0.02
+   },
+   "first_layer": {
+    "physics": 9,
+    "external": 1
+   },
+   "fired": {
+    "R10": 4,
+    "R6": 3,
+    "R7T": 1,
+    "R9": 1
+   },
+   "isolation_correct_rate": 0.2,
+   "isolation_exact_rate": 0.0,
+   "median_bias_estimate": {
+    "T_ice": -0.47
+   },
+   "suspects_top": {
+    "T_out_s,T_ice": 1,
+    "T_out_s,T_mid": 1,
+    "T_out_s,RH_mid": 1
+   }
+  }
+ ],
+ "calibration": {
+  "cusum_kappa": 1.1736829138273124,
+  "cusum_h": 493.5030392118558,
+  "cusum_h_bootstrap": 164.5010130706186,
+  "calibration_days": 21,
+  "calibrated": [
+   "R1",
+   "R2",
+   "R4",
+   "R5",
+   "R6",
+   "R7T",
+   "R7W",
+   "R8",
+   "R9"
+  ]
+ },
+ "biased_cusum": {
+  "mean_phi_max": 1.6291997909079452,
+  "drift_per_reading": 0.6291997909079452,
+  "drift_per_day": 181.20953978148822,
+  "S_after_30_days": 6061.360115865726,
+  "note": "On honest data the largest of ~8 standardised residuals averages well above 1, so S = S + Φ − 1 grows at every reading and any threshold is crossed again and again. The CUSUM used here subtracts the expected χ² (m) plus κ, so its honest drift is negative."
+ }
+}

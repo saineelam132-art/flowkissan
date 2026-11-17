@@ -169,3 +169,9 @@ tr.bad td{background:var(--badbg)}tr.flag td{background:var(--wnbg)}
   .pm-w.ok .flow{animation:none;stroke-dasharray:none;opacity:.35}
   .pm-w.bad .base{animation:none;stroke-dasharray:4 3}
   .g-needle,.pm-chip{transition:none}}
+.pm-s .pm-name{display:flex;flex-direction:column;line-height:1.2}
+.pm-badges{display:flex;gap:4px}.pm-badges:empty{display:none}
+.pm-pick label{display:flex!important;align-items:center;gap:6px;margin:0!important;font-size:.85rem;padding:1px 0}
+.pm-pick input{width:auto!important;margin:0!important;flex:none}
+.tl-track .bar{height:12px;top:2px;bottom:auto;opacity:.85}
+.tl-track em{top:-1px;background:var(--card);padding:0 5px;border-radius:4px;border:1px solid var(--bad);font-size:.72rem;line-height:14px;transform:none;margin-left:6px}

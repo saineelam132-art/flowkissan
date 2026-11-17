@@ -135,55 +135,55 @@
  },
  "running_INR_yr": {
   "low": {
-   "grid_electricity_INR": 484.8564,
+   "grid_electricity_INR": 568.9524,
    "upkeep_INR": 15000,
    "bags_INR": 10789.5,
-   "fogger_INR": 1599.80625,
-   "total_INR": 27874.162650000002
+   "fogger_INR": 1598.9850000000001,
+   "total_INR": 27957.4374
   },
   "mid": {
-   "grid_electricity_INR": 565.6658,
+   "grid_electricity_INR": 663.7778000000001,
    "upkeep_INR": 17500,
    "bags_INR": 16184.25,
-   "fogger_INR": 2836.0725,
-   "total_INR": 37085.9883
+   "fogger_INR": 2834.795,
+   "total_INR": 37182.8228
   },
   "high": {
-   "grid_electricity_INR": 727.2846,
+   "grid_electricity_INR": 853.4286,
    "upkeep_INR": 20000,
    "bags_INR": 21579.0,
-   "fogger_INR": 5308.605,
-   "total_INR": 47614.889599999995
+   "fogger_INR": 5306.415,
+   "total_INR": 47738.8436
   }
  },
  "fogger_yearly_INR": {
   "low": {
-   "ro_water_INR": 363.55825,
-   "electricity_INR": 436.248,
+   "ro_water_INR": 363.175,
+   "electricity_INR": 435.81000000000006,
    "disc_parts_INR": 300,
    "cleaning_INR": 500,
-   "total_INR": 1599.80625
+   "total_INR": 1598.9850000000001
   },
   "mid": {
-   "ro_water_INR": 727.1165,
-   "electricity_INR": 508.956,
+   "ro_water_INR": 726.35,
+   "electricity_INR": 508.44500000000005,
    "disc_parts_INR": 600,
    "cleaning_INR": 1000,
-   "total_INR": 2836.0725
+   "total_INR": 2834.795
   },
   "high": {
-   "ro_water_INR": 1454.233,
-   "electricity_INR": 654.372,
+   "ro_water_INR": 1452.7,
+   "electricity_INR": 653.715,
    "disc_parts_INR": 1200,
    "cleaning_INR": 2000,
-   "total_INR": 5308.605
+   "total_INR": 5306.415
   }
  },
  "fogger_inputs": {
-  "water_L_per_year": 727.1165,
-  "water_L_per_day": 1.9921,
-  "electric_kWh_per_year": 72.708,
-  "run_hours_per_year": 2423.6,
+  "water_L_per_year": 726.35,
+  "water_L_per_day": 1.99,
+  "electric_kWh_per_year": 72.635,
+  "run_hours_per_year": 2421.166666666667,
   "fogger_W": 30.0
  },
  "humidity_options": {
@@ -200,10 +200,10 @@
     "high": 0
    },
    "yearly_parts": "no cost",
-   "rh_avg_pct": 77.3438,
+   "rh_avg_pct": 77.4438,
    "rh_gain_pct_points": 0.0,
-   "weight_loss_pct_per_day": 1.4432,
-   "rh_below_85_h_day": 10.9419,
+   "weight_loss_pct_per_day": 1.4409,
+   "rh_below_85_h_day": 10.8677,
    "yearly_INR_per_pct_RH_gained": null
   },
   "liners": {
@@ -219,10 +219,10 @@
     "high": 21579.0
    },
    "yearly_parts": "PE bags for 10,790 kg a year",
-   "rh_avg_pct": 74.7859,
-   "rh_gain_pct_points": -2.5579000000000036,
-   "weight_loss_pct_per_day": 0.4427,
-   "rh_below_85_h_day": 11.8194,
+   "rh_avg_pct": 74.9216,
+   "rh_gain_pct_points": -2.522199999999998,
+   "weight_loss_pct_per_day": 0.4421,
+   "rh_below_85_h_day": 11.8032,
    "yearly_INR_per_pct_RH_gained": null
   },
   "liners_tray": {
@@ -233,15 +233,15 @@
     "high": 1000
    },
    "yearly_INR": {
-    "low": 10790.9965,
-    "mid": 16187.99125,
-    "high": 21586.4825
+    "low": 10790.99139,
+    "mid": 16187.978475,
+    "high": 21586.45695
    },
    "yearly_parts": "bags + 75 L of water a year",
-   "rh_avg_pct": 75.9731,
-   "rh_gain_pct_points": -1.3706999999999994,
+   "rh_avg_pct": 76.109,
+   "rh_gain_pct_points": -1.3348000000000013,
    "weight_loss_pct_per_day": 0.4324,
-   "rh_below_85_h_day": 11.3613,
+   "rh_below_85_h_day": 11.2742,
    "yearly_INR_per_pct_RH_gained": null
   },
   "liners_fogger": {
@@ -252,16 +252,16 @@
     "high": 13000
    },
    "yearly_INR": {
-    "low": 12389.30625,
-    "mid": 19020.322500000002,
-    "high": 26887.605
+    "low": 12388.485,
+    "mid": 19019.045,
+    "high": 26885.415
    },
-   "yearly_parts": "bags + RO water 727 L + electricity 72.7 kWh (2,424 run hours x 30 W) + disc/parts + cleaning",
-   "rh_avg_pct": 92.1162,
-   "rh_gain_pct_points": 14.772400000000005,
-   "weight_loss_pct_per_day": 0.3159,
+   "yearly_parts": "bags + RO water 726 L + electricity 72.6 kWh (2,421 run hours x 30 W) + disc/parts + cleaning",
+   "rh_avg_pct": 92.1114,
+   "rh_gain_pct_points": 14.667600000000007,
+   "weight_loss_pct_per_day": 0.3163,
    "rh_below_85_h_day": 0.1194,
-   "yearly_INR_per_pct_RH_gained": 1287.55804743982
+   "yearly_INR_per_pct_RH_gained": 1296.670552783004
   }
  },
  "humidity_best_value": "liners_fogger",
@@ -272,15 +272,15 @@
   "high": 9.0
  },
  "twin_inputs": {
-  "grid_kWh_per_year": 80.8094,
-  "pump_kWh_per_year": 73.0365,
-  "electric_kWh_per_year": 1353.712,
-  "fogger_water_L_per_year": 727.1165,
+  "grid_kWh_per_year": 94.8254,
+  "pump_kWh_per_year": 73.73,
+  "electric_kWh_per_year": 1358.384,
+  "fogger_water_L_per_year": 726.35,
   "kg_stored_simulated": 9784.984,
   "kg_planned_full_year": 10789.5,
   "full_year_scale": 1.1026589312767399,
   "kg_days_per_year": 15859.600416020097,
-  "value_INR_simulated": 631725.3602,
+  "value_INR_simulated": 631672.8862,
   "days_simulated": 310,
   "pump_note": "Pump energy is already inside the electricity numbers; most of it is solar."
  },
@@ -288,11 +288,11 @@
   "farmer_group": {
    "label": "(a) Farmer group: value captured (price uplift + surplus held + losses avoided)",
    "INR_yr": [
-    487604.32737698185,
-    696577.6105385455,
-    905550.8937001092
+    487563.82472964993,
+    696519.7496137857,
+    905475.6744979214
    ],
-   "how": "seasonal twin run (best practice): ₹631,725 in 310 days × 1.10 (kg planned for the full year / kg simulated), × 0.7 / 1.0 / 1.3"
+   "how": "seasonal twin run (best practice): ₹631,673 in 310 days × 1.10 (kg planned for the full year / kg simulated), × 0.7 / 1.0 / 1.3"
   },
   "rent_only": {
    "label": "(b) Rent only",
@@ -310,30 +310,30 @@
    "note": null,
    "low": {
     "total_cost_INR": 356000.0,
-    "benefit_INR_yr": 487604.32737698185,
-    "running_INR_yr": 27874.162650000002,
-    "net_INR_yr": 459730.16472698183,
-    "payback_years": 0.7743672861044834,
-    "ten_year_net_INR": 4241301.647269818
+    "benefit_INR_yr": 487563.82472964993,
+    "running_INR_yr": 27957.4374,
+    "net_INR_yr": 459606.38732964994,
+    "payback_years": 0.7745758323081379,
+    "ten_year_net_INR": 4240063.873296499
    },
    "mid": {
     "total_cost_INR": 503000.0,
-    "benefit_INR_yr": 696577.6105385455,
-    "running_INR_yr": 37085.9883,
-    "net_INR_yr": 659491.6222385456,
-    "payback_years": 0.7627087032472707,
-    "ten_year_net_INR": 6091916.222385456
+    "benefit_INR_yr": 696519.7496137857,
+    "running_INR_yr": 37182.8228,
+    "net_INR_yr": 659336.9268137857,
+    "payback_years": 0.7628876520396386,
+    "ten_year_net_INR": 6090369.268137857
    },
    "high": {
     "total_cost_INR": 711000.0,
-    "benefit_INR_yr": 905550.8937001092,
-    "running_INR_yr": 47614.889599999995,
-    "net_INR_yr": 857936.0041001092,
-    "payback_years": 0.8287331416353942,
-    "ten_year_net_INR": 7868360.041001093
+    "benefit_INR_yr": 905475.6744979214,
+    "running_INR_yr": 47738.8436,
+    "net_INR_yr": 857736.8308979213,
+    "payback_years": 0.8289255799540403,
+    "ten_year_net_INR": 7866368.308979213
    },
-   "payback_best_years": 0.4056163133937236,
-   "payback_worst_years": 1.6159478818225308
+   "payback_best_years": 0.4056895742444545,
+   "payback_worst_years": 1.6165521070991968
   },
   "rent_only": {
    "label": "(b) Rent only",
@@ -341,28 +341,28 @@
    "low": {
     "total_cost_INR": 356000.0,
     "benefit_INR_yr": 47578.80124806029,
-    "running_INR_yr": 27874.162650000002,
-    "net_INR_yr": 19704.63859806029,
-    "payback_years": 18.066811945236307,
-    "ten_year_net_INR": -158953.6140193971
+    "running_INR_yr": 27957.4374,
+    "net_INR_yr": 19621.363848060293,
+    "payback_years": 18.143489043713597,
+    "ten_year_net_INR": -159786.36151939706
    },
    "mid": {
     "total_cost_INR": 503000.0,
     "benefit_INR_yr": 63438.40166408039,
-    "running_INR_yr": 37085.9883,
-    "net_INR_yr": 26352.413364080392,
-    "payback_years": 19.087435865954244,
-    "ten_year_net_INR": -239475.86635919608
+    "running_INR_yr": 37182.8228,
+    "net_INR_yr": 26255.578864080388,
+    "payback_years": 19.157833182956097,
+    "ten_year_net_INR": -240444.2113591961
    },
    "high": {
     "total_cost_INR": 711000.0,
     "benefit_INR_yr": 79298.00208010049,
-    "running_INR_yr": 47614.889599999995,
-    "net_INR_yr": 31683.11248010049,
-    "payback_years": 22.440977048784724,
-    "ten_year_net_INR": -394168.8751989951
+    "running_INR_yr": 47738.8436,
+    "net_INR_yr": 31559.158480100486,
+    "payback_years": 22.52911782956185,
+    "ten_year_net_INR": -395408.41519899515
    },
-   "payback_best_years": 6.922859201983634,
+   "payback_best_years": 6.934088127355268,
    "payback_worst_years": null
   },
   "rent_subsidy_35": {
@@ -371,28 +371,28 @@
    "low": {
     "total_cost_INR": 231400.0,
     "benefit_INR_yr": 47578.80124806029,
-    "running_INR_yr": 27874.162650000002,
-    "net_INR_yr": 19704.63859806029,
-    "payback_years": 11.743427764403599,
-    "ten_year_net_INR": -34353.61401939709
+    "running_INR_yr": 27957.4374,
+    "net_INR_yr": 19621.363848060293,
+    "payback_years": 11.793267878413838,
+    "ten_year_net_INR": -35186.36151939706
    },
    "mid": {
     "total_cost_INR": 326950.0,
     "benefit_INR_yr": 63438.40166408039,
-    "running_INR_yr": 37085.9883,
-    "net_INR_yr": 26352.413364080392,
-    "payback_years": 12.406833312870258,
-    "ten_year_net_INR": -63425.86635919608
+    "running_INR_yr": 37182.8228,
+    "net_INR_yr": 26255.578864080388,
+    "payback_years": 12.452591568921463,
+    "ten_year_net_INR": -64394.21135919611
    },
    "high": {
     "total_cost_INR": 462150.0,
     "benefit_INR_yr": 79298.00208010049,
-    "running_INR_yr": 47614.889599999995,
-    "net_INR_yr": 31683.11248010049,
-    "payback_years": 14.586635081710071,
-    "ten_year_net_INR": -145318.8751989951
+    "running_INR_yr": 47738.8436,
+    "net_INR_yr": 31559.158480100486,
+    "payback_years": 14.643926589215203,
+    "ten_year_net_INR": -146558.41519899515
    },
-   "payback_best_years": 4.499858481289362,
+   "payback_best_years": 4.507157282780923,
    "payback_worst_years": null
   },
   "farmer_subsidy_35": {
@@ -400,30 +400,30 @@
    "note": "E – MIDH cold-chain subsidy: 35 % of the project cost in general areas, 50 % in scheduled / hilly areas. Check the current scheme and its cost norms.",
    "low": {
     "total_cost_INR": 231400.0,
-    "benefit_INR_yr": 487604.32737698185,
-    "running_INR_yr": 27874.162650000002,
-    "net_INR_yr": 459730.16472698183,
-    "payback_years": 0.5033387359679141,
-    "ten_year_net_INR": 4365901.647269818
+    "benefit_INR_yr": 487563.82472964993,
+    "running_INR_yr": 27957.4374,
+    "net_INR_yr": 459606.38732964994,
+    "payback_years": 0.5034742910002896,
+    "ten_year_net_INR": 4364663.873296499
    },
    "mid": {
     "total_cost_INR": 326950.0,
-    "benefit_INR_yr": 696577.6105385455,
-    "running_INR_yr": 37085.9883,
-    "net_INR_yr": 659491.6222385456,
-    "payback_years": 0.495760657110726,
-    "ten_year_net_INR": 6267966.222385456
+    "benefit_INR_yr": 696519.7496137857,
+    "running_INR_yr": 37182.8228,
+    "net_INR_yr": 659336.9268137857,
+    "payback_years": 0.4958769738257651,
+    "ten_year_net_INR": 6266419.268137857
    },
    "high": {
     "total_cost_INR": 462150.0,
-    "benefit_INR_yr": 905550.8937001092,
-    "running_INR_yr": 47614.889599999995,
-    "net_INR_yr": 857936.0041001092,
-    "payback_years": 0.5386765420630063,
-    "ten_year_net_INR": 8117210.041001093
+    "benefit_INR_yr": 905475.6744979214,
+    "running_INR_yr": 47738.8436,
+    "net_INR_yr": 857736.8308979213,
+    "payback_years": 0.5388016269701261,
+    "ten_year_net_INR": 8115218.308979213
    },
-   "payback_best_years": 0.26365060370592036,
-   "payback_worst_years": 1.050366123184645
+   "payback_best_years": 0.26369822325889547,
+   "payback_worst_years": 1.0507588696144778
   },
   "rent_subsidy_50": {
    "label": "(c) Rent with 50 % MIDH subsidy (scheduled areas)",
@@ -431,28 +431,28 @@
    "low": {
     "total_cost_INR": 178000.0,
     "benefit_INR_yr": 47578.80124806029,
-    "running_INR_yr": 27874.162650000002,
-    "net_INR_yr": 19704.63859806029,
-    "payback_years": 9.033405972618153,
-    "ten_year_net_INR": 19046.385980602907
+    "running_INR_yr": 27957.4374,
+    "net_INR_yr": 19621.363848060293,
+    "payback_years": 9.071744521856798,
+    "ten_year_net_INR": 18213.63848060294
    },
    "mid": {
     "total_cost_INR": 251500.0,
     "benefit_INR_yr": 63438.40166408039,
-    "running_INR_yr": 37085.9883,
-    "net_INR_yr": 26352.413364080392,
-    "payback_years": 9.543717932977122,
-    "ten_year_net_INR": 12024.13364080392
+    "running_INR_yr": 37182.8228,
+    "net_INR_yr": 26255.578864080388,
+    "payback_years": 9.578916591478048,
+    "ten_year_net_INR": 11055.78864080389
    },
    "high": {
     "total_cost_INR": 355500.0,
     "benefit_INR_yr": 79298.00208010049,
-    "running_INR_yr": 47614.889599999995,
-    "net_INR_yr": 31683.11248010049,
-    "payback_years": 11.220488524392362,
-    "ten_year_net_INR": -38668.87519899511
+    "running_INR_yr": 47738.8436,
+    "net_INR_yr": 31559.158480100486,
+    "payback_years": 11.264558914780926,
+    "ten_year_net_INR": -39908.41519899515
    },
-   "payback_best_years": 3.461429600991817,
+   "payback_best_years": 3.467044063677634,
    "payback_worst_years": null
   },
   "farmer_subsidy_50": {
@@ -460,87 +460,87 @@
    "note": "E – MIDH cold-chain subsidy: 35 % of the project cost in general areas, 50 % in scheduled / hilly areas. Check the current scheme and its cost norms.",
    "low": {
     "total_cost_INR": 178000.0,
-    "benefit_INR_yr": 487604.32737698185,
-    "running_INR_yr": 27874.162650000002,
-    "net_INR_yr": 459730.16472698183,
-    "payback_years": 0.3871836430522417,
-    "ten_year_net_INR": 4419301.647269818
+    "benefit_INR_yr": 487563.82472964993,
+    "running_INR_yr": 27957.4374,
+    "net_INR_yr": 459606.38732964994,
+    "payback_years": 0.38728791615406893,
+    "ten_year_net_INR": 4418063.873296499
    },
    "mid": {
     "total_cost_INR": 251500.0,
-    "benefit_INR_yr": 696577.6105385455,
-    "running_INR_yr": 37085.9883,
-    "net_INR_yr": 659491.6222385456,
-    "payback_years": 0.38135435162363535,
-    "ten_year_net_INR": 6343416.222385456
+    "benefit_INR_yr": 696519.7496137857,
+    "running_INR_yr": 37182.8228,
+    "net_INR_yr": 659336.9268137857,
+    "payback_years": 0.3814438260198193,
+    "ten_year_net_INR": 6341869.268137857
    },
    "high": {
     "total_cost_INR": 355500.0,
-    "benefit_INR_yr": 905550.8937001092,
-    "running_INR_yr": 47614.889599999995,
-    "net_INR_yr": 857936.0041001092,
-    "payback_years": 0.4143665708176971,
-    "ten_year_net_INR": 8223860.041001093
+    "benefit_INR_yr": 905475.6744979214,
+    "running_INR_yr": 47738.8436,
+    "net_INR_yr": 857736.8308979213,
+    "payback_years": 0.41446278997702013,
+    "ten_year_net_INR": 8221868.308979213
    },
-   "payback_best_years": 0.2028081566968618,
-   "payback_worst_years": 0.8079739409112654
+   "payback_best_years": 0.20284478712222725,
+   "payback_worst_years": 0.8082760535495984
   }
  },
  "seasons": {
   "dasara_deepavali_karthika": {
    "label": "Dasara–Deepavali–Karthika (mid Sep–mid Dec)",
    "kg": 2250.0772,
-   "value_INR": 64194.5274,
-   "price_uplift_INR": 18692.1902,
-   "loss_avoided_INR": 7770.9872,
-   "surplus_held_INR": 37731.3499,
-   "running_share_INR": 8527.999301102256,
-   "net_INR": 55666.52809889775,
-   "roi_on_total_cost_pct": 11.066904194611878
+   "value_INR": 64192.4518,
+   "price_uplift_INR": 18692.1445,
+   "loss_avoided_INR": 7770.9669,
+   "surplus_held_INR": 37729.3404,
+   "running_share_INR": 8550.266593580549,
+   "net_INR": 55642.18520641945,
+   "roi_on_total_cost_pct": 11.062064653363707
   },
   "sankranti": {
    "label": "Sankranti (mid Dec–Jan)",
    "kg": 944.8089,
-   "value_INR": 34259.1682,
-   "price_uplift_INR": 4432.5561,
-   "loss_avoided_INR": 1892.3593,
-   "surplus_held_INR": 27934.2529,
-   "running_share_INR": 3580.9125299679454,
-   "net_INR": 30678.255670032057,
-   "roi_on_total_cost_pct": 6.0990567932469295
+   "value_INR": 34258.739,
+   "price_uplift_INR": 4432.4469,
+   "loss_avoided_INR": 1892.3541,
+   "surplus_held_INR": 27933.938,
+   "running_share_INR": 3590.262580762822,
+   "net_INR": 30668.47641923718,
+   "roi_on_total_cost_pct": 6.0971126081982465
   },
   "sravana": {
    "label": "Sravana (Aug–early Sep)",
    "kg": 1345.6676,
-   "value_INR": 90473.8683,
-   "price_uplift_INR": 3067.0507,
+   "value_INR": 90472.5477,
+   "price_uplift_INR": 3067.0502,
    "loss_avoided_INR": 0.0,
-   "surplus_held_INR": 87406.8176,
-   "running_share_INR": 5100.203829591246,
-   "net_INR": 85373.66447040875,
-   "roi_on_total_cost_pct": 16.972895520956012
+   "surplus_held_INR": 87405.4975,
+   "running_share_INR": 5113.520872236611,
+   "net_INR": 85359.02682776339,
+   "roi_on_total_cost_pct": 16.969985452835665
   },
   "summer_jasmine": {
    "label": "Summer jasmine (Mar–Jul)",
    "kg": 5107.3141,
-   "value_INR": 429576.2602,
-   "price_uplift_INR": 196472.1363,
+   "value_INR": 429528.1624,
+   "price_uplift_INR": 196439.1322,
    "loss_avoided_INR": 0.0,
-   "surplus_held_INR": 233104.1239,
-   "running_share_INR": 19357.18964456406,
-   "net_INR": 410219.07055543596,
-   "roi_on_total_cost_pct": 81.55448718795944
+   "surplus_held_INR": 233089.0302,
+   "running_share_INR": 19407.73282452393,
+   "net_INR": 410120.42957547604,
+   "roi_on_total_cost_pct": 81.53487665516423
   },
   "valentine": {
    "label": "Valentine's / weddings (Feb)",
    "kg": 137.1161,
-   "value_INR": 13221.5361,
-   "price_uplift_INR": 13221.5361,
+   "value_INR": 13220.9854,
+   "price_uplift_INR": 13220.9854,
    "loss_avoided_INR": 0.0,
    "surplus_held_INR": 0.0,
-   "running_share_INR": 519.6826157653021,
-   "net_INR": 12701.853484234698,
-   "roi_on_total_cost_pct": 2.5252193805635583
+   "running_share_INR": 521.0395488972777,
+   "net_INR": 12699.945851102722,
+   "roi_on_total_cost_pct": 2.524840129443881
   }
  },
  "sensitivity": {
@@ -550,21 +550,21 @@
     "cells": [
      {
       "sale_day_multiplier": 1.1,
-      "benefit_INR_yr": 411921.5691012105,
-      "payback_years": 1.341921700508896,
-      "payback_35_years": 0.8722491053307823
+      "benefit_INR_yr": 411875.1298804697,
+      "payback_years": 1.3424348205045338,
+      "payback_35_years": 0.872582633327947
      },
      {
       "sale_day_multiplier": 1.25,
-      "benefit_INR_yr": 495555.0211472558,
-      "payback_years": 1.0971297164307718,
-      "payback_35_years": 0.7131343156800017
+      "benefit_INR_yr": 495503.7093262616,
+      "payback_years": 1.0974843494748265,
+      "payback_35_years": 0.7133648271586372
      },
      {
       "sale_day_multiplier": 1.4,
-      "benefit_INR_yr": 579188.4731933011,
-      "payback_years": 0.9278688329550869,
-      "payback_35_years": 0.6031147414208066
+      "benefit_INR_yr": 579132.2887720536,
+      "payback_years": 0.9281308158460995,
+      "payback_35_years": 0.6032850302999646
      }
     ]
    },
@@ -573,21 +573,21 @@
     "cells": [
      {
       "sale_day_multiplier": 1.1,
-      "benefit_INR_yr": 470616.2161364967,
-      "payback_years": 1.1602420493495633,
-      "payback_35_years": 0.7541573320772161
+      "benefit_INR_yr": 470569.06689249235,
+      "payback_years": 1.1606275161162034,
+      "payback_35_years": 0.7544078854755322
      },
      {
       "sale_day_multiplier": 1.25,
-      "benefit_INR_yr": 554249.668182542,
-      "payback_years": 0.9726127714812478,
-      "payback_35_years": 0.6321983014628111
+      "benefit_INR_yr": 554197.6463382844,
+      "payback_years": 0.9728928013274912,
+      "payback_35_years": 0.6323803208628693
      },
      {
       "sale_day_multiplier": 1.4,
-      "benefit_INR_yr": 637883.1202285874,
-      "payback_years": 0.837221040628716,
-      "payback_35_years": 0.5441936764086654
+      "benefit_INR_yr": 637826.2257840763,
+      "payback_years": 0.8374353193609205,
+      "payback_35_years": 0.5443329575845983
      }
     ]
    },
@@ -596,21 +596,21 @@
     "cells": [
      {
       "sale_day_multiplier": 1.1,
-      "benefit_INR_yr": 529310.8631717829,
-      "payback_years": 1.021890655426595,
-      "payback_35_years": 0.6642289260272868
+      "benefit_INR_yr": 529263.0039045152,
+      "payback_years": 1.0221911373690653,
+      "payback_35_years": 0.6644242392898925
      },
      {
       "sale_day_multiplier": 1.25,
-      "benefit_INR_yr": 612944.3152178283,
-      "payback_years": 0.8734787299025638,
-      "payback_35_years": 0.5677611744366664
+      "benefit_INR_yr": 612891.5833503072,
+      "payback_years": 0.8737056554762055,
+      "payback_35_years": 0.5679086760595335
      },
      {
       "sale_day_multiplier": 1.4,
-      "benefit_INR_yr": 696577.7672638735,
-      "payback_years": 0.7627085219928935,
-      "payback_35_years": 0.4957605392953808
+      "benefit_INR_yr": 696520.1627960991,
+      "payback_years": 0.7628871739661763,
+      "payback_35_years": 0.4958766630780146
      }
     ]
    }
