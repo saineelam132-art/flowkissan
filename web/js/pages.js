@@ -270,32 +270,8 @@
     $('app').innerHTML = `<h2>How it works ${range()}</h2>
       <div class="card diagram"><div class="zero">${D.r290_inside_room_g} g R290 inside the room</div>
         <figure><img src="assets/how/glycol_loop.jpg" alt="Diagram: outdoor R290 chiller with compressor, condenser and plate heat exchanger; glycol pump; V-ROOM valve to the glycol air cooler; V-ICE valve to the finned storage panels; orange return line" style="height:auto;object-fit:contain">
-          <figcaption><b>System diagram</b> (illustration supplied by the project owner). Its labels were drawn for the first, paraffin-ice version. In today's design the panels hold
-            ${f(D.ice_kg)} kg of ${esc(pcm.word)} that freezes and melts at ${f(pcm.T_melt_C)} °C, and the glycol supply is ${f(g.supply_ice_C)} °C when the ${esc(pcm.word)} is made. The drawing below uses today's values.</figcaption></figure></div>
-      <div class="card diagram"><h3>The same loop with today's design values ${C}</h3>
-      <svg viewBox="0 0 900 430" role="img" aria-label="Diagram: outdoor R290 chiller, plate heat exchanger, glycol pump, V-ROOM to the air cooler and V-ICE to the ice panels">
-        <rect x="20" y="60" width="250" height="250" rx="10" class="dg-box"/><text x="32" y="82" class="dg-t">OUTDOOR R290 chiller (factory-sealed)</text>
-        <rect x="40" y="110" width="90" height="60" rx="6" class="dg-box"/><text x="52" y="136" class="dg-s">compressor</text><text x="52" y="152" class="dg-s">(inverter)</text>
-        <rect x="40" y="220" width="90" height="60" rx="6" class="dg-box"/><text x="50" y="246" class="dg-s">condenser</text><text x="50" y="262" class="dg-s">+ fan</text>
-        <rect x="180" y="150" width="60" height="110" rx="6" class="dg-box"/><text x="186" y="200" class="dg-s">plate</text><text x="186" y="216" class="dg-s">heat ex.</text>
-        <path d="M130 140 H210 V150 M210 260 V270 H130 M85 170 V220" class="dg-r290"/><text x="32" y="300" class="dg-s" fill="#ef4444">red = R290, stays outside</text>
-        <text x="32" y="330" class="dg-s">gas leak sensor here · max ${f(D.chiller_max_kW, 1)} kW cooling</text>
-        <path d="M240 180 H330" class="dg-cold"/><circle cx="350" cy="180" r="20" class="dg-box"/><text x="338" y="185" class="dg-t">P</text><text x="322" y="150" class="dg-s">glycol pump ${f(g.pump_W)} W</text>
-        <path d="M370 180 H470 V110 H560 M470 180 V290 H560" class="dg-cold"/>
-        <rect x="455" y="20" width="430" height="390" rx="12" class="dg-room"/><text x="470" y="44" class="dg-t">COLD ROOM ${D.room_m.join(' × ')} m · ${f(D.setpoint_C)} °C</text>
-        <path d="M560 95 l24 30 l-24 0 l24 -30 z" class="dg-box"/><text x="548" y="84" class="dg-t">V-ROOM</text>
-        <path d="M560 275 l24 30 l-24 0 l24 -30 z" class="dg-box"/><text x="548" y="264" class="dg-t">V-ICE</text>
-        <path d="M584 110 H650" class="dg-cold"/><rect x="650" y="75" width="200" height="70" rx="8" class="dg-box"/><text x="662" y="103" class="dg-t">Glycol air cooler + EC fan</text><text x="662" y="122" class="dg-s">glycol supply about ${f(g.supply_room_C)} °C</text>
-        <path d="M584 290 H650" class="dg-cold"/><rect x="650" y="255" width="200" height="80" rx="8" class="dg-box"/><text x="662" y="283" class="dg-t">Ice panels (${f(D.ice_kg)} kg) + fins</text><text x="662" y="302" class="dg-s">glycol coils inside · supply ${f(g.supply_ice_C)} °C</text><text x="662" y="320" class="dg-s">freezes and melts at ${f(pcm.T_melt_C)} °C</text>
-        <path d="M850 110 H870 V370 H300 V230 H240 M850 295 H870" class="dg-warm"/><text x="480" y="390" class="dg-s">orange = glycol return (warmer)</text>
-        <text x="32" y="352" class="dg-s">blue = cold glycol (${esc(g.fluid)})</text>
-      </svg></div>
+</figure></div>
       <div class="cols">
-       <div class="card"><h3>Control rules</h3><ul class="plain">
-        <li><b>Room first.</b> V-ROOM opens when the room needs cold.</li>
-        <li><b>V-ICE</b> opens only with spare solar power and when the ice is below 100 %.</li>
-        <li><b>At night</b> the pump is off and both valves are closed. The ice cools the room by natural air flow over the fins.</li>
-        <li>Minimum ON time ${f(g.min_on_min)} min. The grid is only a backup (ice below ${f(D.controller.ats_pcm_pct)} % with no sun, or the room above ${f(D.controller.protect_above_C, 1)} °C for 15 min).</li></ul></div>
        <div class="card"><h3>The physics in the twin ${C} ${E}</h3>${table(['', N], [
         ['Glycol supply for the air cooler ' + E, f(g.supply_room_C) + ' °C'], ['Glycol supply when charging ice ' + E, f(g.supply_ice_C) + ' °C'],
         ['Plate heat-exchanger approach ' + E, f(g.hx_approach_K) + ' K'], ['R290 evaporating temperature (room / ice) ' + C, `${f(D.T_evap_room_C)} / ${f(D.T_evap_ice_C)} °C`],
