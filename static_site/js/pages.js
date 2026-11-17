@@ -281,20 +281,6 @@
         ['Pump energy ' + S, f(RS.pump_kWh_day, 2) + ' kWh/day'], ['Compressor energy ' + S, f(RS.compressor_kWh_day, 2) + ' kWh/day'],
         ['Cold lost in pipes + pump heat ' + S, f(RS.pipe_loss_kWh_day + RS.pump_heat_kWh_day, 2) + ' kWh/day'],
        ], { note: 'COP = R290 cycle from CoolProp at the evaporating temperature and condensing at outside air + 10 K (same compressor model as the old twin).' })}</div>
-      </div>
-      <h2>Parts (real photos of typical examples)</h2>
-      <div class="cols">
-        <div class="card">${fig('condensing_unit', 'Example of an outdoor condensing unit. Ours is a sealed R290 glycol chiller that stands outside in the same way')}</div>
-        <div class="card">${fig('pv')}</div><div class="card">${fig('trh_sensor')}</div><div class="card">${fig('temp_probe')}</div><div class="card">${fig('door_switch')}</div>
-        <div class="card"><h3>Design drawing – our ice panel</h3>
-          <svg viewBox="0 0 520 250" style="width:100%"><rect x="30" y="20" width="24" height="200" fill="none" stroke="#94a3b8" stroke-dasharray="4 3"/><text x="8" y="14" class="dg-s">insulated wall</text>
-          <rect x="58" y="24" width="30" height="190" fill="#dbeafe" stroke="#1e3a8a" stroke-width="1.5"/>${[0, 1, 2, 3, 4, 5].map(i => `<circle cx="73" cy="${44 + i * 30}" r="6" fill="#2a78d6" stroke="#1e3a8a"/>`).join('')}
-          ${Array.from({ length: 10 }, (_, i) => `<line x1="88" y1="${32 + i * 19}" x2="158" y2="${32 + i * 19}" stroke="#64748b" stroke-width="2.5"/>`).join('')}
-          <path d="M175 50 v140" stroke="#0e7490" stroke-width="2" stroke-dasharray="5 4"/><text x="186" y="50" class="dg-s">ice slab ${slab} mm (water with nucleating agent)</text>
-          <text x="186" y="72" class="dg-s">glycol coil inside the ice (blue)</text><text x="186" y="94" class="dg-s">aluminium fins ${f(hx.b * 1000)} mm deep, ${f(hx.S * 1000)} mm gap</text>
-          <text x="186" y="116" class="dg-s">panel ${f(hx.L, 1)} m tall, ${f(pcm.slab_area_m2)} m² in total</text><text x="186" y="138" class="dg-s">cold air sinks – no fan</text>
-          <text x="186" y="160" class="dg-s">drip tray + drain below</text><path d="M54 222 h120 l-6 10 h-108 z" fill="#e2e8f0" stroke="#334155"/></svg>
-          <figcaption><b>Design drawing</b> – our own part, not a photo. Sizes from the design file.</figcaption></div>
       </div>`;
   };
 
