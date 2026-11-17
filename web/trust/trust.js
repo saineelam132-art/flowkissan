@@ -385,19 +385,8 @@
   const lastTele = () => store.tele.length ? store.tele[store.tele.length - 1] : null;
   function renderOwner() {
     const i = step(), s = sc(), tl = lastTele();
-    const fault = s.from_step !== null ? (i >= s.from_step ? ` – fault active since ${whenLbl(tsAt(s.from_step))}` : ` – fault starts ${whenLbl(tsAt(s.from_step))}`) : '';
-    $('scenarioNote').innerHTML = `Scenario: <b>${esc(s.label)}</b>${fault}. 3-day twin run from the day before the hottest day of 2026.`;
-    const c = ctrl(), live = store.mode === 'live';
-    $('ctrlBox').innerHTML = amController() ? `<div class="alarm ok">This device runs the chamber clock${live ? ' (controller)' : ''}.</div>`
-      : `<div class="alarm wn">The chamber clock is run by ${c ? 'another device' : 'nobody yet'}${c ? ` (last step ${whenLbl(tsAt(c.step))})` : ''}.
-        ${store.isAdmin() ? '<button id="takeCtrl">Run it on this device</button>' : 'Only an owner device can run it.'}</div>`;
-    if ($('takeCtrl')) $('takeCtrl').onclick = () => store.setCtrl({ uid: store.uid, scenario: scKey(), step: step(), updated: new Date().toISOString() });
     ['playBtn', 'speedSel'].forEach(id => ($(id).disabled = !amController()));
     document.querySelectorAll('[data-adv]').forEach(b => (b.disabled = !amController()));
-    $('adminBox').innerHTML = live ? `Device id (uid): <code>${esc(store.uid)}</code> · ${store.isAdmin() ? '<b>owner (admin)</b>' : 'not an owner – add this uid to chambers/CH-FLOWER → admins in the Firebase console'}` : '';
-    gauge($('gauge'), tl ? tl.phi : 0);
-    $('phiTx').innerHTML = `${phiWord(tl ? tl.phi : 0)}<br><span class="note">Φ = √(Σ w·z² / Σ w) over 4 checks (moisture, energy, room heat balance, core lag), 15-min mean.
-      Green &lt; ${PH.green_below}, orange ${PH.green_below}–${PH.red_at}, alert when ≥ ${PH.red_at} for ${PH.red_steps} readings.</span>`;
     const r = tl ? tl.rep : X.truthAt(D, scKey(), i), p = readingPayload(i, r);
     const v = (x, u) => (x === null || x === undefined ? '<span class="bd">no reading</span>' : `${f1(x)} ${u}`);
     const node = (t, val, sub, tag) => `<div class="node"><b>${t} <span class="chip ${tag}">${tag}</span></b><span class="v">${val}</span><small>${sub}</small></div>`;

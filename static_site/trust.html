@@ -25,6 +25,9 @@
     <label class="lbl" for="scenario">Scenario</label>
     <select id="scenario" title="Which twin run the cold room follows (S)"></select>
     <button id="resetBtn" class="ghost" title="Delete all demo slips and start again">Demo: reset</button>
+    <span class="tt-play"><button id="playBtn" title="Run the twin clock">▶ Run</button>
+      <select id="speedSel" title="Twin speed"><option value="300">1×</option><option value="5" selected>60×</option><option value="1">300×</option></select>
+      <button data-adv="12" title="Advance 1 hour">+1 h</button><button data-adv="72" title="Advance 6 hours">+6 h</button></span>
   </div>
 </header>
 <div id="kkBanner" class="kkbanner"></div>
@@ -86,30 +89,6 @@
   <section id="v-owner" class="view">
     <div class="grid">
       <div class="card wide pm" id="phiMon" aria-label="Live trust monitor"><p class="muted">Loading the trust monitor…</p></div>
-      <div class="card">
-        <h3>Chamber clock <span class="chip S">S</span></h3>
-        <p class="note" id="scenarioNote"></p>
-        <div id="ctrlBox"></div>
-        <div class="row">
-          <button id="playBtn">▶ Run</button>
-          <select id="speedSel" title="Twin speed"><option value="300">1× real time</option><option value="5" selected>60× (5 min in 5 s)</option><option value="1">300× (5 min / s)</option></select>
-          <button data-adv="12">+1 h</button><button data-adv="72">+6 h</button>
-        </div>
-        <p class="note">Each 5-minute reading of the four nodes goes into the shared telemetry and one READING block into every stored
-          slip's chain. The owner can read the ledger but has no button to change it.</p>
-        <div id="adminBox" class="note"></div>
-      </div>
-      <div class="card">
-        <h3>Physics check Φ <span class="chip C">C</span></h3>
-        <div id="gauge"></div>
-        <div id="phiTx" class="phitx"></div>
-      </div>
-      <div class="card wide">
-        <h3>Glycol energy-balance check <span class="chip C">C</span> <span class="chip S">S</span></h3>
-        <div id="glyNow" class="nodes"></div>
-        <div class="chartbox"><canvas id="cGly"></canvas></div>
-        <p class="note" id="glyNote"></p>
-      </div>
       <div class="card wide">
         <h3>Inside nodes now <span class="chip S">S</span> · outside <span class="chip W">W</span></h3>
         <div id="nodes" class="nodes"></div>
@@ -247,7 +226,6 @@
 <script src="vendor/firebase/kk-firebase.js"></script>
 <script src="kk/kkstore.js"></script>
 <script src="trust/trust.js"></script>
-<script src="trust/glycol.js"></script>
 <script src="trust/phi_monitor.js"></script>
 <script src="js/sidemenu.js"></script>
 </body>
