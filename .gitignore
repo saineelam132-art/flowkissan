@@ -25,3 +25,6 @@ tools/firebase_bundle/package-lock.json
 *.epw
 .firebaserc
 .env
+
+# trust-model working cache (rebuilt by python -m twin.phi.evaluate)
+results/phi_cache/

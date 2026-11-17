@@ -12,7 +12,7 @@
   const C = '<span class="tag C" title="Calculated">C</span>';
   const range = () => `<span class="range">${esc(K.flowers.date_range.label)}</span>`;
   const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const PAGES = [['index.html', 'Home'], ['flowers.html', 'Flowers'], ['season.html', 'Season planner'], ['how.html', 'How it works'], ['cost.html', 'Cost & ROI'], ['reality.html', 'Reality check'], ['humidity.html', 'Humidity'], ['safety.html', 'Safety'], ['live.html', 'Live 2026'], ['trust.html', 'Trust & Trade'], ['control.html', 'Control centre']];
+  const PAGES = [['index.html', 'Home'], ['flowers.html', 'Flowers'], ['season.html', 'Season planner'], ['how.html', 'How it works'], ['cost.html', 'Cost & ROI'], ['reality.html', 'Reality check'], ['humidity.html', 'Humidity'], ['safety.html', 'Safety'], ['live.html', 'Live 2026'], ['trust.html', 'Trust & Trade'], ['control.html', 'Control centre'], ['method.html', 'Trust method (Φ)']];
   function table(head, rows, opt = {}) {
     const th = head.map(h => `<th class="${h.n ? 'n' : ''}">${h.t ?? h}</th>`).join('');
     const tr = rows.map(r => `<tr class="${r.hl ? 'hl' : ''}">${(r.c || r).map((c, i) => `<td class="${head[i] && head[i].n ? 'n' : ''}">${c ?? '–'}</td>`).join('')}</tr>`).join('');
@@ -20,7 +20,7 @@
   }
   const tile = (label, val, unit = '', sub = '', cls = '') => `<div class="tile ${cls}"><small>${label}</small><b>${val}</b><span class="u">${unit}</span>${sub ? `<div class="sub">${sub}</div>` : ''}</div>`;
   const ICON = { 'index.html': '🏠', 'how.html': '⚙️', 'flowers.html': '🌼', 'live.html': '📅', 'season.html': '🗓️', 'humidity.html': '💧', 'safety.html': '🛡️',
-    'cost.html': '₹', 'reality.html': '🔍', 'control.html': '🎛️', 'trust.html': '🤝' };
+    'cost.html': '₹', 'reality.html': '🔍', 'control.html': '🎛️', 'trust.html': '🤝', 'method.html': 'Φ' };
   function shell(page) {
     const here = page || (location.pathname.split('/').pop() || 'index.html');
     const top = document.createElement('header');

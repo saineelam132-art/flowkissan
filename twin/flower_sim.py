@@ -112,6 +112,8 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
         ch = R["cop_hot_penalty"]
         pen = np.where(T_out > ch["above_T_out_C"], 1 - ch["frac"], 1.0)
         cop_room, cop_ice = cop_room * pen, cop_ice * pen
+    if R.get("cop_factor"):                                          # truth plant for the trust tests: real COP differs from the map
+        cop_room, cop_ice = cop_room * R["cop_factor"], cop_ice * R["cop_factor"]
     Qmax = lr["compressor_max_kW"]
     Qmin = cfg["simulation"]["inverter_min_capacity_frac"] * Qmax
     mcp = GLY.m_dot(cfg) * gl["cp_kJ_kgK"]                              # kW/K
@@ -241,14 +243,16 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
             "Q_int", "Q_air", "Q_air_sens", "Q_air_lat", "Q_ch", "Q_pcm_room", "Q_wax_lat", "Q_pipe", "Q_pump", "Q_chill",
             "P_comp", "P_chiller", "P_pump", "P_fan", "P_fog", "P_pv", "P_solar_used", "P_grid", "grid_on", "running", "run_frac",
             "door_s", "solar_ok", "G_wax", "cop", "T_out", "RH_out", "poa", "v_room", "v_ice", "T_sup", "T_ret",
-            "w_transp", "w_coil", "w_ice", "w_fog", "w_tray", "w_door", "kg_inside", "valve_duty", "Q_evap_air", "ps_Pa", "load_event", "Q_other", "P_nfan")
+            "w_transp", "w_coil", "w_ice", "w_fog", "w_tray", "w_door", "kg_inside", "valve_duty", "Q_evap_air", "ps_Pa", "load_event", "Q_other", "P_nfan", "T_probe", "C_flowers")
     out = {k: np.zeros(n) for k in keys}
     acc = dict(in_=0.0, out=0.0, prod_in=0.0, prod_out=0.0)
     batches = []
 
     for i in range(n):
-        fault = i >= sc_from and any(k_ in sc for k_ in ("door_leak", "setpoint_C", "no_grid"))
+        fault = i >= sc_from and any(k_ in sc for k_ in ("door_leak", "setpoint_C", "no_grid", "chiller_off"))
         Tset = sc.get("setpoint_C", Tset0) if fault else Tset0
+        if R.get("setpoint_dither") is not None and not fault:         # secret watermark on the set-point (trust model)
+            Tset = Tset + float(R["setpoint_dither"][i])
         p = ps[i]
 
         # ---- flowers out (05:00) and in (13:00)
@@ -314,6 +318,9 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
         Q_avail = Qmax if grid_mode else (Q_sun_room if solar_ok else 0.0)       # chiller cold, supply 0 C
         if defrost[i]:
             Q_avail = 0.0
+        chiller_dead = fault and sc.get("chiller_off")                    # trust tests: chiller broken, nothing cools
+        if chiller_dead:
+            Q_avail = 0.0
 
         # ---- heat gains
         Dt_door = min(1.0, door[i] / DT)
@@ -331,7 +338,7 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
         Q_bs = [nd["C"] / tau * (nd["T"] - T_r - nd.get("off", 0.0)) for nd in nodes]
         Q_b = sum(Q_bs)
         # respiration fades as the flowers use up their life: spent flowers no longer respire (E)
-        Q_rs = [nd["m"] * FL.respiration_W_kg(crops[nd["crop"]], nd["T"]) * max(0.0, 1.0 - nd["fresh"].life_used) / 1000.0 for nd in nodes]
+        Q_rs = [nd["m"] * FL.respiration_W_kg(crops[nd["crop"]], nd["T"]) * max(0.0, 1.0 - nd["fresh"].life_used) * R.get("resp_factor", 1.0) / 1000.0 for nd in nodes]
 
         dTw = T_r - T_p if m_p > 0 else 0.0
         G_w = float(np.interp(max(dTw, 0.0), dTs, G_nat_tab)) if m_p > 0 else 0.0
@@ -361,9 +368,11 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
             low_lock = False
         if low_lock and not (fault and sc.get("setpoint_C") is not None):
             Q_req = 0.0
-        pipe_room = UA_pipe * max(0.0, T_out[i] - (Ts_room + gl["design_dT_K"] / 2))
+        dsup = float(R["supply_dither"][i]) if (R.get("supply_dither") is not None and not fault) else 0.0   # secret watermark on the glycol supply set-point
+        Ts_room_i, Ts_ice_i = Ts_room + dsup, Ts_ice + dsup
+        pipe_room = UA_pipe * max(0.0, T_out[i] - (Ts_room_i + gl["design_dT_K"] / 2))
         loss_room = pipe_room + pump_heat
-        Ts = Ts_room
+        Ts = Ts_room_i
         duty = Q_air_s = Q_air_l = Q_ch = 0.0
         q_s1 = T_surf = 0.0
         for _try in (0, 1):
@@ -375,18 +384,18 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
                     q_l1 = G_cm * max(0.0, W_r - HUM.w_sat(T_surf, p)) * HV
                     d_need, d_pow = min(1.0, Q_req / q_s1), (Q_avail - loss_room) / (q_s1 + q_l1)
                     duty = min(d_need, d_pow)
-                    if hot_day and d_pow < d_need - 1e-9 and not no_grid and not defrost[i] and _try == 0:
+                    if hot_day and d_pow < d_need - 1e-9 and not no_grid and not defrost[i] and not chiller_dead and _try == 0:
                         grid_mode, Q_avail = True, Qmax                   # the sun is too weak for a hot room: grid helps
                         continue
-            elif hot_day and Q_req > 1e-9 and not no_grid and not defrost[i] and _try == 0:
+            elif hot_day and Q_req > 1e-9 and not no_grid and not defrost[i] and not chiller_dead and _try == 0:
                 grid_mode, Q_avail = True, Qmax
                 continue
             break
-        want_ice = m_p > 0 and solar_ok and not grid_mode and not defrost[i] and h > h_min + 1e-9
+        want_ice = m_p > 0 and solar_ok and not grid_mode and not defrost[i] and not chiller_dead and h > h_min + 1e-9
         if want_ice:                                                      # spare solar after the room -> V-ICE, supply -2 C
-            q_s1w = GLY.coil_sensible_kW(G_coil, T_r, Ts_ice, mcp)
+            q_s1w = GLY.coil_sensible_kW(G_coil, T_r, Ts_ice_i, mcp)
             duty_w = min(1.0, Q_req / q_s1w) if (Q_req > 1e-9 and q_s1w > 1e-9) else 0.0
-            T_surf_w = T_r - f_air * (T_r - (Ts_ice + q_s1w / (2 * mcp)))
+            T_surf_w = T_r - f_air * (T_r - (Ts_ice_i + q_s1w / (2 * mcp)))
             q_l1w = G_cm * max(0.0, W_r - HUM.w_sat(T_surf_w, p)) * HV
             pipe_w = UA_pipe * max(0.0, T_out[i] - T_gm_ice)
             spare = Q_sun_ice - pipe_w - pump_heat - duty_w * (q_s1w + q_l1w)
@@ -394,7 +403,7 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
             ch_max = min(UA_ch * max(0.0, T_p - T_gm_ice), max(0.0, m_p * (h - h_lim) / DT))
             if spare > 1e-6 and ch_max > 1e-6 and duty_w * q_s1w >= min(Q_req, duty * q_s1 if duty > 0 else Q_req) - 1e-9:
                 Q_ch = min(spare, ch_max)
-                Ts, duty, q_s1, T_surf, loss_room = Ts_ice, duty_w, q_s1w, T_surf_w, pipe_w + pump_heat
+                Ts, duty, q_s1, T_surf, loss_room = Ts_ice_i, duty_w, q_s1w, T_surf_w, pipe_w + pump_heat
         if duty > 0 and Q_ch <= 0:                                        # V-ROOM alone: at least the minimum speed for 3 min
             need = min(Q_avail, Qmin) * min(1.0, min_on) - loss_room
             if duty * q_s1 < need:
@@ -453,6 +462,13 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
         P_fan = fan_kW * run_frac if Q_air > 0 else 0.0
         P_pump = pump_kW * run_frac
         P_fog = fog_kW * (S_fog / fog_rate) if fog_rate > 0 else 0.0
+        if not grid_mode and running and Q_ch > 0:                        # solar mode: ice charging may only use the sun that is there
+            excess = P_chiller + P_fan + P_pump + heat_def + P_fog + P_nf - P_pv[i]
+            if excess > 1e-9:
+                cut = min(Q_ch, excess * cop_i)
+                Q_ch -= cut
+                Q_chill -= cut
+                P_chiller = Q_chill / cop_i
         if R.get("start_loss_frac") and running and not was_running:
             k_ = 1 - R["start_loss_frac"]                                 # a start: power but little cold in the first minute
             Q_air_s *= k_
@@ -465,7 +481,7 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
             P_grid = P_comp - P_sol
         else:
             P_sol = min(P_comp, P_pv[i]) if running else min(P_fog + P_nf, P_pv[i])
-            P_grid = P_comp - P_sol if not running else 0.0               # fogger at night: from the grid / battery
+            P_grid = P_comp - P_sol                                       # any shortfall (fogger at night, a start) comes from the grid
         if no_grid:
             P_grid = 0.0
         if C_loop > 0:
@@ -523,7 +539,8 @@ def simulate(weather, cfg=None, crop_key=None, pcm_kg=None, pv_kWp=None, load_kg
                          ("T_out", T_out[i]), ("RH_out", RH_o[i]), ("poa", poa[i]), ("v_room", float(Q_air > 1e-9)), ("v_ice", float(Q_ch > 1e-9)),
                          ("T_sup", Ts if running else np.nan), ("T_ret", Tret), ("w_transp", sum(w_tr)), ("w_coil", w_coil), ("w_ice", w_ice),
                          ("w_fog", S_fog), ("w_tray", w_tray), ("w_door", w_door), ("kg_inside", sum(nd["m"] for nd in nodes)),
-                         ("valve_duty", duty), ("Q_evap_air", evap_air), ("ps_Pa", p), ("load_event", load_ev), ("Q_other", Q_other), ("P_nfan", P_nf)):
+                         ("valve_duty", duty), ("Q_evap_air", evap_air), ("ps_Pa", p), ("load_event", load_ev), ("Q_other", Q_other), ("P_nfan", P_nf),
+                         ("T_probe", nodes[-1]["T"] if nodes else T_r), ("C_flowers", sum(nd["C"] for nd in nodes))):
             out[key][i] = val
 
     E1 = C_room * T_r + M_air * W_r * HV + m_p * h + sum(nd["C"] * nd["T"] for nd in nodes)

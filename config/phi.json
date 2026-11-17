@@ -1,0 +1,307 @@
+{
+  "_about": "Trust model φ (phi) for the flower cold room. Every number here is an assumption (E) unless marked C (calculated). Keys starting with '_' are notes.",
+  "dt_s": 300,
+  "truth_plant": {
+    "_note": "E – the 'real' room differs from the engineer's model by these factors, so the check is not circular. The checker always uses the NOMINAL model.",
+    "wall_UA_factor": 1.15,
+    "curtain_E": 0.8,
+    "cop_factor": 0.93,
+    "flower_pulldown_hours": 4.8,
+    "ice_fin_UA_factor": 0.85,
+    "respiration_factor": 1.15,
+    "glycol_design_dT_K": 3.3,
+    "site_weather_run": 3,
+    "stratification": {
+      "fan_on_K": 0.2,
+      "fan_off_K": 0.6,
+      "per_K_outside": 0.02
+    },
+    "glycol_loop_tau_s": 7200
+  },
+  "nominal": {
+    "_note": "E – what the checker believes. Same as the best-practice twin settings, which are the engineer's best estimate.",
+    "flower_cp_kJ_kgK": 3.7,
+    "flower_pulldown_hours": 4.0,
+    "stratification": {
+      "fan_on_K": 0.25,
+      "fan_off_K": 0.5,
+      "per_K_outside": 0.015
+    },
+    "part_load_cop_factor": 1.0,
+    "defrost": {
+      "times": [
+        [
+          3,
+          0
+        ],
+        [
+          15,
+          0
+        ]
+      ],
+      "minutes": 20
+    }
+  },
+  "sensors": {
+    "_note": "E – cheap but decent sensors. offset: fixed error drawn once per sensor (uniform ±); noise: random each reading (1 sigma); gain: fixed relative error; quantum: display resolution; tau_s: probe time constant; dropout: chance a reading is missing.",
+    "T_out_s": {
+      "offset": 0.3,
+      "noise": 0.05,
+      "quantum": 0.1,
+      "tau_s": 300,
+      "dropout": 0.001
+    },
+    "RH_out_s": {
+      "offset": 2.0,
+      "noise": 0.5,
+      "quantum": 0.1,
+      "tau_s": 300,
+      "dropout": 0.001
+    },
+    "P_el": {
+      "gain": 0.015,
+      "noise_rel": 0.005,
+      "quantum": 0.001,
+      "dropout": 0.001
+    },
+    "T_mid": {
+      "offset": 0.3,
+      "noise": 0.05,
+      "quantum": 0.1,
+      "tau_s": 120,
+      "dropout": 0.001
+    },
+    "RH_mid": {
+      "offset": 2.0,
+      "noise": 0.5,
+      "quantum": 0.1,
+      "tau_s": 120,
+      "dropout": 0.001
+    },
+    "T_high": {
+      "offset": 0.3,
+      "noise": 0.05,
+      "quantum": 0.1,
+      "tau_s": 120,
+      "dropout": 0.001
+    },
+    "T_flower": {
+      "offset": 0.3,
+      "noise": 0.05,
+      "quantum": 0.1,
+      "tau_s": 600,
+      "dropout": 0.001
+    },
+    "T_ice": {
+      "offset": 0.3,
+      "noise": 0.05,
+      "quantum": 0.1,
+      "tau_s": 300,
+      "dropout": 0.001
+    },
+    "T_sup": {
+      "offset": 0.1,
+      "noise": 0.02,
+      "quantum": 0.01,
+      "tau_s": 60,
+      "dropout": 0.001
+    },
+    "T_ret": {
+      "offset": 0.1,
+      "noise": 0.02,
+      "quantum": 0.01,
+      "tau_s": 60,
+      "dropout": 0.001
+    },
+    "flow": {
+      "gain": 0.03,
+      "noise_rel": 0.01,
+      "quantum": 0.0001,
+      "dropout": 0.001
+    }
+  },
+  "external": {
+    "_note": "E – references the owner cannot edit, fetched server-side: weather service (Open-Meteo), PV inverter cloud log, utility (DISCOM) meter.",
+    "inverter_noise_rel": 0.01,
+    "discom_noise_rel": 0.01,
+    "discom_noise_abs_kWh": 0.02
+  },
+  "masking": {
+    "after_door_min": 25,
+    "after_load_min": 30,
+    "_note": "E – R1, R2, R6 are not scored this long after the door opens or flowers are loaded.",
+    "after_control_steps": 2,
+    "_control_note": "E – R1, R5 and R6 are skipped for 2 readings (10 min) after the controller changes valve duty, fogger, ice valve, night fan, defrost or starts/stops the chiller: the probes (time constants in 'sensors') lag the commanded heat flows."
+  },
+  "calibration": {
+    "days": 21,
+    "shrinkage": 0.3,
+    "_note": "E – the first 21 days of honest operation are used to learn the noise. Shrinkage pulls the correlation matrix toward 'no correlation' so 21 days are enough.",
+    "adapt_days": 14,
+    "adapt_sd_range": [
+      0.5,
+      4.0
+    ],
+    "adapt_mean_max_sd": 4.0,
+    "prior_sd": {
+      "R1": 60.0,
+      "R2": 1.0,
+      "R3": 60.0,
+      "R4": 10.0,
+      "R5": 0.2,
+      "R6": 4.0,
+      "R7T": 1.5,
+      "R7W": 1.5,
+      "R8": 3.0,
+      "R9": 0.1
+    },
+    "_adapt_note": "E – after the 21 calibration days the checker keeps learning with a 14-day memory, but only from readings that are NOT flagged. Means learn only for the PHYSICS residuals; external references (R7T, R7W, R8, R8d) keep their calibrated mean (they are the fixed truth) and may only widen their spread. The spread stays between 0.5× and 4× its calibrated value and a mean moves at most 4 calibrated spreads, so a lie cannot teach the checker quickly. prior_sd (residual units, E: sensor error budget) is used when a residual never ran during calibration (R3 needs the ice valve closed, which does not happen in January). cusum_clip: each whitened residual is clipped to ±4 inside the slow CUSUM only, so one wild honest reading cannot build up the sum.",
+    "adapt_mean_residuals": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6",
+      "R9"
+    ],
+    "adapt_spread_residuals": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6",
+      "R7T",
+      "R7W",
+      "R8",
+      "R9"
+    ],
+    "cusum_clip": 4.0,
+    "cusum_exclude": [
+      "R7T",
+      "R7W"
+    ],
+    "_cusum_exclude_note": "E – the real site weather differs from the weather service for hours at a time (rain, sea breeze), so the outside-T and outside-humidity checks are judged per reading (sudden jumps) and not summed in the slow CUSUM.",
+    "sd_floor": {
+      "R1": 5.0,
+      "R2": 0.05,
+      "R3": 10.0,
+      "R4": 1.0,
+      "R5": 0.08,
+      "R6": 0.3,
+      "R7T": 0.1,
+      "R7W": 0.1,
+      "R8": 0.5,
+      "R9": 0.05,
+      "_note": "E – smallest allowed noise per residual (residual units), from sensor resolution: temperatures are rounded to 0.1 K, RH to 0.1 %, power to 10 W."
+    },
+    "no_whiten": [
+      "R7T"
+    ],
+    "_no_whiten_note": "E – the outside-temperature check is judged on its LEVEL (no AR(1) whitening): a constant lie about outside temperature must stay visible, not only when it starts. Outside humidity keeps whitening because the real site humidity differs from the weather service for hours at a time (S: 5 extra false flags in 290 days when judged on level)."
+  },
+  "cusum": {
+    "target_false_per_30d": 1.0,
+    "bootstrap_runs": 300,
+    "_note": "E – slow-drift detector tuned on the 21 calibration days for about one false flag a month.",
+    "h_safety_factor": 3.0,
+    "_safety_note": "E – h is tuned by bootstrapping the 21 calibration days (January) to ~1 false flag per 30 days, then multiplied by 3 because calm winter days under-represent summer loading and weather. The cost (slower detection of small slow lies) is measured in docs/phi_results.md."
+  },
+  "flag": {
+    "phi": 3.0,
+    "steps": 3
+  },
+  "hard_rules": {
+    "carnot_frac": 0.6,
+    "min_chiller_kW": 0.15,
+    "ice_band_K": 0.5,
+    "ice_f_range": [
+      0.15,
+      0.85
+    ],
+    "ice_steps": 3,
+    "_note": "H1 measured COP may not exceed 0.6 x Carnot; H2 dew point <= room T and, while cooling, glycol supply < room T; H3 while the ice is partly frozen its temperature must stay within 0.5 K of 0 C (3 readings, probe lag)."
+  },
+  "ice_observer": {
+    "gain": 1.0,
+    "plateau_K": 0.5,
+    "_note": "E – gain 1: the observer restarts from the reported ice temperature whenever it is outside the melting plateau, so R5 is the one-step error of the ice temperature (rate check); inside the plateau the frozen fraction is tracked from the heat flows."
+  },
+  "isolation": {
+    "window_steps": 12,
+    "max_set": 3,
+    "penalty": 10.83,
+    "_note": "E – GLR over every set of up to 3 owner sensors on the last hour; penalty = chi-square(1) 99.9 % point per extra sensor."
+  },
+  "watermark": {
+    "amplitude_K": 0.3,
+    "hold_steps": 6,
+    "seed": 20261117,
+    "filter_tau_s": 600,
+    "min_cool_steps": 48,
+    "z_flag": 2.0,
+    "_note": "E – the controller moves the set-point by ±0.3 K in a secret random pattern (30-min blocks). The real room follows; a faked or replayed record does not. The seed would live only on the server; this demo seed is public.",
+    "supply_z_flag": 4.0,
+    "supply_min_steps": 24,
+    "_supply_note": "E – the same kind of secret ±0.3 K pattern (seed + 1) on the chiller's glycol supply set-point. Checked once a day: z = corr(T_sup minus its mode mean, today's pattern)·√N. Honest days in the 2026 run: z ≥ 6 in 99 % (S); a record made by a model, replayed or copied gives z ≈ 0. Flag when z < 4. It proves the glycol readings are live; it says nothing about the room probes. The room set-point pattern is kept but NOT used for flags: the room valve acts only ~3 % of the time here (the ice panels do most cooling), so its signal is too weak (S)."
+  },
+  "evaluation": {
+    "starts": 50,
+    "pre_days": 2,
+    "horizon_h": 48,
+    "seed": 7
+  },
+  "owner_sensors": [
+    "T_out_s",
+    "RH_out_s",
+    "P_el",
+    "T_mid",
+    "RH_mid",
+    "T_high",
+    "T_flower",
+    "T_ice",
+    "T_sup",
+    "T_ret",
+    "flow"
+  ],
+  "binary_owner_sensors": [
+    "ATS",
+    "door"
+  ],
+  "external_refs": [
+    "T_out_api",
+    "RH_out_api",
+    "ps_api",
+    "ghi_api",
+    "P_inv",
+    "discom_kWh"
+  ],
+  "commands": [
+    "duty_room",
+    "v_ice",
+    "run_frac",
+    "fog_duty",
+    "nfan",
+    "defrost",
+    "kg",
+    "load_event",
+    "dither"
+  ],
+  "model_uncertainty": {
+    "wall": 0.0,
+    "door": 0.3,
+    "flowers": 0.25,
+    "ice": 0.0,
+    "coil": 0.0,
+    "pipe": 0.0,
+    "respiration": 0.0,
+    "transpiration": 0.3,
+    "fogger": 0.0,
+    "_note": "E – relative uncertainty of the TRANSIENT flows in the checker's nominal model: door/curtain air exchange ±30 % (door studies), flower heat transfer of a fresh hot load ±25 % (pull-down time 3–5 h), transpiration ±30 %. The allowed spread of a residual is √(learnt noise² + Σ(u·flow)²), so a hot load or an open door does not cause alarms. Steady flows (walls, ice, coil, pipes, respiration) are set to 0 here because their model error is steady and is learnt by the calibration and the slow baseline instead. Not tuned to the truth plant."
+  },
+  "design": {
+    "visible_sigma": 1.0,
+    "_note": "E – a lie counts as 'visible' in one operating state if a unit bias moves the residuals by at least 1 σ (combined) within one hour."
+  }
+}

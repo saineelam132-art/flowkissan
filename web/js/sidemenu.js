@@ -11,7 +11,8 @@
     ['safety.html', '🛡️', 'Safety'],
     ['live.html', '📅', 'Live 2026'],
     ['trust.html', '🤝', 'Trust & Trade'],
-    ['control.html', '🎛️', 'Control centre']];
+    ['control.html', '🎛️', 'Control centre'],
+    ['method.html', 'Φ', 'Trust method (Φ)']];
   function init() {
     const bar = document.querySelector('.tt-top');
     if (!bar || document.getElementById('menuBtn')) return;

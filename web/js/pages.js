@@ -425,6 +425,64 @@
       </div>`;
   };
 
+  // ------------------------------------------------------------------ TRUST METHOD (Φ)
+  P.method = () => {
+    const ev = K.phi_eval, dz = K.phi_design, pc = K.phi_cfg;
+    if (!ev) { $('app').innerHTML = '<h2>Trust method</h2><p>Run <code>python -m twin.phi.evaluate</code> first.</p>'; return; }
+    const h = ev.honest_year, cl = ev.calibration, bc = ev.biased_cusum;
+    const pct = x => (x === null || x === undefined ? '–' : f(100 * x) + ' %');
+    const mins = x => (x === null || x === undefined ? '–' : f(x) + ' min');
+    const rows = ev.cases.map(c => `<tr class="${c.key === 'honest' ? '' : c.detection_rate >= 0.9 ? 'good' : c.detection_rate >= 0.5 ? 'warn' : 'bad'}"><td>${esc(c.label)}</td><td>${pct(c.detection_rate)}</td><td>${mins(c.median_ttf_min)}</td>
+      <td>${Object.entries(c.by_layer_rate).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${esc(k)} ${pct(v)}`).join(', ') || '–'}</td><td>${Object.keys(c.fired).slice(0, 2).join(', ') || '–'}</td>
+      <td>${c.isolation_correct_rate === null ? '–' : pct(c.isolation_correct_rate)}</td></tr>`).join('');
+    const blind = dz ? Object.entries(dz.states).map(([st, v]) => `<li><b>${esc(st)}</b>: ${v.blind['physics only'].length} blind sensor sets with physics only, ${v.blind['physics + external references'].length} with external references too.</li>`).join('') : '';
+    $('app').innerHTML = `<h2>Trust method – how Φ checks the sensor data ${S}</h2>
+      <div class="note bd">Everything on this page was tested on a <b>simulated</b> cold room (S): a "truth" twin whose walls, chiller, flowers and ice behave differently from the checker's model,
+        with simulated sensor errors and simulated attacks. Nothing here is measured. All assumptions are in <code>config/phi.json</code> and marked ${E}.</div>
+      <div class="cols">
+       <div class="card"><h3>1 · Residuals: "what physics expects" minus "what the sensors say"</h3><ul class="plain">
+        <li><b>R1 room heat</b>: C<sub>a</sub>ΔT/Δt − [walls + door + inside heat + flowers − ice panels − air cooler − fogger]</li>
+        <li><b>R2 flower heat</b> (per kg): c·ΔT<sub>f</sub>/Δt − [air → flower + respiration − transpiration]</li>
+        <li><b>R3 glycol loop</b>: ṁc(T<sub>ret</sub> − T<sub>sup</sub>) − [air cooler + pipe gains + pump heat]</li>
+        <li><b>R4 chiller map</b>: P<sub>chiller</sub>·COP(T<sub>out</sub> of the weather service, T<sub>sup</sub>) vs the glycol cooling (%)</li>
+        <li><b>R5 ice</b>, <b>R6 moisture</b>, <b>R9 room probes</b> (high vs middle), <b>R10</b> daily energy closure</li>
+        <li>External (owner cannot edit): <b>R7</b> outside T/humidity vs the weather service, <b>R8</b> power vs the PV inverter log, <b>R8d</b> daily grid kWh vs the utility meter</li>
+        <li>Hard rules: <b>H1</b> COP above ${f(100 * pc.hard_rules.carnot_frac)} % of Carnot, <b>H2</b> RH above 100 % or supply warmer than the room while cooling, <b>H3</b> ice "frozen" but its temperature is off the melting plateau</li></ul>
+        <p class="src">Readings within ${pc.masking.after_door_min} min of a door opening, ${pc.masking.after_load_min} min of loading and ${pc.masking.after_control_steps} readings of a control change are not judged by R1/R5/R6 ${E}.
+        A hot load or an open door widens the allowed spread: √(noise² + Σ(u·flow)²) with u = door ${f(100 * pc.model_uncertainty.door)} %, flowers ${f(100 * pc.model_uncertainty.flowers)} %, transpiration ${f(100 * pc.model_uncertainty.transpiration)} % ${E}.</p></div>
+       <div class="card"><h3>2 · One number: Φ</h3><ul class="plain">
+        <li>Each residual is standardised with the noise learnt on the first ${cl.calibration_days} honest days, its memory removed (AR(1)): e = (z<sub>k</sub> − ρz<sub>k−1</sub>)/√(1−ρ²).</li>
+        <li>Combined with their correlation Σ: <b>χ² = eᵀΣ⁻¹e</b>, m = number of residuals active now.</li>
+        <li><b>Φ<sub>inst</sub> = Φ<sub>N</sub>⁻¹(F<sub>χ²(m)</sub>(χ²))</b> – a "sigma" number: Φ = 3 always means the same small chance, whether 2 or 10 checks are active.</li>
+        <li>Slow lies: <b>S<sub>k</sub> = max(0, S<sub>k−1</sub> + χ²<sub>k</sub> − m − κ)</b>, Φ<sub>slow</sub> = 3S/h (κ = ${f(cl.cusum_kappa, 2)}, h = ${f(cl.cusum_h)}) ${E}.</li>
+        <li>Daily closure: Φ<sub>day</sub> = |R10 or R8d − normal| / spread, held for the next day.</li>
+        <li><b>Φ = max(Φ<sub>inst</sub>, Φ<sub>slow</sub>, Φ<sub>day</sub>, 99 if a hard rule breaks)</b>. FLAG when Φ ≥ ${pc.flag.phi} for ${pc.flag.steps} readings in a row, or a hard rule breaks.</li>
+        <li>After calibration the checker keeps learning with a ${pc.calibration.adapt_days}-day memory, only from un-flagged readings, bounded to ${pc.calibration.adapt_sd_range[1]}× the spread ${E}.</li></ul>
+        <p class="src">Why not the old "S = S + Φ − 1" with Φ = max|z|: on honest data max|z| averages ${f(bc.mean_phi_max, 2)}, so S grows by about ${f(bc.drift_per_day)} per day and alarms forever.</p></div>
+       <div class="card"><h3>3 · Which sensor is lying? (isolation)</h3><ul class="plain">
+        <li>For the hour after a flag, each owner sensor is nudged in the model to see how every residual would move (a Jacobian J).</li>
+        <li>For every set S of up to ${pc.isolation.max_set} sensors: <b>GLR = ‖y‖² − min<sub>b</sub>‖y − J<sub>S</sub>b‖²</b>, minus ${f(pc.isolation.penalty, 2)} per sensor. The best set is the suspect; b is its estimated bias.</li>
+        <li>Safe Mode quarantines the suspects: outside T is replaced by the weather service, room and glycol values by "reported − bias". Freshness then uses these trusted values, or the worst case (no cooling) when nothing explains the data.</li></ul></div>
+       <div class="card"><h3>4 · What physics cannot see – and what covers it</h3><ul class="plain">
+        <li><b>Watermark</b>: the controller moves the glycol supply set-point by ±${f(pc.watermark.amplitude_K, 1)} K in a secret pattern; once a day the record must correlate with it (z ≥ ${f(pc.watermark.supply_z_flag)}). Honest days: ${h.watermark_false_days} of ${h.watermark_days} below the line (S).</li>
+        <li><b>Hash chain</b>: every reading is signed and chained; a replay of yesterday is a bit-identical copy.</li>
+        <li><b>External references</b>: the weather service, the inverter log and the utility meter cannot be edited by the owner.</li>
+        <li><b>A fully consistent fake – every owner sensor taken from a good model on the real weather – breaks no physics. Φ alone cannot catch it.</b> Only the watermark and the external data can.</li>
+        ${blind ? `<li>Rank test on 1-hour windows (S): <ul>${blind}</ul> Details: docs/phi_design.md.</li>` : ''}</ul></div>
+      </div>
+      <div class="card"><h3>Honest record ${S}</h3><div class="tiles">${tile('False flags', f(h.false_flags_per_30_days, 2), 'per 30 days', `${h.false_flags} in ${f(h.days_scored)} days after the ${cl.calibration_days} calibration days`, h.false_flags_per_30_days <= 2 ? 'good' : 'warn')}
+        ${tile('Readings flagged', f(100 * h.flagged_fraction, 1), '%', 'mostly the daily closure holding a flag for a day')}${tile('Φ_inst ≥ 3', f(100 * h.phi_inst_ge3_fraction, 2), '% of readings', 'Gaussian theory: 0.13 % – real residuals have heavier tails')}</div></div>
+      <div class="card"><h3>Attacks: ${ev.starts_per_case} random start times each, ${ev.horizon_h} h to catch ${S}</h3>
+        <div class="tscroll"><table class="tbl"><thead><tr><th>Case</th><th>Caught</th><th>Median time</th><th>Layers that caught it</th><th>First residual</th><th>Right sensor isolated</th></tr></thead><tbody>${rows}</tbody></table></div>
+        <p class="src">Full table with the "why": docs/phi_results.md. Data: results/live/phi_eval_2026.json.</p></div>
+      <div class="card"><h3>Limits and real-world data still needed</h3><ul class="plain">
+        <li>The noise, bias and tails of REAL sensors (we used ${E} offsets, noise and lags), and of a real room's model error.</li>
+        <li>A real door/curtain air-exchange measurement, the real chiller COP map and glycol flow, and a season of honest data to set κ, h and the spreads.</li>
+        <li>The real latency and gaps of the weather service, inverter log and utility meter feeds.</li>
+        <li>The watermark must be tried on the real chiller: does a ±0.3 K supply pattern stay visible and harmless?</li>
+        <li>Red-team tests by people who know the method – the simulated attacks here are only a start.</li></ul></div>`;
+  };
+
   // ------------------------------------------------------------------ COST
   P.cost = () => {
     const c = K.cost, L = ['low', 'mid', 'high'], tw = c.twin_inputs, g = c.glycol_vs_old, fy = c.fogger_yearly_INR, fi = c.fogger_inputs;
