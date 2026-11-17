@@ -1,9 +1,17 @@
 // Side menu for pages that have their own top bar (Trust & Trade, alert). Same links as the rest of the site.
 (function () {
   'use strict';
-  const PAGES = [['index.html', '🏠', 'Home'], ['how.html', '⚙️', 'How it works'], ['flowers.html', '🌼', 'Flowers'], ['live.html', '📅', 'Live 2026'], ['season.html', '🗓️', 'Season planner'],
-    ['humidity.html', '💧', 'Humidity'], ['safety.html', '🛡️', 'Safety'], ['cost.html', '₹', 'Cost & ROI'], ['reality.html', '🔍', 'Reality check'], ['control.html', '🎛️', 'Control centre'],
-    ['trust.html', '🤝', 'Trust & Trade']];
+  const PAGES = [['index.html', '🏠', 'Home'],
+    ['flowers.html', '🌼', 'Flowers'],
+    ['season.html', '🗓️', 'Season planner'],
+    ['how.html', '⚙️', 'How it works'],
+    ['cost.html', '₹', 'Cost & ROI'],
+    ['reality.html', '🔍', 'Reality check'],
+    ['humidity.html', '💧', 'Humidity'],
+    ['safety.html', '🛡️', 'Safety'],
+    ['live.html', '📅', 'Live 2026'],
+    ['trust.html', '🤝', 'Trust & Trade'],
+    ['control.html', '🎛️', 'Control centre']];
   function init() {
     const bar = document.querySelector('.tt-top');
     if (!bar || document.getElementById('menuBtn')) return;
