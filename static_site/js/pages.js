@@ -594,39 +594,182 @@
 
   // ------------------------------------------------------------------ LIVE 2026
   P.live = () => {
-    const v = K.live, h = v.headline, t = v.totals, lr = `<span class="range">${esc(v.date_range.label)}</span>`;
-    $('app').innerHTML = `<h2>Live 2026 report ${S} ${lr}</h2>
-      <p>The best-practice room on real Visakhapatnam weather from 1 January 2026 to the newest saved weather hour (${esc(v.weather_last_hour)} IST). ${esc(v.note)}</p>
-      <div class="tiles">
+    const v = K.live, h = v.headline, t = v.totals, lr = `<span class="range">${esc(v.date_range.label)}</span>`, HR = K.hourly;
+    const band = D.band_C, hi = band[1], days = v.daily, fc = v.forecast.days, byDate = {};
+    days.forEach(d => { byDate[d.date] = d; });
+    fc.forEach(d => { if (!byDate[d.date]) byDate[d.date] = Object.assign({ forecast: true }, d); });
+    const today = days[days.length - 1].date, tomorrow = fc.length ? fc[0].date : null;
+    const t0 = new Date(HR.t0.replace(' ', 'T') + '+05:30');
+    const hIdx = date => Math.round((new Date(date + 'T00:00:00+05:30') - t0) / 3600000);
+    const avgFresh = days.reduce((s_, d) => s_ + (d.hours_above_band_fresh || 0), 0) / days.length;
+    const other = days.reduce((s_, d) => s_ + (d.hours_above_band_other || 0), 0);
+    const KIND = { solar: ['solar', 'fully on solar + ice'], loading: ['load', 'grid only during morning loading'], grid: ['grid', 'grid at other times'] };
+    const fmtD = d => new Date(d + 'T00:00:00+05:30').toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Asia/Kolkata' });
+    const cropName = k => esc((crop(k) || { label: k }).label.split(' (')[0]);
+    $('app').innerHTML = `
+      <div class="lv-head"><h2>Live Year Run <small>real 2026 Visakhapatnam weather</small> ${S}</h2>
+        <div class="lv-meta"><span>Weather up to ${esc(v.weather_last_hour)} IST · ${esc(v.weather_source)}</span>
+          <span>🔋 No battery for cooling (the ice is the storage). Small 12 V battery only for sensors and controller.</span>
+          <span class="lv-sim">Simulated – digital twin, nothing measured</span></div>
+        <div class="lv-ok">Room air above ${f(hi)} °C only while a fresh warm batch is cooling: <b>${f(avgFresh, 1)} h/day</b> on average. All other times: <b>${f(other)} h</b> outside ${band.join('–')} °C. ${lr}</div></div>
+      <div class="seg tabs" id="lvTabs">${[['year', 'Year so far'], ['cal', 'Calendar'], ['today', 'Today'], ['tom', 'Tomorrow'], ['months', 'Month by month'], ['money', 'Money'], ['inputs', 'Fixed inputs'], ['how', '₹ Money: how we calculate']]
+        .map(([k, l]) => `<button data-t="${k}"${k === 'how' ? ' class="lv-money"' : ''}>${l}</button>`).join('')}</div>
+      <div id="lvTab"></div>`;
+    let charts = [];
+    const kill = () => { charts.forEach(c => c.destroy()); charts = []; };
+
+    // ---------- one day: summary + charts
+    function daySummary(date) {
+      const d = byDate[date];
+      if (!d) return `<div class="card"><p>No twin data for ${esc(date)}.</p></div>`;
+      const fresh = (d.fresh_in || []).map(x => `${f(x.kg)} kg ${cropName(x.crop)} in at ${esc(x.time)}`).join(', ');
+      const f0 = (d.fresh_in || [])[0];
+      const kind = d.forecast ? '<span class="pill wn">PREDICTION – forecast run through the twin</span>' : (KIND[d.day_kind] || KIND.grid)[1];
+      const cell = (l, val, sub) => `<div class="lv-c"><span>${l}</span><b>${val}</b>${sub ? `<small>${sub}</small>` : ''}</div>`;
+      return `<div class="card lv-day"><h3>${fmtD(date)} – day summary ${d.forecast ? '' : S}</h3><div class="lv-grid">
+        ${cell('Outside', d.outside_avg_C !== undefined ? f(d.outside_avg_C, 1) + ' °C' : `${f(d.outside_min_C, 1)}–${f(d.outside_max_C, 1)} °C`, `max ${f(d.outside_max_C, 1)} °C`)}
+        ${cell('Sunlight', f(d.sun_kWh_m2, 2) + ' kWh/m²', d.rain_mm !== undefined ? `rain ${f(d.rain_mm, 1)} mm` : '')}
+        ${d.heat_load_kWh !== undefined ? cell('Heat load', f(d.heat_load_kWh, 1) + ' kWh', 'walls, door, flowers, fans') : ''}
+        ${d.cooling_kWh !== undefined ? cell('Cooling made by the chiller', f(d.cooling_kWh, 1) + ' kWh', 'room + ice charging') : ''}
+        ${cell('Electricity (cooling system)', f(d.electric_kWh !== undefined ? d.electric_kWh : d.solar_kWh + d.grid_kWh, 2) + ' kWh', d.compressor_h !== undefined ? `chiller ran ${f(d.compressor_h, 1)} h` : '')}
+        ${cell('Solar available / used', `${d.pv_available_kWh !== undefined ? f(d.pv_available_kWh, 1) : '–'} / ${f(d.solar_kWh, 1)} kWh`)}
+        ${cell('Grid', f(d.grid_kWh, 2) + ' kWh', `${f(d.grid_h, 1)} h of grid assist`)}
+        ${cell('Room min / max', d.room_min_C !== undefined ? `${f(d.room_min_C, 1)} / ${f(d.room_max_C, 1)} °C` : `max ${f(d.room_max_C, 1)} °C`, d.rh_avg_pct !== undefined ? `room RH ${f(d.rh_avg_pct)} %` : '')}
+        ${cell('Ice lowest / end of day', d.ice_min_pct !== undefined ? `${f(d.ice_min_pct)} / ${f(d.ice_end_pct)} %` : `${f(d.ice_sunrise_pct)} → ${f(d.ice_sunset_pct)} %`, d.ice_min_pct !== undefined ? 'frozen share of the ice panels' : 'sunrise → sunset')}
+        ${cell('Fresh flowers in', f0 ? `${f(f0.kg)} kg at ${esc(f0.time)}` : (d.planned_in && d.planned_in.length ? d.planned_in.map(x => Object.entries(x.parts).map(([k, kg]) => `${f(kg)} kg ${cropName(k)}`).join(', ')).join('; ') + ' (plan)' : 'none'),
+          f0 ? `${f(f0.T_in_C, 1)} °C, to ${f(t.cooled_to_C)} °C in ${f0.cool_h !== null ? f(f0.cool_h, 1) + ' h' : '–'}` : '')}
+        ${d.door_openings !== undefined ? cell('Door openings', f(d.door_openings)) : ''}
+        ${d.hours_above_band_fresh !== undefined ? cell(`Room > ${f(hi)} °C while fresh flowers cool`, f(d.hours_above_band_fresh) + ' h', `other times ${f(d.hours_above_band_other)} h`) : ''}
+        ${cell('Day', kind)}
+        ${d.kg_out ? cell('Flowers out', f(d.kg_out) + ' kg', `value ${inr(d.value_INR)} ${E}`) : ''}
+      </div>${d.forecast ? `<p class="note wn"><b>${esc(d.text)}</b></p>` : ''}
+      <p class="src">Weather this day: ${d.forecast ? 'Open-Meteo forecast' : esc(v.weather_source)}. Room humidity IS modelled (fogger + liners). Fresh flowers in: ${fresh || '–'}.</p></div>
+      <div class="lv-charts"><div class="card"><h3>Temperatures (°C)</h3><canvas id="lvT"></canvas></div><div class="card"><h3>Humidity (%)</h3><canvas id="lvH"></canvas></div>
+        <div class="card"><h3>Sunlight on flat ground (W/m²)</h3><canvas id="lvS"></canvas></div><div class="card"><h3>Electricity (kW) and ice (%)</h3><canvas id="lvE"></canvas></div></div>`;
+    }
+    function dayCharts(date) {
+      if (!window.Chart) return;
+      const i0 = hIdx(date), sl = (k, a = 1) => (HR[k] ? HR[k].slice(i0, i0 + 24).map(x => (x === null ? null : x * a)) : []);
+      if (i0 < 0 || i0 >= HR.n) return;
+      const lab = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0') + ':00');
+      const o = (yt, extra) => Object.assign({ animation: false, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, scales: { x: { title: { display: true, text: 'Time of day (IST)' } }, y: { title: { display: true, text: yt } } } }, extra || {});
+      const kgs = sl('kg');
+      const fresh = sl('T_batch').map((x, i) => (kgs[i] > 0 ? x : null));
+      charts.push(new Chart($('lvT'), { type: 'line', data: { labels: lab, datasets: [
+        { label: 'Outside', data: sl('T_out'), borderColor: '#f97316', pointRadius: 0, tension: .3 },
+        { label: 'Room', data: sl('T_room'), borderColor: '#2a78d6', pointRadius: 0, tension: .3 },
+        { label: 'Fresh batch', data: fresh, borderColor: '#10b981', pointRadius: 0, tension: .3, spanGaps: false }] }, options: o('Temperature (°C)') }));
+      charts.push(new Chart($('lvH'), { type: 'line', data: { labels: lab, datasets: [
+        { label: 'Outside RH', data: sl('RH_out'), borderColor: '#8b5cf6', pointRadius: 0, tension: .3 },
+        { label: 'Room RH', data: sl('RH_room'), borderColor: '#0ea5e9', pointRadius: 0, tension: .3 }] }, options: o('Relative humidity (%)', { scales: { x: { title: { display: true, text: 'Time of day (IST)' } }, y: { min: 0, max: 100, title: { display: true, text: 'Relative humidity (%)' } } } }) }));
+      charts.push(new Chart($('lvS'), { type: 'bar', data: { labels: lab, datasets: [{ label: 'Sunlight', data: sl('ghi'), backgroundColor: '#f59e0b' }] }, options: o('W/m²', { plugins: { legend: { display: false } } }) }));
+      charts.push(new Chart($('lvE'), { data: { labels: lab, datasets: [
+        { type: 'bar', label: 'Solar used kW', data: sl('P_sol'), backgroundColor: 'rgba(20,184,166,.6)', stack: 'p' },
+        { type: 'bar', label: 'Grid kW', data: sl('P_grid'), backgroundColor: '#ef4444', stack: 'p' },
+        { type: 'line', label: 'Ice frozen %', data: sl('ice'), borderColor: '#64748b', pointRadius: 0, yAxisID: 'y2' }] },
+        options: o('kW', { scales: { x: { stacked: true, title: { display: true, text: 'Time of day (IST)' } }, y: { stacked: true, title: { display: true, text: 'kW' } }, y2: { position: 'right', min: 0, max: 100, grid: { drawOnChartArea: false }, title: { display: true, text: 'ice %' } } } }) }));
+    }
+
+    // ---------- calendar
+    function calendar() {
+      const months = [];
+      Object.keys(byDate).sort().forEach(d => { const m = d.slice(0, 7); if (!months.includes(m)) months.push(m); });
+      const html = months.map(m => {
+        const [y, mo] = m.split('-').map(Number), first = new Date(Date.UTC(y, mo - 1, 1)), nd = new Date(Date.UTC(y, mo, 0)).getUTCDate();
+        const pad = (first.getUTCDay() + 6) % 7;
+        let cells = '<span class="dow">M</span><span class="dow">T</span><span class="dow">W</span><span class="dow">T</span><span class="dow">F</span><span class="dow">S</span><span class="dow">S</span>' + '<span></span>'.repeat(pad);
+        for (let dd = 1; dd <= nd; dd++) {
+          const ds = `${m}-${String(dd).padStart(2, '0')}`, x = byDate[ds];
+          if (!x) { cells += `<span class="day none">${dd}</span>`; continue; }
+          const cls = x.forecast ? 'fc' : (KIND[x.day_kind] || KIND.grid)[0];
+          const tip = x.forecast ? `${ds}: forecast` : `${ds}: ${(KIND[x.day_kind] || KIND.grid)[1]} · room max ${f(x.room_max_C, 1)} °C · grid ${f(x.grid_kWh, 2)} kWh`;
+          cells += `<button class="day ${cls}${ds === today ? ' today' : ''}" data-d="${ds}" title="${esc(tip)}" aria-label="${esc(tip)}">${dd}</button>`;
+        }
+        return `<div class="card lv-month"><h3>${MONTHS[mo - 1]} ${y}</h3><div class="lv-cal">${cells}</div></div>`;
+      }).join('');
+      const n = k => days.filter(d => d.day_kind === k).length;
+      return `<h3>Calendar – click a day</h3><div class="lv-legend"><span><i class="solar"></i>fully on solar + ice (${n('solar')})</span><span><i class="load"></i>grid only during morning loading (${n('loading')})</span>
+        <span><i class="grid"></i>grid at other times (${n('grid')})</span><span><i class="fc"></i>tomorrow and later (forecast)</span></div>
+        <div class="lv-months">${html}</div><div id="lvDay"></div>`;
+    }
+    function showDay(date) {
+      kill();
+      document.querySelectorAll('.lv-cal .day.sel').forEach(b => b.classList.remove('sel'));
+      const b = document.querySelector(`.lv-cal [data-d="${date}"]`); if (b) b.classList.add('sel');
+      $('lvDay').innerHTML = daySummary(date); dayCharts(date);
+      try { history.replaceState(null, '', '#cal=' + date); } catch (e) { /* file:// */ }
+    }
+
+    // ---------- other tabs
+    const V = {
+      year: () => `<div class="tiles">
         ${tile('Days fully on solar + ice', f(t.days_fully_solar), `of ${f(t.days)}`, '', 'big good')}${tile('Grid backup', f(t.grid_kWh, 1), 'kWh', `${f(t.grid_h)} hours · bill ${inr(t.grid_bill_INR)} at ₹${f(t.tariff_INR_kWh)}/kWh ${E}`, 'big')}
         ${tile('Electricity used', f(t.electric_kWh), 'kWh', `${f(t.solar_kWh)} kWh from the sun (${f(100 * t.solar_kWh / t.electric_kWh)} %)`, 'big')}${tile('Solar available', f(t.pv_available_kWh), 'kWh', `${f(100 * t.solar_kWh / t.pv_available_kWh)} % used`)}
         ${tile('Flowers stored', f(h.kg_stored), 'kg', `${f(h.days_with_stock)} days with stock, ${f(h.fills_done)} fills`)}${tile('Value captured ' + E, inr(h.value_INR), '', `uplift ${inr(h.price_uplift_INR)} + surplus held ${inr(h.surplus_held_INR)} + losses avoided ${inr(h.loss_avoided_INR)}`)}
-        ${tile('Hours outside ' + D.band_C.join('–') + ' °C', f(h.hours_outside_band), 'h', `above alarm: ${f(h.hours_above_alarm)} h`)}${tile('Humidity (flowers inside)', f(h.rh_avg_pct, 1), '%', `fogger water ${f(h.water_fog_L_day, 2)} L/day`)}
+        ${tile('Hours outside ' + band.join('–') + ' °C', f(h.hours_outside_band), 'h', `above alarm: ${f(h.hours_above_alarm)} h`)}${tile('Humidity (flowers inside)', f(h.rh_avg_pct, 1), '%', `fogger water ${f(h.water_fog_L_day, 2)} L/day`)}
         ${tile('Chiller COP', f(h.COP_chiller, 2), '', `${f(h.electric_kWh_day, 2)} kWh/day`)}</div>
-      <div class="note ok">${gridLine(t.grid_h, t.days_with_grid, t.grid_months, t.days_fully_solar, t.days)}. Hours below 2 °C: ${f(t.hours_below_2C)} (coldest room ${f(t.room_min_C, 1)} °C).</div>
-      <h2>Tomorrow and the day after <span class="pill wn">PREDICTION – weather forecast run through the twin</span></h2>
-      <div class="cols">${v.forecast.days.map(d => `<div class="card"><h3>${esc(d.date)} <span class="pill ${d.kind === 'storm' ? 'bd' : d.kind === 'normal' ? 'ok' : 'wn'}">${esc(d.kind.replace('_', ' '))}</span></h3>
-        <p><b>${esc(d.text)}</b></p>${table(['', N], [['Outside', `${f(d.outside_min_C, 1)}–${f(d.outside_max_C, 1)} °C`], ['Sun', f(d.sun_kWh_m2, 1) + ' kWh/m²'], ['Rain', f(d.rain_mm, 1) + ' mm'], ['Room, highest', f(d.room_max_C, 1) + ' °C'],
-          ['Ice at sunrise → sunset', `${f(d.ice_sunrise_pct)} → ${f(d.ice_sunset_pct)} %`], ['Grid backup expected', `${f(d.grid_h, 1)} h, ${f(d.grid_kWh, 2)} kWh`],
-          ['Plan: flowers in', d.planned_in.map(x => Object.entries(x.parts).map(([k, kg]) => `${f(kg)} kg ${crop(k).label.split(' (')[0]}`).join(', ')).join('; ') || '–'],
-          ['Plan: flowers out', d.planned_out.map(x => Object.entries(x.parts).map(([k, kg]) => `${f(kg)} kg ${crop(k).label.split(' (')[0]}`).join(', ')).join('; ') || '–']])}</div>`).join('')}</div>
-      <p class="src">${esc(v.forecast.about)} ${esc(v.forecast.rules.note)} Official warnings: <a href="${v.forecast.rules.imd_url}">India Meteorological Department</a>.</p>
-      <div class="card"><h3>Day by day ${lr}</h3><canvas id="lc" height="80"></canvas></div>
-      <div class="card"><h3>Month by month</h3>${table(['Month', n('Days'), n('kg stored'), n('Days with stock'), n('Electricity kWh'), n('Solar kWh'), n('Grid kWh'), n('Grid h'), n('Room avg °C'), n('Room max °C'), n('RH %'), n('Outside avg °C'), n('Ice at sunrise, worst %'), n('₹ captured ' + E)],
+        <div class="note ok">${gridLine(t.grid_h, t.days_with_grid, t.grid_months, t.days_fully_solar, t.days)}. Hours below 2 °C: ${f(t.hours_below_2C)} (coldest room ${f(t.room_min_C, 1)} °C).</div>
+        <div class="card"><h3>Day by day ${lr}</h3><canvas id="lc" height="80"></canvas></div>
+        <div class="card"><h3>Every day</h3><div style="max-height:520px;overflow:auto">${table(['Date', n('Outside max °C'), n('Sun kWh/m²'), n('Room avg °C'), n('Room max °C'), n('RH %'), n('Ice at sunrise %'), n('Flowers inside kg'), n('Solar kWh'), n('Grid kWh'), n('Grid h'), ''],
+          days.slice().reverse().map(d => [`<a href="#cal=${d.date}">${d.date}</a>`, f(d.outside_max_C, 1), f(d.sun_kWh_m2, 1), f(d.room_avg_C, 1), f(d.room_max_C, 1), f(d.rh_avg_pct), f(d.ice_sunrise_pct), f(d.kg_inside_max), f(d.solar_kWh, 2), f(d.grid_kWh, 2), f(d.grid_h, 1),
+            `<span class="pill ${d.day_kind === 'solar' ? 'ok' : 'wn'}">${(KIND[d.day_kind] || KIND.grid)[1]}</span>`]))}</div></div>
+        <p class="src">Weather: ${esc(v.weather_source)}. The studies on the other pages use the frozen first ${f(DAYS)} days so they can be repeated exactly; this report runs on to the newest weather.</p>`,
+      cal: calendar,
+      today: () => `<p>Newest day with saved weather: <b>${fmtD(today)}</b>.</p><div id="lvDay"></div>`,
+      tom: () => `<p>${esc(v.forecast.about)}</p><div class="cols">${fc.map(d => `<div class="card"><h3>${fmtD(d.date)} <span class="pill ${d.kind === 'storm' ? 'bd' : d.kind === 'normal' ? 'ok' : 'wn'}">${esc(d.kind.replace('_', ' '))}</span></h3><p><b>${esc(d.text)}</b></p>
+          <button class="lvgo" data-d="${d.date}">Show this day</button></div>`).join('')}</div><div id="lvDay"></div>
+        <p class="src">${esc(v.forecast.rules.note)} Official warnings: <a href="${v.forecast.rules.imd_url}">India Meteorological Department</a>.</p>`,
+      months: () => `<div class="card"><h3>Month by month ${S}</h3>${table(['Month', n('Days'), n('kg stored'), n('Days with stock'), n('Electricity kWh'), n('Solar kWh'), n('Grid kWh'), n('Grid h'), n('Room avg °C'), n('Room max °C'), n('RH %'), n('Outside avg °C'), n('Ice at sunrise, worst %'), n('Door openings'), n('₹ captured ' + E)],
         v.monthly.map(m => [MONTHS[m.month - 1], f(m.days), f(m.kg_stored), f(m.days_with_stock), f(m.energy_kWh), f(m.solar_kWh), f(m.grid_kWh, 1), f(m.grid_h), f(m.room_avg_C, 1), f(m.room_max_C, 1), m.rh_avg_pct ? f(m.rh_avg_pct) : '–',
-          f(m.outside_avg_C, 1), f(m.ice_sunrise_worst_pct), inr(m.value_INR)]))}</div>
-      <div class="card"><h3>By flower</h3>${table(['Flower', n('kg'), n('Fills'), n('Days held (avg)'), n('Freshness at take-out'), n('Worst'), n('With no cold room'), n('₹ captured ' + E)],
-        Object.entries(v.by_flower).map(([k, x]) => [esc(crop(k).label), f(x.kg), f(x.fills), f(x.hold_days_avg, 1), f(x.freshness_kept_pct) + ' %', f(x.freshness_kept_worst_pct) + ' %', f(x.freshness_no_room_pct) + ' %', inr(x.value_INR)]))}</div>
-      <div class="card"><h3>Every day</h3><div style="max-height:520px;overflow:auto">${table(['Date', n('Outside max °C'), n('Sun kWh/m²'), n('Room avg °C'), n('Room max °C'), n('RH %'), n('Ice at sunrise %'), n('Flowers inside kg'), n('Solar kWh'), n('Grid kWh'), n('Grid h'), ''],
-        v.daily.slice().reverse().map(d => [d.date, f(d.outside_max_C, 1), f(d.sun_kWh_m2, 1), f(d.room_avg_C, 1), f(d.room_max_C, 1), f(d.rh_avg_pct), f(d.ice_sunrise_pct), f(d.kg_inside_max), f(d.solar_kWh, 2), f(d.grid_kWh, 2), f(d.grid_h, 1),
-          d.fully_solar ? '<span class="pill ok">solar + ice</span>' : '<span class="pill wn">some grid</span>']))}</div></div>
-      <p class="src">Weather: ${esc(v.weather_source)}. The studies on the other pages use the frozen first ${f(DAYS)} days so they can be repeated exactly; this report runs on to the newest weather.</p>`;
-    if (window.Chart) new Chart($('lc'), { data: { labels: v.daily.map(d => d.date), datasets: [
-      { type: 'line', label: 'Room max °C', data: v.daily.map(d => d.room_max_C), borderColor: '#2a78d6', pointRadius: 0, borderWidth: 1.5, yAxisID: 'y' },
-      { type: 'line', label: 'Outside max °C', data: v.daily.map(d => d.outside_max_C), borderColor: '#f59e0b', pointRadius: 0, borderWidth: 1, yAxisID: 'y' },
-      { type: 'bar', label: 'Grid kWh', data: v.daily.map(d => d.grid_kWh), backgroundColor: '#ef4444', yAxisID: 'y2' },
-      { type: 'bar', label: 'Solar kWh', data: v.daily.map(d => d.solar_kWh), backgroundColor: 'rgba(20,184,166,.5)', yAxisID: 'y2' }] },
-      options: { animation: false, interaction: { mode: 'index', intersect: false }, scales: { x: { ticks: { maxTicksLimit: 12 } }, y: { title: { display: true, text: '°C' } }, y2: { position: 'right', title: { display: true, text: 'kWh/day' }, grid: { drawOnChartArea: false } } } } });
+          f(m.outside_avg_C, 1), f(m.ice_sunrise_worst_pct), f(m.door_openings), inr(m.value_INR)]))}</div><div class="card"><h3>Month by month – energy</h3><canvas id="lvM" height="90"></canvas></div>`,
+      money: () => `<div class="tiles">${tile('Value captured ' + E, inr(h.value_INR), '', lr, 'big good')}${tile('Price uplift', inr(h.price_uplift_INR), '', 'held for a better sale day')}${tile('Surplus held', inr(h.surplus_held_INR), '', 'instead of a distress sale')}
+          ${tile('Losses avoided', inr(h.loss_avoided_INR), '', 'post-festival glut that had no buyer')}${tile('Grid bill', inr(t.grid_bill_INR), '', `${f(t.grid_kWh, 1)} kWh × ₹${f(t.tariff_INR_kWh)}/kWh ${E}`)}</div>
+        <div class="card"><h3>By flower</h3>${table(['Flower', n('kg'), n('Fills'), n('Days held (avg)'), n('Freshness at take-out'), n('Worst'), n('With no cold room'), n('₹ captured ' + E)],
+          Object.entries(v.by_flower).map(([k, x]) => [cropName(k), f(x.kg), f(x.fills), f(x.hold_days_avg, 1), f(x.freshness_kept_pct) + ' %', f(x.freshness_kept_worst_pct) + ' %', f(x.freshness_no_room_pct) + ' %', inr(x.value_INR)]))}</div>
+        <div class="card"><h3>By season</h3>${table(['Season', n('kg'), n('Price uplift'), n('Surplus held'), n('Losses avoided'), n('₹ total ' + E)],
+          Object.values(v.by_season).map(x => [esc(x.label), f(x.kg), inr(x.price_uplift_INR), inr(x.surplus_held_INR), inr(x.loss_avoided_INR), inr(x.value_INR)]))}</div>`,
+      inputs: () => `<div class="card"><h3>Fixed inputs of this run ${E}</h3>${table(['Input', N], [['Room (inside)', D.room_m ? D.room_m.join(' × ') + ' m (' + f(D.room_m3, 1) + ' m³)' : '–'], ['Walls U-value', f(D.U_W_m2K, 2) + ' W/m²K'],
+          ['Solar PV', f(D.pv_kWp, 2) + ' kWp'], ['Ice panels', f(D.ice_kg) + ' kg'], ['Chiller (R290, outdoors)', `up to ${f(D.chiller_max_kW, 1)} kW cooling`], ['Glycol loop', `${esc(D.glycol.fluid || '')} · ${f(D.glycol_m_dot_kg_s, 3)} kg/s`],
+          ['Set-point / band', `${f(D.setpoint_C, 1)} °C / ${band.join('–')} °C (alarm ${f(D.alarm_C, 1)} °C)`], ['Humidity target', f(D.rh_target_pct) + ' % (' + esc(D.humidity_option) + ')'], ['Crate places', f(D.crate_places)],
+          ['Grid tariff', `₹${f(t.tariff_INR_kWh)}/kWh`], ['Battery', 'none for cooling – the ice is the storage'], ['Weather', esc(v.weather_source)], ['Practice', 'best practice (realistic losses, hot-site weather correction)']])}</div>`,
+      how: () => {
+        const pm = K.plan.calendar && K.plan.calendar.price_model;
+        return `<div class="card"><h3>₹ How the money is calculated ${E}</h3><ul class="plain">
+          <li><b>Held for a sale day (price uplift)</b> = kg sold × price on the sale day × freshness − kg × price on the storage day.</li>
+          <li><b>Everyday surplus held</b> = kg sold × price on the sale day × freshness − kg × ${pm ? f(pm.surplus_distress_factor, 2) : '0.5'} × price on the storage day (without the room it is a distress sale).</li>
+          <li><b>Post-festival glut (loss avoided)</b> = kg sold × price on the sale day × freshness (without the room it had no buyer).</li>
+          <li>kg sold = kg stored × (1 − weight loss). Freshness comes from the flower model at the room temperature and humidity of the twin.</li>
+          <li>Grid bill = grid kWh × ₹${f(t.tariff_INR_kWh)}/kWh. Solar electricity is free (panels are in the capital cost – see Cost & ROI).</li></ul></div>
+          ${pm ? `<div class="card"><h3>Price model ${E}</h3>${table(['Rule', N], Object.entries(pm).filter(([k, x]) => typeof x === 'number').map(([k, x]) => [esc(k.replace(/_/g, ' ')), f(x, 2)]))}
+            <p class="src">Daily prices per flower come from data/season_calendar.json and data/crops.json (research estimates, E). Nothing is a market quote.</p></div>` : ''}`;
+      },
+    };
+    function after(k) {
+      kill();
+      if (k === 'year' && window.Chart) charts.push(new Chart($('lc'), { data: { labels: days.map(d => d.date), datasets: [
+        { type: 'line', label: 'Room max °C', data: days.map(d => d.room_max_C), borderColor: '#2a78d6', pointRadius: 0, borderWidth: 1.5, yAxisID: 'y' },
+        { type: 'line', label: 'Outside max °C', data: days.map(d => d.outside_max_C), borderColor: '#f59e0b', pointRadius: 0, borderWidth: 1, yAxisID: 'y' },
+        { type: 'bar', label: 'Grid kWh', data: days.map(d => d.grid_kWh), backgroundColor: '#ef4444', yAxisID: 'y2' },
+        { type: 'bar', label: 'Solar kWh', data: days.map(d => d.solar_kWh), backgroundColor: 'rgba(20,184,166,.5)', yAxisID: 'y2' }] },
+        options: { animation: false, interaction: { mode: 'index', intersect: false }, scales: { x: { ticks: { maxTicksLimit: 12 } }, y: { title: { display: true, text: '°C' } }, y2: { position: 'right', title: { display: true, text: 'kWh/day' }, grid: { drawOnChartArea: false } } } } }));
+      if (k === 'months' && window.Chart) charts.push(new Chart($('lvM'), { data: { labels: v.monthly.map(m => MONTHS[m.month - 1]), datasets: [
+        { type: 'bar', label: 'Solar kWh', data: v.monthly.map(m => m.solar_kWh), backgroundColor: 'rgba(20,184,166,.6)', stack: 'e' }, { type: 'bar', label: 'Grid kWh', data: v.monthly.map(m => m.grid_kWh), backgroundColor: '#ef4444', stack: 'e' },
+        { type: 'line', label: 'Room avg °C', data: v.monthly.map(m => m.room_avg_C), borderColor: '#2a78d6', yAxisID: 'y2' }] },
+        options: { animation: false, scales: { x: { stacked: true }, y: { stacked: true, title: { display: true, text: 'kWh / month' } }, y2: { position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: '°C' } } } } }));
+      if (k === 'today') { $('lvDay').innerHTML = daySummary(today); dayCharts(today); }
+      if (k === 'tom' && tomorrow) { $('lvDay').innerHTML = daySummary(tomorrow); dayCharts(tomorrow); document.querySelectorAll('.lvgo').forEach(b => { b.onclick = () => { kill(); $('lvDay').innerHTML = daySummary(b.dataset.d); dayCharts(b.dataset.d); }; }); }
+      if (k === 'cal') {
+        document.querySelector('.lv-months').onclick = e => { const b = e.target.closest('[data-d]'); if (b) showDay(b.dataset.d); };
+        const want = (location.hash.match(/cal=(\d{4}-\d\d-\d\d)/) || [])[1];
+        showDay(want && byDate[want] ? want : today);
+      }
+    }
+    const show = k => { document.querySelectorAll('#lvTabs button').forEach(b => b.classList.toggle('on', b.dataset.t === k)); kill(); $('lvTab').innerHTML = V[k](); after(k);
+      if (k !== 'cal') try { history.replaceState(null, '', '#' + k); } catch (e) { /* file:// */ } };
+    $('lvTabs').onclick = e => { if (e.target.dataset.t) show(e.target.dataset.t); };
+    $('lvTab').addEventListener('click', e => { const a = e.target.closest('a[href^="#cal="]'); if (a) { e.preventDefault(); history.replaceState(null, '', a.getAttribute('href')); show('cal'); } });
+    const hk = location.hash.slice(1);
+    show(hk.startsWith('cal') ? 'cal' : (V[hk] ? hk : 'cal'));
   };
 
   // ------------------------------------------------------------------ CONTROL CENTRE

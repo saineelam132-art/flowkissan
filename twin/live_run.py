@@ -93,11 +93,29 @@ def main(fetch=False):
                          "ice_sunrise_pct": float(h.pcm_pct[hod == 6].mean()), "ice_sunset_pct": float(h.pcm_pct[hod == 18].mean()),
                          "kg_inside_max": float(h.kg_inside.max()), "planned_in": [f for f in sched if f["in_date"] == str(d)], "planned_out": [f for f in sched if f["out_date"] == str(d)]})
     lo, hi = cfg["live_run"]["band_C"]
+    lw = cfg["live_run"]["loading_window_h"]
+    door_s = float(real.get("door_seconds", cfg["live_run"]["door_seconds"]))
     daily = []
     out_day = pd.to_datetime(btv.out_date).dt.date
+    in_day = pd.to_datetime(bt_all.date).dt.date if len(bt_all) else pd.Series(dtype=object)
     for d, h in H.groupby(H.time_ist.dt.date):
         b = btv[out_day == d]
         hod = h.time_ist.dt.hour
+        fresh = bt_all[in_day == d] if len(bt_all) else bt_all
+        win = np.zeros(len(h), bool)                       # hours while a fresh batch is still cooling (from loading to 'cooled')
+        batches_in = []
+        for r in fresh.itertuples():
+            h0 = (int(r.step) % 288) / 12.0
+            ch = float(r.cool_h) if pd.notna(r.cool_h) else None
+            win |= (hod.to_numpy() >= int(h0)) & (hod.to_numpy() < h0 + (ch if ch is not None else lw))
+            batches_in.append({"crop": r.crop, "kg": float(r.kg), "time": f"{int(h0):02d}:{int(round((h0 % 1) * 60)):02d}", "T_in_C": float(r.T_in_C), "cool_h": ch})
+        grid_h_ = h.grid_on.to_numpy() > 0
+        load_win = np.zeros(len(h), bool)
+        for x in batches_in:
+            hh = int(x["time"][:2])
+            load_win |= (hod.to_numpy() >= hh) & (hod.to_numpy() < hh + lw)
+        kind = "solar" if not grid_h_.any() else ("loading" if (~grid_h_ | load_win).all() and load_win.any() else "grid")
+        above = h.T_room.to_numpy() > hi
         daily.append({"date": str(d), "outside_max_C": float(h.T_out.max()), "outside_min_C": float(h.T_out.min()), "sun_kWh_m2": float(h.ghi.sum() / 1000.0),
                       "room_avg_C": float(h.T_room.mean()), "room_max_C": float(h.T_room.max()), "room_min_C": float(h.T_room.min()),
                       "rh_avg_pct": float(h.RH_room.mean()), "ice_sunrise_pct": float(h.pcm_pct[hod == 6].mean()) if (hod == 6).any() else None,
@@ -105,7 +123,13 @@ def main(fetch=False):
                       "kg_inside_max": float(h.kg_inside.max()), "kg_out": float(b.kg.sum()), "value_INR": float(b.value_INR.sum()),
                       "solar_kWh": float(h.P_solar_used.sum()), "grid_kWh": float(h.P_grid.sum()), "grid_h": float(h.grid_on.sum()),
                       "electric_kWh": float(h.P_comp.sum()), "pv_available_kWh": float(h.P_pv.sum()), "hours_outside_band": int(((h.T_room > hi) | (h.T_room < lo)).sum()),
-                      "fully_solar": bool(h.grid_on.sum() == 0)})
+                      "fully_solar": bool(h.grid_on.sum() == 0), "day_kind": kind,
+                      "outside_avg_C": float(h.T_out.mean()), "rh_out_avg_pct": float(h.RH_out.mean()),
+                      "heat_load_kWh": float((h.Q_load + h.Q_batch).sum()), "cooling_kWh": float(h.Q_chill.sum()),
+                      "compressor_h": float(h.running_h.sum()), "ice_min_pct": float(h.pcm_pct.min()), "ice_end_pct": float(h.pcm_pct.iloc[-1]),
+                      "door_openings": int(round(float(h.door_s.sum()) / door_s)) if door_s else None,
+                      "hours_above_band_fresh": int((above & win).sum()), "hours_above_band_other": int((above & ~win).sum()),
+                      "fresh_in": batches_in})
     dr = study.date_range(w_act)
     out = {"about": "Live 2026 report: KoolKisaan Flowers (ice panels, best practice) on real Visakhapatnam weather from 1 January 2026 to the newest saved hour.",
            "date_range": dr, "weather_last_hour": str(last), "weather_source": "Open-Meteo archive (ERA5) + recent hours, saved in data/live/ (CC BY 4.0)",
@@ -116,12 +140,12 @@ def main(fetch=False):
            "totals": {"days": dr["days"], "electric_kWh": float(H.P_comp.sum()), "solar_kWh": float(H.P_solar_used.sum()), "grid_kWh": float(H.P_grid.sum()),
                       "grid_h": float(H.grid_on.sum()), "pv_available_kWh": float(H.P_pv.sum()), "days_fully_solar": int(sum(x["fully_solar"] for x in daily)), "days_with_grid": int(sum(not x["fully_solar"] for x in daily)), "grid_months": study.grid_months(H),
                       "hours_below_2C": int((H.T_room < 2.0).sum()), "room_min_C": float(H.T_room.min()), "room_max_C": float(H.T_room.max()),
-                      "grid_bill_INR": float(H.P_grid.sum() * cfg["live_run"]["money"]["grid_tariff_INR_kWh"]), "tariff_INR_kWh": cfg["live_run"]["money"]["grid_tariff_INR_kWh"]},
+                      "grid_bill_INR": float(H.P_grid.sum() * cfg["live_run"]["money"]["grid_tariff_INR_kWh"]), "tariff_INR_kWh": cfg["live_run"]["money"]["grid_tariff_INR_kWh"], "cooled_to_C": cfg["live_run"]["cooled_to_C"]},
            "by_flower": m["by_flower"], "by_season": m["by_season"], "monthly": monthly, "daily": daily,
            "forecast": {"about": "PREDICTION: the Open-Meteo forecast run through the twin, starting from today's simulated room and ice state. Not a result.",
                         "days": forecast, "rules": ADV}}
     RA.write("live_2026.json", out)
-    cols = ["time_ist", "T_out", "RH_out", "T_room", "RH_room", "pcm_pct", "T_pcm", "T_sup", "T_ret", "P_pv", "P_solar_used", "P_grid", "P_comp", "P_pump",
+    cols = ["time_ist", "T_out", "RH_out", "T_room", "RH_room", "T_batch", "pcm_pct", "T_pcm", "T_sup", "T_ret", "P_pv", "P_solar_used", "P_grid", "P_comp", "P_pump",
             "grid_on", "running_h", "v_room", "v_ice", "kg_inside", "Q_air", "Q_ch", "Q_pcm_room", "Q_chill", "cop", "door_s"]
     Hx = H_all[cols].copy()
     Hx["ghi"], Hx["wind"] = ww.ghi.values[:len(Hx)], w.wind.values[:len(Hx)]

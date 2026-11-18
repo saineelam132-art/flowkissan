@@ -25,7 +25,7 @@ def main():
     plan = J(RES / "season_plan.json")
     H = pd.read_csv(RES / ("hourly_live.csv" if (RES / "hourly_live.csv").exists() else "hourly_flowers.csv"), parse_dates=["time_ist"])
     r = lambda c, k=2: [None if pd.isna(x) else round(float(x), k) for x in H[c]]
-    hourly = {"t0": str(H.time_ist.iloc[0]), "n": len(H), "T_out": r("T_out", 1), "RH_out": r("RH_out", 0), "T_room": r("T_room"), "RH_room": r("RH_room", 1),
+    hourly = {"t0": str(H.time_ist.iloc[0]), "n": len(H), "T_out": r("T_out", 1), "RH_out": r("RH_out", 0), "T_room": r("T_room"), "RH_room": r("RH_room", 1), "T_batch": r("T_batch", 1) if "T_batch" in H else None, "door_s": r("door_s", 0),
               "ice": r("pcm_pct", 1), "T_sup": r("T_sup"), "T_ret": r("T_ret"), "P_pv": r("P_pv", 3), "P_grid": r("P_grid", 3), "P_comp": r("P_comp", 3),
               "run": r("running_h"), "grid": r("grid_on"), "v_ice": r("v_ice"), "kg": r("kg_inside", 1), "cop": r("cop"),
               "Q_air": r("Q_air", 3), "Q_ch": r("Q_ch", 3), "Q_ice_room": r("Q_pcm_room", 3), "P_sol": r("P_solar_used", 3)}
