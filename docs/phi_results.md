@@ -19,17 +19,17 @@ Why not the old memory `S = S + Φ − 1` with Φ = max|z|: on this honest recor
 | Case | Caught | Median time to flag | 90 % within | Layers that caught it | First residual | Isolation correct | Verdict |
 |---|---|---|---|---|---|---|---|
 | Honest (4 door openings a day) | 10 % | 765 min | 1291 min | physics 10 % | R10, R1 | – | honest data: any flag here is a false alarm |
-| Room T offset −2 K | 100 % | 10 min | 10 min | physics 100 % | R9 | 96 % (exact 36 %) | caught, mostly first by the physics layer |
-| Room T offset −5 K | 100 % | 10 min | 10 min | physics 100 % | R9, H2 | 40 % (exact 8 %) | caught, mostly first by the physics layer |
+| Room T offset −2 K | 100 % | 10 min | 10 min | physics 100 % | R9 | 100 % (exact 32 %) | caught, mostly first by the physics layer |
+| Room T offset −5 K | 100 % | 10 min | 10 min | physics 100 % | R9, H2 | 70 % (exact 8 %) | caught, mostly first by the physics layer |
 | Room T frozen at 4.0 °C while the chiller is really off | 100 % | 10 min | 655 min | physics 100 % | R9, R6 | 64 % (exact 34 %) | caught, mostly first by the physics layer |
-| Outside T −2 K | 18 % | 335 min | 1512 min | external 14 %, physics 4 % | R7T, R7W | 67 % (exact 44 %) | NOT reliably caught: the lie stays inside the honest noise of every residual this layer can see |
-| Outside T −5 K | 96 % | 62 min | 1232 min | external 90 %, physics 6 % | R7T, R5 | 85 % (exact 69 %) | caught, mostly first by the external layer |
-| Outside T −8 K | 100 % | 10 min | 10 min | external 100 % | R7T, R7W | 100 % (exact 92 %) | caught, mostly first by the external layer |
-| Outside T −8 K and power −20 % | 100 % | 10 min | 10 min | external 100 % | R7T, R8 | 36 % (exact 30 %) | caught, mostly first by the external layer |
+| Outside T −2 K | 18 % | 335 min | 1512 min | external 14 %, physics 4 % | R7T, R7W | 67 % (exact 33 %) | NOT reliably caught: the lie stays inside the honest noise of every residual this layer can see |
+| Outside T −5 K | 96 % | 62 min | 1232 min | external 90 %, physics 6 % | R7T, R5 | 85 % (exact 65 %) | caught, mostly first by the external layer |
+| Outside T −8 K | 100 % | 10 min | 10 min | external 100 % | R7T, R7W | 100 % (exact 88 %) | caught, mostly first by the external layer |
+| Outside T −8 K and power −20 % | 100 % | 10 min | 10 min | external 100 % | R7T, R8 | 36 % (exact 28 %) | caught, mostly first by the external layer |
 | Glycol supply and return both reported 2 K colder | 48 % | 705 min | 2232 min | watermark 28 %, physics 28 % | R6, R10 | 7 % (exact 7 %) | NOT reliably caught: the lie stays inside the honest noise of every residual this layer can see |
-| Chiller power −20 % | 100 % | 170 min | 833 min | external 68 %, physics 32 % | R8, H1 | 90 % (exact 66 %) | caught, mostly first by the external layer |
+| Chiller power −20 % | 100 % | 170 min | 833 min | external 68 %, physics 32 % | R8, H1 | 90 % (exact 58 %) | caught, mostly first by the external layer |
 | Chiller power −40 % | 100 % | 142 min | 738 min | external 50 %, physics 50 % | R8, H1 | 94 % (exact 66 %) | caught, mostly first by the external layer |
-| Room T slow drift −0.1 K per hour | 100 % | 250 min | 290 min | physics 98 %, external 2 % | R9, R2 | 82 % (exact 64 %) | caught, mostly first by the physics layer |
+| Room T slow drift −0.1 K per hour | 100 % | 250 min | 290 min | physics 98 %, external 2 % | R9, R2 | 84 % (exact 60 %) | caught, mostly first by the physics layer |
 | All owner sensors from a model run with outside T 4 K lower | 100 % | 10 min | 10 min | watermark 100 %, physics 72 %, external 28 % | R9, R8 | – | caught, mostly first by the physics layer |
 | All owner sensors from a model run on the real weather (no watermark) | 100 % | 1265 min | 2108 min | watermark 100 %, external 54 %, physics 8 % | R8, R8d | – | caught, mostly first by the watermark layer |
 | Replay of yesterday (all owner sensors and logs) | 100 % | 45 min | 55 min | watermark 100 %, hash 100 %, external 84 %, physics 16 % | R8, R1 | – | caught, mostly first by the hash layer |
