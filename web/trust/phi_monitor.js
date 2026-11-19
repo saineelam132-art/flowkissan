@@ -28,7 +28,7 @@
       <div class="pm-left">
         <div class="pm-colh"><span>Sensor</span><span>Live value</span></div>
         <ul class="pm-sensors" id="pmSensors" aria-label="Owner sensors and their live values">${SENS.map(([k, name, ic]) => `<li class="pm-s" id="pmS_${k}"><span class="pm-ic" aria-hidden="true">${ic}</span>
-          <span class="pm-name">${name}<span class="pm-badges"><span class="pm-badge" hidden>MANIPULATED</span><span class="pm-badge q" hidden>QUARANTINED</span><span class="pm-badge s" hidden>SUSPECT</span></span></span><b class="pm-val" id="pmV_${k}">–</b></li>`).join('')}</ul>
+          <span class="pm-name">${name}<span class="pm-badges"><span class="pm-badge" hidden>MANIPULATED</span><span class="pm-badge q" hidden>QUARANTINED</span><span class="pm-badge s" hidden>SUSPECT</span><span class="pm-badge u" hidden>UNDER ATTACK</span></span></span><b class="pm-val" id="pmV_${k}">–</b></li>`).join('')}</ul>
         <div class="pm-ext"><div class="pm-colh"><span>Independent references (owner cannot edit)</span></div>
           <ul><li>☁️ Weather service <b id="pmWx">–</b></li><li>📟 DISCOM meter (yesterday) <b id="pmDis">–</b></li><li>🔆 Solar inverter log <b id="pmInv">–</b></li></ul></div>
       </div>
@@ -100,13 +100,15 @@
       if (k === 'drift') $('pmSize').value = -0.1; else if (k === 'offset' && +$('pmSize').value === -0.1) $('pmSize').value = -2;
     };
     $('pmKind').onchange = kindChange;
+    for (const id of ['pmStart', 'pmEnd']) $(id).addEventListener('input', () => { $('pmStart').dataset.touched = '1'; });
     $('pmRun').onclick = async () => {
       const kind = $('pmKind').value, sensors = [...document.querySelectorAll('#pmPick input:checked')].map(x => x.value);
       if (['offset', 'freeze', 'drift'].includes(kind) && !sensors.length) { $('pmVerdict').textContent = 'Pick at least one sensor.'; return; }
       const st = stepOf($('pmStart').value), en = stepOf($('pmEnd').value);
       if (!(en > st)) { $('pmVerdict').textContent = 'The end must be after the start.'; return; }
       const msg = await B.setTamper({ kind, sensors: kind === 'replay' ? [] : sensors, size: +$('pmSize').value || 0, start: st, end: en });
-      $('pmVerdict').textContent = msg || 'Attack scheduled – the clock runs; watch the lines, the gauge and the ledger.';
+      delete $('pmStart').dataset.touched;
+      $('pmVerdict').textContent = msg || 'Attack started – the clock runs fast; watch the red lines, the gauge and the ledger.';
     };
     $('pmClear').onclick = async () => { await B.clearTamper(); $('pmVerdict').textContent = 'Attack cleared. Readings already written stay in the ledger.'; };
     $('pmEdit').onclick = async () => { $('pmVerdict').textContent = await B.editOld(false); };
@@ -120,11 +122,8 @@
   const W0ms = () => Date.parse(B.V.t0.replace(' ', 'T') + '+05:30');
   const localOf = i => new Date(W0ms() + i * 300e3 + 5.5 * 3600e3).toISOString().slice(0, 16);
   const stepOf = s => Math.round((Date.parse(s + ':00Z') - 5.5 * 3600e3 - W0ms()) / 300e3);
-  function defaults() {                             // next 10:00 at least 30 min ahead (the reference demo time)
-    let s = B.step() + 6;
-    while (((s % 288) + 288) % 288 !== 120) s++;
-    if (s >= B.V.n - 60) s = B.step() + 6;
-    const h = Math.round(B.V.demo.default_window_h * 12);
+  function defaults() {                             // start at the next reading, so the attack is visible at once
+    const s = B.step() + 1, h = Math.round(B.V.demo.default_window_h * 12);
     $('pmStart').value = localOf(s); $('pmEnd').value = localOf(s + h);
   }
 
@@ -154,17 +153,21 @@
     const susp = a.iso && a.kf !== undefined && i >= a.kf && i < a.iso.k ? new Set(a.iso.suspects) : new Set();
     const quar = a.safe && i >= a.safe.k && i < a.safe.release ? new Set(a.safe.sensors) : new Set();
     const manip = a.iso && i >= a.iso.k && (!a.safe || i < a.safe.release) ? new Set(a.iso.suspects) : new Set();
+    const under = tp && tp.kind !== 'edit' && i >= tp.start && i < tp.end ? new Set(a.attacked) : new Set();   // demo: what YOU are faking
     SENS.forEach(([k, name, , unit, dec]) => {
       const v = k === 'door' ? (num(R.door[i]) > 0 ? 'Open' : 'Closed') : fin(num(R[k][i])) ? num(R[k][i]).toFixed(dec) + (unit ? ' ' + unit : '') : 'no data';
       $('pmV_' + k).textContent = v;
       const li = $('pmS_' + k), w = $('pmW_' + k), tt = $('pmWT_' + k);
-      li.classList.toggle('bad', manip.has(k) || susp.has(k));
+      li.classList.toggle('bad', manip.has(k) || susp.has(k) || under.has(k));
+      li.classList.toggle('under', under.has(k));
+      li.querySelector('.pm-badge.u').hidden = !under.has(k) || quar.has(k);
       li.querySelector('.pm-badge').hidden = !manip.has(k);
       li.querySelector('.pm-badge.q').hidden = !quar.has(k);
       li.querySelector('.pm-badge.s').hidden = !susp.has(k);
       if (w) {
-        w.setAttribute('class', 'pm-w ' + (quar.has(k) ? 'quar' : susp.has(k) ? 'bad' : 'ok'));
-        if (tt) tt.textContent = `${name}: ${quar.has(k) ? 'quarantined – trusted value in use' : susp.has(k) ? 'SUSPECT – data line cut while the node isolates it' : 'healthy, data flowing'}`;
+        w.setAttribute('class', 'pm-w ' + (quar.has(k) ? 'quar' : susp.has(k) || under.has(k) ? 'bad' : 'ok'));
+        if (tt) tt.textContent = `${name}: ${quar.has(k) ? 'quarantined – trusted value in use' : susp.has(k) ? 'SUSPECT – data line cut while the node isolates it' :
+          under.has(k) ? 'UNDER ATTACK – this reading is being faked in the demo' : 'healthy, data flowing'}`;
       }
     });
     $('pmWx').textContent = fin(num(R.T_out_api[i])) ? num(R.T_out_api[i]).toFixed(1) + ' °C' : '–';
@@ -215,6 +218,8 @@
       li.querySelector('i').style.width = (on ? Math.min(v, 6) / 6 * 100 : 0) + '%';
       li.querySelector('.bv').textContent = on ? (v >= 3 ? '✗ ' : '') + v.toFixed(1) : 'off';
     });
+    const idle = !tp || tp.kind === 'edit' || i >= tp.end;
+    if (idle && !$('pmStart').dataset.touched && document.activeElement !== $('pmStart') && document.activeElement !== $('pmEnd')) defaults();   // follow the clock
     tamperStory(a, i, tp);
     if (i % 12 === 0) $('pmSR').textContent = `${B.whenLbl(B.tsAt(i))}: Φ ${phi.toFixed(1)}, ${st}${safeOn ? '. Safe mode on.' : ''}`;
   }
@@ -229,7 +234,10 @@
       const det = a.caught >= 0 ? a.caught : null, k0 = a.k0, k1 = a.k1;
       const lay = { physics: 'physics (heat, moisture, ice, chiller)', external: 'external data (weather service, inverter, utility meter)', watermark: 'watermark (secret glycol pattern)', hash: 'hash chain (identical to 24 h ago)' };
       const lines = Object.entries(a.layers).sort((x, y) => x[1] - y[1]).map(([k, s]) => `<li>${lay[k]}: ${i >= s ? `✗ caught at ${hh(s)} (after ${(s - k0) * 5} min)` : 'pending'}</li>`).join('');
-      $('pmVerdict').innerHTML = `<p><b>Tampered from ${hh(k0)} to ${hh(k1)}</b> · ${det !== null ? (i >= det ? `<b class="bd">✗ detected at ${hh(det)} (after ${(det - k0) * 5} min)</b>` : 'not detected yet') : '<b class="wn">⚠ not detected in this run</b>'}</p>
+      const wait = i < k0 ? `<b class="wn">⏳ attack starts at ${hh(k0)} – in ${(k0 - i) * 5} min of twin time (the clock is running)</b>` :
+        det !== null ? (i >= det ? `<b class="bd">✗ detected at ${hh(det)} (after ${(det - k0) * 5} min)</b>` : '<b class="wn">⚠ attack running – not detected yet</b>') :
+        i < k1 ? '<b class="wn">⚠ attack running – not detected yet</b>' : '<b class="wn">⚠ not detected in this run</b>';
+      $('pmVerdict').innerHTML = `<p><b>Tampered from ${hh(k0)} to ${hh(k1)}</b> · ${wait}</p>
         <ul>${lines || '<li>no layer has fired yet</li>'}</ul>
         ${a.iso && i >= a.iso.k ? `<p>Isolation (GLR): <b>${a.iso.suspects.map(s => esc(s)).join(' + ') || 'nothing'}</b> · ${a.iso.suspects.map(s => `${s} bias ${window.PhiCore.RELATIVE.has(s) ? (100 * a.iso.bias[s]).toFixed(0) + ' %' : a.iso.bias[s].toFixed(1)}`).join(' · ')} · confidence ${esc(a.iso.confidence)}</p>` : ''}
         ${a.safe && i >= a.safe.k ? `<p>Safe mode from ${hh(a.safe.k)}${a.safe.green >= 0 ? ` · Φ(trusted) back to green at ${hh(a.safe.green)}` : ' · Φ(trusted) has not returned to green (a constant correction cannot follow this lie)'}.</p>` : ''}`;

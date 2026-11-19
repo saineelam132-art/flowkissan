@@ -235,3 +235,6 @@ fieldset.trip input,fieldset.trip select{width:100%;box-sizing:border-box;min-wi
 .door3 .d3 span{font-size:clamp(.95rem,2.2vw,1.25rem);white-space:nowrap}
 .pm-tlsvg .tphi{fill:none;stroke:#16a34a;stroke-width:2.2}
 #phiMon [hidden],.view [hidden]{display:none!important}
+.pm-badge.u{background:#dc2626;animation:pmblink 1s steps(2,start) infinite}
+.pm-s.under .pm-val{color:#dc2626}
+@media (prefers-reduced-motion:reduce){.pm-badge.u{animation:none}}

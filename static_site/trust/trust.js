@@ -577,8 +577,8 @@
     if (cfg.kind === 'replay' && cfg.start < 288) return 'Replay needs a day of history.';
     await store.setCtrl({ ...ctrl(), tamper: cfg, updated: new Date().toISOString() });
     await store.audit({ what: 'demo tamper', cfg });
-    $('speedSel').value = '1';
-    if (!playTimer) play(true);
+    $('speedSel').value = '0.5';
+    play(true);
     schedule();
     return null;
   }
