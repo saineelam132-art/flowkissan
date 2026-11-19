@@ -73,18 +73,19 @@ def isolate(R: pd.DataFrame, X: dict, Sc: dict, cal: dict, N: dict, P: dict, dg:
     tot = float(yv @ yv)
     best: dict[str, Any] = {"set": [], "score": 0.0, "glr": 0.0, "bias": {}}
     useful = [s for s in OWNER if np.any(np.abs(A[s]) > 1e-6)]
+    jumped = jumps(R, k_flag, P)
     for size in range(1, I["max_set"] + 1):
         for S in itertools.combinations(useful, size):
             M_ = np.column_stack([A[s] for s in S])
             b, *_ = np.linalg.lstsq(M_, yv, rcond=None)
             res = yv - M_ @ b
             glr = tot - float(res @ res)
-            sc = glr - I["penalty"] * size
+            sc = glr - I["penalty"] * size + I["penalty"] * sum(1 for x in S if x in jumped)
             if sc > best["score"] + 1e-9:
                 best = {"set": list(S), "score": sc, "glr": glr, "bias": {s: float(v) for s, v in zip(S, b)}, "left": float(res @ res)}
     dof = int(m.sum())
     out: dict[str, Any] = {"k_flag": int(k_flag), "k": int(k), "window_steps": int(len(ks)), "rows": dof, "chi2_window": tot, "suspects": best["set"],
-                           "bias": best["bias"], "glr": best["glr"], "units": {s: UNIT.get(s, "K") for s in best["set"]}}
+                           "bias": best["bias"], "glr": best["glr"], "units": {s: UNIT.get(s, "K") for s in best["set"]}, "jumped": sorted(jumped)}
     flagged = bool(Sc["flag"][k_flag])
     if not flagged:
         out["confidence"] = "high"
@@ -93,6 +94,25 @@ def isolate(R: pd.DataFrame, X: dict, Sc: dict, cal: dict, N: dict, P: dict, dg:
     else:
         out["confidence"] = "low"
     out["reconstructed"] = reconstruct(R.iloc[k], best["bias"])
+    return out
+
+
+def jumps(R: pd.DataFrame, k_flag: int, P: dict) -> set[str]:
+    """Sensors whose 5-min step in the last `jump_lookback_steps` readings before the flag is > jump_z × their normal step."""
+    I = P["isolation"]
+    out = set()
+    for s in I["jump_sensors"]:
+        x = R[s].to_numpy(dtype=float)
+        a, b = max(1, k_flag - I["jump_lookback_steps"]), k_flag + 1
+        d = np.abs(np.diff(x[max(0, k_flag - 60):max(1, k_flag - 12)]))
+        d = d[np.isfinite(d)]
+        if len(d) < 10:
+            continue
+        typ = max(1.4826 * float(np.median(d)), P["sensors"][s]["quantum"])
+        recent = np.abs(x[a:b] - x[a - 1:b - 1])
+        recent = recent[np.isfinite(recent)]
+        if len(recent) and float(recent.max()) > I["jump_z"] * typ:
+            out.add(s)
     return out
 
 

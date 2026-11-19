@@ -1,0 +1,36 @@
+{
+  "_note": "Trust & Trade v2 settings. Every value here is an estimate (E) unless it says otherwise. Read by twin/freshness_v2.py, twin/trust_v2.py and (through web/trust/data/trust_v2.js) by the website.",
+  "trip": {
+    "speeds_km_h": {"walk": 4, "cycle": 10, "bike": 25, "auto": 20, "bus": 18},
+    "_speeds_note": "E – average door-to-door speeds on rural roads near Visakhapatnam incl. stops. A Google Maps Distance Matrix travel time can replace distance ÷ speed later (pass travel_h); no paid API is called.",
+    "mode_labels": {"walk": "Walk", "cycle": "Cycle", "bike": "Motorbike", "auto": "Auto-rickshaw", "bus": "Bus / van"},
+    "distance_bands_km": {"0-10": 5, "10-20": 15, "20-40": 30, "40+": 50},
+    "_bands_note": "E – the middle of each band is used.",
+    "default_band": "10-20",
+    "default_mode": "bike",
+    "farm_wait_h": 0.5,
+    "_farm_wait_note": "E – bundling, weighing and waiting for transport after picking ends.",
+    "default_picking_window_h": 2.0,
+    "default_picking_end_before_checkin_h": 2.5,
+    "packing": {
+      "basket": {"label": "Open basket in shade", "bag_heating_K": 0.0, "water_factor": 1.0},
+      "perforated_bag": {"label": "Perforated bag", "bag_heating_K": 1.0, "water_factor": 0.3},
+      "crate_wet_cloth": {"label": "Crate with wet cloth", "bag_heating_K": 1.0, "water_factor": 0.15},
+      "gunny_bag": {"label": "Closed gunny bag", "bag_heating_K": 3.0, "water_factor": 0.5}
+    },
+    "_packing_note": "E – flower temperature in the pack = outside air + bag heating (respiration heat trapped by the pack). water_factor scales the open-air water loss (1 = loose flowers in moving air).",
+    "default_packing": "perforated_bag",
+    "air_speed_m_s": 0.3,
+    "_air_note": "E – air speed around the flowers during the trip, used only for the water-loss term."
+  },
+  "room": {
+    "_note": "Inside the room the flowers sit in liners: water loss uses the twin's liner transpiration factor (config/design.json → humidity.liner_transpiration_factor)."
+  },
+  "demo": {
+    "default_kg": 100, "default_crop": "jasmine", "default_base_INR_kg": 120,
+    "_note": "E – used for the tamper impact card only when no batch is in the room.",
+    "control_tau_h": 0.5,
+    "_control_note": "E – how fast the true room follows when the controller is fooled by a faked room temperature (valve control time constant of the twin, about 30 min).",
+    "default_window_h": 2.0
+  }
+}

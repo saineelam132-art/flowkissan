@@ -296,7 +296,7 @@
     const thr = P.flag.phi, need = P.flag.steps;
     const { r, active: act, running, hard, u: U } = X;
     const n = r.length, cache = {};
-    const o = { chi2: [], m: [], phi_inst: [], phi_max: [], S: [], phi_slow: [], phi_day: [], phi: [], flag: [], e: [], mu: [], sc: [], days: [] };
+    const o = { chi2: [], m: [], phi_inst: [], phi_max: [], S: [], inc: [], phi_slow: [], phi_day: [], phi: [], flag: [], e: [], mu: [], sc: [], days: [] };
     for (let k = 0; k < n; k++) {
       const g = running[k] ? 1 : 0;
       o.sc.push(Array.from({ length: K }, (_, j) => Math.sqrt(st.var[g][j] + (fin(U[k][j]) ? U[k][j] : 0) ** 2)));
@@ -311,7 +311,7 @@
       }
       o.e.push(erow);
       const m = ids.length;
-      let c2 = 0, pi = 0, pm = 0;
+      let c2 = 0, pi = 0, pm = 0, inc = 0;
       if (m) {
         c2 = quad(ev, subInv(Sig, ids, cache));
         pi = sigmaEquiv(c2, m);
@@ -320,11 +320,12 @@
         ids.forEach((j, i) => { if (!ex.has(j)) idc.push(i); });
         if (idc.length) {
           const vc = idc.map(i => Math.min(clipC, Math.max(-clipC, ev[i])));
-          st.S = Math.max(0.0, st.S + quad(vc, subInv(Sig, idc.map(i => ids[i]), cache)) - idc.length - kappa);
+          inc = quad(vc, subInv(Sig, idc.map(i => ids[i]), cache)) - idc.length - kappa;
+          st.S = Math.max(0.0, st.S + inc);
         }
       }
       o.chi2.push(c2); o.m.push(m); o.phi_inst.push(pi); o.phi_max.push(pm);
-      o.S.push(st.S);
+      o.S.push(st.S); o.inc.push(inc);
       const ps = 3.0 * st.S / hh;
       o.phi_slow.push(ps); o.phi_day.push(st.phi_day);
       const hk = hard[k][0] || hard[k][1] || hard[k][2];
@@ -421,6 +422,7 @@
     const tot = yv.reduce((s, v) => s + v * v, 0);
     let best = { set: [], score: 0.0, glr: 0.0, bias: {}, left: tot };
     const useful = OWNER.filter(s => A[s].some(v => Math.abs(v) > 1e-6));
+    const jumped = jumps(R, kFlag, P);
     const combos = [];
     for (let a = 0; a < useful.length; a++) {
       combos.push([useful[a]]);
@@ -434,7 +436,7 @@
       const M = yv.map((_, i) => S.map(s => A[s][i]));
       const b = lstsq(M, yv);
       let left = 0; yv.forEach((y, i) => { let f = 0; S.forEach((_, c) => { f += M[i][c] * b[c]; }); left += (y - f) ** 2; });
-      const glr = tot - left, sc = glr - I.penalty * S.length;
+      const glr = tot - left, sc = glr - I.penalty * S.length + I.penalty * S.filter(x => jumped.has(x)).length;
       if (sc > best.score + 1e-9) best = { set: S.slice(), score: sc, glr, bias: Object.fromEntries(S.map((s, c) => [s, b[c]])), left };
     }
     const dof = yv.length;
@@ -442,7 +444,23 @@
     if (Sc.flag[kFlag]) conf = best.set.length && chi2Sf(best.left, Math.max(dof - best.set.length, 1)) > 1e-3 ? 'medium' : 'low';
     const rec = {};
     for (const s of best.set) { const v = num(R[s][k]); rec[s] = RELATIVE.has(s) ? v / (1 + best.bias[s]) : v - best.bias[s]; }
-    return { k_flag: kFlag, k, suspects: best.set, bias: best.bias, glr: best.glr, confidence: conf, reconstructed: rec, rows: dof };
+    return { k_flag: kFlag, k, suspects: best.set, bias: best.bias, glr: best.glr, confidence: conf, reconstructed: rec, rows: dof, jumped: [...jumped].sort() };
+  }
+  function median(a) { const b = a.slice().sort((x, y) => x - y), m = b.length >> 1; return b.length % 2 ? b[m] : (b[m - 1] + b[m]) / 2; }
+  function jumps(R, kFlag, P) {                     // same as twin/phi/isolate.py → jumps
+    const I = P.isolation, out = new Set();
+    if (!I.jump_sensors) return out;                 // older exports (phi_lab.js) have no jump test
+    for (const s of I.jump_sensors) {
+      const x = R[s].map(num), a = Math.max(1, kFlag - I.jump_lookback_steps), b = kFlag + 1;
+      const d = [];
+      for (let i = Math.max(0, kFlag - 60) + 1; i < Math.max(1, kFlag - 12); i++) { const v = Math.abs(x[i] - x[i - 1]); if (fin(v)) d.push(v); }
+      if (d.length < 10) continue;
+      const typ = Math.max(1.4826 * median(d), P.sensors[s].quantum);
+      let mx = -1;
+      for (let i = a; i < b; i++) { const v = Math.abs(x[i] - x[i - 1]); if (fin(v) && v > mx) mx = v; }
+      if (mx > I.jump_z * typ) out.add(s);
+    }
+    return out;
   }
 
   // ---------------------------------------------------------------- watermark + replay fingerprint

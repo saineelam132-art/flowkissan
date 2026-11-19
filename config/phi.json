@@ -232,7 +232,19 @@
     "window_steps": 12,
     "max_set": 3,
     "penalty": 10.83,
-    "_note": "E – GLR over every set of up to 3 owner sensors on the last hour; penalty = chi-square(1) 99.9 % point per extra sensor."
+    "_note": "E – GLR over every set of up to 3 owner sensors on the last hour; penalty = chi-square(1) 99.9 % point per extra sensor.",
+    "jump_z": 12.0,
+    "jump_lookback_steps": 6,
+    "jump_sensors": [
+      "T_out_s",
+      "RH_out_s",
+      "T_mid",
+      "RH_mid",
+      "T_high",
+      "T_flower",
+      "T_ice"
+    ],
+    "_jump_note": "E – jump test: a sensor whose reading stepped by more than 12× its normal 5-minute change in the 30 min before the flag gets a bonus of one 'penalty' in the GLR, because a real room (thermal mass) cannot change that fast; a faked reading usually starts with such a step. It Glycol temperatures and power are left out: they jump naturally when the chiller starts or stops. It breaks ties like 'middle probe too low' vs 'high probe too high'."
   },
   "watermark": {
     "amplitude_K": 0.3,

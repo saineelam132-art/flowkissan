@@ -29,7 +29,7 @@ Read: `web/trust.html`, `web/trust/trust.js`, `trust_core.js`, `detector.js`, `p
   Hash = SHA-256 of the canonical block string, which includes `prevHash` (`trust_core.js → blockString / blockHash`).
 * **Daily anchors**: one row per UTC day – day, first 32 chars of the anchor (SHA-256 of all slips' last block hash of that
   day), number of slips, publish time. Published when the twin clock passes midnight UTC (05:30 IST). The anchor is printed
-  on NEW slips. The buyer view checks each slip's day heads against the anchors.
+  on NEW slips. The buyer view (now: the transporter's Delivery check) checks each slip's day heads against the anchors.
 
 ## (c) What "Demo: tamper a sensor" does now (owner view)
 
@@ -77,7 +77,19 @@ Read: `web/trust.html`, `web/trust/trust.js`, `trust_core.js`, `detector.js`, `p
 * F4 demo tampering with start/end window, edge-node safe mode, impact card (true vs reported freshness, ₹ owner vs farmer).
 * F5 formula card next to the gauge with live χ², m, Φ_inst, S_k, Φ and hover-highlight of residual bars.
 
-## ⚠ One number to decide before I start
+## Decision taken (option 2) and what was built
+
+* Bag heating depends on the packing (E, `config/trust_v2.json`): open basket in shade +0 K, perforated bag +1 K, crate with wet cloth +1 K,
+  closed gunny bag +3 K; demo default = perforated bag. `data/crops.json` unchanged. Typical ~32 °C trip (15 Mar 2026, 25 km by motorbike,
+  picking 05:00–07:00, check-in 09:30): jasmine perforated bag ≈ 79.8 %, gunny bag ≈ 73.6 %, marigold perforated ≈ 92.3 % (tests/test_freshness_v2.py).
+* One Φ everywhere (the coded version above, #2). The old 4-check Φ is only in the git history (detector.js and the old functions in trust_core.js were removed).
+* Code: `twin/freshness_v2.py` ↔ `web/trust/freshness_v2.js`; `twin/trust_v2.py` → `web/trust/data/trust_v2.js` + `results/live/trust_v2_golden.json`;
+  `web/trust/phi_stream.js` (reported stream, φ, FLAG, isolation, Safe Mode, impact); `trust.js` (roles, ledger, slips); `phi_monitor.js` (monitor, formula card,
+  demo tampering). Tests: `tests/test_freshness_v2.py`, `tests/test_trust_v2.py` (+ `tests/js/trust_v2_check.js`).
+* Roles: Farmer · Cold-room owner · Transporter & delivery. `?role=buyer` and `#buyer` open the transporter view (its Delivery check holds the old buyer checks).
+* Isolation got a "jump test" (a faked reading usually starts with a step no real room can make); see `config/phi.json → isolation`.
+
+## ⚠ The number that had to be decided (kept for the record)
 
 Your test target "honest typical jasmine trip (25 km, bike, 45 min, 1 h wait, ~32 °C) → F_door ≈ 84–88 %" does **not** follow
 from our jasmine data with +3 K bag heating:

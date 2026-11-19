@@ -1,43 +1,118 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://koolkisaan.example/schemas/block.schema.json",
-  "title": "KoolKisaan ledger block (one per event, per slip)",
-  "description": "hash = SHA-256 of index|ts|slipId|type|actor|canonical(payload)|canonical(physics)|prevHash. canonical = JSON with sorted keys, no spaces, numbers rounded to 4 decimals and whole numbers written as integers. Code: engine/trust_ledger.py and web/trust/trust_core.js.",
-  "type": "object",
-  "required": ["index", "ts", "slipId", "type", "actor", "payload", "physics", "prevHash", "hash"],
-  "additionalProperties": false,
-  "properties": {
-    "index": {"type": "integer", "minimum": 0, "description": "0 = genesis (CHECKIN)"},
-    "ts": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$", "description": "ISO-8601 UTC"},
-    "slipId": {"type": "string", "pattern": "^CT-\\d{6}-\\d{3}$", "description": "CT-YYMMDD-NNN (check-in date, IST)"},
-    "type": {"enum": ["CHECKIN", "READING", "HANDOVER_OUT", "TRANSIT", "HANDOVER_IN", "SALE", "CHECKOUT", "VOID", "FLAG", "REVIEW"]},
-    "actor": {"enum": ["farmer", "owner", "transporter", "buyer", "system"]},
-    "payload": {
-      "type": "object",
-      "description": "Depends on type. CHECKIN: slipId, farmer, crop, kg, basePrice_INR_kg, bay, harvest_h, T_field_C, RH_field_pct, lastAnchor. READING: see telemetry.schema.json (step, N1..N4, out, P_el_W). HANDOVER_OUT: transporterId, vehicle, produce_T_C. TRANSIT: T_box_C, T_out_C, source. HANDOVER_IN: buyerId, produce_T_C. SALE: freshness_pct, price_INR_kg, total_INR, loss_INR. CHECKOUT: kg, kg_left. VOID: reason, kg_freed. FLAG: alertId, kind, sensor, from, phi, reason. REVIEW: alertId, note."
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://koolkisaan.example/schemas/block.schema.json",
+ "title": "KoolKisaan ledger block (one per event, per slip)",
+ "description": "hash = SHA-256 of index|ts|slipId|type|actor|canonical(payload)|canonical(physics)|prevHash. canonical = JSON with sorted keys, no spaces, numbers rounded to 4 decimals and whole numbers written as integers. Code: engine/trust_ledger.py and web/trust/trust_core.js.",
+ "type": "object",
+ "required": [
+  "index",
+  "ts",
+  "slipId",
+  "type",
+  "actor",
+  "payload",
+  "physics",
+  "prevHash",
+  "hash"
+ ],
+ "additionalProperties": false,
+ "properties": {
+  "index": {
+   "type": "integer",
+   "minimum": 0,
+   "description": "0 = genesis (CHECKIN)"
+  },
+  "ts": {
+   "type": "string",
+   "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$",
+   "description": "ISO-8601 UTC"
+  },
+  "slipId": {
+   "type": "string",
+   "pattern": "^CT-\\d{6}-\\d{3}$",
+   "description": "CT-YYMMDD-NNN (check-in date, IST)"
+  },
+  "type": {
+   "enum": [
+    "CHECKIN",
+    "READING",
+    "HANDOVER_OUT",
+    "TRANSIT",
+    "HANDOVER_IN",
+    "SALE",
+    "CHECKOUT",
+    "VOID",
+    "FLAG",
+    "REVIEW"
+   ]
+  },
+  "actor": {
+   "enum": [
+    "farmer",
+    "owner",
+    "transporter",
+    "buyer",
+    "system"
+   ]
+  },
+  "payload": {
+   "type": "object",
+   "description": "Depends on type. CHECKIN: slipId, farmer, crop, kg, basePrice_INR_kg, bay, trip {pick_start, pick_end (IST), village, band, distance_km, mode, packing, travel_h, F_door (E), stages, compare}, T_field_C, RH_field_pct, lastAnchor (older slips: harvest_h instead of trip). READING (v2): step, T_out, RH_out, T_room, T_high, RH_room, T_core, T_ice, T_sup, T_ret, flow, P_el_W, door_s, fan, T_wx (weather service). HANDOVER_OUT: transporterId, vehicle, produce_T_C. TRANSIT: T_box_C, T_out_C, source. HANDOVER_IN: buyerId (receiver), produce_T_C. SALE: freshness_pct, F_door_pct, price_INR_kg, total_INR, loss_INR. CHECKOUT: kg, kg_left. VOID: reason, kg_freed. FLAG: alertId, kind (physics / external / quarantine / watermark / replay / hash), sensors, reason, quarantine {sensors, bias, confidence}. REVIEW: alertId or note."
+  },
+  "physics": {
+   "type": "object",
+   "required": [
+    "phi",
+    "flags"
+   ],
+   "properties": {
+    "phi": {
+     "type": "number",
+     "minimum": 0,
+     "description": "physics consistency index at this reading"
     },
-    "physics": {
+    "flags": {
+     "type": "array",
+     "items": {
       "type": "object",
-      "required": ["phi", "flags"],
+      "required": [
+       "type",
+       "from",
+       "raised",
+       "phi",
+       "reason"
+      ],
       "properties": {
-        "phi": {"type": "number", "minimum": 0, "description": "physics consistency index at this reading"},
-        "flags": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": ["type", "from", "raised", "phi", "reason"],
-            "properties": {
-              "type": {"const": "PHYSICS"},
-              "from": {"type": "string", "description": "ISO UTC time the run of high Φ started"},
-              "raised": {"type": "string", "description": "ISO UTC time Φ had been ≥ red_at for red_steps readings"},
-              "phi": {"type": "number"},
-              "reason": {"type": "string"}
-            }
-          }
-        }
+       "type": {
+        "const": "PHYSICS"
+       },
+       "from": {
+        "type": "string",
+        "description": "ISO UTC time the run of high Φ started"
+       },
+       "raised": {
+        "type": "string",
+        "description": "ISO UTC time Φ had been ≥ red_at for red_steps readings"
+       },
+       "phi": {
+        "type": "number"
+       },
+       "reason": {
+        "type": "string"
+       }
       }
-    },
-    "prevHash": {"type": "string", "pattern": "^[0-9a-f]{64}$", "description": "64 zeros for the genesis block"},
-    "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+     }
+    }
+   }
+  },
+  "prevHash": {
+   "type": "string",
+   "pattern": "^[0-9a-f]{64}$",
+   "description": "64 zeros for the genesis block"
+  },
+  "hash": {
+   "type": "string",
+   "pattern": "^[0-9a-f]{64}$"
   }
+ }
 }
